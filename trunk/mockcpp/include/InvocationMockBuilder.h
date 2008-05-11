@@ -3,14 +3,15 @@
 #define __MOCKCPP_INVOCATION_MOCK_BUILDER_H
 
 #include <mockcpp.h>
-#include <BeforeMatchBuilder.h>
+#include <DummyBuilder.h>
 
 MOCKCPP_NS_START
 
 class Matcher;
 class InvocationMocker;
 
-class InvocationMockBuilder : public BeforeMatchBuilder
+template <typename Builder = DummyBuilder>
+class InvocationMockBuilder : public Builder
 {
 public:
     InvocationMockBuilder(InvocationMocker* mocker);
@@ -23,6 +24,8 @@ private:
 };
 
 MOCKCPP_NS_END
+
+#include <InvocationMockBuilder.tcc>
 
 #endif
 

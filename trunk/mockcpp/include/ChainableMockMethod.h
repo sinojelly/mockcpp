@@ -6,6 +6,8 @@
 #include <Any.h>
 #include <ChainableMockMethodCore.h>
 #include <Invocation.h>
+#include <Asserter.h>
+#include <SelfDescribe.h>
 
 MOCKCPP_NS_START
 
@@ -25,15 +27,20 @@ public:
                  , const RefAny& p6 = RefAny())
     {
       Invocation inv(p1,p2,p3,p4,p5,p6);
+		SelfDescribe* resultProvider = 0;
 
-      Any& anyResult = methodCore->invoke(inv);
+      Any anyResult = methodCore->invoke(inv, resultProvider);
 
-      if(any_castable<RT>(anyResult))
-      {
-			return any_cast<RT>(anyResult);
-		}
+		oss_t oss;
 
-      return RT();
+		oss << "Returned type does NOT match the method declaration \n"
+          << "Required : " << TypeString<RT>::value() << "\n"
+          << "Returned : " << anyResult.toTypeString() << ", which is from\n"
+          << resultProvider->toString();
+
+      MOCKCPP_ASSERT_TRUE_MESSAGE(oss.str(), any_castable<RT>(anyResult) );
+
+		return any_cast<RT>(anyResult);
     }
 
 private:
@@ -59,7 +66,8 @@ public:
                    , const RefAny& p6 = RefAny())
     {
       Invocation inv(p1,p2,p3,p4,p5,p6);
-      methodCore->invoke(inv);
+		SelfDescribe* resultProvider = 0;
+      methodCore->invoke(inv, resultProvider);
     }
 
 private:

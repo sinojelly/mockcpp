@@ -3,18 +3,17 @@
 #define __MOCKCPP_STUB_H
 
 #include <mockcpp.h>
-#include <string>
+#include <SelfDescribe.h>
 
 MOCKCPP_NS_START
 
 class Any;
 class Invocation;
 
-struct Stub
+struct Stub : public SelfDescribe
 {
     virtual ~Stub() {}
     virtual Any& invoke(const Invocation& inv) = 0;
-    virtual std::string toString() const = 0;
 };
 
 MOCKCPP_NS_END

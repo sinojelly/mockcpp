@@ -4,7 +4,7 @@
 
 #include <mockcpp.h>
 
-#include <string>
+#include <SelfDescribe.h>
 
 MOCKCPP_NS_START
 
@@ -16,7 +16,7 @@ class Invocation;
 class InvocationId;
 class Any;
 
-class InvocationMocker
+class InvocationMocker : public SelfDescribe
 {
 public:
 
@@ -26,7 +26,7 @@ public:
     ChainableMockMethodCore* getMethod() const;
     void setStub(Stub* stub);
     void addMatcher(Matcher* matcher);
-    bool isInvoked(void) const ;
+    bool hasBeenInvoked(void) const ;
 
     void setId(InvocationId* id);
     const InvocationId* const getId(void) const;
@@ -35,7 +35,8 @@ public:
     Any& invoke(const Invocation& inv);
 
     void verify();
-    std::string toString(bool wide) const;
+
+    std::string toString() const;
 
 private:
     InvocationMockerImpl* This;

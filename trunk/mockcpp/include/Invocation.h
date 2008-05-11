@@ -8,6 +8,7 @@
 #include <string>
 
 MOCKCPP_NS_START
+class Stub;
 
 class InvocationImpl;
 
@@ -21,7 +22,7 @@ public:
              , const RefAny& p5 = RefAny()
              , const RefAny& p6 = RefAny());
 
-	~Invocation();
+	virtual ~Invocation();
 
 	RefAny& getParameter(const unsigned int i) const;
 

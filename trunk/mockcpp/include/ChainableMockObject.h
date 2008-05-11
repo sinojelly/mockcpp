@@ -10,7 +10,6 @@
 MOCKCPP_NS_START
 
 class ChainableMockMethodCore;
-class InvocationMockBuilder;
 class ChainableMockObjectImpl;
 
 class ChainableMockObject : public Namespace

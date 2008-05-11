@@ -39,9 +39,9 @@ public:
 		InvocationMocker mocker(0);
       Invocation inv;
 
-		CPPUNIT_ASSERT(!mocker.isInvoked());
+		CPPUNIT_ASSERT(!mocker.hasBeenInvoked());
 		mocker.invoke(inv);
-		CPPUNIT_ASSERT(mocker.isInvoked());
+		CPPUNIT_ASSERT(mocker.hasBeenInvoked());
    }
 
    void testShouldMatchAnExpectedTimes()

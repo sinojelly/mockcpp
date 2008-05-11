@@ -4,19 +4,47 @@
 
 #include <mockcpp.h>
 #include <InvocationMockBuilder.h>
+#include <AfterMatchBuilder.h>
+#include <BeforeMatchBuilder.h>
+#include <IdentityBuilder.h>
+#include <StubBuilder.h>
+#include <ArgumentsMatchBuilder.h>
 
 MOCKCPP_NS_START
 
 class Matcher;
 class Stub;
 
+///////////////////////////////////////////////
+typedef InvocationMockBuilder< 
+          BeforeMatchBuilder<
+            ArgumentsMatchBuilder<
+              AfterMatchBuilder<
+                StubBuilder< 
+                  IdentityBuilder
+                >
+              >
+            >
+          >
+        > WorkingBuilder;
+
+///////////////////////////////////////////////
+typedef InvocationMockBuilder< 
+          ArgumentsMatchBuilder<
+             StubBuilder<>
+          >
+        > DefaultBuilder;
+
+///////////////////////////////////////////////
 struct Method
 {
 	~Method() {}
-	virtual InvocationMockBuilder stubs() = 0;
-	virtual InvocationMockBuilder expects(Matcher* matcher) = 0;
-   virtual void setDefaultStub(Stub* stub) = 0;
+	virtual WorkingBuilder stubs() = 0;
+	virtual WorkingBuilder expects(Matcher* matcher) = 0;
+   virtual DefaultBuilder defaults() = 0;
 };
+
+///////////////////////////////////////////////
 
 MOCKCPP_NS_END
 

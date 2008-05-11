@@ -15,6 +15,7 @@ class Invocation;
 class Namespace;
 class Stub;
 class ChainableMockMethodCoreImpl;
+class SelfDescribe;
 
 class ChainableMockMethodCore
 		: public Method
@@ -28,11 +29,12 @@ public:
 	std::string& getName(void) const;
    Namespace* getNamespace() const;
 
-   Any& invoke(const Invocation& invocation);
+   Any invoke(const Invocation& invocation, SelfDescribe* &resultProvider);
    void setDefaultStub(Stub* stub);
 
-	InvocationMockBuilder stubs();
-	InvocationMockBuilder expects(Matcher* matcher);
+	WorkingBuilder stubs();
+	WorkingBuilder expects(Matcher* matcher);
+   DefaultBuilder defaults();
 
 	void reset();
    void verify();

@@ -24,6 +24,11 @@ struct Holder : public PlaceHolder
        return MOCKCPP_NS::toString(getValue());
     }
 
+    std::string toTypeString() const
+    {
+       return TypeString<ValueType>::value();
+    }
+
     std::string toTypeAndValueString() const
     {
        return MOCKCPP_NS::toTypeAndValueString(getValue());
