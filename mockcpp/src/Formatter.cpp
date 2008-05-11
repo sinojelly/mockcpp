@@ -60,6 +60,10 @@ std::string toHexStr(unsigned char val)
 { return toHexStr((unsigned int)val&0xFF); }
 
 //////////////////////////////////////////
+std::string toHexStr(short val)
+{ return toHexStr((unsigned int)val&0xFFFF); }
+
+//////////////////////////////////////////
 template <typename T>
 std::string toValStr(T val)
 {

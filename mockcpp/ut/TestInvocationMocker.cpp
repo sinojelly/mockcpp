@@ -16,7 +16,6 @@ class TestInvocationMocker : public CPPUNIT_NS::TestFixture
 	CPPUNIT_TEST_SUITE( TestInvocationMocker );
 	CPPUNIT_TEST( testShouldReturnSettedStubWhenCallingInvoke );
 	CPPUNIT_TEST( testShouldSetInvokedStateAfterItsInvoked );
-	CPPUNIT_TEST( testShouldMatchAnExpectedTimes );
 	CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -45,16 +44,6 @@ public:
 		CPPUNIT_ASSERT(mocker.hasBeenInvoked());
    }
 
-   void testShouldMatchAnExpectedTimes()
-	{
-      InvocationMocker mocker(0);
-      Invocation inv;
-
-      mocker.addMatcher(once());
-		CPPUNIT_ASSERT(mocker.matches(inv));
-		mocker.invoke(inv);
-		CPPUNIT_ASSERT(!mocker.matches(inv));
-	}
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION( TestInvocationMocker );
