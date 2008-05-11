@@ -15,7 +15,7 @@ bool isAnyConstraint(Constraint* c)
 
     TypelessConstraintAdapter* tc = dynamic_cast<TypelessConstraintAdapter*>(c);
 
-	return (tc != 0) && (dynamic_cast<IsAnything*>(tc->getAdaptedConstraint()) != 0);
+    return (tc != 0) && (dynamic_cast<IsAnything*>(tc->getAdaptedConstraint()) != 0);
 }
 
 MOCKCPP_NS_END

@@ -3,19 +3,22 @@
 #define __MOCKCPP_INVOKED_ATMOST_H
 
 #include <mockcpp.h>
-#include <InvocationRecorder.h>
+#include <InvocationTimesMatcher.h>
 
 MOCKCPP_NS_START
 
-class InvokedAtMost : public InvocationRecorder
+class InvokedAtMost
+    : public InvocationTimesMatcher
 {
 public:
 
     InvokedAtMost(const unsigned int times);
 
-    bool matches(void) const;
-    std::string describeSelf(void) const;
+    bool matches(const Invocation& inv) const;
+
     void verify(void);
+
+    std::string toString(void) const;
 
 private:
    

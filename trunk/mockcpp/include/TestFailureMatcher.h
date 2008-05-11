@@ -3,19 +3,19 @@
 #define __MOCKCPP_TEST_FAILURE_MATCHER_H
 
 #include <mockcpp.h>
-#include <TypelessMatcher.h>
+#include <Matcher.h>
 
 MOCKCPP_NS_START
 
-class TestFailureMatcher : public TypelessMatcher
+class TestFailureMatcher : public Matcher
 {
 public:
 
     TestFailureMatcher(const std::string& msg
                       ,const std::string& str);
 
-    bool matches(void) const;
-    void increaseInvoked(void);
+    bool matches(const Invocation& inv) const;
+    void increaseInvoked(const Invocation& inv);
     std::string toString(void) const;
     void verify(void);
 

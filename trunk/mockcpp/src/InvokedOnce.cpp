@@ -4,19 +4,22 @@
 
 MOCKCPP_NS_START
 
-InvokedOnce::InvokedOnce() {}
+///////////////////////////////////////////////////////
+InvokedOnce::InvokedOnce()
+{
+}
 
 ///////////////////////////////////////////////////////
-bool InvokedOnce::matches(void) const
+bool InvokedOnce::matches(const Invocation& inv) const
 {
-    return invokedTimes == 0;
+    return getInvokedTimes() == 0;
 }
 
 ///////////////////////////////////////////////////////
 std::string
-InvokedOnce::describeSelf(void) const
+InvokedOnce::toString(void) const
 {
-    return ".expects(once())";
+    return "once()";
 }
 
 ///////////////////////////////////////////////////////
@@ -24,7 +27,7 @@ void InvokedOnce::verify(void)
 {
     MOCKCPP_ASSERT_TRUE_MESSAGE(
          "Expected invocation was never invoked!"
-         , hasBeenInvoked());
+         , getInvokedTimes() > 0);
 }
 
 MOCKCPP_NS_END

@@ -6,23 +6,22 @@
 MOCKCPP_NS_START
 
 InvokedAtMost::InvokedAtMost(const unsigned int times)
-	: highLimit(times)
+   : highLimit(times)
 {
 }
 
 ///////////////////////////////////////////////////////
-bool InvokedAtMost::matches(void) const
+bool InvokedAtMost::matches(const Invocation& inv) const
 {
-	return invokedTimes < highLimit;
+	return getInvokedTimes() < highLimit;
 }
 
 ///////////////////////////////////////////////////////
-std::string
-InvokedAtMost::describeSelf(void) const
+std::string InvokedAtMost::toString(void) const
 {
 	 oss_t oss;
 
-    oss << ".expects(atMost(" << highLimit << "))";
+    oss << "atMost(" << highLimit << ")";
 
     return oss.str();
 }
@@ -32,7 +31,7 @@ void InvokedAtMost::verify(void)
 {
     MOCKCPP_ASSERT_TRUE_MESSAGE(
 			"Invoked too many times" 
-         , invokedTimes >= highLimit);
+         , getInvokedTimes() >= highLimit);
 }
 
 MOCKCPP_NS_END

@@ -5,26 +5,26 @@
 
 MOCKCPP_NS_START
 
+///////////////////////////////////////////////////////
 InvokedAtLeast::InvokedAtLeast(const unsigned int times)
-	: lowLimit(times)
+   : lowLimit(times)
 {
 }
 
 ///////////////////////////////////////////////////////
-bool InvokedAtLeast::matches(void) const
+bool InvokedAtLeast::matches(const Invocation& inv) const
 {
 	return true;
 }
 
 ///////////////////////////////////////////////////////
-std::string
-InvokedAtLeast::describeSelf(void) const
+std::string InvokedAtLeast::toString(void) const
 {
-	 std::ostringstream ss;
+	 oss_t oss;
 
-    ss << ".expects(atLeast(" << lowLimit << "))";
+    oss << "atLeast(" << lowLimit << ")";
 
-    return ss.str();
+    return oss.str();
 }
 
 ///////////////////////////////////////////////////////
@@ -32,7 +32,7 @@ void InvokedAtLeast::verify(void)
 {
     MOCKCPP_ASSERT_TRUE_MESSAGE(
 			"Invoked too few times" 
-         , invokedTimes >= lowLimit);
+         , getInvokedTimes() >= lowLimit);
 }
 
 MOCKCPP_NS_END

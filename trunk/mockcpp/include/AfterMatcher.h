@@ -23,6 +23,8 @@ public:
    void increaseInvoked(const Invocation& inv);
 
 	std::string toString() const;
+   
+   void verify(void);
 
    bool isComplete(void) const;
 

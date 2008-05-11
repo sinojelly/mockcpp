@@ -16,6 +16,7 @@ class Namespace;
 class Stub;
 class ChainableMockMethodCoreImpl;
 class SelfDescribe;
+class InvokedRecorder;
 
 class ChainableMockMethodCore
 		: public Method

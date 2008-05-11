@@ -33,6 +33,11 @@ std::string AfterMatcher::toString() const
 }
 
 //////////////////////////////////////////////////////
+void AfterMatcher::verify() 
+{
+}
+
+//////////////////////////////////////////////////////
 bool AfterMatcher::isComplete(void) const
 {
     return previousCall != 0;

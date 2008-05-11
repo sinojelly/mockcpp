@@ -14,7 +14,7 @@ struct Matcher
     virtual ~Matcher() {}
     virtual bool matches(const Invocation& inv) const = 0;
     virtual void increaseInvoked(const Invocation& inv) = 0;
-    virtual void verify() {}
+    virtual void verify() = 0;
     virtual std::string toString() const = 0;
 };
 

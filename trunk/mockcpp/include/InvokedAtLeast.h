@@ -3,19 +3,21 @@
 #define __MOCKCPP_INVOKED_ATLEAST_H
 
 #include <mockcpp.h>
-#include <InvocationRecorder.h>
+#include <InvocationTimesMatcher.h>
 
 MOCKCPP_NS_START
 
-class InvokedAtLeast : public InvocationRecorder
+class InvokedAtLeast : public InvocationTimesMatcher
 {
 public:
 
     InvokedAtLeast(const unsigned int times);
 
-    bool matches(void) const;
-    std::string describeSelf(void) const;
+    bool matches(const Invocation& inv) const;
+
     void verify(void);
+
+    std::string toString() const;
 
 private:
    

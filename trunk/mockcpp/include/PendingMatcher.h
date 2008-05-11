@@ -31,7 +31,7 @@ public:
 
 	std::string toString() const;
 
-	void verify() const;
+	void verify();
 
 private:
 

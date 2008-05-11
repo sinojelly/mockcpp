@@ -13,7 +13,6 @@
 MOCKCPP_NS_START
 
 class Matcher;
-class Stub;
 
 ///////////////////////////////////////////////
 typedef InvocationMockBuilder< 

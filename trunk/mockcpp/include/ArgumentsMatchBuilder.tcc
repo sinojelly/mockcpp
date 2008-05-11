@@ -8,14 +8,23 @@ MOCKCPP_NS_START
 template <typename Builder>
 Builder&
 ArgumentsMatchBuilder<Builder>::
-with( Constraint* c1 
-    , Constraint* c2
-    , Constraint* c3
-    , Constraint* c4
-    , Constraint* c5
-    , Constraint* c6)
+with( Constraint* c01 
+    , Constraint* c02
+    , Constraint* c03
+    , Constraint* c04
+    , Constraint* c05
+    , Constraint* c06
+    , Constraint* c07
+    , Constraint* c08
+    , Constraint* c09
+    , Constraint* c10
+    , Constraint* c11
+    , Constraint* c12
+)
 {
-    getMocker()->addMatcher( new ConstraintSet(c1, c2, c3, c4, c5, c6));
+    getMocker()->addMatcher(
+      new ConstraintSet(c01, c02, c03, c04, c05, c06,
+                        c07, c08, c09, c10, c11, c12));
     return *this;
 }
 

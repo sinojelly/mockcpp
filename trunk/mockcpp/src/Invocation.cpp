@@ -6,45 +6,55 @@
 
 MOCKCPP_NS_START
 
+////////////////////////////////////////////////////////////////
 namespace
 {
-	const static unsigned int maxNumOfParameters = 6;
+    const static unsigned int maxNumOfParameters = 12;
 };
 
 ////////////////////////////////////////////////////////////////
 struct InvocationImpl
 {
-	std::vector<RefAny> parameters;
-   std::string toString(void) const;
+    std::vector<RefAny> parameters;
+    std::string toString(void) const;
 };
 
 ////////////////////////////////////////////////////////////////
 std::string InvocationImpl::toString() const
 {
-   std::string result = "";
-   if(parameters[0].empty())
-      return result;
+    oss_t oss;
 
-   result += parameters[0].toTypeAndValueString();
-   for(unsigned int i=1; i<maxNumOfParameters; i++) {
-      if(parameters[i].empty())
-          return result;
-      result += " ,";
-      result += parameters[i].toTypeAndValueString();
-   }
+    for (unsigned int i=0; i<maxNumOfParameters; i++)
+    {
+      if (parameters[i].empty())
+          return oss.str();
 
-   return result;
+      if (i > 0) oss << ", ";
+
+      oss << parameters[i].toTypeAndValueString();
+    }
+
+    return oss.str();
 }
 
 ////////////////////////////////////////////////////////////////
+
 #define INIT_PARAMETER(i) This->parameters.push_back(p##i)
 
-Invocation::Invocation(const RefAny& p1
+Invocation::Invocation(
+                 const RefAny& p1
 				   , const RefAny& p2
 				   , const RefAny& p3
 				   , const RefAny& p4
 				   , const RefAny& p5
-				   , const RefAny& p6)
+				   , const RefAny& p6
+				   , const RefAny& p7
+				   , const RefAny& p8
+				   , const RefAny& p9
+				   , const RefAny& p10
+				   , const RefAny& p11
+				   , const RefAny& p12
+   )
 	: This(new InvocationImpl)
 {
 	INIT_PARAMETER(1);
@@ -53,6 +63,12 @@ Invocation::Invocation(const RefAny& p1
 	INIT_PARAMETER(4);
 	INIT_PARAMETER(5);
 	INIT_PARAMETER(6);
+	INIT_PARAMETER(7);
+	INIT_PARAMETER(8);
+	INIT_PARAMETER(9);
+	INIT_PARAMETER(10);
+	INIT_PARAMETER(11);
+	INIT_PARAMETER(12);
 }
 
 ////////////////////////////////////////////////////////////////
@@ -64,17 +80,18 @@ Invocation::~Invocation()
 ////////////////////////////////////////////////////////////////
 RefAny& Invocation::getParameter(const unsigned int i) const
 {
-	if(i < 1 || i > maxNumOfParameters ) {
+    if (i < 1 || i > maxNumOfParameters )
+    {
 		return getEmptyRefAny();
-	}
+    }
 
-	return This->parameters[i-1];
+    return This->parameters[i-1];
 }
 
 ////////////////////////////////////////////////////////////////
 std::string Invocation::toString(void) const
 {
-   return std::string("(") + This->toString() + std::string(")");
+    return std::string("(") + This->toString() + std::string(")");
 }
 
 ////////////////////////////////////////////////////////////////

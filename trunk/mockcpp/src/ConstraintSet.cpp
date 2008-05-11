@@ -9,13 +9,22 @@ MOCKCPP_NS_START
 
 struct ConstraintSetImpl
 {
+public:
+
     typedef std::vector<Constraint*> Vector;
+
+public:
 
     Vector constraints;
 
+public:
+
     ~ConstraintSetImpl();
+
     bool matches(const Invocation& inv) const;
+
     unsigned int numberOfValidConstraint(void) const;
+
     std::string toString() const;
 };
 
@@ -23,65 +32,87 @@ struct ConstraintSetImpl
 std::string
 ConstraintSetImpl::toString() const
 {
+    oss_t oss;
+
     unsigned int n = numberOfValidConstraint();
-    std::string result("");
-    for(unsigned int i = 0; i < n; i++) {
-      result += constraints[i]->toString();
-      if(i < n-1)
-        result += ", ";
+    for (unsigned int i = 0; i < n; i++)
+    {
+      oss << constraints[i]->toString();
+      if (i < n-1) oss << ", ";
 	 }
 
-    return result;
+    return oss.str();
 }
+
 ////////////////////////////////////////////////////////////
 unsigned int
 ConstraintSetImpl::numberOfValidConstraint() const
 {
-    unsigned int num = constraints.size();
-
-    for(int i = num-1; i >= 0; i--) {
-      if(isAnyConstraint(constraints[i]))
-        num--;
+    for (int i = constraints.size()-1; i >= 0; i--)
+    {
+      if(!isAnyConstraint(constraints[i]))
+        return i + 1;
     }
 
-    return num;
+    return 0;
 }
 ////////////////////////////////////////////////////////////
 ConstraintSetImpl::~ConstraintSetImpl()
 {
-  for(int i=0; i<constraints.size(); i++)
-    delete constraints[i];
+    for (int i=0; i<constraints.size(); i++)
+    {
+      delete constraints[i];
+    }
 
-  constraints.clear();
+    constraints.clear();
 }
 
 ////////////////////////////////////////////////////////////
 bool
 ConstraintSetImpl::matches(const Invocation& inv) const
 {
-  for(int i=0; i<constraints.size(); i++) {
-    if(!constraints[i]->eval(inv.getParameter(i+1)))
-      return false;
-  }
-  return true;
+    for (int i=0; i<constraints.size(); i++)
+    {
+      if (!constraints[i]->eval(inv.getParameter(i+1)))
+      {
+        return false;
+      }
+    }
+
+    return true;
 }
 
 ////////////////////////////////////////////////////////////
+#define INIT_CONSTRAINT(i) This->constraints.push_back(p##i)
+
 ConstraintSet::ConstraintSet(
                Constraint* p1
              , Constraint* p2
              , Constraint* p3
              , Constraint* p4
              , Constraint* p5
-             , Constraint* p6)
+             , Constraint* p6
+             , Constraint* p7
+             , Constraint* p8
+             , Constraint* p9
+             , Constraint* p10
+             , Constraint* p11
+             , Constraint* p12
+   )
    : This(new ConstraintSetImpl())
 {
-   This->constraints.push_back(p1);
-   This->constraints.push_back(p2);
-   This->constraints.push_back(p3);
-   This->constraints.push_back(p4);
-   This->constraints.push_back(p5);
-   This->constraints.push_back(p6);
+    INIT_CONSTRAINT(1);
+    INIT_CONSTRAINT(2);
+    INIT_CONSTRAINT(3);
+    INIT_CONSTRAINT(4);
+    INIT_CONSTRAINT(5);
+    INIT_CONSTRAINT(6);
+    INIT_CONSTRAINT(7);
+    INIT_CONSTRAINT(8);
+    INIT_CONSTRAINT(9);
+    INIT_CONSTRAINT(10);
+    INIT_CONSTRAINT(11);
+    INIT_CONSTRAINT(12);
 }
 
 ////////////////////////////////////////////////////////////
@@ -99,11 +130,18 @@ bool ConstraintSet::matches(const Invocation& inv) const
 ////////////////////////////////////////////////////////////
 std::string ConstraintSet::toString() const
 {
-   std::string result(".with(");
-   result += This->toString();
-   result += ")";
-   return result;
+    oss_t oss;
+
+    oss << ".with(" << This->toString() << ")";
+
+    return oss.str();
 }
+
+////////////////////////////////////////////////////////////
+void ConstraintSet::verify(void) 
+{
+}
+
 ////////////////////////////////////////////////////////////
 
 MOCKCPP_NS_END

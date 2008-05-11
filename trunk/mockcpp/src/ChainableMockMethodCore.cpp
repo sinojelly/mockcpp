@@ -9,6 +9,11 @@
 #include <InvocationId.h>
 #include <DefaultMatcher.h>
 #include <StubsMatcher.h>
+#include <ExpectsMatcher.h>
+#include <InvokedTimesMatcher.h>
+#include <SimpleInvocationRecorder.h>
+#include <InvokedTimesRecorder.h>
+#include <InvocationTimesMatcher.h>
 
 MOCKCPP_NS_START
 
@@ -154,6 +159,7 @@ WorkingBuilder ChainableMockMethodCore::stubs()
 {
     InvocationMocker* mocker = new InvocationMocker(this);
 	 mocker->addMatcher(new StubsMatcher);
+    mocker->addMatcher(new InvokedTimesMatcher(new SimpleInvocationRecorder));
     addInvocationMocker(mocker);
     return WorkingBuilder(mocker);
 }
@@ -162,8 +168,19 @@ WorkingBuilder ChainableMockMethodCore::stubs()
 WorkingBuilder ChainableMockMethodCore::expects(Matcher* matcher)
 {
     InvocationMocker* mocker = new InvocationMocker(this);
-	 mocker->addMatcher(matcher);
+
+    InvokedTimesRecorder* recorder = new SimpleInvocationRecorder;
+    InvocationTimesMatcher* itMatcher = dynamic_cast<InvocationTimesMatcher*>(matcher);
+    if (itMatcher != 0)
+    {
+      itMatcher->setInvokedTimesReader(recorder);
+    }
+
+    mocker->addMatcher(new ExpectsMatcher(matcher));
+    mocker->addMatcher(new InvokedTimesMatcher(recorder));
+
     addInvocationMocker(mocker);
+
     return WorkingBuilder(mocker);
 }
 
