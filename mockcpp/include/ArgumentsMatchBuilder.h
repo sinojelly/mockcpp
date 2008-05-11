@@ -16,12 +16,19 @@ class ArgumentsMatchBuilder : public Builder
 {
 public:
 
-    Builder& with( Constraint* c1 = any()
-                 , Constraint* c2 = any()
-                 , Constraint* c3 = any()
-                 , Constraint* c4 = any()
-                 , Constraint* c5 = any()
-                 , Constraint* c6 = any() );
+    Builder& with( Constraint* c01 = any()
+                 , Constraint* c02 = any()
+                 , Constraint* c03 = any()
+                 , Constraint* c04 = any()
+                 , Constraint* c05 = any()
+                 , Constraint* c06 = any()
+                 , Constraint* c07 = any()
+                 , Constraint* c08 = any()
+                 , Constraint* c09 = any()
+                 , Constraint* c10 = any()
+                 , Constraint* c11 = any()
+                 , Constraint* c12 = any()
+    );
 
 private:
 

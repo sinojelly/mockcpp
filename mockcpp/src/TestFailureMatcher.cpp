@@ -10,13 +10,13 @@ TestFailureMatcher::TestFailureMatcher(const std::string& m, const std::string& 
 {}
 
 //////////////////////////////////////////////////////////////////////
-bool TestFailureMatcher::matches(void) const
+bool TestFailureMatcher::matches(const Invocation& inv) const
 {
     return true;
 }
 
 //////////////////////////////////////////////////////////////////////
-void TestFailureMatcher::increaseInvoked(void) 
+void TestFailureMatcher::increaseInvoked(const Invocation& inv) 
 {
     MOCKCPP_FAIL(msg);
 }

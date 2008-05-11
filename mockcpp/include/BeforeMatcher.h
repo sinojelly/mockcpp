@@ -24,6 +24,8 @@ public:
 
 	std::string toString() const;
 
+   void verify();
+
    bool isComplete(void) const;
 
    void setOrderingInvocationMocker(InvocationMocker* mocker);

@@ -35,6 +35,11 @@ std::string BeforeMatcher::toString() const
 }
 
 //////////////////////////////////////////////////////
+void BeforeMatcher::verify() 
+{
+}
+
+//////////////////////////////////////////////////////
 bool BeforeMatcher::isComplete(void) const
 {
     return previousCall != 0;

@@ -15,12 +15,19 @@ class InvocationImpl;
 class Invocation
 {
 public:
-	Invocation( const RefAny& p1 = RefAny()
-             , const RefAny& p2 = RefAny()
-             , const RefAny& p3 = RefAny()
-             , const RefAny& p4 = RefAny()
-             , const RefAny& p5 = RefAny()
-             , const RefAny& p6 = RefAny());
+	Invocation( const RefAny& p01 = RefAny()
+             , const RefAny& p02 = RefAny()
+             , const RefAny& p03 = RefAny()
+             , const RefAny& p04 = RefAny()
+             , const RefAny& p05 = RefAny()
+             , const RefAny& p06 = RefAny()
+             , const RefAny& p07 = RefAny()
+             , const RefAny& p08 = RefAny()
+             , const RefAny& p09 = RefAny()
+             , const RefAny& p10 = RefAny()
+             , const RefAny& p11 = RefAny()
+             , const RefAny& p12 = RefAny()
+    );
 
 	virtual ~Invocation();
 

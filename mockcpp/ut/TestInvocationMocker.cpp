@@ -6,6 +6,7 @@
 #include <InvocationMockBuilder.h>
 #include <ChainingMockHelper.h>
 #include <Any.h>
+#include <InvokedTimesRecorder.h>
 
 using namespace mockcpp;
 

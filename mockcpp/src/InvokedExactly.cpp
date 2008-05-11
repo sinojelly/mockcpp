@@ -5,36 +5,37 @@
 
 MOCKCPP_NS_START
 
+/////////////////////////////////////////////////////////
 InvokedExactly::InvokedExactly(const unsigned int times)
-	: expectedInvokedTimes(times)
+   : expectedInvokedTimes(times)
 {
 }
 
-///////////////////////////////////////////////////////
-bool InvokedExactly::matches(void) const
+/////////////////////////////////////////////////////////
+bool InvokedExactly::matches(const Invocation& inv) const
 {
-	return invokedTimes < expectedInvokedTimes;
+	return getInvokedTimes() < expectedInvokedTimes;
 }
 
-///////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
 std::string
-InvokedExactly::describeSelf(void) const
+InvokedExactly::toString(void) const
 {
 	 oss_t ss;
 
-    ss << ".expects(exactly(" << expectedInvokedTimes << "))";
+    ss << "exactly(" << expectedInvokedTimes << ")";
 
     return ss.str();
 }
 
-///////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////
 void InvokedExactly::verify(void)
 {
 	 oss_t oss;
    
     MOCKCPP_ASSERT_TRUE_MESSAGE(
 			"Expected invocation times and actual invoked time mismatch" 
-         , invokedTimes == expectedInvokedTimes );
+         , getInvokedTimes() == expectedInvokedTimes );
 }
 
 MOCKCPP_NS_END

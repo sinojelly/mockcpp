@@ -7,6 +7,7 @@
 #include <ChainableMockMethodCore.h>
 #include <ChainingMockHelper.h>
 #include <ConstraintSet.h>
+#include <InvokedTimesRecorder.h>
 
 using namespace mockcpp;
 

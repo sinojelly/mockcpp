@@ -66,7 +66,7 @@ std::string PendingMatcher::toString() const
 }
 
 /////////////////////////////////////////////////////////////////
-void PendingMatcher::verify() const
+void PendingMatcher::verify()
 {
     return matcher->verify();
 }
