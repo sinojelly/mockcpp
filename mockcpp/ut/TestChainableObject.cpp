@@ -169,7 +169,7 @@ public:
          .with(eq(2), eq((unsigned long)2))
 	      .will(returnValue(10));
 
-		int i = 1;
+		int i = 2;
       CPPUNIT_ASSERT_EQUAL(10, foo.foo(i, 2));
 		foo.verify();
    }

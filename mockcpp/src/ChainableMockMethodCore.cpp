@@ -7,7 +7,8 @@
 #include <Asserter.h>
 #include <Invocation.h>
 #include <InvocationId.h>
-#include <DefaultStub.h>
+#include <DefaultMatcher.h>
+#include <StubsMatcher.h>
 
 MOCKCPP_NS_START
 
@@ -152,6 +153,7 @@ ChainableMockMethodCore::addInvocationMocker(InvocationMocker* mocker)
 WorkingBuilder ChainableMockMethodCore::stubs()
 {
     InvocationMocker* mocker = new InvocationMocker(this);
+	 mocker->addMatcher(new StubsMatcher);
     addInvocationMocker(mocker);
     return WorkingBuilder(mocker);
 }
@@ -169,6 +171,7 @@ WorkingBuilder ChainableMockMethodCore::expects(Matcher* matcher)
 DefaultBuilder ChainableMockMethodCore::defaults()
 {
     InvocationMocker* mocker = new InvocationMocker(this);
+	 mocker->addMatcher(new DefaultMatcher);
     This->defaultMockers.addInvocationMocker(mocker);
     return DefaultBuilder(mocker);
 }
