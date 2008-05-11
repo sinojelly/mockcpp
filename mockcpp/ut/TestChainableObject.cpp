@@ -28,6 +28,9 @@ class TestChainableObject : public CPPUNIT_NS::TestFixture
 	CPPUNIT_TEST( testShouldFailIfReturnedTypeDoesNotMatchRequiredType );
 	CPPUNIT_TEST( testShouldFailIfReturnedTypeDoesNotMatchRequiredType2 );
 	CPPUNIT_TEST( testShouldFailIfInvocationOutOfOrder );
+	CPPUNIT_TEST( testShouldFailIfInvocationOutOfOrder2 );
+	CPPUNIT_TEST( testShouldSupportOrderingExpectationByBefore );
+	CPPUNIT_TEST( testShouldSupportOrderingExpectationByAfter );
 	CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -36,6 +39,50 @@ public:
 	void tearDown() { }
 
 	/////////////////////////////////////////////////////////
+	void testShouldSupportOrderingExpectationByAfter()
+   {
+      Foo foo;
+
+      foo.method("foo")
+         .expects(once())
+         .with(eq(1), eq((unsigned long)2))
+         .will(returnValue(10))
+         .id("1");
+
+      foo.method("foo")
+         .expects(once())
+         .with(eq(2), eq((unsigned long)2))
+			.after("1")
+         .will(returnValue(10));
+
+      int i = 2, j = 1;
+      CPPUNIT_ASSERT_EQUAL(10, foo.foo(j, 2));
+      CPPUNIT_ASSERT_EQUAL(10, foo.foo(i, 2));
+      foo.verify();
+   }
+
+	void testShouldSupportOrderingExpectationByBefore()
+   {
+      Foo foo;
+
+      foo.method("foo")
+         .expects(once())
+         .before("1")
+         .with(eq(2), eq((unsigned long)2))
+         .will(returnValue(10));
+
+      foo.method("foo")
+         .expects(once())
+         .with(eq(1), eq((unsigned long)2))
+         .will(returnValue(10))
+         .id("1");
+
+      int i = 2, j = 1;
+      CPPUNIT_ASSERT_EQUAL(10, foo.foo(i, 2));
+      CPPUNIT_ASSERT_EQUAL(10, foo.foo(j, 2));
+      foo.verify();
+   }
+
 	void testShouldFailIfInvocationOutOfOrder()
    {
       Foo foo;
@@ -49,6 +96,26 @@ public:
          .expects(once())
          .before("1")
          .with(eq(2), eq((unsigned long)2))
+         .will(returnValue(10));
+
+      int i = 2;
+      CPPUNIT_ASSERT_EQUAL(10, foo.foo(i, 2));
+      foo.verify();
+   }
+
+   void testShouldFailIfInvocationOutOfOrder2()
+   {
+      Foo foo;
+
+      foo.method("foo")
+         .expects(once())
+         .with(eq(1), eq((unsigned long)2))
+         .will(returnValue(10));
+
+      foo.method("foo")
+         .expects(once())
+         .with(eq(2), eq((unsigned long)2))
+			.after("1")
          .will(returnValue(10));
 
       int i = 2;

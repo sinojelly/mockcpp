@@ -74,7 +74,7 @@ ChainableMockMethodCoreImpl::
 tellNoMatchedExpectation(const Invocation& inv)
 {
     return std::string("Unexpected invocation") + "\n" 
-                     + "Invoked: " + name + inv.toString() + "\n" 
+                     + "Invoked: " + nameSpace->getName() + "::" + name + inv.toString() + "\n" 
                      + "Allowed: \n"
                      + this->toString();
 }
