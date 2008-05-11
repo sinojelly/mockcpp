@@ -15,6 +15,7 @@ struct PlaceHolder
     virtual const std::type_info & type() const = 0;
     virtual PlaceHolder* clone() const = 0;
     virtual std::string toString(void) const = 0;
+    virtual std::string toTypeString(void) const = 0;
     virtual std::string toTypeAndValueString(void) const = 0;
 };
 

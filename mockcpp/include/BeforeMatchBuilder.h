@@ -3,24 +3,25 @@
 #define __MOCKCPP_BEFORE_MATCH_BUILDER_H
 
 #include <mockcpp.h>
-#include <ArgumentsMatchBuilder.h>
+#include <DummyBuilder.h>
 
 MOCKCPP_NS_START
 
 class Namespace;
 class InvocationMocker;
 
-class BeforeMatchBuilder : public ArgumentsMatchBuilder
+template <class Builder = DummyBuilder >
+class BeforeMatchBuilder : public Builder
 {
 public:
     
-    ArgumentsMatchBuilder&
+    Builder&
 	 before(const Namespace& ns, const std::string& name);
 
-    ArgumentsMatchBuilder&
+    Builder&
 	 before(Namespace* ns, const std::string& name);
 
-    ArgumentsMatchBuilder&
+    Builder&
 	 before(const std::string& name);
 
 private:
@@ -34,6 +35,8 @@ private:
 };
 
 MOCKCPP_NS_END
+
+#include <BeforeMatchBuilder.tcc>
 
 #endif
 

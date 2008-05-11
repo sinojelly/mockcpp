@@ -21,14 +21,14 @@ struct InvocationMockerImpl
 
 	///////////////////////////////////////////////////
     List matchers;
-    bool isInvoked;
+    bool hasBeenInvoked;
     ChainableMockMethodCore* coreMocker;
     InvocationId* id ;
     Stub* stub;
 
 	///////////////////////////////////////////////////
     InvocationMockerImpl(ChainableMockMethodCore* core)
-		: coreMocker(core), isInvoked(false), id(0), stub(0)
+		: coreMocker(core), hasBeenInvoked(false), id(0), stub(0)
 	 {}
 
     ~InvocationMockerImpl()
@@ -40,39 +40,38 @@ struct InvocationMockerImpl
 
 	 void reset();
     void verify();
-    std::string toString(bool wide = false) const;
+    std::string toString() const;
 };
 
 /////////////////////////////////////////////////////////
 namespace
 {
-const std::string wideSpace = "            ";
 const std::string normalSpace = "     ";
 
-const std::string& space(bool wide)
+const std::string& space()
 {
-   return wide ? wideSpace : normalSpace; 
+	return normalSpace;
 }
 }
 
 std::string
-InvocationMockerImpl::toString(bool wide) const
+InvocationMockerImpl::toString() const
 {
 	std::ostringstream ss;
 
    ss << coreMocker->getNamespace()->getName()
-      << "::method(" << coreMocker->getName() <<  ") \n";
+      << "::method(" << coreMocker->getName() <<  ")";
 
 	for(ConstIterator i = matchers.begin(); i != matchers.end(); ++i) {
-      ss << space(wide) << (*i)->toString() << "\n";
+      ss << "\n" << space() << (*i)->toString();
 	}
 
    if(stub != 0) {
-      ss << space(wide) << stub->toString();
+      ss << "\n" << space() << stub->toString();
    }
 
    if(id != 0) {
-      ss << space(wide) << id->toString();
+      ss << "\n" << space() << id->toString();
    }
    
    ss << ";";
@@ -111,6 +110,7 @@ void InvocationMockerImpl::reset()
       id = 0;
     }
 }
+
 ///////////////////////////////////////////////////////////
 bool
 InvocationMockerImpl::matches(const Invocation& inv) const
@@ -138,7 +138,7 @@ InvocationMockerImpl::invoke(const Invocation& inv)
 {
     increaseInvoked(inv);
 
-    isInvoked = true;
+    hasBeenInvoked = true;
 
     if(stub != 0) {
       return stub->invoke(inv);
@@ -172,16 +172,19 @@ void InvocationMocker::setId(InvocationId* id)
 
     This->id = id;
 }
+
 ///////////////////////////////////////////////////////////
 void InvocationMocker::addMatcher(Matcher* matcher)
 {
     This->matchers.push_back(matcher);
 }
+
 ///////////////////////////////////////////////////////////
-bool InvocationMocker::isInvoked(void) const
+bool InvocationMocker::hasBeenInvoked(void) const
 {
-    return This->isInvoked;
+    return This->hasBeenInvoked;
 }
+
 ///////////////////////////////////////////////////////////
 void InvocationMocker::setStub(Stub* stub) 
 {
@@ -202,9 +205,9 @@ InvocationMocker::matches(const Invocation& inv) const
 
 ///////////////////////////////////////////////////////////
 std::string
-InvocationMocker::toString(bool wide) const
+InvocationMocker::toString() const
 {
-    return This->toString(wide);
+    return This->toString();
 }
 
 ///////////////////////////////////////////////////////////
@@ -216,7 +219,7 @@ InvocationMocker::invoke(const Invocation& inv)
     }
     catch(Exception& ex) {
        MOCKCPP_FAIL(ex.getMessage() + "\n" +
-                    This->toString(false));
+                    This->toString());
     }
 }
 ///////////////////////////////////////////////////////////
@@ -228,7 +231,7 @@ InvocationMocker::verify()
     }
     catch(Exception& ex) {
        MOCKCPP_FAIL(ex.getMessage() + "\n" +
-                    This->toString(false));
+                    This->toString());
     }
 }
 ///////////////////////////////////////////////////////////

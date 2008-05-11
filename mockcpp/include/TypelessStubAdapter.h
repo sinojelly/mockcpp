@@ -13,6 +13,7 @@ class Invocation;
 struct TypelessStubAdapter : public Stub
 {
     TypelessStubAdapter(TypelessStub* ts);
+
     ~TypelessStubAdapter();
 
     Any& invoke(const Invocation& inv);
@@ -20,6 +21,7 @@ struct TypelessStubAdapter : public Stub
     std::string toString(void) const;
 
 private:
+
     TypelessStub* stub;
 };
 

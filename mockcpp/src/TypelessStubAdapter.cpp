@@ -21,6 +21,7 @@ Any& TypelessStubAdapter::invoke(const Invocation& inv)
 	return stub->invoke();
 }
 
+////////////////////////////////////////////////////////
 std::string TypelessStubAdapter::toString() const
 {
    return stub->toString();

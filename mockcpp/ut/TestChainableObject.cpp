@@ -25,6 +25,9 @@ class TestChainableObject : public CPPUNIT_NS::TestFixture
 {
 	CPPUNIT_TEST_SUITE( TestChainableObject );
 	CPPUNIT_TEST( testShouldFailIfInvokedTimesIsMoreThanExpectedTimes );
+	CPPUNIT_TEST( testShouldFailIfReturnedTypeDoesNotMatchRequiredType );
+	CPPUNIT_TEST( testShouldFailIfReturnedTypeDoesNotMatchRequiredType2 );
+	CPPUNIT_TEST( testShouldFailIfInvocationOutOfOrder );
 	CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -33,6 +36,57 @@ public:
 	void tearDown() { }
 
 	/////////////////////////////////////////////////////////
+	void testShouldFailIfInvocationOutOfOrder()
+   {
+      Foo foo;
+
+      foo.method("foo")
+         .expects(once())
+         .with(eq(1), eq((unsigned long)2))
+         .will(returnValue(10));
+
+      foo.method("foo")
+         .expects(once())
+         .before("1")
+         .with(eq(2), eq((unsigned long)2))
+         .will(returnValue(10));
+
+      int i = 2;
+      CPPUNIT_ASSERT_EQUAL(10, foo.foo(i, 2));
+      foo.verify();
+   }
+
+	void testShouldFailIfReturnedTypeDoesNotMatchRequiredType2()
+   {
+		Foo foo;
+
+		foo.method("foo")
+			.defaults()
+			.will(returnValue((long)10));
+
+		foo.method("foo")
+         .expects(once())
+         .with(eq(1), eq((unsigned long)2))
+	      .will(returnValue((long)10));
+
+		int i = 2;
+      CPPUNIT_ASSERT_EQUAL(10, foo.foo(i, 2));
+		foo.verify();
+   }
+
+	void testShouldFailIfReturnedTypeDoesNotMatchRequiredType()
+   {
+		Foo foo;
+
+		foo.method("foo")
+         .expects(once())
+         .with(eq(1), eq((unsigned long)2))
+	      .will(returnValue((long)10));
+
+		int i = 1;
+      CPPUNIT_ASSERT_EQUAL(10, foo.foo(i, 2));
+		foo.verify();
+   }
 
 	void testShouldFailIfInvokedTimesIsMoreThanExpectedTimes()
    {

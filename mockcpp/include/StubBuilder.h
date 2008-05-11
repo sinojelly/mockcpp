@@ -3,17 +3,19 @@
 #define __MOCKCPP_STUB_BUILDER_H
 
 #include <mockcpp.h>
-#include <IdentityBuilder.h>
+#include <DummyBuilder.h>
 
 MOCKCPP_NS_START
 
+class InvocationMocker;
 class Stub;
 
-class StubBuilder : public IdentityBuilder
+template <class Builder = DummyBuilder >
+class StubBuilder : public Builder
 {
 public:
 
-    IdentityBuilder& will(Stub* stub);
+    Builder& will(Stub* stub);
 
 private:
 
@@ -21,6 +23,8 @@ private:
 };
 
 MOCKCPP_NS_END
+
+#include <StubBuilder.tcc>
 
 #endif
 

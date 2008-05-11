@@ -33,10 +33,13 @@ public:
     { return content ? content->type() : typeid(void); }
 
     std::string toString() const
-    { return (content==0 ? std::string("empty") : content->toString()); }
+    { return (content==0 ? std::string("void") : content->toString()); }
+
+    std::string toTypeString() const
+    { return (content==0 ? std::string("void") : content->toTypeString()); }
 
     std::string toTypeAndValueString() const
-    { return (content==0 ? std::string("empty") : content->toTypeAndValueString()); }
+    { return (content==0 ? std::string("void") : content->toTypeAndValueString()); }
 
 protected:
 

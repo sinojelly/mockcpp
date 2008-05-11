@@ -18,6 +18,8 @@ public:
 
     std::string toString(void) const;
 
+    const std::type_info& type() const;
+
 private:
     Any returnValue;
 };

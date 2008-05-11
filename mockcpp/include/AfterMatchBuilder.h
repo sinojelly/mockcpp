@@ -4,24 +4,25 @@
 
 #include <mockcpp.h>
 
-#include <StubBuilder.h>
+#include <DummyBuilder.h>
 
 MOCKCPP_NS_START
 
 class Namespace;
 class InvocationMocker;
 
-class AfterMatchBuilder : public StubBuilder
+template <class Builder = DummyBuilder>
+class AfterMatchBuilder : public Builder
 {
 public:
     
-    StubBuilder&
+    Builder&
     after(const Namespace& ns, const std::string& name);
 
-    StubBuilder&
+    Builder&
     after(Namespace* ns, const std::string& name);
 
-    StubBuilder&
+    Builder&
     after(const std::string& name);
 
 private:
@@ -33,6 +34,8 @@ private:
 };
 
 MOCKCPP_NS_END
+
+#include <AfterMatchBuilder.tcc>
 
 #endif
 
