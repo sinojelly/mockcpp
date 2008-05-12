@@ -16,13 +16,6 @@ template <typename T> struct TypeString
 };
 
 //////////////////////////////////////////////////////////
-template <typename T> struct TypeString<T*>
-{
-	static std::string value() 
-	{ return TypeString<T>::value() + std::string("*"); }
-};
-
-//////////////////////////////////////////////////////////
 template <> struct TypeString<std::string>
 {
 	static std::string value()
@@ -141,6 +134,20 @@ template <> struct TypeString<double>
 {
 	static std::string value()
 	{ return "double"; }
+};
+
+//////////////////////////////////////////////////////////
+template <typename T> struct TypeString<T*>
+{
+	static std::string value() 
+	{ return TypeString<T>::value() + std::string("*"); }
+};
+
+//////////////////////////////////////////////////////////
+template <typename T> struct TypeString<const T*>
+{
+	static std::string value() 
+	{ return std::string("const ") + TypeString<T>::value() + std::string("*"); }
 };
 
 MOCKCPP_NS_END

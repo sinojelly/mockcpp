@@ -20,6 +20,10 @@ public:
       : AnyBase(new RefHolder<ValueType>(value))
    {}
 
+   RefAny(const char* value)
+      : AnyBase(new RefHolder<const char*>(value))
+   {}
+
    RefAny(const RefAny & other)
       : AnyBase(other.getContent() ? other.getContent()->clone() : 0)
    {}

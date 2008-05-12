@@ -24,6 +24,11 @@ Constraint* eq(const T& val)
 	return new IsEqual<T>(val);
 }
 
+static inline Constraint* eq(const char* s)
+{
+   return new IsEqual<const char*>(s);
+}
+
 template <typename T>
 Constraint* outBound(const T& val, Constraint* constraint = 0)
 {

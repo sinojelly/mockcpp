@@ -144,7 +144,7 @@ InvocationMockerImpl::invoke(const Invocation& inv)
       return stub->invoke(inv);
     } 
 
-    return getEmptyAny();
+    return getVoidAny();
 }
 
 ///////////////////////////////////////////////////////////

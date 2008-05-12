@@ -102,7 +102,7 @@ ChainableMockMethodCoreImpl::invoke(const Invocation& inv
 
 	MOCKCPP_FAIL(tellNoMatchedExpectation(inv));
    
-	return const_cast<Any&>(EmptyAny);
+	return getEmptyAny();
 }
 
 //////////////////////////////////////////////////////////
