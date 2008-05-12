@@ -13,7 +13,7 @@ struct AnyBase
 {
 public: 
 
-    AnyBase()
+    AnyBase(void)
        : content(0)
     {}
 

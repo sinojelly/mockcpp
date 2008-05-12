@@ -24,9 +24,16 @@ public:
                  , const RefAny& p3 = RefAny()
                  , const RefAny& p4 = RefAny()
                  , const RefAny& p5 = RefAny()
-                 , const RefAny& p6 = RefAny())
+                 , const RefAny& p6 = RefAny()
+                 , const RefAny& p7 = RefAny()
+                 , const RefAny& p8 = RefAny()
+                 , const RefAny& p9 = RefAny()
+                 , const RefAny& p10 = RefAny()
+                 , const RefAny& p11 = RefAny()
+                 , const RefAny& p12 = RefAny()
+    )
     {
-      Invocation inv(p1,p2,p3,p4,p5,p6);
+      Invocation inv(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12);
 		SelfDescribe* resultProvider = 0;
 
       Any anyResult = methodCore->invoke(inv, resultProvider);
@@ -63,9 +70,16 @@ public:
                    , const RefAny& p3 = RefAny()
                    , const RefAny& p4 = RefAny()
                    , const RefAny& p5 = RefAny()
-                   , const RefAny& p6 = RefAny())
+                   , const RefAny& p6 = RefAny()
+                   , const RefAny& p7 = RefAny()
+                   , const RefAny& p8 = RefAny()
+                   , const RefAny& p9 = RefAny()
+                   , const RefAny& p10 = RefAny()
+                   , const RefAny& p11 = RefAny()
+                   , const RefAny& p12 = RefAny()
+    )
     {
-      Invocation inv(p1,p2,p3,p4,p5,p6);
+      Invocation inv(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12);
 		SelfDescribe* resultProvider = 0;
       methodCore->invoke(inv, resultProvider);
     }

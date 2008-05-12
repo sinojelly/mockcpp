@@ -6,6 +6,7 @@
 
 #include <ValueHolder.h>
 #include <AnyBase.h>
+#include <Void.h>
 
 MOCKCPP_NS_START
 
@@ -17,6 +18,11 @@ struct Any : public AnyBase
    Any(const ValueType& value)
       : AnyBase(new ValueHolder<ValueType>(value))
    {}
+
+   Any(const char* value)
+      : AnyBase(new ValueHolder<const char*>(value))
+   {}
+   
 
    Any(const Any & other)
       : AnyBase(other.getContent() ? other.getContent()->clone() : 0)
@@ -46,6 +52,19 @@ inline Any& getEmptyAny()
 {
     return const_cast<Any&>(EmptyAny);
 }
+
+const Any VoidAny = Any(Void());
+
+inline Any& getVoidAny()
+{
+    return const_cast<Any&>(VoidAny);
+}
+
+inline bool isVoidAny(const Any& val)
+{
+    return val.type() == VoidAny.type(); 
+}
+
 /////////////////////////////////////////////////////////////////
 
 MOCKCPP_NS_END
