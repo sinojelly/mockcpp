@@ -3,53 +3,37 @@
 #define __MOCKCPP_OUTBOUND_H
 
 #include <mockcpp.h>
-#include <Constraint.h>
+#include <DecoratedConstraint.h>
 #include <RefAny.h>
 #include <Formatter.h>
 
 MOCKCPP_NS_START
 
 template <typename T>
-class OutBound: public Constraint
+class OutBound: public DecoratedConstraint
 {
 public:
     OutBound(const T& val, Constraint* constraint = 0)
-      : ref(val), attachedConstraint(constraint)
+      : ref(val), DecoratedConstraint(constraint)
     {}
 
-    ~OutBound()
+    bool evalSelf(const RefAny& val) const
     {
-      delete attachedConstraint;
-    }
-
-    bool eval(const RefAny& val) const
-    {
-      if(attachedConstraint != 0 &&
-        !attachedConstraint->eval(val)) {
-        return false;
-      }
-
       return const_cast<RefAny&>(val).changeValue(ref);
     }
 
-    std::string toString() const
+    std::string getName() const
     {
-      return std::string("outBound(") + 
-             MOCKCPP_NS::toTypeAndValueString(ref) +
-             getAttachedConstraintString() +
-             std::string(")");
+      return "outBound";
+    }
+
+    std::string getTypeAndValueString() const
+    {
+      return toTypeAndValueString(ref);
     }
 
 private:
 
-    std::string getAttachedConstraintString() const
-    {
-      return (attachedConstraint == 0) ?
-			"" : std::string(", ") + attachedConstraint->toString();
-    }
-
-private:
-    Constraint* attachedConstraint;
     T ref;
 };
 

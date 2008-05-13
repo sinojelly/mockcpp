@@ -10,6 +10,9 @@
 #include <TestFailureMatcher.h>
 #include <ReturnStub.h>
 #include <ReturnObjectList.h>
+#include <Constraint.h>
+#include <OutBoundPointer.h>
+#include <IsMirror.h>
 
 MOCKCPP_NS_START
 
@@ -81,6 +84,26 @@ Stub* returnObjectList( const Any& o01
                  new ReturnObjectList(
                        o01, o02, o03, o04, o05, o06,
                        o07, o08, o09, o10, o11, o12));
+}
+
+Constraint* outBoundP(void* p, size_t size, Constraint* constraint)
+{
+   return new OutBoundPointer<void*>(p, size, constraint);
+}
+
+Constraint* mirror(void* p, size_t size)
+{
+   return new IsMirror<void*>(p, size);
+}
+
+Constraint* smirror(char* s)
+{
+   return new IsMirror<char*>(s, strlen(s)+1);
+}
+
+Constraint* smirror(const char* s)
+{
+   return new IsMirror<const char*>(s, strlen(s)+1);
 }
 
 MOCKCPP_NS_END

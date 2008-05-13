@@ -14,6 +14,8 @@ MOCKCPP_NS_START
 template<typename ValueType>
 struct Holder : public PlaceHolder
 {
+    typedef ValueType  Type;
+
     const std::type_info & type() const
     {
       return typeid(ValueType);

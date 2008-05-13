@@ -4,7 +4,9 @@
 
 #include <mockcpp.h>
 #include <IsEqual.h>
+#include <IsMirror.h>
 #include <OutBound.h>
+#include <OutBoundPointer.h>
 #include <Any.h>
 
 MOCKCPP_NS_START
@@ -24,17 +26,58 @@ Constraint* eq(const T& val)
 	return new IsEqual<T>(val);
 }
 
+////////////////////////////////////////////////////////////////
 static inline Constraint* eq(const char* s)
 {
    return new IsEqual<const char*>(s);
 }
 
+////////////////////////////////////////////////////////////////
 template <typename T>
 Constraint* outBound(const T& val, Constraint* constraint = 0)
 {
    return new OutBound<T>(val, constraint);
 }
 
+////////////////////////////////////////////////////////////////
+template <typename T>
+Constraint* outBoundP(T* p, size_t size, Constraint* constraint = 0)
+{
+   return new OutBoundPointer<T*>(p, size, constraint);
+}
+
+////////////////////////////////////////////////////////////////
+Constraint* outBoundP(void* p, size_t size, Constraint* constraint = 0);
+
+////////////////////////////////////////////////////////////////
+template <typename T>
+Constraint* outBoundP(T* p, Constraint* constraint = 0)
+{
+   return new OutBoundPointer<T*>(p, sizeof(T), constraint);
+}
+
+///////////////////////////////////////////////////////////////////
+template <typename T>
+Constraint* mirror(const T& obj)
+{
+   return new IsMirror<T>(obj);
+}
+
+///////////////////////////////////////////////////////////////////
+template <typename T>
+Constraint* mirror(T* p, size_t size = 0)
+{
+   return new IsMirror<T*>(p, size);
+}
+
+///////////////////////////////////////////////////////////////////
+Constraint* mirror(void* p, size_t size);
+
+Constraint* smirror(char* s);
+Constraint* smirror(const char* s);
+///////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////////
 Stub* returnValue(const Any& val);
 
 Stub* returnObjectList( const Any& o01

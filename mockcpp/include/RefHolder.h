@@ -37,6 +37,41 @@ private:
     const ValueType& ref;
 };
 
+template<>
+class RefHolder<const char*> : public Holder<const char*>
+{
+public:
+
+    typedef Holder<const char*>::Type Type;
+
+    RefHolder(const char* value)
+      : ref(strdup(value))
+    {
+    }
+
+    ~RefHolder()
+    {
+      delete [] ref;
+    }
+
+    PlaceHolder * clone() const
+    { return new RefHolder(ref); }
+
+    const Type& getValue() const
+    {
+      return ref;
+    }
+
+    void changeValue(const Type& val)
+    {
+      delete ref;
+      ref = strdup(val);
+    }
+
+private:
+
+    const char* ref;
+};
 MOCKCPP_NS_END
 
 

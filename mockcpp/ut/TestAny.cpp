@@ -12,6 +12,7 @@ class TestAny : public CPPUNIT_NS::TestFixture
 	CPPUNIT_TEST( testShouldBeEmptyIfANewInstanceIsNotInitialized );
 	CPPUNIT_TEST( testShouldNotBeEmptyIfAInstanceIsInitialized );
 	CPPUNIT_TEST( testShouldBeCastableForSameType );
+	CPPUNIT_TEST( testShouldBeAbleToGetTypeAndValueStringCorrectly );
 	CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -44,6 +45,13 @@ public:
 		RefAny ref(10);
 
 		CPPUNIT_ASSERT(any_castable<int>(ref));
+   }
+
+	void testShouldBeAbleToGetTypeAndValueStringCorrectly()
+   {
+		RefAny ref("abc");
+
+		CPPUNIT_ASSERT(std::string("\"abc\"") == ref.toString());
    }
 };
 
