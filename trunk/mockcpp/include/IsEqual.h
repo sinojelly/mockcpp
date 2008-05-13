@@ -37,37 +37,6 @@ private:
     T expectedValue;
 };
 
-template <>
-class IsEqual<const char*> : public Constraint
-{
-public:
-    IsEqual(const char* expected)
-      : expectedValue(strdup(expected))
-    {}
-
-    ~IsEqual()
-    {
-      delete [] expectedValue;
-    }
-
-    bool eval(const RefAny& val) const
-    {
-		if(!any_castable<const char*>(val)) return false;
-      return !strcmp(any_cast<const char*>(val), expectedValue);
-    }
-
-    std::string toString() const
-    {
-      return std::string("eq(") + 
-             MOCKCPP_NS::toTypeAndValueString(expectedValue) +
-             std::string(")");
-    }
-
-private:
-
-    const char* expectedValue;
-};
-
 MOCKCPP_NS_END
 
 #endif

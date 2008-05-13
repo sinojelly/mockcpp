@@ -70,7 +70,8 @@ public:
 		Foo foo;
 
 		foo.method("foo")
-         .setDefaultStub(returnValue(10));
+			.defaults()
+         .will(returnValue(10));
 
 		int i = 1;
       CPPUNIT_ASSERT_EQUAL(10, foo.foo(i, 2));
@@ -85,7 +86,8 @@ public:
 		Foo foo;
 
 		foo.method("foo")
-         .setDefaultStub(returnValue(10));
+         .defaults()
+         .will(returnValue(10));
 
 		foo.method("foo")
          .expects(once())

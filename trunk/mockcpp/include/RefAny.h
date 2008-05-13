@@ -47,11 +47,13 @@ public:
    bool changeValue(const ValueType& val)
    {
       RefHolder<ValueType>* p = dynamic_cast<RefHolder<ValueType>*>(getContent());
-      if(p == 0) {
+      if (p == 0)
+      {
 			return false;
 		}
 
       p->changeValue(val);
+
       return true;
    }
 };
