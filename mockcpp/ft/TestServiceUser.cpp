@@ -547,6 +547,7 @@ public:
    //
    void test_func7_should_invoke_service_f8()
    {
+#if defined(__GNUC__) && (__GNUC__ > 3)
 		st_struct_0 st0;
       st_struct_0 st1;
 
@@ -568,6 +569,7 @@ public:
         .will(returnValue(1));
 
       CPPUNIT_ASSERT_EQUAL(1, func7(st1));
+#endif
    }
 
    
