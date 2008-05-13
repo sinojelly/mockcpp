@@ -79,6 +79,8 @@ private:
 template <typename T>
 class IsMirror : public Constraint
 {
+
+#if defined(__GNUC__) && (__GNUC__ > 3)
 public:
 
    IsMirror(const T& obj)
@@ -111,6 +113,8 @@ public:
 private:
 
    T object;
+#endif
+
 };
 
 //////////////////////////////////////////////////////////////////////
