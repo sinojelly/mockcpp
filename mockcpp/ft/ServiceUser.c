@@ -51,3 +51,19 @@ int func7(const st_struct_0& obj)
 {
    return MOCKABLE(service_f8)(obj);
 }
+
+int func8(const st_struct_0* p)
+{
+   return MOCKABLE(service_f9)(p);
+}
+
+int func9(st_struct_0& p)
+{
+   return MOCKABLE(service_f10)(p);
+}
+
+int func10(st_struct_0 p)
+{
+   return MOCKABLE(service_f11)(p);
+}
+

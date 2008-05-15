@@ -32,6 +32,10 @@ class TestService : public CPPUNIT_NS::TestFixture
 	CPPUNIT_TEST( test_func6_should_invoke_service_f7_with_mirror_for_char );
 	CPPUNIT_TEST( test_func6_should_invoke_service_f7_with_smirror );
 	CPPUNIT_TEST( test_func7_should_invoke_service_f8 );
+	CPPUNIT_TEST( test_func8_should_invoke_service_f9 );
+	CPPUNIT_TEST( test_func9_should_invoke_service_f10 );
+	CPPUNIT_TEST( test_func10_should_invoke_service_f11 );
+	CPPUNIT_TEST( test_func7_should_invoke_service_f8_with_outbound );
 	CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -45,7 +49,7 @@ public:
 
 	void tearDown()
 	{
-      globalMockContextVerifyAndReset();
+      MOCKCPP_NS_OBJ_VERIFY_AND_RESET(Global);
 	}
 
 	/////////////////////////////////////////////////////////
@@ -105,11 +109,9 @@ public:
 
 	//
 	// a function without return value (void) 
-	// should be supported, and you don't need to
-	// specify a return value by will.
+	// should be supported, and you can't specify 
+	// a return value by will(returnValue(v)).
 	//
-	// Actually, you can still specify a return
-	// value, it will be ignored anyway.
 	//
    void test_func2_should_invoke_service_f1()
    {
@@ -118,7 +120,7 @@ public:
       MOCKER(service_f1)
         .expects(once())
         .with(eq(10), eq<const int*>(&i));
-        //.will(returnValue(0));
+        //.will(returnValue(0)); // This will result in runtime error
 
       func2(&i);
    }
@@ -429,8 +431,6 @@ public:
 
 	  strcpy(s1, s0);
 
-     s1[3] = 'a';
-
      MOCKER(service_f7)
        .expects(once())
        .with(smirror(s1))
@@ -571,8 +571,122 @@ public:
       CPPUNIT_ASSERT_EQUAL(1, func7(st1));
 #endif
    }
-
    
+   //
+	// When trying to outbound a const T*, a runtime exception
+	// will be raised.
+	//
+   void test_func8_should_invoke_service_f9()
+   {
+      st_struct_0 st0;
+      st_struct_0 st1;
+
+      st0.field0 = 101;
+      st0.field1 = 10.1;
+      strcpy(st0.field2, "abc");
+
+      MOCKER(service_f9)
+        .expects(once())
+        .with(outBoundP((const st_struct_0*)&st0))
+        .will(returnValue(1));
+
+      bool hasException =  false;
+      try
+      {
+        func8((const st_struct_0*)&st1);
+      }
+      catch(...)
+      {
+        hasException = true;
+      }
+
+      CPPUNIT_ASSERT(hasException);
+
+		MOCKCPP_NS_OBJ_RESET(Global);
+   }
+
+   //
+   // a reference (non-const) could be outbounded
+   //
+   void test_func9_should_invoke_service_f10()
+   {
+      st_struct_0 st0;
+      st_struct_0 st1;
+      
+      st0.field0 = 101;
+      st0.field1 = 10.1;
+      strcpy(st0.field2, "abc");
+
+      MOCKER(service_f10)
+        .expects(once())
+        .with(outBound(st0))
+        .will(returnValue(1));
+
+      CPPUNIT_ASSERT_EQUAL(1, func9(st1));
+      CPPUNIT_ASSERT_EQUAL(st1.field0, st0.field0);
+      CPPUNIT_ASSERT_EQUAL(st1.field1, st0.field1);
+      CPPUNIT_ASSERT_EQUAL(0, strcmp(st1.field2, st0.field2));
+   }
+
+   //
+   // trying to outbound a non-reference type will not
+   // raise any runtime exception, mockcpp take it as
+   // a successful invocation, however, outbounding
+   // will not actually happen, the actual parameter
+   // is going to keep orignal value still.
+   //
+   void test_func10_should_invoke_service_f11()
+   {
+      st_struct_0 st0;
+      
+      st0.field0 = 101;
+      st0.field1 = 10.1;
+      strcpy(st0.field2, "abc");
+
+      MOCKER(service_f11)
+        .expects(once())
+        .with(outBound(st0))
+        .will(returnValue(1));
+
+      st_struct_0 st1;
+      memset((void*)&st1, 0, sizeof(st1));
+
+      CPPUNIT_ASSERT_EQUAL(1, func10(st1));
+      CPPUNIT_ASSERT_EQUAL(0, st1.field0);
+      CPPUNIT_ASSERT_EQUAL((float)0.0, st1.field1);
+      CPPUNIT_ASSERT_EQUAL(0, strcmp(st1.field2, ""));
+   }
+
+	//
+	// when trying to outbound a const T&, mockpp cannot
+	// distinguish the difference between const reference
+	// and non-constant reference according to current
+	// design.
+	//
+	// In order to keep your code follow the constraint of
+	// C++ spec, you should avoid to do this yourself.
+	//
+   void test_func7_should_invoke_service_f8_with_outbound()
+   {
+      st_struct_0 st0;
+
+      st0.field0 = 101;
+      st0.field1 = 10.1;
+      strcpy(st0.field2, "abc");
+
+      MOCKER(service_f8)
+        .expects(once())
+        .with(outBound(st0))
+        .will(returnValue(1));
+
+      st_struct_0 st1;
+
+      CPPUNIT_ASSERT_EQUAL(1, func7(st1));
+
+      CPPUNIT_ASSERT_EQUAL(st1.field0, st0.field0);
+      CPPUNIT_ASSERT_EQUAL(st1.field1, st0.field1);
+      CPPUNIT_ASSERT_EQUAL(0, strcmp(st1.field2, st0.field2));
+   }
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION( TestService );

@@ -81,7 +81,15 @@ public:
     {
       Invocation inv(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12);
 		SelfDescribe* resultProvider = 0;
-      methodCore->invoke(inv, resultProvider);
+      Any result = methodCore->invoke(inv, resultProvider);
+      
+      oss_t oss;
+		oss << "Returned type does NOT match the method declaration \n"
+          << "Required : void" << "\n"
+          << "Returned : " << result.toTypeString() << ", which is from\n"
+          << resultProvider->toString();
+
+      MOCKCPP_ASSERT_TRUE_MESSAGE(oss.str(), any_castable<Void>(result) );
     }
 
 private:

@@ -24,7 +24,7 @@ class ChainableMockMethodCore
 {
 public:
 
-	ChainableMockMethodCore(const std::string& name, Namespace* ns);
+	ChainableMockMethodCore(const std::string& name, const Namespace* ns);
 	~ChainableMockMethodCore();
 
 	std::string& getName(void) const;

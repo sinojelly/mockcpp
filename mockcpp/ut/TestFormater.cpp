@@ -116,7 +116,7 @@ public:
 	{
 		const A* p = (const A*)0x12ab;	
 
-		std::string expected = std::string("([") + typeid(A).name() + "]*)0x000012ab";
+		std::string expected = std::string("(const [") + typeid(A).name() + "]*)0x000012ab";
       CPPUNIT_ASSERT_EQUAL(expected, toTypeAndValueString(p));
 	}
 

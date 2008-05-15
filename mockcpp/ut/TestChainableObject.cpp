@@ -24,11 +24,11 @@ public:
 class TestChainableObject : public CPPUNIT_NS::TestFixture
 {
 	CPPUNIT_TEST_SUITE( TestChainableObject );
-	CPPUNIT_TEST( testShouldFailIfInvokedTimesIsMoreThanExpectedTimes );
-	CPPUNIT_TEST( testShouldFailIfReturnedTypeDoesNotMatchRequiredType );
-	CPPUNIT_TEST( testShouldFailIfReturnedTypeDoesNotMatchRequiredType2 );
-	CPPUNIT_TEST( testShouldFailIfInvocationOutOfOrder );
-	CPPUNIT_TEST( testShouldFailIfInvocationOutOfOrder2 );
+	CPPUNIT_TEST_EXCEPTION( testShouldFailIfInvokedTimesIsMoreThanExpectedTimes, AssertionFailedError );
+	CPPUNIT_TEST_EXCEPTION( testShouldFailIfReturnedTypeDoesNotMatchRequiredType, AssertionFailedError );
+	CPPUNIT_TEST_EXCEPTION( testShouldFailIfReturnedTypeDoesNotMatchRequiredType2, AssertionFailedError );
+	CPPUNIT_TEST_EXCEPTION( testShouldFailIfInvocationOutOfOrder, AssertionFailedError );
+	CPPUNIT_TEST_EXCEPTION( testShouldFailIfInvocationOutOfOrder2, AssertionFailedError );
 	CPPUNIT_TEST( testShouldSupportOrderingExpectationByBefore );
 	CPPUNIT_TEST( testShouldSupportOrderingExpectationByAfter );
 	CPPUNIT_TEST_SUITE_END();

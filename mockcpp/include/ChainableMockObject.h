@@ -24,7 +24,7 @@ public:
     Method& method(const std::string& name);
 
     template <typename RT>
-    ChainableMockMethod<RT> invoke(const std::string& name)
+    ChainableMockMethod<RT> invoke(const std::string& name) const
     {
       return ChainableMockMethod<RT>(getMethod(name)); 
     }
@@ -40,7 +40,7 @@ public:
 
 public:
 
-    ChainableMockMethodCore* getMethod(const std::string& name);
+    ChainableMockMethodCore* getMethod(const std::string& name) const;
 
 private:
 

@@ -27,8 +27,8 @@ struct ChainableMockMethodCoreImpl
     Namespace* nameSpace;
 
 	 /////////////////////////////////////////////////////
-    ChainableMockMethodCoreImpl(const std::string& s, Namespace* ns)
-      : name(s), nameSpace(ns)
+    ChainableMockMethodCoreImpl(const std::string& s, const Namespace* ns)
+      : name(s), nameSpace(const_cast<Namespace*>(ns))
     {}
  
     ~ChainableMockMethodCoreImpl();
@@ -107,7 +107,7 @@ ChainableMockMethodCoreImpl::invoke(const Invocation& inv
 
 //////////////////////////////////////////////////////////
 ChainableMockMethodCore::
-ChainableMockMethodCore(const std::string& name, Namespace* ns)
+ChainableMockMethodCore(const std::string& name, const Namespace* ns)
    : This(new ChainableMockMethodCoreImpl(name, ns))
 {
 }
