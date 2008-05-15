@@ -25,8 +25,8 @@ class TestReturnObjectList : public CPPUNIT_NS::TestFixture
 {
 	CPPUNIT_TEST_SUITE( TestReturnObjectList );
 	CPPUNIT_TEST( testShouldSupportReturnObjectList );
-	CPPUNIT_TEST( testShouldFailIfTheTypeOfAReturnObjectMismatch );
-	CPPUNIT_TEST( testShouldFailIfThereIsNoAvailableObjectsToReturn );
+	CPPUNIT_TEST_EXCEPTION( testShouldFailIfTheTypeOfAReturnObjectMismatch, AssertionFailedError );
+	CPPUNIT_TEST_EXCEPTION( testShouldFailIfThereIsNoAvailableObjectsToReturn, AssertionFailedError );
 	CPPUNIT_TEST_SUITE_END();
 
 public:

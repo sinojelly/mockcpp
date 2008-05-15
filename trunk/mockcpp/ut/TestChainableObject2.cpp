@@ -21,9 +21,9 @@ public:
 	}
 };
 
-class TestChainableObject : public CPPUNIT_NS::TestFixture
+class TestChainableObject2 : public CPPUNIT_NS::TestFixture
 {
-	CPPUNIT_TEST_SUITE( TestChainableObject );
+	CPPUNIT_TEST_SUITE( TestChainableObject2 );
 	CPPUNIT_TEST( testShouldAlwaysGetSameCoreMockerWithSameName );
 	CPPUNIT_TEST( testShouldNotGetSameCoreMockerWithDifferentName );
 	CPPUNIT_TEST( testShouldReturnTheValueOfSettedStubByWill );
@@ -33,15 +33,16 @@ class TestChainableObject : public CPPUNIT_NS::TestFixture
 	CPPUNIT_TEST( testShouldReturnDefaultValueIfExpectionMismatch2 );
 	CPPUNIT_TEST( testShouldReturnDefaultStubIfThereIsNotMatchedExpectation );
 	CPPUNIT_TEST( testShouldReturnDefaultStubIfThereIsNotMatchedExpectation2 );
-	CPPUNIT_TEST( testShouldRaiseExceptionIfAInvokedWasExpectedNever );
 	CPPUNIT_TEST( testShouldBeAbleToOutBoundParameter );
 	CPPUNIT_TEST( testShouldBeAbleToOutBoundParameterAndAttachOtherConstraint );
-	CPPUNIT_TEST( testShouldFailWhenOutBoundParameterAndAttachAMismatchedConstraint );
 	CPPUNIT_TEST( testShouldBeAbleToSupportAtLeast );
-	CPPUNIT_TEST( testShouldFailIfThereIsNoMatchingInvocationButTheExpectWasSetAsAtLeaseOnce );
-	CPPUNIT_TEST( testShouldFailIfInvokedTimeExceedsTheLimitationByAtMost );
-	CPPUNIT_TEST( testShouldFailIfInvokedTimesIsMoreThanExpectedTimes );
-	CPPUNIT_TEST( testShouldFailIfInvokedTimesIsLessThanExpectedTimes );
+
+	CPPUNIT_TEST_EXCEPTION( testShouldRaiseExceptionIfAInvokedWasExpectedNever, AssertionFailedError);
+	CPPUNIT_TEST_EXCEPTION( testShouldFailWhenOutBoundParameterAndAttachAMismatchedConstraint, AssertionFailedError );
+	CPPUNIT_TEST_EXCEPTION( testShouldFailIfThereIsNoMatchingInvocationButTheExpectWasSetAsAtLeaseOnce, AssertionFailedError );
+	CPPUNIT_TEST_EXCEPTION( testShouldFailIfInvokedTimeExceedsTheLimitationByAtMost, AssertionFailedError );
+	CPPUNIT_TEST_EXCEPTION( testShouldFailIfInvokedTimesIsMoreThanExpectedTimes, AssertionFailedError );
+	CPPUNIT_TEST_EXCEPTION( testShouldFailIfInvokedTimesIsLessThanExpectedTimes, AssertionFailedError );
 	CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -132,9 +133,13 @@ public:
    {
 		Foo foo;
 
+      foo.method("foo")
+         .defaults()
+         .will(returnValue(0));
+
 		foo.method("foo")
-         .expects(once())
-         .with(eq(2), eq((unsigned long)3))
+         .stubs()
+         .with(eq(2), eq((unsigned char)3))
 	      .will(returnValue(10));
 
 		int i = 2;
@@ -146,6 +151,10 @@ public:
    void testShouldReturnDefaultValueIfExpectionMismatch2()
    {
 		Foo foo;
+
+      foo.method("foo")
+         .defaults()
+         .will(returnValue(0));
 
 		foo.method("foo")
          .expects(once())
@@ -161,6 +170,10 @@ public:
    void testShouldReturnTheDefaultValueOfSpecifiedTypeIfExistingExpectationDoesNotMatch()
    {
 		Foo foo;
+
+      foo.method("foo")
+         .defaults()
+         .will(returnValue(0));
 
 		foo.method("foo")
          .expects(once())
@@ -183,6 +196,7 @@ public:
 	      .will(returnValue(10));
 
 		int i = 1;
+    
 		foo.foo(i, 2);
    }
 
@@ -307,4 +321,4 @@ public:
    }
 };
 
-CPPUNIT_TEST_SUITE_REGISTRATION( TestChainableObject );
+CPPUNIT_TEST_SUITE_REGISTRATION( TestChainableObject2 );

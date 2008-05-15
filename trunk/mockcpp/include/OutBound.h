@@ -6,11 +6,13 @@
 #include <DecoratedConstraint.h>
 #include <RefAny.h>
 #include <Formatter.h>
+#include <Asserter.h>
+#include <IsRef.h>
 
 MOCKCPP_NS_START
 
 template <typename T>
-class OutBound: public DecoratedConstraint
+class OutBound : public DecoratedConstraint
 {
 public:
     OutBound(const T& val, Constraint* constraint = 0)

@@ -7,6 +7,7 @@
 #include <RefAny.h>
 #include <Formatter.h>
 #include <Asserter.h>
+#include <IsConst.h>
 
 MOCKCPP_NS_START
 
@@ -33,6 +34,13 @@ public:
       {
         return false;
       }
+
+      oss_t oss;
+
+      oss << "A constant pointer " << TypeString<T*>::value() 
+          << " cannot be outbounded";
+
+      MOCKCPP_ASSERT_FALSE_MESSAGE( oss.str(), IsConst<T>::isTrue);
 
       (void) memcpy((void*)p, (void*)pointer, sizeOfBuffer);
 

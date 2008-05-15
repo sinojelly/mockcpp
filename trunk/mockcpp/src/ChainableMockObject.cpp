@@ -14,16 +14,17 @@ struct ChainableMockObjectImpl
 {
     typedef std::list<ChainableMockMethodCore*> List;
     typedef List::iterator Iterator;
+    typedef List::const_iterator ConstIterator;
 
     ChainableMockObjectImpl(const std::string& name);
 	 ~ChainableMockObjectImpl();
-    ChainableMockMethodCore* addMethodCore(const std::string& name, Namespace* ns);
-    ChainableMockMethodCore* findMethodCore(const std::string& name);
+    ChainableMockMethodCore* addMethodCore(const std::string& name, const Namespace* ns) const;
+    ChainableMockMethodCore* findMethodCore(const std::string& name) const;
     InvocationMocker* findInvocationMocker(const std::string& id);
     void reset();
     void verify();
 
-    List methods;
+    mutable List methods;
     std::string objectName;
 
 };
@@ -47,20 +48,26 @@ void resetCore(ChainableMockMethodCore* core)
     core->reset();
     delete core;
 }}
+
 void ChainableMockObjectImpl::reset()
 {
     for_each(methods.begin(), methods.end(), resetCore);
     methods.clear();
 }
+
 //////////////////////////////////////////////////////////////
 ChainableMockObjectImpl::~ChainableMockObjectImpl()
 {
     Iterator i = methods.begin();
-    for(; i != methods.end(); ++i) {
+
+    for (; i != methods.end(); ++i)
+    {
       delete (*i);
     }
+
     methods.clear();
 }
+
 //////////////////////////////////////////////////////////////
 struct IsMethodNameMatch
 {
@@ -81,13 +88,16 @@ ChainableMockObjectImpl::ChainableMockObjectImpl(const std::string& name)
    : objectName(name)
 {
 }
+
 //////////////////////////////////////////////////////////////
 InvocationMocker*
 ChainableMockObjectImpl::findInvocationMocker(const std::string& id)
 {
-	for(Iterator i = methods.begin(); i != methods.end(); ++i) {
+	for (Iterator i = methods.begin(); i != methods.end(); ++i)
+   {
 		InvocationMocker* mocker = (*i)->getInvocationMocker(id);
-      if(mocker != 0) {
+      if(mocker != 0)
+      {
          return mocker;
 		}
 	}
@@ -97,21 +107,24 @@ ChainableMockObjectImpl::findInvocationMocker(const std::string& id)
 //////////////////////////////////////////////////////////////
 ChainableMockMethodCore*
 ChainableMockObjectImpl::addMethodCore( const std::string& name
-                                      , Namespace* ns)
+                                      , const Namespace* ns) const
 {
     ChainableMockMethodCore* core =
             new ChainableMockMethodCore(name, ns);
+
     methods.push_back(core);
+
     return core;
 }
 
 //////////////////////////////////////////////////////////////
 ChainableMockMethodCore*
-ChainableMockObjectImpl::findMethodCore(const std::string& name)
+ChainableMockObjectImpl::findMethodCore(const std::string& name) const
 {
-    Iterator i = std::find_if( methods.begin()
+    ConstIterator i = std::find_if( methods.begin()
                              , methods.end()
                              , IsMethodNameMatch(name));
+
     return (i == methods.end()) ? 0 : (*i);
 }
 
@@ -122,6 +135,7 @@ ChainableMockObject::ChainableMockObject(
 	: This(new ChainableMockObjectImpl(name))
 {
 }
+
 //////////////////////////////////////////////////////////////
 ChainableMockObject::~ChainableMockObject()
 {
@@ -137,10 +151,11 @@ ChainableMockObject::method(const std::string& name)
 
 //////////////////////////////////////////////////////////////
 ChainableMockMethodCore*
-ChainableMockObject::getMethod(const std::string& name)
+ChainableMockObject::getMethod(const std::string& name) const
 {
     ChainableMockMethodCore* core = This->findMethodCore(name);
-    if(core != 0) {
+    if (core != 0)
+    {
       return core;
     }
 

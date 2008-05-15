@@ -1,7 +1,7 @@
 
 INCLUDE= -I. -I../include -I/usr/local/include
 
-CXX=g++-2.95
+CXX=g++
 
 RM = rm -f
 TARGET = ft
