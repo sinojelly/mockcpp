@@ -184,8 +184,10 @@ public:
    //
    void test_func3_should_invoke_service_f2()
    {
-      st_struct_1* st1 = new st_struct_1;
-      st1->field0 = 100;
+      st_struct_1 st0 = {0};
+      st0.field0 = 100;
+
+      st_struct_1* st1 = &st0;
 
       MOCKER(service_f2)
         .expects(once())
