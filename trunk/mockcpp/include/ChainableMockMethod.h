@@ -60,7 +60,12 @@ class ChainableMockMethod : public ChainableMockMethodBase<RT>
 {
     RT getResult(const Any& result)
     {
-       return any_cast<RT>(result);
+      if (result.empty())
+      {
+        return RT();
+      }
+
+      return any_cast<RT>(result);
     }
 
 public:

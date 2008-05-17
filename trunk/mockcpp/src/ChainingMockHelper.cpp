@@ -13,6 +13,7 @@
 #include <Constraint.h>
 #include <OutBoundPointer.h>
 #include <IsMirror.h>
+#include <IgnoreReturnStub.h>
 
 MOCKCPP_NS_START
 
@@ -64,6 +65,12 @@ Matcher* never()
 Stub* returnValue(const Any& val)
 {
    return new TypelessStubAdapter(new ReturnStub(val));
+}
+
+//////////////////////////////////////////////////////////////////
+Stub* ignoreReturnValue()
+{
+   return new TypelessStubAdapter(new IgnoreReturnStub());
 }
 
 //////////////////////////////////////////////////////////////////
