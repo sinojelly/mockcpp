@@ -8,6 +8,7 @@
 
 #include <EqualityUtil.h>
 #include <Formatter.h>
+#include <Void.h>
 
 MOCKCPP_NS_START
 
@@ -18,7 +19,7 @@ struct Holder : public PlaceHolder
 
     const std::type_info & type() const
     {
-      return typeid(ValueType);
+      return typeid(ValueType) == typeid(Void) ? typeid(void) : typeid(ValueType);
     }
 
     std::string toString() const

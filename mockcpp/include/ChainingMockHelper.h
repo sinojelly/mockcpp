@@ -90,6 +90,8 @@ Constraint* smirror(const char* s);
 /////////////////////////////////////////////////////////////////
 Stub* returnValue(const Any& val);
 
+Stub* ignoreReturnValue();
+
 Stub* returnObjectList( const Any& o01
                       , const Any& o02 = Any()
                       , const Any& o03 = Any()

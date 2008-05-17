@@ -19,6 +19,7 @@ class TestService : public CPPUNIT_NS::TestFixture
 	CPPUNIT_TEST( test_func2_should_invoke_service_f1_with_less_constraint );
 	CPPUNIT_TEST( test_func2_should_invoke_service_f5 );
 	CPPUNIT_TEST( test_func3_should_invoke_service_f2 );
+	CPPUNIT_TEST( test_func3_should_invoke_service_f2_with_ignore_return );
 	CPPUNIT_TEST( test_func4_should_invoke_service_f0 );
 	CPPUNIT_TEST( test_func4_should_invoke_service_f0_with_eq );
 	CPPUNIT_TEST( test_func4_should_invoke_service_f0_with_size );
@@ -193,6 +194,29 @@ public:
         .expects(once())
         .with(outBoundP(&st1))
         .will(returnValue(0));
+
+      st_struct_1* p = func3();
+
+      CPPUNIT_ASSERT(p != 0);
+      CPPUNIT_ASSERT_EQUAL((long)100, p->field0);
+   }
+
+   //
+   // If the return value is not concerned, you should use
+   // will(ignoreReturnValue()), instead of not giving
+   // will(...) stub.
+   //
+   void test_func3_should_invoke_service_f2_with_ignore_return()
+   {
+      st_struct_1 st0 = {0};
+      st0.field0 = 100;
+
+      st_struct_1* st1 = &st0;
+
+      MOCKER(service_f2)
+        .expects(once())
+        .with(outBoundP(&st1))
+        .will(ignoreReturnValue());
 
       st_struct_1* p = func3();
 

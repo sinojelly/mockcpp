@@ -33,7 +33,7 @@ Any& MismatchResultHandler::getResult(const Any& result) const
         << "Returned : " << result.toTypeString() << ", which is from\n"
         << resultProvider->toString();
 
-    MOCKCPP_ASSERT_TRUE_MESSAGE(oss.str(), matches(result));
+    MOCKCPP_ASSERT_FALSE_MESSAGE(oss.str(), matches(result));
 
     return getEmptyAny();
 }
