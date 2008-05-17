@@ -4,6 +4,8 @@
 
 #include <mockcpp.h>
 
+#include <Void.h>
+
 #include <string>
 #include <typeinfo>
 
@@ -134,6 +136,20 @@ template <> struct TypeString<double>
 {
 	static std::string value()
 	{ return "double"; }
+};
+
+//////////////////////////////////////////////////////////
+template <> struct TypeString<void>
+{
+	static std::string value()
+	{ return "void"; }
+};
+
+//////////////////////////////////////////////////////////
+template <> struct TypeString<Void>
+{
+   static std::string value()
+   { return "void"; }
 };
 
 //////////////////////////////////////////////////////////

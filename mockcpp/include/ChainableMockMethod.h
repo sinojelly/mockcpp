@@ -6,16 +6,18 @@
 #include <Any.h>
 #include <ChainableMockMethodCore.h>
 #include <Invocation.h>
+#include <Result.h>
 #include <Asserter.h>
-#include <SelfDescribe.h>
 
 MOCKCPP_NS_START
 
+class SelfDescribe;
+
 template <typename RT>
-class ChainableMockMethod
+class ChainableMockMethodBase
 {
 public:
-    ChainableMockMethod(ChainableMockMethodCore* core)
+    ChainableMockMethodBase(ChainableMockMethodCore* core)
 		: methodCore(core)
     {}
 
@@ -37,66 +39,50 @@ public:
 		SelfDescribe* resultProvider = 0;
 
       Any anyResult = methodCore->invoke(inv, resultProvider);
+      
+      Any result = Result(typeid(RT), TypeString<RT>::value(), resultProvider).getResult(anyResult);
 
-		oss_t oss;
-
-		oss << "Returned type does NOT match the method declaration \n"
-          << "Required : " << TypeString<RT>::value() << "\n"
-          << "Returned : " << anyResult.toTypeString() << ", which is from\n"
-          << resultProvider->toString();
-
-      MOCKCPP_ASSERT_TRUE_MESSAGE(oss.str(), any_castable<RT>(anyResult) );
-
-		return any_cast<RT>(anyResult);
+      return getResult(result);
     }
+
+protected:
+
+    virtual RT getResult(const Any& result) = 0;
 
 private:
 
     ChainableMockMethodCore* methodCore;
 };
 
-///////////////////////////////////////////////////////
-template <>
-class ChainableMockMethod<void>
+
+template <typename RT>
+class ChainableMockMethod : public ChainableMockMethodBase<RT>
 {
+    RT getResult(const Any& result)
+    {
+       return any_cast<RT>(result);
+    }
+
 public:
 
     ChainableMockMethod(ChainableMockMethodCore* core)
-      : methodCore(core)
+       : ChainableMockMethodBase<RT>(core)
     {}
-
-    void operator()( const RefAny& p1 = RefAny()
-                   , const RefAny& p2 = RefAny()
-                   , const RefAny& p3 = RefAny()
-                   , const RefAny& p4 = RefAny()
-                   , const RefAny& p5 = RefAny()
-                   , const RefAny& p6 = RefAny()
-                   , const RefAny& p7 = RefAny()
-                   , const RefAny& p8 = RefAny()
-                   , const RefAny& p9 = RefAny()
-                   , const RefAny& p10 = RefAny()
-                   , const RefAny& p11 = RefAny()
-                   , const RefAny& p12 = RefAny()
-    )
-    {
-      Invocation inv(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12);
-		SelfDescribe* resultProvider = 0;
-      Any result = methodCore->invoke(inv, resultProvider);
-      
-      oss_t oss;
-		oss << "Returned type does NOT match the method declaration \n"
-          << "Required : void" << "\n"
-          << "Returned : " << result.toTypeString() << ", which is from\n"
-          << resultProvider->toString();
-
-      MOCKCPP_ASSERT_TRUE_MESSAGE(oss.str(), any_castable<Void>(result) );
-    }
-
-private:
-
-    ChainableMockMethodCore* methodCore;
 };
 
+template <>
+class ChainableMockMethod<void> : public ChainableMockMethodBase<void>
+{
+    void getResult(const Any& result)
+    {
+    }
+
+public:
+
+    ChainableMockMethod(ChainableMockMethodCore* core)
+       : ChainableMockMethodBase<void>(core)
+    {}
+};
 
 MOCKCPP_NS_END
 
