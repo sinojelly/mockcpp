@@ -20,7 +20,7 @@ The goals of *mockcpp* are:
 
 = How Do You Create A Mock Object =
 
-To create a mock object, a mock class should be created first, which should be a sub-class of _ChainableMockObject.
+To create a mock object, a mock class should be created first, which should be a sub-class of _ChainableMockObject .
 
 {{{
 
