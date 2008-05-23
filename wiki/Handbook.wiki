@@ -17,3 +17,26 @@ The goals of *mockcpp* are:
    # Creating a mock class should be very easy.
 
 *mockcpp* is strongly enlightened by *mockpp* and [http://www.jmock.org jmock].
+
+= How Do You Create A Mock Object =
+
+To create a mock object, a mock class should be created first. A mock class should be a sub-class of _ChainableMockObject_.
+
+{{{
+    *class* MockObject : *public* mockcpp::ChainableMockObject
+    {
+       MockObject()
+          : mockcpp::ChainableMockObject("Object", 0)
+       {}
+
+       int foo(char* p1, long p2, double p3)
+       {
+          return invoke<int>("foo")(p1, p2, p3);
+       }
+
+       void bar(const std::string& p1) const
+       {
+          invoke<void>("bar")(p1);
+       }
+    }; 
+}}}
