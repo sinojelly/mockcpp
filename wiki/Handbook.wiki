@@ -23,20 +23,36 @@ The goals of *mockcpp* are:
 To create a mock object, a mock class should be created first. A mock class should be a sub-class of _ChainableMockObject_.
 
 {{{
-    *class* MockObject : *public* mockcpp::ChainableMockObject
-    {
-       MockObject()
-          : mockcpp::ChainableMockObject("Object", 0)
-       {}
 
-       int foo(char* p1, long p2, double p3)
-       {
-          return invoke<int>("foo")(p1, p2, p3);
-       }
+class MockObject : public mockcpp::ChainableMockObject
+{
+public:
+   MockObject()
+      : mockcpp::ChainableMockObject("Object", 0)
+   {}
 
-       void bar(const std::string& p1) const
-       {
-          invoke<void>("bar")(p1);
-       }
-    }; 
+   int foo(char* p1, long p2, double p3)
+   {
+      return invoke<int>("foo")(p1, p2, p3);
+   }
+
+   void bar(const std::string& p1) const
+   {
+      invoke<void>("bar")(p1);
+   }
+};
+ 
+}}}
+
+Then you can create instances of this class and use it.
+
+{{{
+MockObject* mockObject = new MockObject;
+
+mockObject->method("foo")
+   .expects(once())
+   .with(smirror("abc"), eq((long)10), eq(3.2))
+   .will(returnValue(100));
+
+CPPUNIT_ASSERT_EQUAL(100, mockObject->foo("abc", 10, 3.2));
 }}}
