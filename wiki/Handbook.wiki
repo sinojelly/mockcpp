@@ -1,4 +1,5 @@
 #summary Handbook of mockcpp
+#labels C,Mock,Mockcpp
 
 = Introduction =
 
