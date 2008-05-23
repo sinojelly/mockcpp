@@ -31,7 +31,7 @@ public:
       : mockcpp::ChainableMockObject("Object", 0)
    {}
 
-   int foo(char* p1, long p2, double p3)
+   int foo(const char* p1, long p2, double p3)
    {
       return invoke<int>("foo")(p1, p2, p3);
    }
