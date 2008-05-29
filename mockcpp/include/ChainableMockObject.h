@@ -29,14 +29,13 @@ public:
       return ChainableMockMethod<RT>(getMethod(name)); 
     }
 
-
     void verify();
+
 	 void reset();
 
 public:
 
-    InvocationMocker*
-    getInvocationMocker(const std::string& name);
+    InvocationMocker* getInvocationMocker(const std::string& name);
 
 public:
 

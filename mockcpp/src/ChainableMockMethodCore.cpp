@@ -134,10 +134,23 @@ ChainableMockMethodCore::getNamespace() const
 
 //////////////////////////////////////////////////////////
 Any
-ChainableMockMethodCore::invoke(const Invocation& invocation
-		, SelfDescribe* &resultProvider)
+ChainableMockMethodCore::invoke
+             ( const RefAny& p1
+             , const RefAny& p2
+             , const RefAny& p3
+             , const RefAny& p4
+             , const RefAny& p5
+             , const RefAny& p6
+             , const RefAny& p7
+             , const RefAny& p8
+             , const RefAny& p9
+             , const RefAny& p10
+             , const RefAny& p11
+             , const RefAny& p12
+		       , SelfDescribe* &resultProvider)
 {
-	return This->invoke(invocation, resultProvider);
+	Invocation inv(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12);
+	return This->invoke(inv, resultProvider);
 }
 
 //////////////////////////////////////////////////////////

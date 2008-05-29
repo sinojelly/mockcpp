@@ -11,7 +11,6 @@
 MOCKCPP_NS_START
 
 class Any;
-class Invocation;
 class Namespace;
 class Stub;
 class ChainableMockMethodCoreImpl;
@@ -30,7 +29,20 @@ public:
 	std::string& getName(void) const;
    Namespace* getNamespace() const;
 
-   Any invoke(const Invocation& invocation, SelfDescribe* &resultProvider);
+   Any invoke( const RefAny& p1 
+             , const RefAny& p2
+             , const RefAny& p3
+             , const RefAny& p4
+             , const RefAny& p5
+             , const RefAny& p6
+             , const RefAny& p7
+             , const RefAny& p8
+             , const RefAny& p9
+             , const RefAny& p10
+             , const RefAny& p11
+             , const RefAny& p12
+             , SelfDescribe* &resultProvider);
+
    void setDefaultStub(Stub* stub);
 
 	WorkingBuilder stubs();
