@@ -3,7 +3,7 @@ INCLUDE= -I. -I../include -I/usr/local/include
 
 CXX=g++
 
-GCCXML = gccxml
+#GCCXML = gccxml
 
 RM = rm -f
 TARGET = ft
@@ -25,7 +25,7 @@ clean:
 clean-all:
 	$(RM) $(TARGET) $(TEST_OBJS) $(PRODUCT_OBJS)
 
-$(TARGET) : $(OBJS) $(XMLS)
+$(TARGET) : $(OBJS) #$(XMLS)
 	$(CXX) -o $@ $(OBJS) $(LIBS)
 
 %.o : %.cpp

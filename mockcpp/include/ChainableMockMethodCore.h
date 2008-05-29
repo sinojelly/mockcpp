@@ -50,13 +50,16 @@ public:
    DefaultBuilder defaults();
 
 	void reset();
+
    void verify();
 
 public:
-	InvocationMocker*
-   getInvocationMocker(const std::string& id);
+
+	InvocationMocker* getInvocationMocker(const std::string& id);
    void addInvocationMocker(InvocationMocker* mocker);
+
 private:
+
    ChainableMockMethodCoreImpl* This;
 };
 
