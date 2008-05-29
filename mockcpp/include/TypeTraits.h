@@ -29,7 +29,7 @@ struct TypeTraits<const T>
     typedef T          Raw;
     typedef T&         RefRaw;
 
-    typedef const T    Type;
+    typedef T          Type;
     typedef const T&   Ref;
 };
 
@@ -52,8 +52,8 @@ struct TypeTraits<const T*>
 template <typename T>
 struct TypeTraits<T&>
 {
-	typedef T         Raw;
-	typedef T&        RefRawx;
+    typedef T         Raw;
+    typedef T&        RefRawx;
 
     typedef T         Type;
     typedef T&        Ref;
@@ -65,10 +65,10 @@ struct TypeTraits<T&>
 template <typename T>
 struct TypeTraits<const T&>
 {
-	typedef T         Raw;
-	typedef T&        RefRaw;
+    typedef T         Raw;
+    typedef T&        RefRaw;
 
-    typedef const T   Type;
+    typedef T         Type;
     typedef const T&  Ref;
 };
 

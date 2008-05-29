@@ -67,3 +67,17 @@ int func10(st_struct_0 p)
    return MOCKABLE(service_f11)(p);
 }
 
+int func11(void)
+{
+	return MOCKABLE(service_f12)();
+}
+
+st_struct_0 func12()
+{
+	return MOCKABLE(service_f14)();
+}
+
+st_struct_0 func13()
+{
+	return MOCKABLE(service_f15)();
+}

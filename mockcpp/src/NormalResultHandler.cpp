@@ -13,7 +13,7 @@ NormalResultHandler::NormalResultHandler(const std::type_info& typeInfo)
 ///////////////////////////////////////////////////////////////////////////
 bool NormalResultHandler::matches(const Any& result) const
 {
-      return result.type() == expectedTypeInfo;
+    return result.type() == expectedTypeInfo;
 }
 
 ///////////////////////////////////////////////////////////////////////////

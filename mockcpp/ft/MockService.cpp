@@ -26,4 +26,12 @@ MOCK_METHOD1_DEF(service_f10, int, st_struct_0&)
 
 MOCK_METHOD1_DEF(service_f11, int, st_struct_0)
 
+MOCK_METHOD0_DEF(service_f12, int&);
+
+MOCK_METHOD0_DEF(service_f13, const int&);
+
+MOCK_METHOD0_DEF(service_f14, st_struct_0&);
+
+MOCK_METHOD0_DEF(service_f15, const st_struct_0&);
+
 MOCK_METHOD_ANY_DEF(service_printf, int)
