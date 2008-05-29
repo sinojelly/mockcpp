@@ -815,14 +815,15 @@ public:
 	//
 	// Maybe you think that mockcpp should try to stop the crash
 	// by letting the returned ref refer to a default object; however,
-	// we didn't do this for 2 reasons:
+	// we didn't do this for 3 reasons:
+	//
 	// 1. You should ignore it if you specified ignoreReturnValue in
 	//    your test cases.
 	// 2. If the return type is not ref, but a pointer, we have no way
 	//    to prevent you from using the null pointer, which will also
 	//    make your program crash;
 	// 3. Even if we return a ref refering to a default object, if you
-	//    don't ignore it, it's still likely to crash your program.
+	//    don't ignore it, it's still likely crashing your program.
 	//
 	void test_func14_should_invoke_service_f15_with_ignore_return()
    {
