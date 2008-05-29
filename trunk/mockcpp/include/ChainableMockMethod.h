@@ -21,28 +21,29 @@ public:
 		: methodCore(core)
     {}
 
-    RT operator()( const RefAny& p1 = RefAny()
-                 , const RefAny& p2 = RefAny()
-                 , const RefAny& p3 = RefAny()
-                 , const RefAny& p4 = RefAny()
-                 , const RefAny& p5 = RefAny()
-                 , const RefAny& p6 = RefAny()
-                 , const RefAny& p7 = RefAny()
-                 , const RefAny& p8 = RefAny()
-                 , const RefAny& p9 = RefAny()
+    RT operator()( const RefAny& p01 = RefAny()
+                 , const RefAny& p02 = RefAny()
+                 , const RefAny& p03 = RefAny()
+                 , const RefAny& p04 = RefAny()
+                 , const RefAny& p05 = RefAny()
+                 , const RefAny& p06 = RefAny()
+                 , const RefAny& p07 = RefAny()
+                 , const RefAny& p08 = RefAny()
+                 , const RefAny& p09 = RefAny()
                  , const RefAny& p10 = RefAny()
                  , const RefAny& p11 = RefAny()
                  , const RefAny& p12 = RefAny()
     )
     {
-      Invocation inv(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12);
 		SelfDescribe* resultProvider = 0;
 
-      Any anyResult = methodCore->invoke(inv, resultProvider);
-      
-      Any result = Result(typeid(RT), TypeString<RT>::value(), resultProvider).getResult(anyResult);
+      Any anyResult = methodCore->invoke( p01, p02, p03, p04, p05, p06
+                                        , p07, p08, p09, p10, p11, p12
+                                        , resultProvider);
 
-      return getResult(result);
+      Result result(typeid(RT), TypeString<RT>::value(), resultProvider);
+
+      return getResult(result.getResult(anyResult));
     }
 
 protected:
