@@ -3,6 +3,8 @@ INCLUDE= -I. -I../include -I/usr/local/include
 
 CXX=g++
 
+GCCXML = gccxml
+
 RM = rm -f
 TARGET = ft
 
@@ -13,6 +15,7 @@ LIBS = -L/usr/local/lib -lcppunit -ldl
 TEST_OBJS = $(patsubst %.cpp, %.o, $(shell ls *.cpp))
 PRODUCT_OBJS = $(patsubst %.cpp, %.o, $(shell ls ../src/*.cpp))
 OBJS = $(TEST_OBJS) $(PRODUCT_OBJS)
+XMLS = $(patsubst %.cpp, %.xml, $(shell ls *.cpp))
 
 all: $(TARGET)
 
@@ -22,9 +25,11 @@ clean:
 clean-all:
 	$(RM) $(TARGET) $(TEST_OBJS) $(PRODUCT_OBJS)
 
-$(TARGET) : $(OBJS)
+$(TARGET) : $(OBJS) $(XMLS)
 	$(CXX) -o $@ $(OBJS) $(LIBS)
 
 %.o : %.cpp
 	$(CXX) $(CXXFLAGS) $(DEFS) $(INCLUDE) -o $@ -c $<
 
+%.xml : %.cpp
+	$(GCCXML) $(CXXFLAGS) $(DEFS) $(INCLUDE) $< -fxml=$@

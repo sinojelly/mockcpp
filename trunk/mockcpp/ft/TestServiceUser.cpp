@@ -37,6 +37,11 @@ class TestService : public CPPUNIT_NS::TestFixture
 	CPPUNIT_TEST( test_func9_should_invoke_service_f10 );
 	CPPUNIT_TEST( test_func10_should_invoke_service_f11 );
 	CPPUNIT_TEST( test_func7_should_invoke_service_f8_with_outbound );
+	CPPUNIT_TEST( test_func11_should_invoke_service_f12 );
+	CPPUNIT_TEST( test_func11_should_invoke_service_f12_with_const_ref_return );
+	CPPUNIT_TEST( test_func12_should_invoke_service_f14 );
+	CPPUNIT_TEST( test_func12_should_invoke_service_f14_with_const_ref_return );
+	CPPUNIT_TEST( test_func13_should_invoke_service_f15 );
 	CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -708,6 +713,93 @@ public:
       st_struct_0 st1;
 
       CPPUNIT_ASSERT_EQUAL(1, func7(st1));
+
+      CPPUNIT_ASSERT_EQUAL(st1.field0, st0.field0);
+      CPPUNIT_ASSERT_EQUAL(st1.field1, st0.field1);
+      CPPUNIT_ASSERT_EQUAL(0, strcmp(st1.field2, st0.field2));
+   }
+
+	//
+	//
+	void test_func11_should_invoke_service_f12()
+   {
+		MOCKER(service_f12)
+			.expects(once())
+			.will(returnValue(2));
+
+      CPPUNIT_ASSERT_EQUAL(2, func11());
+   }
+
+	//
+	void test_func11_should_invoke_service_f12_with_const_ref_return()
+   {
+		MOCKER(service_f12)
+			.expects(once())
+			.will(returnValue((const int)2));
+
+      CPPUNIT_ASSERT_EQUAL(2, func11());
+   }
+
+	// 
+	void test_func12_should_invoke_service_f14()
+   {
+		st_struct_0 st0;
+
+		st0.field0 = 100;
+      st0.field1 = 10.1;
+      strcpy(st0.field2, "abc");
+
+		MOCKER(service_f14)
+			.expects(once())
+			.will(returnValue(st0));
+
+      st_struct_0 st1 = func12();
+
+      CPPUNIT_ASSERT_EQUAL(st1.field0, st0.field0);
+      CPPUNIT_ASSERT_EQUAL(st1.field1, st0.field1);
+      CPPUNIT_ASSERT_EQUAL(0, strcmp(st1.field2, st0.field2));
+   }
+
+	//
+	// This is a test for a mock function with the return
+	// type of ref to an object.
+	//
+	void test_func12_should_invoke_service_f14_with_const_ref_return()
+   {
+		st_struct_0 st0;
+
+		st0.field0 = 100;
+      st0.field1 = 10.1;
+      strcpy(st0.field2, "abc");
+
+		MOCKER(service_f14)
+			.expects(once())
+			.will(returnValue((const st_struct_0)st0));
+
+      st_struct_0 st1 = func12();
+
+      CPPUNIT_ASSERT_EQUAL(st1.field0, st0.field0);
+      CPPUNIT_ASSERT_EQUAL(st1.field1, st0.field1);
+      CPPUNIT_ASSERT_EQUAL(0, strcmp(st1.field2, st0.field2));
+   }
+
+	//
+	// This is a test for a mock function with the return
+	// type of const ref to an object.
+	// 
+	void test_func13_should_invoke_service_f15()
+   {
+		st_struct_0 st0;
+
+		st0.field0 = 100;
+      st0.field1 = 10.1;
+      strcpy(st0.field2, "abc");
+
+		MOCKER(service_f15)
+			.expects(once())
+			.will(returnValue(st0));
+
+      st_struct_0 st1 = func13();
 
       CPPUNIT_ASSERT_EQUAL(st1.field0, st0.field0);
       CPPUNIT_ASSERT_EQUAL(st1.field1, st0.field1);

@@ -71,7 +71,11 @@ ValueType* any_cast(AnyBase* operand)
    typedef typename TypeTraits<ValueType>::Type nonref;
    typedef Holder<nonref> holder;
 
-	if(operand == 0 || operand->type() != typeid(ValueType)) return 0;
+	if (operand == 0 || operand->type() != typeid(ValueType))
+	{
+	   return 0;
+	}
+
    holder* p = dynamic_cast<holder*>(operand->getContent());
 
 	return p ? &const_cast<ValueType&>(p->getValue()) : 0;
