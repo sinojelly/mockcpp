@@ -77,7 +77,12 @@ st_struct_0 func12()
 	return MOCKABLE(service_f14)();
 }
 
-st_struct_0 func13()
+const st_struct_0& func13()
 {
 	return MOCKABLE(service_f15)();
+}
+
+void func14()
+{
+	(void) MOCKABLE(service_f15)();
 }

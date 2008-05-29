@@ -42,6 +42,7 @@ class TestService : public CPPUNIT_NS::TestFixture
 	CPPUNIT_TEST( test_func12_should_invoke_service_f14 );
 	CPPUNIT_TEST( test_func12_should_invoke_service_f14_with_const_ref_return );
 	CPPUNIT_TEST( test_func13_should_invoke_service_f15 );
+	CPPUNIT_TEST( test_func14_should_invoke_service_f15_with_ignore_return );
 	CPPUNIT_TEST_SUITE_END();
 
 public:
@@ -804,6 +805,38 @@ public:
       CPPUNIT_ASSERT_EQUAL(st1.field0, st0.field0);
       CPPUNIT_ASSERT_EQUAL(st1.field1, st0.field1);
       CPPUNIT_ASSERT_EQUAL(0, strcmp(st1.field2, st0.field2));
+   }
+
+	// 
+	// For a function with ref or const ref return value, if users
+	// ignore the return value, a ref to null object(at address 0) 
+	// will be returned. If the tested code is not actually ignore
+	// the return value, the testing program will crash.
+	//
+	// Maybe you think that mockcpp should try to stop the crash
+	// by letting the returned ref refer to a default object; however,
+	// we didn't do this for 2 reasons:
+	// 1. You should ignore it if you specified ignoreReturnValue in
+	//    your test cases.
+	// 2. If the return type is not ref, but a pointer, we have no way
+	//    to prevent you from using the null pointer, which will also
+	//    make your program crash;
+	// 3. Even if we return a ref refering to a default object, if you
+	//    don't ignore it, it's still likely to crash your program.
+	//
+	void test_func14_should_invoke_service_f15_with_ignore_return()
+   {
+		st_struct_0 st0;
+
+		st0.field0 = 100;
+      st0.field1 = 10.1;
+      strcpy(st0.field2, "abc");
+
+		MOCKER(service_f15)
+			.expects(once())
+			.will(ignoreReturnValue());
+
+      func14();
    }
 };
 

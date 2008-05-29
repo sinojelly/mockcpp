@@ -21,6 +21,7 @@ public:
     const std::type_info& type() const;
 
 private:
+
     Any returnValue;
 };
 
