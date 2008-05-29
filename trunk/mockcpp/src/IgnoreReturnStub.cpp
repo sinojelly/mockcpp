@@ -14,7 +14,7 @@ IgnoreReturnStub::invoke()
 /////////////////////////////////////////////////////
 std::string IgnoreReturnStub::toString(void) const
 {
-    return "ignoreReturnValue";
+    return "ignoreReturnValue()";
 }
 
 /////////////////////////////////////////////////////

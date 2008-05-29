@@ -24,7 +24,7 @@ public:
 
 private:
     const std::type_info& expectedTypeInfo;
-    const std::string& expectedTypeString;
+    const std::string expectedTypeString;
     const SelfDescribe* resultProvider;
 };
 

@@ -37,26 +37,37 @@ struct ResultImpl
 
     ResultImpl( const std::type_info& typeInfo
           , const std::string& typeString
-          , const SelfDescribe* selfDescriber)
-    {
-      for(unsigned int i=0; i < numberOfResultHandlerFactorys; i++)
-      {
-        handlers.push_back(resultHandlerFactorys[i]->create(typeInfo, typeString, selfDescriber));
-      }
-    }
+          , const SelfDescribe* selfDescriber);
 
-    ~ResultImpl()
-    {
-      std::list<ResultHandler*>::iterator i = handlers.begin();
-      for(; i != handlers.end(); i++)
-      {
-        delete (*i);
-      }
-
-      handlers.clear();
-    }
+    ~ResultImpl();
 };
 
+/////////////////////////////////////////////////////////
+ResultImpl::ResultImpl(
+      const std::type_info& typeInfo
+	 , const std::string& typeString
+	 , const SelfDescribe* selfDescriber)
+{
+   for(unsigned int i=0; i < numberOfResultHandlerFactorys; i++)
+   {
+      handlers.push_back(
+                  resultHandlerFactorys[i]->create( typeInfo
+                                                  , typeString
+                                                  , selfDescriber));
+   }
+}
+
+/////////////////////////////////////////////////////////
+ResultImpl::~ResultImpl()
+{
+   std::list<ResultHandler*>::iterator i = handlers.begin();
+   for(; i != handlers.end(); i++)
+   {
+      delete (*i);
+   }
+
+   handlers.clear();
+}
 //////////////////////////////////////////////////////////
 Result::Result(
             const std::type_info& expectedTypeInfo

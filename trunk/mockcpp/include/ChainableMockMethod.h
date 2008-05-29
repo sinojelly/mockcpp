@@ -56,6 +56,7 @@ private:
 };
 
 
+//////////////////////////////////////////////////////////////////
 template <typename RT>
 class ChainableMockMethod : public ChainableMockMethodBase<RT>
 {
@@ -76,6 +77,7 @@ public:
     {}
 };
 
+//////////////////////////////////////////////////////////////////
 template <>
 class ChainableMockMethod<void> : public ChainableMockMethodBase<void>
 {
@@ -89,6 +91,8 @@ public:
        : ChainableMockMethodBase<void>(core)
     {}
 };
+
+//////////////////////////////////////////////////////////////////
 
 MOCKCPP_NS_END
 
