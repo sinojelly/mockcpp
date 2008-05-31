@@ -5,11 +5,11 @@
 #include <mockcpp.h>
 #include <DecoratedConstraint.h>
 #include <RefAny.h>
-#include <Formatter.h>
-#include <Asserter.h>
 #include <IsConst.h>
 
 MOCKCPP_NS_START
+
+void OutBoundPointerCheckConst(const std::string& typeString, bool isConst);
 
 ///////////////////////////////////////////////////////
 template <typename T>
@@ -30,17 +30,12 @@ public:
     bool evalSelf(const RefAny& val) const
     {
       T* p = any_cast<T*>(val);
-      if(p == 0)
+      if (p == 0)
       {
         return false;
       }
 
-      oss_t oss;
-
-      oss << "A constant pointer " << TypeString<T*>::value() 
-          << " cannot be outbounded";
-
-      MOCKCPP_ASSERT_FALSE_MESSAGE( oss.str(), IsConst<T>::isTrue);
+      checkConst();
 
       (void) memcpy((void*)p, (void*)pointer, sizeOfBuffer);
 
@@ -55,6 +50,13 @@ public:
     std::string getTypeAndValueString() const
     {
       return toTypeAndValueString(pointer);
+    }
+
+private:
+
+    void checkConst() const
+    {
+      OutBoundPointerCheckConst(TypeString<T*>::value(), IsConst<T>::isTrue);
     }
 
 private:
@@ -88,14 +90,7 @@ class OutBoundPointer<void*>: public OutBoundPointerBase<void*>
 {
 public:
 
-    OutBoundPointer(void* p, size_t size, Constraint* constraint = 0)
-      : OutBoundPointerBase<void*>(p, size, constraint)
-    {
-      MOCKCPP_ASSERT_TRUE_MESSAGE(
-            "parameter \"size\" of OutBoundPointer<void*> cannot be specified as 0", 
-            size > 0);
-    }
-
+    OutBoundPointer(void* p, size_t size, Constraint* constraint = 0);
 };
 
 MOCKCPP_NS_END
