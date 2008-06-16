@@ -47,29 +47,27 @@ class TestService : public CPPUNIT_NS::TestFixture
 
 public:
 
-	void setUp()
-	{
+   void setUp()
+   {
       MOCKER(service_f5)
         .defaults()
         .will(returnValue((long)0));
-	}
+   }
 
-	void tearDown()
-	{
-      MOCKCPP_NS_OBJ_VERIFY_AND_RESET(Global);
-	}
-
-	/////////////////////////////////////////////////////////
-
-	//
-	// Should be able to support various parameters of function.
-	//
-	// like, int service_printf(int, ...);
-	//
-	void test_func1_should_invoke_service_printf()
+   void tearDown()
    {
-		char* s = "abc";
+      MOCKCPP_NS_OBJ_VERIFY_AND_RESET(Global);
+   }
 
+   /////////////////////////////////////////////////////////
+
+   //
+   // Should be able to support various parameters of function.
+   //
+   // like, int service_printf(int, ...);
+   //
+   void test_func1_should_invoke_service_printf()
+   {
       MOCKER(service_printf)
         .expects(once())
         .with(eq(10), eq(true), eq(2.0))
@@ -84,10 +82,8 @@ public:
    // except for the first several ones, you can specify them by using
    // any() constraint.
    //
-	void test_func1_should_invoke_service_printf_with_any_constraints()
+   void test_func1_should_invoke_service_printf_with_any_constraints()
    {
-		char* s = "abc";
-
       MOCKER(service_printf)
         .expects(once())
         .with(eq(10), eq(true), any())
@@ -102,10 +98,8 @@ public:
    // except for the first several ones, you don't have to specify 
    // the constraints by using any(), just left it blank.
    //
-	void test_func1_should_invoke_service_printf_with_less_constraints()
+   void test_func1_should_invoke_service_printf_with_less_constraints()
    {
-		char* s = "abc";
-
       MOCKER(service_printf)
         .expects(once())
         .with(eq(10), eq(true) /*, any() */)
@@ -114,12 +108,11 @@ public:
       func1(); 
    }
 
-	//
-	// a function without return value (void) 
-	// should be supported, and you can't specify 
-	// a return value by will(returnValue(v)).
-	//
-	//
+   //
+   // a function without return value (void) 
+   // should be supported, and you can't specify 
+   // a return value by will(returnValue(v)).
+   //
    void test_func2_should_invoke_service_f1()
    {
       int i = 20;
@@ -166,11 +159,11 @@ public:
       func2(&i);
    }
 
-	//
-	// Since the default return value of service_f1
-	// was specified in setUp(), here, you don't have
-	// to specify it if you want to use same one.
-	//
+   //
+   // Since the default return value of service_f1
+   // was specified in setUp(), here, you don't have
+   // to specify it if you want to use same one.
+   //
    void test_func2_should_invoke_service_f5()
    {
       int i = 10;
@@ -382,7 +375,7 @@ public:
    //
    void test_func6_should_invoke_service_f7()
    {
-     char* s0 = "abcdefg";
+     char* s0 = (char*)"abcdefg";
      char  s1[20];
 
      MOCKER(service_f7)
@@ -419,32 +412,32 @@ public:
 
 
    //
-	// When trying to expect 2 const char* or char* are equal,
-	// you can use constraint mirror() to compare 2 string 
-	// are equal. 
-	//
-	// Constraint eq(char*) are used to compare the equality
-	// the 2 pointers of char type.
-	//
-	// If your intention is to compare the string, you have to
-	// give the length, mockpp merely takes it as a buffer, just
-	// like a void* buffer. If the length you want to specify
-	// is strlen(s) + 1, you can use contraint smirror(s) instead,
-	// which is a facility.
-	//
+   // When trying to expect 2 const char* or char* are equal,
+   // you can use constraint mirror() to compare 2 string 
+   // are equal. 
+   //
+   // Constraint eq(char*) are used to compare the equality
+   // the 2 pointers of char type.
+   //
+   // If your intention is to compare the string, you have to
+   // give the length, mockpp merely takes it as a buffer, just
+   // like a void* buffer. If the length you want to specify
+   // is strlen(s) + 1, you can use contraint smirror(s) instead,
+   // which is a facility.
+   //
    void test_func6_should_invoke_service_f7_with_mirror()
    {
-     char* s0 = "abcdefg";
-     char  s1[20];
+      char* s0 = (char*)"abcdefg";
+      char  s1[20];
 
-     memset((void*)s1, 0, 20);
+      memset((void*)s1, 0, 20);
 
-	  strcpy(s1, s0);
+      strcpy(s1, s0);
 
-     MOCKER(service_f7)
-       .expects(once())
-       .with(mirror(s1, strlen(s1)+1))
-       .will(returnValue(1));
+      MOCKER(service_f7)
+        .expects(once())
+        .with(mirror(s1, strlen(s1)+1))
+        .will(returnValue(1));
 
       CPPUNIT_ASSERT_EQUAL(1, func6(s0));
    }
@@ -456,17 +449,17 @@ public:
    //
    void test_func6_should_invoke_service_f7_with_smirror()
    {
-     char* s0 = "abcdefg";
-     char  s1[20];
+      char* s0 = (char*)"abcdefg";
+      char  s1[20];
 
-     memset((void*)s1, 0, 20);
+      memset((void*)s1, 0, 20);
 
-	  strcpy(s1, s0);
+      strcpy(s1, s0);
 
-     MOCKER(service_f7)
-       .expects(once())
-       .with(smirror(s1))
-       .will(returnValue(1));
+      MOCKER(service_f7)
+        .expects(once())
+        .with(smirror(s1))
+        .will(returnValue(1));
 
       CPPUNIT_ASSERT_EQUAL(1, func6(s0));
    }
@@ -518,7 +511,7 @@ public:
       CPPUNIT_ASSERT_EQUAL(0, func4(&st2));
    }
 
-	//
+   //
    // Constraint mirror() can be used to compare if contents
    // of 2 buffers are identical. If the buffer are pointed
    // by void*, you have to specify the length of buffer, 
@@ -526,10 +519,10 @@ public:
    //
    void test_func5_should_invoke_service_f6_with_mirror()
    {
-		st_struct_0 st0;
+      st_struct_0 st0;
       st_struct_0 st1;
 
-		// memset them first to make sure padding bytes are same.
+      // memset them first to make sure padding bytes are same.
       memset((void*)&st0, 0, sizeof(st0));
       memset((void*)&st1, 0, sizeof(st1));
 
@@ -605,9 +598,9 @@ public:
    }
    
    //
-	// When trying to outbound a const T*, a runtime exception
-	// will be raised.
-	//
+   // When trying to outbound a const T*, a runtime exception
+   // will be raised.
+   //
    void test_func8_should_invoke_service_f9()
    {
       st_struct_0 st0;
@@ -689,15 +682,15 @@ public:
       CPPUNIT_ASSERT_EQUAL(0, strcmp(st1.field2, ""));
    }
 
-	//
-	// when trying to outbound a const T&, mockpp cannot
-	// distinguish the difference between const reference
-	// and non-constant reference according to current
-	// design.
-	//
-	// In order to keep your code follow the constraint of
-	// C++ spec, you should avoid to do this yourself.
-	//
+   //
+   // when trying to outbound a const T&, mockpp cannot
+   // distinguish the difference between const reference
+   // and non-constant reference according to current
+   // design.
+   //
+   // In order to keep your code follow the constraint of
+   // C++ spec, you should avoid to do this yourself.
+   //
    void test_func7_should_invoke_service_f8_with_outbound()
    {
       st_struct_0 st0;
@@ -720,39 +713,39 @@ public:
       CPPUNIT_ASSERT_EQUAL(0, strcmp(st1.field2, st0.field2));
    }
 
-	//
-	//
-	void test_func11_should_invoke_service_f12()
+   //
+   //
+   void test_func11_should_invoke_service_f12()
    {
-		MOCKER(service_f12)
-			.expects(once())
-			.will(returnValue(2));
+      MOCKER(service_f12)
+	.expects(once())
+	.will(returnValue(2));
 
       CPPUNIT_ASSERT_EQUAL(2, func11());
    }
 
-	//
-	void test_func11_should_invoke_service_f12_with_const_ref_return()
+   //
+   void test_func11_should_invoke_service_f12_with_const_ref_return()
    {
-		MOCKER(service_f12)
-			.expects(once())
-			.will(returnValue((const int)2));
+      MOCKER(service_f12)
+	.expects(once())
+        .will(returnValue((const int)2));
 
       CPPUNIT_ASSERT_EQUAL(2, func11());
    }
 
-	// 
-	void test_func12_should_invoke_service_f14()
+   // 
+   void test_func12_should_invoke_service_f14()
    {
-		st_struct_0 st0;
+      st_struct_0 st0;
 
-		st0.field0 = 100;
+      st0.field0 = 100;
       st0.field1 = 10.1;
       strcpy(st0.field2, "abc");
 
-		MOCKER(service_f14)
-			.expects(once())
-			.will(returnValue(st0));
+      MOCKER(service_f14)
+	.expects(once())
+	.will(returnValue(st0));
 
       st_struct_0 st1 = func12();
 
@@ -761,21 +754,21 @@ public:
       CPPUNIT_ASSERT_EQUAL(0, strcmp(st1.field2, st0.field2));
    }
 
-	//
-	// This is a test for a mock function with the return
-	// type of ref to an object.
-	//
-	void test_func12_should_invoke_service_f14_with_const_ref_return()
+   //
+   // This is a test for a mock function with the return
+   // type of ref to an object.
+   //
+   void test_func12_should_invoke_service_f14_with_const_ref_return()
    {
-		st_struct_0 st0;
+      st_struct_0 st0;
 
-		st0.field0 = 100;
+      st0.field0 = 100;
       st0.field1 = 10.1;
       strcpy(st0.field2, "abc");
 
-		MOCKER(service_f14)
-			.expects(once())
-			.will(returnValue((const st_struct_0)st0));
+      MOCKER(service_f14)
+        .expects(once())
+	.will(returnValue((const st_struct_0)st0));
 
       st_struct_0 st1 = func12();
 
@@ -784,21 +777,21 @@ public:
       CPPUNIT_ASSERT_EQUAL(0, strcmp(st1.field2, st0.field2));
    }
 
-	//
-	// This is a test for a mock function with the return
-	// type of const ref to an object.
-	// 
-	void test_func13_should_invoke_service_f15()
+   //
+   // This is a test for a mock function with the return
+   // type of const ref to an object.
+   // 
+   void test_func13_should_invoke_service_f15()
    {
-		st_struct_0 st0;
+      st_struct_0 st0;
 
-		st0.field0 = 100;
+      st0.field0 = 100;
       st0.field1 = 10.1;
       strcpy(st0.field2, "abc");
 
-		MOCKER(service_f15)
-			.expects(once())
-			.will(returnValue(st0));
+      MOCKER(service_f15)
+	.expects(once())
+	.will(returnValue(st0));
 
       st_struct_0 st1 = func13();
 
@@ -807,35 +800,35 @@ public:
       CPPUNIT_ASSERT_EQUAL(0, strcmp(st1.field2, st0.field2));
    }
 
-	// 
-	// For a function with ref or const ref return value, if users
-	// ignore the return value, a ref to null object(at address 0) 
-	// will be returned. If the tested code is not actually ignore
-	// the return value, the testing program will crash.
-	//
-	// Maybe you think that mockcpp should try to stop the crash
-	// by letting the returned ref refer to a default object; however,
-	// we didn't do this for 3 reasons:
-	//
-	// 1. You should ignore it if you specified ignoreReturnValue in
-	//    your test cases.
-	// 2. If the return type is not ref, but a pointer, we have no way
-	//    to prevent you from using the null pointer, which will also
-	//    make your program crash;
-	// 3. Even if we return a ref refering to a default object, if you
-	//    don't ignore it, it's still likely crashing your program.
-	//
-	void test_func14_should_invoke_service_f15_with_ignore_return()
+   // 
+   // For a function with ref or const ref return value, if users
+   // ignore the return value, a ref to null object(at address 0) 
+   // will be returned. If the tested code is not actually ignore
+   // the return value, the testing program will crash.
+   //
+   // Maybe you think that mockcpp should try to stop the crash
+   // by letting the returned ref refer to a default object; however,
+   // we didn't do this for 3 reasons:
+   //
+   // 1. You should ignore it if you specified ignoreReturnValue in
+   //    your test cases.
+   // 2. If the return type is not ref, but a pointer, we have no way
+   //    to prevent you from using the null pointer, which will also
+   //    make your program crash;
+   // 3. Even if we return a ref refering to a default object, if you
+   //    don't ignore it, it's still likely crashing your program.
+   //
+   void test_func14_should_invoke_service_f15_with_ignore_return()
    {
-		st_struct_0 st0;
+      st_struct_0 st0;
 
-		st0.field0 = 100;
+      st0.field0 = 100;
       st0.field1 = 10.1;
       strcpy(st0.field2, "abc");
 
-		MOCKER(service_f15)
-			.expects(once())
-			.will(ignoreReturnValue());
+      MOCKER(service_f15)
+        .expects(once())
+	.will(ignoreReturnValue());
 
       func14();
    }
