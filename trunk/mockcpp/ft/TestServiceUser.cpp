@@ -2,7 +2,7 @@
 #include <cppunit/extensions/HelperMacros.h>
 
 #include <ChainingMockHelper.h>
-#include <MockService.h>
+#include <Functor.h>
 
 #include <ServiceUser.c>
 
@@ -56,7 +56,7 @@ public:
 
    void tearDown()
    {
-      MOCKCPP_NS_OBJ_VERIFY_AND_RESET(Global);
+      GlobalMockObject::verify();
    }
 
    /////////////////////////////////////////////////////////
@@ -611,8 +611,8 @@ public:
       strcpy(st0.field2, "abc");
 
       MOCKER(service_f9)
-        .expects(once())
-        .with(outBoundP((const st_struct_0*)&st0))
+        .stubs()
+        .with(outBoundP((const st_struct_0*)&st1))
         .will(returnValue(1));
 
       bool hasException =  false;
@@ -626,8 +626,6 @@ public:
       }
 
       CPPUNIT_ASSERT(hasException);
-
-		MOCKCPP_NS_OBJ_RESET(Global);
    }
 
    //

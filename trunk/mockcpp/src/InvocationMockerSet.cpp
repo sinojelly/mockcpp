@@ -77,13 +77,13 @@ InvocationMockerSet::addInvocationMocker(InvocationMocker* mocker)
 std::string
 InvocationMockerSet::toString() const
 {
-	oss_t oss;
-	ConstIterator i = mockers.begin();
-   for(; i != mockers.end(); i++) {
+    oss_t oss;
+    ConstIterator i = mockers.begin();
+    for(; i != mockers.end(); i++) {
       oss << (*i)->toString() << "\n\n"; 
-   }
+    }
 
-   return oss.str();
+    return oss.str();
 }
 
 //////////////////////////////////////////////////////////////

@@ -5,16 +5,15 @@ MOCKCPP_NS_START
 
 //////////////////////////////////////////////////////
 template <class Builder>
-InvocationMockBuilder<Builder>::
-InvocationMockBuilder(InvocationMocker* mocker)
+InvocationMockBuilder<Builder>::InvocationMockBuilder(InvocationMocker* mocker)
 	: invocationMocker(mocker)
-{}
+{
+}
 
 //////////////////////////////////////////////////////
 template <class Builder>
 InvocationMocker*
-InvocationMockBuilder<Builder>::
-getMocker() const
+InvocationMockBuilder<Builder>::getMocker() const
 {
     return invocationMocker;
 }
