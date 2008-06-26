@@ -31,7 +31,7 @@ public:
 
     void verify();
 
-	 void reset();
+    void reset();
 
 public:
 

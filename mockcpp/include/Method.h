@@ -37,10 +37,11 @@ typedef InvocationMockBuilder<
 ///////////////////////////////////////////////
 struct Method
 {
-	~Method() {}
-	virtual WorkingBuilder stubs() = 0;
-	virtual WorkingBuilder expects(Matcher* matcher) = 0;
-   virtual DefaultBuilder defaults() = 0;
+    virtual WorkingBuilder stubs() = 0;
+    virtual WorkingBuilder expects(Matcher* matcher) = 0;
+    virtual DefaultBuilder defaults() = 0;
+
+    ~Method() {}
 };
 
 ///////////////////////////////////////////////

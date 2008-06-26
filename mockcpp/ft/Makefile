@@ -32,4 +32,7 @@ $(TARGET) : $(OBJS) #$(XMLS)
 	$(CXX) $(CXXFLAGS) $(DEFS) $(INCLUDE) -o $@ -c $<
 
 %.xml : %.cpp
-	$(GCCXML) $(CXXFLAGS) $(DEFS) $(INCLUDE) $< -fxml=$@
+	$(CXX) -fdump-tree-dom $(CXXFLAGS) $(DEFS) $(INCLUDE) $< 
+
+%.original : %
+	$(CXX) -fdump-tree-original $(CXXFLAGS) $(DEFS) $(INCLUDE) $<

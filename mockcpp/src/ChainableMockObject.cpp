@@ -93,14 +93,14 @@ ChainableMockObjectImpl::ChainableMockObjectImpl(const std::string& name)
 InvocationMocker*
 ChainableMockObjectImpl::findInvocationMocker(const std::string& id)
 {
-	for (Iterator i = methods.begin(); i != methods.end(); ++i)
+   for (Iterator i = methods.begin(); i != methods.end(); ++i)
    {
-		InvocationMocker* mocker = (*i)->getInvocationMocker(id);
+      InvocationMocker* mocker = (*i)->getInvocationMocker(id);
       if(mocker != 0)
       {
          return mocker;
-		}
-	}
+      }
+   }
 
    return 0;
 }

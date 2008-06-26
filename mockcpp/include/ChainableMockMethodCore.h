@@ -23,44 +23,44 @@ class ChainableMockMethodCore
 {
 public:
 
-	ChainableMockMethodCore(const std::string& name, const Namespace* ns);
-	~ChainableMockMethodCore();
+    ChainableMockMethodCore(const std::string& name, const Namespace* ns);
+    ~ChainableMockMethodCore();
 
-	std::string& getName(void) const;
-   Namespace* getNamespace() const;
+    std::string& getName(void) const;
+    Namespace* getNamespace() const;
 
-   Any invoke( const RefAny& p1 
-             , const RefAny& p2
-             , const RefAny& p3
-             , const RefAny& p4
-             , const RefAny& p5
-             , const RefAny& p6
-             , const RefAny& p7
-             , const RefAny& p8
-             , const RefAny& p9
-             , const RefAny& p10
-             , const RefAny& p11
-             , const RefAny& p12
-             , SelfDescribe* &resultProvider);
+    Any invoke( const RefAny& p1 
+              , const RefAny& p2
+              , const RefAny& p3
+              , const RefAny& p4
+              , const RefAny& p5
+              , const RefAny& p6
+              , const RefAny& p7
+              , const RefAny& p8
+              , const RefAny& p9
+              , const RefAny& p10
+              , const RefAny& p11
+              , const RefAny& p12
+              , SelfDescribe* &resultProvider);
 
-   void setDefaultStub(Stub* stub);
+    void setDefaultStub(Stub* stub);
 
-	WorkingBuilder stubs();
-	WorkingBuilder expects(Matcher* matcher);
-   DefaultBuilder defaults();
+    WorkingBuilder stubs();
+    WorkingBuilder expects(Matcher* matcher);
+    DefaultBuilder defaults();
 
-	void reset();
+    void reset();
 
-   void verify();
+    void verify();
 
 public:
 
-	InvocationMocker* getInvocationMocker(const std::string& id);
-   void addInvocationMocker(InvocationMocker* mocker);
+    InvocationMocker* getInvocationMocker(const std::string& id);
+    void addInvocationMocker(InvocationMocker* mocker);
 
 private:
 
-   ChainableMockMethodCoreImpl* This;
+    ChainableMockMethodCoreImpl* This;
 };
 
 MOCKCPP_NS_END

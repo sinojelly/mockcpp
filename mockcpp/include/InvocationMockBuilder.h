@@ -14,13 +14,16 @@ template <typename Builder = DummyBuilder>
 class InvocationMockBuilder : public Builder
 {
 public:
-    InvocationMockBuilder(InvocationMocker* mocker);
+
+   InvocationMockBuilder(InvocationMocker* mocker);
 
 private:
-    virtual InvocationMocker* getMocker() const;
+
+   virtual InvocationMocker* getMocker() const;
 
 private:
-    InvocationMocker* invocationMocker;
+
+   InvocationMocker* invocationMocker;
 };
 
 MOCKCPP_NS_END

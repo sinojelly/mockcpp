@@ -16,5 +16,16 @@ long service_f5(const int&);
 
 int service_printf(int, ...);
 
+int service_f6(void*);
+int service_f7(char*);
+int service_f8(const st_struct_0&);
+int service_f9(const st_struct_0*);
+int service_f10(st_struct_0&);
+int service_f11(st_struct_0);
+int& service_f12();
+const int& service_f13();
+st_struct_0& service_f14();
+const st_struct_0& service_f15();
+
 #endif
 

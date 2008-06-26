@@ -39,7 +39,7 @@ int func4(st_struct_0* st)
 
 int func5(void* p)
 {
-   return MOCKABLE(service_f6(p));
+   return MOCKABLE(service_f6)(p);
 }
 
 int func6(char* s)

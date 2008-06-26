@@ -29,7 +29,7 @@ struct InvocationMockerImpl
 	///////////////////////////////////////////////////
     InvocationMockerImpl(ChainableMockMethodCore* core)
 		: coreMocker(core), hasBeenInvoked(false), id(0), stub(0)
-	 {}
+    {}
 
     ~InvocationMockerImpl()
     { reset(); }
@@ -38,7 +38,7 @@ struct InvocationMockerImpl
     void increaseInvoked(const Invocation& inv);
     Any& invoke(const Invocation& inv);
 
-	 void reset();
+    void reset();
     void verify();
     std::string toString() const;
 };
@@ -57,55 +57,70 @@ const std::string& space()
 std::string
 InvocationMockerImpl::toString() const
 {
-	std::ostringstream ss;
+    std::ostringstream ss;
 
-   ss << coreMocker->getNamespace()->getName()
-      << "::method(" << coreMocker->getName() <<  ")";
+    ss << coreMocker->getNamespace()->getName()
+       << "::method(" << coreMocker->getName() << ")";
 
-	for(ConstIterator i = matchers.begin(); i != matchers.end(); ++i) {
+    for (ConstIterator i = matchers.begin(); i != matchers.end(); ++i)
+    {
       ss << "\n" << space() << (*i)->toString();
-	}
+    }
 
-   if(stub != 0) {
+    if (stub != 0)
+    {
       ss << "\n" << space() << stub->toString();
-   }
+    }
 
-   if(id != 0) {
+    if(id != 0)
+    {
       ss << "\n" << space() << id->toString();
-   }
+    }
    
-   ss << ";";
+    ss << ";";
 
-	return ss.str();
+    return ss.str();
 }
+
 /////////////////////////////////////////////////////////
-namespace {
-void verifyMatcher(Matcher* matcher)
+namespace
 {
-    matcher->verify();
-}}
+    void verifyMatcher(Matcher* matcher)
+    {
+      matcher->verify();
+    }
+}
+
 /////////////////////////////////////////////////////////
 void InvocationMockerImpl::verify()
 {
     for_each(matchers.begin(), matchers.end(), verifyMatcher);
 }
+
 /////////////////////////////////////////////////////////
-namespace {
-void deleteMatcher(Matcher* matcher)
+namespace
 {
-    delete matcher;
-}}
+    void deleteMatcher(Matcher* matcher)
+    {
+      delete matcher;
+    }
+}
 
 ///////////////////////////////////////////////////////////
 void InvocationMockerImpl::reset()
 {
     for_each(matchers.begin(), matchers.end(), deleteMatcher);
-	 matchers.clear();
-    if(stub != 0) {
+
+    matchers.clear();
+
+    if (stub != 0)
+    {
       delete stub;
       stub = 0;
     }
-    if(id != 0) {
+
+    if (id != 0)
+    {
       delete id;
       id = 0;
     }
@@ -116,22 +131,27 @@ bool
 InvocationMockerImpl::matches(const Invocation& inv) const
 {
     ConstIterator i = matchers.begin();
-    for(; i != matchers.end(); ++i) {
-      if(!(*i)->matches(inv)) {
+    for (; i != matchers.end(); ++i)
+    {
+      if (!(*i)->matches(inv))
+      {
         return false;
       }
     }
 
     return true;
 }
+
 ///////////////////////////////////////////////////////////
 void
 InvocationMockerImpl::increaseInvoked(const Invocation& inv) 
 {
-    for(Iterator i = matchers.begin(); i != matchers.end(); ++i) {
-       (*i)->increaseInvoked(inv);
+    for (Iterator i = matchers.begin(); i != matchers.end(); ++i)
+    {
+      (*i)->increaseInvoked(inv);
     }
 }
+
 ///////////////////////////////////////////////////////////
 Any&
 InvocationMockerImpl::invoke(const Invocation& inv)
@@ -140,7 +160,8 @@ InvocationMockerImpl::invoke(const Invocation& inv)
 
     hasBeenInvoked = true;
 
-    if(stub != 0) {
+    if (stub != 0)
+    {
       return stub->invoke(inv);
     } 
 
@@ -165,10 +186,11 @@ InvocationMocker::getMethod() const
 {
     return This->coreMocker;
 }
+
 ///////////////////////////////////////////////////////////
 void InvocationMocker::setId(InvocationId* id)
 {
-    if(This->id != 0) delete This->id;
+    if (This->id != 0) delete This->id;
 
     This->id = id;
 }
@@ -190,50 +212,53 @@ void InvocationMocker::setStub(Stub* stub)
 {
     This->stub = stub;
 }
+
 ///////////////////////////////////////////////////////////
-const InvocationId* const
-InvocationMocker::getId(void) const
+const InvocationId* const InvocationMocker::getId(void) const
 {
     return This->id;
 }
+
 ///////////////////////////////////////////////////////////
-bool
-InvocationMocker::matches(const Invocation& inv) const
+bool InvocationMocker::matches(const Invocation& inv) const
 {
     return This->matches(inv);
 }
 
 ///////////////////////////////////////////////////////////
-std::string
-InvocationMocker::toString() const
+std::string InvocationMocker::toString() const
 {
     return This->toString();
 }
 
 ///////////////////////////////////////////////////////////
-Any&
-InvocationMocker::invoke(const Invocation& inv)
+Any& InvocationMocker::invoke(const Invocation& inv)
 {
-    try {
+    try
+    {
       return This->invoke(inv);
     }
-    catch(Exception& ex) {
-       MOCKCPP_FAIL(ex.getMessage() + "\n" +
+    catch (Exception& ex)
+    {
+      MOCKCPP_FAIL(ex.getMessage() + "\n" +
                     This->toString());
     }
 }
+
 ///////////////////////////////////////////////////////////
-void
-InvocationMocker::verify()
+void InvocationMocker::verify()
 {
-    try {
-		 This->verify();
+    try
+    {
+      This->verify();
     }
-    catch(Exception& ex) {
-       MOCKCPP_FAIL(ex.getMessage() + "\n" +
+    catch (Exception& ex)
+    {
+      MOCKCPP_FAIL(ex.getMessage() + "\n" +
                     This->toString());
     }
 }
+
 ///////////////////////////////////////////////////////////
 
 MOCKCPP_NS_END
