@@ -1,12 +1,9 @@
 
 #include <cppunit/extensions/HelperMacros.h>
 
-#include <ChainingMockHelper.h>
-#include <Functor.h>
+#include <mokc.h>
 
 #include <ServiceUser.c>
-
-using namespace mockcpp;
 
 class TestService : public CPPUNIT_NS::TestFixture
 {
@@ -489,8 +486,8 @@ public:
       st_struct_0 st1;
       st_struct_0 st2;
 
-		// memset them first to make sure padding bytes are same.
-		memset((void*)&st1, 0, sizeof(st1));
+      // memset them first to make sure padding bytes are same.
+      memset((void*)&st1, 0, sizeof(st1));
       memset((void*)&st2, 0, sizeof(st2));
 
       st1.field0 = 101;
@@ -573,7 +570,7 @@ public:
    void test_func7_should_invoke_service_f8()
    {
 #if defined(__GNUC__) && (__GNUC__ > 3)
-		st_struct_0 st0;
+      st_struct_0 st0;
       st_struct_0 st1;
 
 		// memset them first to make sure padding bytes are same.
@@ -588,7 +585,7 @@ public:
       st1.field1 = 10.1;
       strcpy(st1.field2, "abc");
 
-		MOCKER(service_f8)
+      MOCKER(service_f8)
         .expects(once())
         .with(mirror(st0))
         .will(returnValue(1));
@@ -716,8 +713,8 @@ public:
    void test_func11_should_invoke_service_f12()
    {
       MOCKER(service_f12)
-	.expects(once())
-	.will(returnValue(2));
+        .expects(once())
+        .will(returnValue(2));
 
       CPPUNIT_ASSERT_EQUAL(2, func11());
    }
@@ -726,7 +723,7 @@ public:
    void test_func11_should_invoke_service_f12_with_const_ref_return()
    {
       MOCKER(service_f12)
-	.expects(once())
+        .expects(once())
         .will(returnValue((const int)2));
 
       CPPUNIT_ASSERT_EQUAL(2, func11());
@@ -742,8 +739,8 @@ public:
       strcpy(st0.field2, "abc");
 
       MOCKER(service_f14)
-	.expects(once())
-	.will(returnValue(st0));
+        .expects(once())
+        .will(returnValue(st0));
 
       st_struct_0 st1 = func12();
 
@@ -766,7 +763,7 @@ public:
 
       MOCKER(service_f14)
         .expects(once())
-	.will(returnValue((const st_struct_0)st0));
+        .will(returnValue((const st_struct_0)st0));
 
       st_struct_0 st1 = func12();
 
@@ -788,8 +785,8 @@ public:
       strcpy(st0.field2, "abc");
 
       MOCKER(service_f15)
-	.expects(once())
-	.will(returnValue(st0));
+        .expects(once())
+        .will(returnValue(st0));
 
       st_struct_0 st1 = func13();
 
@@ -826,7 +823,7 @@ public:
 
       MOCKER(service_f15)
         .expects(once())
-	.will(ignoreReturnValue());
+        .will(ignoreReturnValue());
 
       func14();
    }

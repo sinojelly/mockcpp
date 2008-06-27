@@ -334,10 +334,6 @@ struct Functor<RT(P1,...)> : public BaseFunctor
 
 MOCKCPP_NS_END
 
-////////////////////////////////////////////
-#define MOCKABLE(function) MOCKCPP_NS::Functor<typeof(function)>(#function)
-#define MOCKER(function) MOCKCPP_NS::GlobalMockObject::instance.method(#function)
-
 
 #endif
 
