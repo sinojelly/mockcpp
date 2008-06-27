@@ -755,6 +755,7 @@ public:
    //
    void test_func12_should_invoke_service_f14_with_const_ref_return()
    {
+#if defined(__GNUC__) && (__GNUC__ > 4) && (__GNUC_MINOR__ > 2)
       st_struct_0 st0;
 
       st0.field0 = 100;
@@ -770,6 +771,7 @@ public:
       CPPUNIT_ASSERT_EQUAL(st1.field0, st0.field0);
       CPPUNIT_ASSERT_EQUAL(st1.field1, st0.field1);
       CPPUNIT_ASSERT_EQUAL(0, strcmp(st1.field2, st0.field2));
+#endif
    }
 
    //
@@ -778,6 +780,7 @@ public:
    // 
    void test_func13_should_invoke_service_f15()
    {
+#if defined(__GNUC__) && (__GNUC__ > 4) && (__GNUC_MINOR__ > 2)
       st_struct_0 st0;
 
       st0.field0 = 100;
@@ -793,6 +796,7 @@ public:
       CPPUNIT_ASSERT_EQUAL(st1.field0, st0.field0);
       CPPUNIT_ASSERT_EQUAL(st1.field1, st0.field1);
       CPPUNIT_ASSERT_EQUAL(0, strcmp(st1.field2, st0.field2));
+#endif
    }
 
    // 
@@ -815,6 +819,7 @@ public:
    //
    void test_func14_should_invoke_service_f15_with_ignore_return()
    {
+#if defined(__GNUC__) && (__GNUC__ > 4) && (__GNUC_MINOR__ > 2)
       st_struct_0 st0;
 
       st0.field0 = 100;
@@ -826,7 +831,9 @@ public:
         .will(ignoreReturnValue());
 
       func14();
+#endif
    }
+
 };
 
 CPPUNIT_TEST_SUITE_REGISTRATION( TestService );
