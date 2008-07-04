@@ -1,48 +1,16 @@
 
-#include <cppunit/extensions/HelperMacros.h>
-
+#include <cxxtest/TestSuite.h>
 #include <mokc.h>
-
 #include <ServiceUser.c>
-
-class TestService : public CPPUNIT_NS::TestFixture
+          
+class TestServiceUser: public CxxTest::TestSuite 
 {
-	CPPUNIT_TEST_SUITE( TestService );
-	CPPUNIT_TEST( test_func1_should_invoke_service_printf );
-	CPPUNIT_TEST( test_func1_should_invoke_service_printf_with_any_constraints );
-	CPPUNIT_TEST( test_func1_should_invoke_service_printf_with_less_constraints );
-	CPPUNIT_TEST( test_func2_should_invoke_service_f1 );
-	CPPUNIT_TEST( test_func2_should_invoke_service_f1_with_any_constraint );
-	CPPUNIT_TEST( test_func2_should_invoke_service_f1_with_less_constraint );
-	CPPUNIT_TEST( test_func2_should_invoke_service_f5 );
-	CPPUNIT_TEST( test_func3_should_invoke_service_f2 );
-	CPPUNIT_TEST( test_func3_should_invoke_service_f2_with_ignore_return );
-	CPPUNIT_TEST( test_func4_should_invoke_service_f0 );
-	CPPUNIT_TEST( test_func4_should_invoke_service_f0_with_eq );
-	CPPUNIT_TEST( test_func4_should_invoke_service_f0_with_size );
-	CPPUNIT_TEST( test_func4_should_invoke_service_f0_with_mirror);
-	CPPUNIT_TEST( test_func5_should_invoke_service_f6 );
-	CPPUNIT_TEST( test_func5_should_invoke_service_f6_with_eq );
-	CPPUNIT_TEST( test_func6_should_invoke_service_f7 );
-	CPPUNIT_TEST( test_func6_should_invoke_service_f7_as_simple_char );
-	CPPUNIT_TEST( test_func5_should_invoke_service_f6_with_mirror );
-	CPPUNIT_TEST( test_func6_should_invoke_service_f7_with_mirror );
-	CPPUNIT_TEST( test_func6_should_invoke_service_f7_with_mirror_for_char );
-	CPPUNIT_TEST( test_func6_should_invoke_service_f7_with_smirror );
-	CPPUNIT_TEST( test_func7_should_invoke_service_f8 );
-	CPPUNIT_TEST( test_func8_should_invoke_service_f9 );
-	CPPUNIT_TEST( test_func9_should_invoke_service_f10 );
-	CPPUNIT_TEST( test_func10_should_invoke_service_f11 );
-	CPPUNIT_TEST( test_func7_should_invoke_service_f8_with_outbound );
-	CPPUNIT_TEST( test_func11_should_invoke_service_f12 );
-	CPPUNIT_TEST( test_func11_should_invoke_service_f12_with_const_ref_return );
-	CPPUNIT_TEST( test_func12_should_invoke_service_f14 );
-	CPPUNIT_TEST( test_func12_should_invoke_service_f14_with_const_ref_return );
-	CPPUNIT_TEST( test_func13_should_invoke_service_f15 );
-	CPPUNIT_TEST( test_func14_should_invoke_service_f15_with_ignore_return );
-	CPPUNIT_TEST_SUITE_END();
-
 public:
+   // void testAddition( void )
+   // {
+   //   TS_ASSERT( 1 + 1 > 1 );
+   //   TS_ASSERT_EQUALS( 1 + 1, 2 );
+   // }
 
    void setUp()
    {
@@ -173,7 +141,7 @@ public:
         .with(eq(i))
         .will(returnValue((long)2));
 
-      CPPUNIT_ASSERT_EQUAL((long)2, func2(&i));
+      TS_ASSERT_EQUALS((long)2, func2(&i));
    }
 
    //
@@ -193,8 +161,8 @@ public:
 
       st_struct_1* p = func3();
 
-      CPPUNIT_ASSERT(p != 0);
-      CPPUNIT_ASSERT_EQUAL((long)100, p->field0);
+      TS_ASSERT(p != 0);
+      TS_ASSERT_EQUALS((long)100, p->field0);
    }
 
    //
@@ -216,8 +184,8 @@ public:
 
       st_struct_1* p = func3();
 
-      CPPUNIT_ASSERT(p != 0);
-      CPPUNIT_ASSERT_EQUAL((long)100, p->field0);
+      TS_ASSERT(p != 0);
+      TS_ASSERT_EQUALS((long)100, p->field0);
    }
 
    //
@@ -241,10 +209,10 @@ public:
 
       st_struct_0 st2;
 
-      CPPUNIT_ASSERT_EQUAL(0, func4(&st2));
-      CPPUNIT_ASSERT_EQUAL(st1.field0, st2.field0);
-      CPPUNIT_ASSERT_EQUAL(st1.field1, st2.field1);
-      CPPUNIT_ASSERT_EQUAL(0, strcmp(st1.field2, st2.field2));
+      TS_ASSERT_EQUALS(0, func4(&st2));
+      TS_ASSERT_EQUALS(st1.field0, st2.field0);
+      TS_ASSERT_EQUALS(st1.field1, st2.field1);
+      TS_ASSERT_EQUALS(0, strcmp(st1.field2, st2.field2));
    }
 
    //
@@ -272,15 +240,15 @@ public:
 
       st_struct_0 st2[2];
 
-      CPPUNIT_ASSERT_EQUAL(0, func4(st2));
+      TS_ASSERT_EQUALS(0, func4(st2));
 
-      CPPUNIT_ASSERT_EQUAL(st1[0].field0, st2[0].field0);
-      CPPUNIT_ASSERT_EQUAL(st1[0].field1, st2[0].field1);
-      CPPUNIT_ASSERT_EQUAL(0, strcmp(st1[0].field2, st2[0].field2));
+      TS_ASSERT_EQUALS(st1[0].field0, st2[0].field0);
+      TS_ASSERT_EQUALS(st1[0].field1, st2[0].field1);
+      TS_ASSERT_EQUALS(0, strcmp(st1[0].field2, st2[0].field2));
 
-      CPPUNIT_ASSERT_EQUAL(st1[1].field0, st2[1].field0);
-      CPPUNIT_ASSERT_EQUAL(st1[1].field1, st2[1].field1);
-      CPPUNIT_ASSERT_EQUAL(0, strcmp(st1[1].field2, st2[1].field2));
+      TS_ASSERT_EQUALS(st1[1].field0, st2[1].field0);
+      TS_ASSERT_EQUALS(st1[1].field1, st2[1].field1);
+      TS_ASSERT_EQUALS(0, strcmp(st1[1].field2, st2[1].field2));
    }
 
    //
@@ -305,10 +273,10 @@ public:
              , eq((float)2.19))
         .will(returnValue((st_struct_1*)0));
 
-      CPPUNIT_ASSERT_EQUAL(0, func4(&st2));
-      CPPUNIT_ASSERT_EQUAL(st1.field0, st2.field0);
-      CPPUNIT_ASSERT_EQUAL(st1.field1, st2.field1);
-      CPPUNIT_ASSERT_EQUAL(0, strcmp(st1.field2, st2.field2));
+      TS_ASSERT_EQUALS(0, func4(&st2));
+      TS_ASSERT_EQUALS(st1.field0, st2.field0);
+      TS_ASSERT_EQUALS(st1.field1, st2.field1);
+      TS_ASSERT_EQUALS(0, strcmp(st1.field2, st2.field2));
    }
 
    //
@@ -331,10 +299,10 @@ public:
 
       st_struct_0 st2;
 
-      CPPUNIT_ASSERT_EQUAL(1, func5((void*)&st2));
-      CPPUNIT_ASSERT_EQUAL(st1.field0, st2.field0);
-      CPPUNIT_ASSERT_EQUAL(st1.field1, st2.field1);
-      CPPUNIT_ASSERT_EQUAL(0, strcmp(st1.field2, st2.field2));
+      TS_ASSERT_EQUALS(1, func5((void*)&st2));
+      TS_ASSERT_EQUALS(st1.field0, st2.field0);
+      TS_ASSERT_EQUALS(st1.field1, st2.field1);
+      TS_ASSERT_EQUALS(0, strcmp(st1.field2, st2.field2));
    }
 
    //
@@ -357,10 +325,10 @@ public:
         .with(outBoundP((void*)&st1, sizeof(st_struct_0), eq((void*)&st2)))
         .will(returnValue(1));
 
-      CPPUNIT_ASSERT_EQUAL(1, func5((void*)&st2));
-      CPPUNIT_ASSERT_EQUAL(st1.field0, st2.field0);
-      CPPUNIT_ASSERT_EQUAL(st1.field1, st2.field1);
-      CPPUNIT_ASSERT_EQUAL(0, strcmp(st1.field2, st2.field2));
+      TS_ASSERT_EQUALS(1, func5((void*)&st2));
+      TS_ASSERT_EQUALS(st1.field0, st2.field0);
+      TS_ASSERT_EQUALS(st1.field1, st2.field1);
+      TS_ASSERT_EQUALS(0, strcmp(st1.field2, st2.field2));
    }
 
    //
@@ -383,8 +351,8 @@ public:
        .will(returnValue(1));
 
      
-      CPPUNIT_ASSERT_EQUAL(1, func6(s1));
-      CPPUNIT_ASSERT_EQUAL(0, strcmp(s0, s1));
+      TS_ASSERT_EQUALS(1, func6(s1));
+      TS_ASSERT_EQUALS(0, strcmp(s0, s1));
    }
    
    //
@@ -403,8 +371,8 @@ public:
        .will(returnValue(1));
 
      
-      CPPUNIT_ASSERT_EQUAL(1, func6(&c1));
-      CPPUNIT_ASSERT_EQUAL('a', c1);
+      TS_ASSERT_EQUALS(1, func6(&c1));
+      TS_ASSERT_EQUALS('a', c1);
    }
 
 
@@ -436,7 +404,7 @@ public:
         .with(mirror(s1, strlen(s1)+1))
         .will(returnValue(1));
 
-      CPPUNIT_ASSERT_EQUAL(1, func6(s0));
+      TS_ASSERT_EQUALS(1, func6(s0));
    }
 
    // 
@@ -458,7 +426,7 @@ public:
         .with(smirror(s1))
         .will(returnValue(1));
 
-      CPPUNIT_ASSERT_EQUAL(1, func6(s0));
+      TS_ASSERT_EQUALS(1, func6(s0));
    }
 
    //
@@ -475,7 +443,7 @@ public:
        .with(mirror(&s1))
        .will(returnValue(1));
 
-      CPPUNIT_ASSERT_EQUAL(1, func6(&s0));
+      TS_ASSERT_EQUALS(1, func6(&s0));
    }
 
    // 
@@ -505,7 +473,7 @@ public:
              , eq((float)2.19))
         .will(returnValue((st_struct_1*)0));
 
-      CPPUNIT_ASSERT_EQUAL(0, func4(&st2));
+      TS_ASSERT_EQUALS(0, func4(&st2));
    }
 
    //
@@ -539,7 +507,7 @@ public:
         .with(mirror((void*)&st1, sizeof(st1)))
         .will(returnValue(1));
 
-      CPPUNIT_ASSERT_EQUAL(1, func5((void*)&st0));
+      TS_ASSERT_EQUALS(1, func5((void*)&st0));
    }
 
    //
@@ -590,7 +558,7 @@ public:
         .with(mirror(st0))
         .will(returnValue(1));
 
-      CPPUNIT_ASSERT_EQUAL(1, func7(st1));
+      TS_ASSERT_EQUALS(1, func7(st1));
 #endif
    }
    
@@ -622,7 +590,7 @@ public:
         hasException = true;
       }
 
-      CPPUNIT_ASSERT(hasException);
+      TS_ASSERT(hasException);
    }
 
    //
@@ -642,10 +610,10 @@ public:
         .with(outBound(st0))
         .will(returnValue(1));
 
-      CPPUNIT_ASSERT_EQUAL(1, func9(st1));
-      CPPUNIT_ASSERT_EQUAL(st1.field0, st0.field0);
-      CPPUNIT_ASSERT_EQUAL(st1.field1, st0.field1);
-      CPPUNIT_ASSERT_EQUAL(0, strcmp(st1.field2, st0.field2));
+      TS_ASSERT_EQUALS(1, func9(st1));
+      TS_ASSERT_EQUALS(st1.field0, st0.field0);
+      TS_ASSERT_EQUALS(st1.field1, st0.field1);
+      TS_ASSERT_EQUALS(0, strcmp(st1.field2, st0.field2));
    }
 
    //
@@ -671,10 +639,10 @@ public:
       st_struct_0 st1;
       memset((void*)&st1, 0, sizeof(st1));
 
-      CPPUNIT_ASSERT_EQUAL(1, func10(st1));
-      CPPUNIT_ASSERT_EQUAL(0, st1.field0);
-      CPPUNIT_ASSERT_EQUAL((float)0.0, st1.field1);
-      CPPUNIT_ASSERT_EQUAL(0, strcmp(st1.field2, ""));
+      TS_ASSERT_EQUALS(1, func10(st1));
+      TS_ASSERT_EQUALS(0, st1.field0);
+      TS_ASSERT_EQUALS((float)0.0, st1.field1);
+      TS_ASSERT_EQUALS(0, strcmp(st1.field2, ""));
    }
 
    //
@@ -701,11 +669,11 @@ public:
 
       st_struct_0 st1;
 
-      CPPUNIT_ASSERT_EQUAL(1, func7(st1));
+      TS_ASSERT_EQUALS(1, func7(st1));
 
-      CPPUNIT_ASSERT_EQUAL(st1.field0, st0.field0);
-      CPPUNIT_ASSERT_EQUAL(st1.field1, st0.field1);
-      CPPUNIT_ASSERT_EQUAL(0, strcmp(st1.field2, st0.field2));
+      TS_ASSERT_EQUALS(st1.field0, st0.field0);
+      TS_ASSERT_EQUALS(st1.field1, st0.field1);
+      TS_ASSERT_EQUALS(0, strcmp(st1.field2, st0.field2));
    }
 
    //
@@ -716,7 +684,7 @@ public:
         .expects(once())
         .will(returnValue(2));
 
-      CPPUNIT_ASSERT_EQUAL(2, func11());
+      TS_ASSERT_EQUALS(2, func11());
    }
 
    //
@@ -726,7 +694,7 @@ public:
         .expects(once())
         .will(returnValue((const int)2));
 
-      CPPUNIT_ASSERT_EQUAL(2, func11());
+      TS_ASSERT_EQUALS(2, func11());
    }
 
    // 
@@ -744,9 +712,9 @@ public:
 
       st_struct_0 st1 = func12();
 
-      CPPUNIT_ASSERT_EQUAL(st1.field0, st0.field0);
-      CPPUNIT_ASSERT_EQUAL(st1.field1, st0.field1);
-      CPPUNIT_ASSERT_EQUAL(0, strcmp(st1.field2, st0.field2));
+      TS_ASSERT_EQUALS(st1.field0, st0.field0);
+      TS_ASSERT_EQUALS(st1.field1, st0.field1);
+      TS_ASSERT_EQUALS(0, strcmp(st1.field2, st0.field2));
    }
 
    //
@@ -768,9 +736,9 @@ public:
 
       st_struct_0 st1 = func12();
 
-      CPPUNIT_ASSERT_EQUAL(st1.field0, st0.field0);
-      CPPUNIT_ASSERT_EQUAL(st1.field1, st0.field1);
-      CPPUNIT_ASSERT_EQUAL(0, strcmp(st1.field2, st0.field2));
+      TS_ASSERT_EQUALS(st1.field0, st0.field0);
+      TS_ASSERT_EQUALS(st1.field1, st0.field1);
+      TS_ASSERT_EQUALS(0, strcmp(st1.field2, st0.field2));
 #endif
    }
 
@@ -793,9 +761,9 @@ public:
 
       st_struct_0 st1 = func13();
 
-      CPPUNIT_ASSERT_EQUAL(st1.field0, st0.field0);
-      CPPUNIT_ASSERT_EQUAL(st1.field1, st0.field1);
-      CPPUNIT_ASSERT_EQUAL(0, strcmp(st1.field2, st0.field2));
+      TS_ASSERT_EQUALS(st1.field0, st0.field0);
+      TS_ASSERT_EQUALS(st1.field1, st0.field1);
+      TS_ASSERT_EQUALS(0, strcmp(st1.field2, st0.field2));
 #endif
    }
 
@@ -836,4 +804,3 @@ public:
 
 };
 
-CPPUNIT_TEST_SUITE_REGISTRATION( TestService );

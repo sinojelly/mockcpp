@@ -37,25 +37,25 @@ private:
     const ValueType& ref;
 };
 
-template<>
-class RefHolder<const char*> : public Holder<const char*>
+#if 0
+template <typename T>
+class PCharRefHolder : public Holder<T>
 {
 public:
-
-    typedef Holder<const char*>::Type Type;
-
-    RefHolder(const char* value)
+    typedef typename Holder<T>::Type Type;
+    
+    PCharRefHolder(T value)
       : ref(strdup(value))
     {
     }
 
-    ~RefHolder()
+    ~PCharRefHolder()
     {
       delete [] ref;
     }
 
     PlaceHolder * clone() const
-    { return new RefHolder(ref); }
+    { return new PCharRefHolder(ref); }
 
     const Type& getValue() const
     {
@@ -70,8 +70,31 @@ public:
 
 private:
 
-    const char* ref;
+    T ref;
 };
+
+template<>
+class RefHolder<const char*> : public PCharRefHolder<const char*>
+{
+public:
+
+    RefHolder(const char* value)
+      : PCharRefHolder<const char*>(value)
+    {}
+};
+
+template<>
+class RefHolder<char*> : public PCharRefHolder<char*>
+{
+public:
+
+    RefHolder(char* value)
+      : PCharRefHolder<char*>(value)
+    {}
+};
+
+#endif
+
 MOCKCPP_NS_END
 
 

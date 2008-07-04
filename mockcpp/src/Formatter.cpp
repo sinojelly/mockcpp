@@ -20,7 +20,11 @@ std::string toPCharStr(const T& s)
 	if(s == 0)
       oss << "NULL";
 	else
-		oss << "\"" << s << "\"";
+#if 0
+	  oss << "\"" << s << "\"";
+#endif
+
+    oss << (void*) s;
 
 	return oss.str();
 }

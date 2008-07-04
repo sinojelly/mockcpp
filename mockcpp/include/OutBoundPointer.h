@@ -23,8 +23,22 @@ class OutBoundPointerBase<T*>: public DecoratedConstraint
 {
 public:
     OutBoundPointerBase(T* p, size_t size, Constraint* constraint)
-      : pointer(p), sizeOfBuffer(size), DecoratedConstraint(constraint)
+      : sizeOfBuffer(size), DecoratedConstraint(constraint)
     {
+      if (size != 0)
+      {
+        pointer = (T*)(new char [size+1]);
+        ::memset((void*)pointer, 0, size+1);
+        ::memcpy((void*)pointer, (void*)p, size);
+      }
+    }
+
+    ~OutBoundPointerBase()
+    {
+      if (pointer != 0)
+      {
+        delete [] (char*)pointer;
+      }
     }
 
     bool evalSelf(const RefAny& val) const

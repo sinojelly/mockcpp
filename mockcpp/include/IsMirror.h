@@ -27,7 +27,8 @@ public:
     {
       if (size != 0)
       {
-        pointer = (T*)(new char [sizeOfBuffer]);
+        pointer = (T*)(new char [sizeOfBuffer+1]);
+        ::memset((void*)pointer, 0, sizeOfBuffer+1);
         ::memcpy((void*)pointer, (void*)p, sizeOfBuffer);
       }
     }

@@ -13,20 +13,19 @@ struct RefAny : public AnyBase
 {
 public: 
 
-   RefAny() {}
+   RefAny();
 
    template <typename ValueType>
    RefAny(const ValueType& value)
       : AnyBase(new RefHolder<ValueType>(value))
    {}
 
-   RefAny(const char* value)
-      : AnyBase(new RefHolder<const char*>(value))
-   {}
+#if 0
+   RefAny(const char* value);
+   RefAny(char* value);
+#endif
 
-   RefAny(const RefAny & other)
-      : AnyBase(other.getContent() ? other.getContent()->clone() : 0)
-   {}
+   RefAny(const RefAny & other);
 
 public:
 
@@ -37,20 +36,16 @@ public:
       return *this;
    }
 
-   RefAny& operator=(const RefAny & rhs)
-   {
-      RefAny(rhs).swap(*this);
-      return *this;
-   }
+   RefAny& operator=(const RefAny & rhs);
 
-	template <typename ValueType>
+   template <typename ValueType>
    bool changeValue(const ValueType& val)
    {
       RefHolder<ValueType>* p = dynamic_cast<RefHolder<ValueType>*>(getContent());
       if (p == 0)
       {
-			return false;
-		}
+         return false;
+      }
 
       p->changeValue(val);
 
@@ -62,10 +57,7 @@ public:
 /////////////////////////////////////////////////////
 const RefAny EmptyRefAny;
 
-inline RefAny& getEmptyRefAny()
-{
-    return const_cast<RefAny&>(EmptyRefAny);
-}
+RefAny& getEmptyRefAny();
 /////////////////////////////////////////////////////
 
 MOCKCPP_NS_END
