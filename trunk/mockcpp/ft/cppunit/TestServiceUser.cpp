@@ -10,9 +10,13 @@
 
 using namespace std;
 
-int __service_f7_stub(const char*)
+int __service_f7_stub(char*)
 {
    return 101;
+}
+
+void __service_f1_stub(int p1, const int* p2)
+{
 }
 
 class TestService : public CPPUNIT_NS::TestFixture
@@ -22,6 +26,7 @@ class TestService : public CPPUNIT_NS::TestFixture
 	CPPUNIT_TEST( test_func1_should_invoke_service_printf_with_any_constraints );
 	CPPUNIT_TEST( test_func1_should_invoke_service_printf_with_less_constraints );
 	CPPUNIT_TEST( test_func2_should_invoke_service_f1 );
+	CPPUNIT_TEST( test_func2_should_invoke_service_f1_with_invoke_stub );
 	CPPUNIT_TEST( test_func2_should_invoke_service_f1_with_any_constraint );
 	CPPUNIT_TEST( test_func2_should_invoke_service_f1_with_less_constraint );
 	CPPUNIT_TEST( test_func2_should_invoke_service_f5 );
@@ -129,6 +134,21 @@ public:
         .expects(once())
         .with(eq(10), eq<const int*>(&i));
         //.will(returnValue(0)); // This will result in runtime error
+
+      func2(&i);
+   }
+
+   //
+   //
+   //
+   void test_func2_should_invoke_service_f1_with_invoke_stub()
+   {
+      int i = 20;
+
+      MOCKER(service_f1)
+        .expects(once())
+        .with(eq(10), eq<const int*>(&i))
+        .will(invoke(__service_f1_stub)); 
 
       func2(&i);
    }
