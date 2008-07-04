@@ -12,21 +12,18 @@ MOCKCPP_NS_START
 
 struct Any : public AnyBase
 {
-	Any() {}
+   Any();
 
    template <typename ValueType>
    Any(const ValueType& value)
       : AnyBase(new ValueHolder<ValueType>(value))
    {}
 
-   Any(const char* value)
-      : AnyBase(new ValueHolder<const char*>(value))
-   {}
+#if 0
+   Any(const char* value);
+#endif
    
-
-   Any(const Any & other)
-      : AnyBase(other.getContent() ? other.getContent()->clone() : 0)
-   {}
+   Any(const Any & other);
 
 public:
 
@@ -37,33 +34,18 @@ public:
       return *this;
    }
 
-   Any& operator=(const Any & rhs)
-   {
-      Any(rhs).swap(*this);
-      return *this;
-   }
+   Any& operator=(const Any & rhs);
 
 };
 
 /////////////////////////////////////////////////////////////////
 const Any EmptyAny;
 
-inline Any& getEmptyAny()
-{
-    return const_cast<Any&>(EmptyAny);
-}
-
 const Any VoidAny = Any(Void());
 
-inline Any& getVoidAny()
-{
-    return const_cast<Any&>(VoidAny);
-}
-
-inline bool isVoidAny(const Any& val)
-{
-    return val.type() == VoidAny.type(); 
-}
+Any& getEmptyAny();
+Any& getVoidAny();
+bool isVoidAny(const Any& val);
 
 /////////////////////////////////////////////////////////////////
 

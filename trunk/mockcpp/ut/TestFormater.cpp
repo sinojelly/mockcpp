@@ -129,16 +129,18 @@ public:
 
 	void testShouldBeAbleToStringnizePChar()
 	{
-		char* s = "abc";
-		std::string expected("(char*)\"abc\"");
-      CPPUNIT_ASSERT_EQUAL(expected, toTypeAndValueString(s));
+		char* s = (char*)"abc";
+        oss_t oss;
+        oss << "(char*)" << (void*)s ;
+      CPPUNIT_ASSERT_EQUAL(oss.str(), toTypeAndValueString(s));
 	}
 
 	void testShouldBeAbleToStringnizeConstPChar()
 	{
 		const char* s = "abc";
-		std::string expected("(const char*)\"abc\"");
-      CPPUNIT_ASSERT_EQUAL(expected, toTypeAndValueString(s));
+        oss_t oss;
+        oss << "(const char*)" << (void*)s ;
+      CPPUNIT_ASSERT_EQUAL(oss.str(), toTypeAndValueString(s));
 	}
 
 	void testShouldBeAbleToStringnizeNullPChar()

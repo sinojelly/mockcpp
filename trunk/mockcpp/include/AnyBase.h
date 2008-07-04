@@ -13,46 +13,29 @@ struct AnyBase
 {
 public: 
 
-    AnyBase(void)
-       : content(0)
-    {}
+    AnyBase(void);
 
-    AnyBase(PlaceHolder* holder)
-		: content(holder)
-    {}
+    AnyBase(PlaceHolder* holder);
 
-    ~AnyBase()
-    { delete content; }
+    ~AnyBase();
 
 public:
 
-    bool empty() const
-    { return !content; }
+    bool empty() const;
 
-    const std::type_info & type() const
-    { return content ? content->type() : typeid(void); }
+    const std::type_info & type() const;
 
-    std::string toString() const
-    { return (content==0 ? std::string("void") : content->toString()); }
+    std::string toString() const;
 
-    std::string toTypeString() const
-    { return (content==0 ? std::string("void") : content->toTypeString()); }
+    std::string toTypeString() const;
 
-    std::string toTypeAndValueString() const
-    { return (content==0 ? std::string("void") : content->toTypeAndValueString()); }
+    std::string toTypeAndValueString() const;
 
 protected:
 
-    AnyBase& swap(AnyBase& rhs)
-    {
-       PlaceHolder* temp = content;
-       content = rhs.content;
-       rhs.content = temp;
-       return *this;
-    }
+    AnyBase& swap(AnyBase& rhs);
 
-    PlaceHolder* getContent() const
-    { return content; }
+    PlaceHolder* getContent() const;
 
 private:
 
@@ -71,14 +54,14 @@ ValueType* any_cast(AnyBase* operand)
    typedef typename TypeTraits<ValueType>::Type nonref;
    typedef Holder<nonref> holder;
 
-	if (operand == 0 || operand->type() != typeid(ValueType))
-	{
-	   return 0;
-	}
+   if (operand == 0 || operand->type() != typeid(ValueType))
+   {
+      return 0;
+   }
 
    holder* p = dynamic_cast<holder*>(operand->getContent());
 
-	return p ? &const_cast<ValueType&>(p->getValue()) : 0;
+   return p ? &const_cast<ValueType&>(p->getValue()) : 0;
 }
 
 /////////////////////////////////////////////////////////////////

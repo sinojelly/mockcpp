@@ -4,6 +4,7 @@
 
 #include <mockcpp.h>
 #include <IsEqual.h>
+#include <IsNotEqual.h>
 #include <IsMirror.h>
 #include <OutBound.h>
 #include <OutBoundPointer.h>
@@ -26,11 +27,19 @@ Constraint* eq(const T& val)
 	return new IsEqual<T>(val);
 }
 
+template <typename T>
+Constraint* neq(const T& val)
+{
+	return new IsNotEqual<T>(val);
+}
+
 ////////////////////////////////////////////////////////////////
+#if 0
 static inline Constraint* eq(const char* s)
 {
    return new IsEqual<const char*>(s);
 }
+#endif
 
 ////////////////////////////////////////////////////////////////
 template <typename T>
