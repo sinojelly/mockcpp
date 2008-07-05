@@ -91,9 +91,7 @@ template <typename R DECL_TEMPLATE_ARGS(n)> \
 Stub* invoke(R(*f)(DECL_ARGS(n)), const char* name = 0) \
 { \
     return new ProcStub<R(DECL_ARGS(n))>(f, name?name:""); \
-}
-
-#define VOID_PROC_STUB_DEF(n) \
+} \
 template <DECL_VOID_TEMPLATE_ARGS(n)> \
 struct ProcStub<void(DECL_ARGS(n))> : public ProcStubBase \
 { \
@@ -111,36 +109,23 @@ struct ProcStub<void(DECL_ARGS(n))> : public ProcStubBase \
  \
 private: \
     Func func; \
-}; 
+}
 
 /////////////////////////////////////////////////////
-VOID_PROC_STUB_DEF(0)
-VOID_PROC_STUB_DEF(1)
-VOID_PROC_STUB_DEF(2)
-VOID_PROC_STUB_DEF(3)
-VOID_PROC_STUB_DEF(4)
-VOID_PROC_STUB_DEF(5)
-VOID_PROC_STUB_DEF(6)
-VOID_PROC_STUB_DEF(7)
-VOID_PROC_STUB_DEF(8)
-VOID_PROC_STUB_DEF(9)
-VOID_PROC_STUB_DEF(10)
-VOID_PROC_STUB_DEF(11)
-VOID_PROC_STUB_DEF(12)
 
-PROC_STUB_DEF(0)
-PROC_STUB_DEF(1)
-PROC_STUB_DEF(2)
-PROC_STUB_DEF(3)
-PROC_STUB_DEF(4)
-PROC_STUB_DEF(5)
-PROC_STUB_DEF(6)
-PROC_STUB_DEF(7)
-PROC_STUB_DEF(8)
-PROC_STUB_DEF(9)
-PROC_STUB_DEF(10)
-PROC_STUB_DEF(11)
-PROC_STUB_DEF(12)
+PROC_STUB_DEF(0);
+PROC_STUB_DEF(1);
+PROC_STUB_DEF(2);
+PROC_STUB_DEF(3);
+PROC_STUB_DEF(4);
+PROC_STUB_DEF(5);
+PROC_STUB_DEF(6);
+PROC_STUB_DEF(7);
+PROC_STUB_DEF(8);
+PROC_STUB_DEF(9);
+PROC_STUB_DEF(10);
+PROC_STUB_DEF(11);
+PROC_STUB_DEF(12);
 
 /////////////////////////////////////////////////////
 
