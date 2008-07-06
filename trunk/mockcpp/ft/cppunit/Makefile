@@ -3,6 +3,9 @@ INCLUDE= -I. -I../../include -I/usr/local/include
 
 CXX=g++
 
+CCMALLOC = #ccmalloc
+LD = $(CCMALLOC) $(CXX) -o
+
 #GCCXML = gccxml
 
 RM = rm -f
@@ -26,7 +29,7 @@ clean-all:
 	$(RM) $(TARGET) $(TEST_OBJS) $(PRODUCT_OBJS)
 
 $(TARGET) : $(OBJS) #$(XMLS)
-	$(CXX) -o $@ $(OBJS) $(LIBS)
+	$(LD) $@ $(OBJS) $(LIBS)
 
 %.o : %.cpp
 	$(CXX) $(CXXFLAGS) $(DEFS) $(INCLUDE) -o $@ -c $<

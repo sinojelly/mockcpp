@@ -17,12 +17,17 @@ MOCKCPP_NS_START
 
 namespace {
 
+IgnoreResultHandlerFactory ignoreResultHandlerFactory;
+VoidResultHandlerFactory voidResultHandlerFactory;
+NormalResultHandlerFactory normalResultHandlerFactory;
+MismatchResultHandlerFactory mismatchResultHandlerFactory;
+
 ResultHandlerFactory* const resultHandlerFactorys[] =
 {
-   new IgnoreResultHandlerFactory,
-   new VoidResultHandlerFactory,
-   new NormalResultHandlerFactory,
-   new MismatchResultHandlerFactory
+   &ignoreResultHandlerFactory,
+   &voidResultHandlerFactory,
+   &normalResultHandlerFactory,
+   &mismatchResultHandlerFactory
 };
 
 const unsigned int numberOfResultHandlerFactorys = 4;

@@ -13,6 +13,8 @@ struct TypelessStub
 {
     virtual Any& invoke(void) = 0;
     virtual std::string toString(void) const = 0;
+
+    virtual ~TypelessStub() {}
 };
 
 MOCKCPP_NS_END
