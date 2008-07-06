@@ -67,7 +67,7 @@ public:
 		A a;	
 		const A& ref = a;
 
-		std::string expected = std::string("([") + typeid(a).name() + "])unknown";
+		std::string expected = std::string("(") + getDemangledName(typeid(a)) + ")unknown";
       CPPUNIT_ASSERT_EQUAL(expected, toTypeAndValueString(ref));
 	}
 
@@ -76,7 +76,7 @@ public:
 		A a;	
 		A& ref = a;
 
-		std::string expected = std::string("([") + typeid(a).name() + "])unknown";
+		std::string expected = std::string("(") + getDemangledName(typeid(a)) + ")unknown";
       CPPUNIT_ASSERT_EQUAL(expected, toTypeAndValueString(ref));
 	}
 
@@ -84,7 +84,7 @@ public:
 	{
 		const A p = A();	
 
-		std::string expected = std::string("([") + typeid(p).name() + "])unknown";
+		std::string expected = std::string("(") + getDemangledName(typeid(p)) + ")unknown";
       CPPUNIT_ASSERT_EQUAL(expected, toTypeAndValueString(p));
 	}
 
@@ -92,7 +92,7 @@ public:
 	{
 		A p;	
 
-		std::string expected = std::string("([") + typeid(p).name() + "])unknown";
+		std::string expected = std::string("(") + getDemangledName(typeid(p)) + ")unknown";
       CPPUNIT_ASSERT_EQUAL(expected, toTypeAndValueString(p));
 	}
 
@@ -100,7 +100,7 @@ public:
 	{
 		A* p = 0;	
 
-		std::string expected = std::string("([") + typeid(A).name() + "]*)NULL";
+		std::string expected = std::string("(") + getDemangledName(typeid(A)) + "*)NULL";
       CPPUNIT_ASSERT_EQUAL(expected, toTypeAndValueString(p));
 	}
 
@@ -108,7 +108,7 @@ public:
 	{
 		A* p = (A*)0x12ab;	
 
-		std::string expected = std::string("([") + typeid(A).name() + "]*)0x000012ab";
+		std::string expected = std::string("(") + getDemangledName(typeid(A)) + "*)0x000012ab";
       CPPUNIT_ASSERT_EQUAL(expected, toTypeAndValueString(p));
 	}
 
@@ -116,7 +116,7 @@ public:
 	{
 		const A* p = (const A*)0x12ab;	
 
-		std::string expected = std::string("(const [") + typeid(A).name() + "]*)0x000012ab";
+		std::string expected = std::string("(") + getDemangledName(typeid(A)) + " const*)0x000012ab";
       CPPUNIT_ASSERT_EQUAL(expected, toTypeAndValueString(p));
 	}
 
@@ -139,7 +139,7 @@ public:
 	{
 		const char* s = "abc";
         oss_t oss;
-        oss << "(const char*)" << (void*)s ;
+        oss << "(char const*)" << (void*)s ;
       CPPUNIT_ASSERT_EQUAL(oss.str(), toTypeAndValueString(s));
 	}
 
@@ -153,7 +153,7 @@ public:
 	void testShouldBeAbleToStringnizeNullConstPChar()
 	{
 		const char* s = 0;
-		std::string expected("(const char*)NULL");
+		std::string expected("(char const*)NULL");
       CPPUNIT_ASSERT_EQUAL(expected, toTypeAndValueString(s));
 	}
 
@@ -252,7 +252,7 @@ public:
 	void testShouldBeAbleToStringnizeUnsignedChar()
 	{
 		unsigned char c = 0xa;
-		std::string expected("(uchar)0xa/10");
+		std::string expected("(unsigned char)0xa/10");
       CPPUNIT_ASSERT_EQUAL(expected, toTypeAndValueString(c));
 	}
 
@@ -273,7 +273,7 @@ public:
 	void testShouldBeAbleToStringnizeUnsignedShort()
 	{
 		unsigned short s = 0x12;
-		std::string expected("(ushort)0x12/18");
+		std::string expected("(unsigned short)0x12/18");
       CPPUNIT_ASSERT_EQUAL(expected, toTypeAndValueString(s));
 	}
 
@@ -293,7 +293,7 @@ public:
 	void testShouldBeAbleToStringnizeUnsignedInt()
 	{
 		unsigned int i = 1234;
-		std::string expected("(uint)0x4d2/1234");
+		std::string expected("(unsigned int)0x4d2/1234");
       CPPUNIT_ASSERT_EQUAL(expected, toTypeAndValueString(i));
 	}
 
@@ -313,7 +313,7 @@ public:
    void testShouldBeAbleToStringnizeUnsignedLong()
    {
 		unsigned long l = 1234;
-		std::string expected("(ulong)0x4d2/1234");
+		std::string expected("(unsigned long)0x4d2/1234");
       CPPUNIT_ASSERT_EQUAL(expected, toTypeAndValueString(l));
    }
 
@@ -327,21 +327,21 @@ public:
 	void testShouldBeAbleToStringnizeLongLong()
    {
       long long ll = 1234;
-		std::string expected("(int64)0x4d2/1234");
+		std::string expected("(long long)0x4d2/1234");
       CPPUNIT_ASSERT_EQUAL(expected, toTypeAndValueString(ll));
    }
 
 	void testShouldBeAbleToStringnizeUnsignedLongLong()
    {
       unsigned long long ll = 1234;
-		std::string expected("(uint64)0x4d2/1234");
+		std::string expected("(unsigned long long)0x4d2/1234");
       CPPUNIT_ASSERT_EQUAL(expected, toTypeAndValueString(ll));
    }
 
 	void testShouldBeAbleToStringnizeNegativeLongLong()
    {
       long long ll = -1234;
-		std::string expected("(int64)0xfffffffffffffb2e/-1234");
+		std::string expected("(long long)0xfffffffffffffb2e/-1234");
       CPPUNIT_ASSERT_EQUAL(expected, toTypeAndValueString(ll));
    }
 };
