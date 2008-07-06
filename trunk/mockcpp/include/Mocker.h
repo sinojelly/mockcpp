@@ -13,6 +13,13 @@ struct Mocker<RT()>
 {
     typedef RT (*Func)();
 
+    Mocker(const std::string& name)
+    {}
+
+    operator Func()
+    {
+    }
+    
 };
 
 MOCKCPP_NS_END

@@ -7,7 +7,7 @@
 #include <RefAny.h>
 #include <Any.h>
 #include <Invocation.h>
-#include <RepeatMacros.h>
+#include <ArgumentsMacroHelpers.h>
 
 MOCKCPP_NS_START
 
@@ -47,24 +47,6 @@ std::string getParameterMismatchString(int n
     ProcStub(Func f, std::string name) \
         : ProcStubBase(name, (void*)f), func(f) \
     {} 
-
-///////////////////////////////////////////////////////////
-#define __ARG(n) P ## n
-#define END_ARGS(n) __ARG(n)
-#define ARGS(n) __ARG(n) ,
-
-#define __PARAM(n) p ## n
-#define END_PARAMS(n) __PARAM(n)
-#define PARAMS(n) __PARAM(n) ,
-
-#define TEMPLATE_ARG(n) typename __ARG(n)
-#define TEMPLATE_ARGS(n) , TEMPLATE_ARG(n)
-#define VOID_TEMPLATE_ARGS(n) typename __ARG(n),
-
-#define DECL_TEMPLATE_ARGS(n) SIMPLE_REPEAT(n, TEMPLATE_ARGS)
-#define DECL_VOID_TEMPLATE_ARGS(n) REPEAT(n, VOID_TEMPLATE_ARGS, TEMPLATE_ARG)
-#define DECL_ARGS(n) REPEAT(n, ARGS, END_ARGS)
-#define DECL_PARAMS(n) REPEAT(n, PARAMS, END_PARAMS)
 
 ///////////////////////////////////////////////////////////
 #define PROC_STUB_DEF(n) \

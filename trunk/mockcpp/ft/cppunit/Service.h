@@ -5,18 +5,13 @@
 #include <ServiceDef.h>
 
 st_struct_1* service_f0(st_struct_0* p1, int p2, float p3);
-void service_f1(int p1, const int* p2)
-{
-}
+void service_f1(int p1, const int* p2);
 int service_f2(st_struct_1** p1);
 long service_f4(void);
 long service_f5(const int&);
 int service_printf(int, ...);
 int service_f6(void*);
-int service_f7(char*)
-{
-    return 101;
-}
+int service_f7(char*);
 int service_f8(const st_struct_0&);
 int service_f9(const st_struct_0*);
 int service_f10(st_struct_0&);
