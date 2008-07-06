@@ -69,7 +69,7 @@ public:
 
    void tearDown()
    {
-      GlobalMockObject::verify();
+      GlobalMockObject::reset();
    }
 
    /////////////////////////////////////////////////////////

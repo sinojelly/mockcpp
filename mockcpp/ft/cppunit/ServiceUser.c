@@ -78,7 +78,10 @@ int func10(st_struct_0 p)
 
 int func11(void)
 {
-	return MCALL(service_f12)();
+    MOCKABLE(service_f12);
+
+	int result = service_f12();
+    return result;
 }
 
 st_struct_0 func12()

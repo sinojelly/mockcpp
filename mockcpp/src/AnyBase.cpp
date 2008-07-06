@@ -10,7 +10,8 @@ AnyBase::AnyBase() : content(0)
 
 AnyBase::AnyBase(PlaceHolder* holder)
     : content(holder)
-{}
+{
+}
 
 AnyBase::~AnyBase()
 {

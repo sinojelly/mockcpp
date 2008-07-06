@@ -58,14 +58,7 @@ void ChainableMockObjectImpl::reset()
 //////////////////////////////////////////////////////////////
 ChainableMockObjectImpl::~ChainableMockObjectImpl()
 {
-    Iterator i = methods.begin();
-
-    for (; i != methods.end(); ++i)
-    {
-      delete (*i);
-    }
-
-    methods.clear();
+    reset();
 }
 
 //////////////////////////////////////////////////////////////
