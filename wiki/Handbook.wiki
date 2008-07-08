@@ -56,3 +56,25 @@ mockObject->method("foo")
 
 CPPUNIT_ASSERT_EQUAL(100, mockObject->foo("abc", 10, 3.2));
 }}}
+
+
+= Behavior Spec =
+
+Generally, once you hold a mock object, you can specify the its behavior by following expression:
+
+{{{
+mockObject.method(...)
+     .expects(...)
+     .before(...)
+     .with(...)
+     .after(...)
+     .id(...);
+}}}
+
+The parameter of *method* is a string which represents the method you are going to specify its behavior. 
+
+*expects* is used to specify the expected invocation times. Existing helper functions include:
+ * once()
+ * atLeast(unsigned int times)
+ * atMost(unsigned int times)
+ * exactly(unsigned int times)
