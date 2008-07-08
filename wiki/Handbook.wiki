@@ -79,7 +79,7 @@ The parameter of *method()* is a string which represents the method you are goin
  * atMost(unsigned int times)
  * exactly(unsigned int times)
 
-If the order of invocation is concerned, *before()*, *after()* and *id()" could be used.
+If the order of invocation is concerned, *before()*, *after()* and *id()* could be used.
 
 Followed is an example:
 {{{
@@ -89,6 +89,7 @@ mockObject->method("foo")
    .will(returnValue(100))
    .id("method-foo");
 
+
 mockObject->method("bar")
    .expects(once())
    .after("method-foo");
@@ -96,3 +97,19 @@ mockObject->method("bar")
 }}}
 
 As you've seen, parameters of them are all strings. There is no rules for naming an invocation, but it has to be unique.
+
+If two or more invocations belong to different mock objects, you must make it clear in *before()* and *after()*:
+
+{{{
+
+mockObject1->method("foo")
+   .expects(once())
+   .will(returnValue(100))
+   .id("method-foo");
+
+
+mockObject2->method("bar")
+   .expects(once())
+   .after(mockObject1, "method-foo");
+
+}}}
