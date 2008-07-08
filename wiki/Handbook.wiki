@@ -71,10 +71,28 @@ mockObject.method(...)
      .id(...);
 }}}
 
-The parameter of *method* is a string which represents the method you are going to specify its behavior. 
+The parameter of *method()* is a string which represents the method you are going to specify its behavior. 
 
-*expects* is used to specify the expected invocation times. Existing helper functions include:
+*expects()* is used to specify the expected invocation times. Existing helper functions include:
  * once()
  * atLeast(unsigned int times)
  * atMost(unsigned int times)
  * exactly(unsigned int times)
+
+If the order of invocation is concerned, *before()*, *after()* and *id()" could be used.
+
+Followed is an example:
+{{{
+
+mockObject->method("foo")
+   .expects(once())
+   .will(returnValue(100))
+   .id("method-foo");
+
+mockObject->method("bar")
+   .expects(once())
+   .after("method-foo");
+
+}}}
+
+As you've seen, parameters of them are all strings. There is no rules for naming an invocation, but it has to be unique.
