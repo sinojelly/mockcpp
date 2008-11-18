@@ -4,9 +4,11 @@
 
 int func1()
 {
+#if 0
     MOCKABLE(service_printf);
 
     service_printf(10, true, 2.0);
+#endif
     return 0;
 }
 
