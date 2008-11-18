@@ -23,7 +23,7 @@ public:
 		return name;
 	}
 
-private:
+protected:
 	std::string name;
 };
 
@@ -45,9 +45,11 @@ struct Functor<R(DECL_ARGS(n))> : public BaseFunctor \
  \
     R operator()(DECL_PARAMS_LIST(n)) \
     { \
-      return GlobalMockObject::instance.invoke<R>(getName())(DECL_PARAMS(n)); \
+		return ChainableMockMethod<R>(GlobalMockObject::instance.getMethod(name))(DECL_PARAMS(n)); \
     } \
 }
+
+// return GlobalMockObject::instance.invoke<R>(getName())(DECL_PARAMS(n));
 
 FUNCTOR_DEF(0);
 FUNCTOR_DEF(1);
@@ -63,6 +65,8 @@ FUNCTOR_DEF(10);
 FUNCTOR_DEF(11);
 FUNCTOR_DEF(12);
 
+#if (__GNUC__ && __GNUC__ >= 3)
+
 #define VARDIC_FUNCTOR_DEF(n) \
 template <typename R DECL_TEMPLATE_ARGS(n)> \
 struct Functor<R(DECL_VARDIC_ARGS(n) ...)> : public BaseFunctor \
@@ -76,7 +80,7 @@ struct Functor<R(DECL_VARDIC_ARGS(n) ...)> : public BaseFunctor \
          const RefAny& p9 = RefAny(), const RefAny& p10 = RefAny(), \
          const RefAny& p11 = RefAny(), const RefAny& p12 = RefAny()) \
     { \
-      return GlobalMockObject::instance.invoke<R>(getName())(DECL_PARAMS(12)); \
+	  return ChainableMockMethod<R>(GlobalMockObject::instance.getMethod(name))(DECL_PARAMS(12)); \
 	} \
 }
 
@@ -89,6 +93,8 @@ VARDIC_FUNCTOR_DEF(5);
 VARDIC_FUNCTOR_DEF(6);
 VARDIC_FUNCTOR_DEF(7);
 VARDIC_FUNCTOR_DEF(8);
+
+#endif
 
 MOCKCPP_NS_END
 
