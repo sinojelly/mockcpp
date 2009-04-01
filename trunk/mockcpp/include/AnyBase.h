@@ -7,6 +7,9 @@
 #include <Holder.h>
 #include <TypeTraits.h>
 
+#include <assert.h>
+#define MOCKCPP_ASSERT(expr) assert(expr)
+
 MOCKCPP_NS_START
 
 struct AnyBase

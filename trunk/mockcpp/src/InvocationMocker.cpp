@@ -13,8 +13,9 @@
 MOCKCPP_NS_START
 
 ///////////////////////////////////////////////////////////
-struct InvocationMockerImpl
+class InvocationMockerImpl
 {
+public:
     typedef std::list<Matcher*>  List;
     typedef List::iterator Iterator;
     typedef List::const_iterator ConstIterator;
@@ -243,6 +244,8 @@ Any& InvocationMocker::invoke(const Invocation& inv)
       MOCKCPP_FAIL(ex.getMessage() + "\n" +
                     This->toString());
     }
+
+	return getEmptyAny();
 }
 
 ///////////////////////////////////////////////////////////

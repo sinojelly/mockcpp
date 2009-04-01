@@ -7,8 +7,9 @@
 
 MOCKCPP_NS_START
 
-struct SelfDescribe
+class SelfDescribe
 {
+public:
     virtual ~SelfDescribe() {}
     virtual std::string toString() const = 0;
 };

@@ -16,7 +16,7 @@ struct ProcStub;
 
 class ProcStubBaseImpl;
 
-struct ProcStubBase : public Stub
+class ProcStubBase : public Stub
 {
 public:
 
@@ -39,9 +39,9 @@ std::string getParameterMismatchString(int n
 ////////////////////////////////////////////////////
 #define MOCKCPP_CHECK_AND_ASSIGN_PARAMETER(N) \
         MOCKCPP_ASSERT_TRUE_MESSAGE( \
-                    getParameterMismatchString(N, TypeString<P##N>::value(), inv) \
-                        , any_castable<P##N>(inv.getParameter(N))); \
-        P##N p##N = any_cast<P##N>(inv.getParameter(N));
+                    getParameterMismatchString(N, TypeString<MOCKP##N>::value(), inv) \
+                        , any_castable<MOCKP##N>(inv.getParameter(N))); \
+        MOCKP##N p##N = any_cast<MOCKP##N>(inv.getParameter(N));
     
 #define PROC_STUB_CONS()  \
     ProcStub(Func f, std::string name) \

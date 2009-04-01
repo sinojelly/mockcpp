@@ -5,8 +5,9 @@
 MOCKCPP_NS_START
 
 //////////////////////////////////////////////////////////////////////////
-struct TypelessConstraintAdapterImpl
+class TypelessConstraintAdapterImpl
 {
+public:
 	TypelessConstraint* typelessConstraint;
 
    TypelessConstraintAdapterImpl(TypelessConstraint* c)

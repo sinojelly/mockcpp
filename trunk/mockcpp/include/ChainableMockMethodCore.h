@@ -29,7 +29,8 @@ public:
     std::string& getName(void) const;
     Namespace* getNamespace() const;
 
-    Any invoke( const RefAny& p1 
+    Any invoke( const std::string& nameOfCaller
+		      , const RefAny& p1 
               , const RefAny& p2
               , const RefAny& p3
               , const RefAny& p4

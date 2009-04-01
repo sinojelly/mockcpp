@@ -12,8 +12,9 @@ class SelfDescribe;
 class ResultHandler;
 class ResultImpl;
 
-struct ResultHandlerFactory
+class ResultHandlerFactory
 {
+public:
     virtual ResultHandler* create(
             const std::type_info& expectedTypeInfo
           , const std::string& expectedTypeString

@@ -38,7 +38,7 @@ void AfterMatcher::verify()
 }
 
 //////////////////////////////////////////////////////
-bool AfterMatcher::isComplete(void) const
+bool AfterMatcher::isCompleted(void) const
 {
     return previousCall != 0;
 }

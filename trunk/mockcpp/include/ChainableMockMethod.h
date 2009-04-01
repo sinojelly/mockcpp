@@ -21,7 +21,8 @@ public:
 		: methodCore(core)
     {}
 
-    RT operator()( const RefAny& p01 = RefAny()
+	RT operator()( const std::string& nameOfCaller
+		         , const RefAny& p01 = RefAny()
                  , const RefAny& p02 = RefAny()
                  , const RefAny& p03 = RefAny()
                  , const RefAny& p04 = RefAny()
@@ -37,7 +38,8 @@ public:
     {
 		SelfDescribe* resultProvider = 0;
 
-      Any anyResult = methodCore->invoke( p01, p02, p03, p04, p05, p06
+      Any anyResult = methodCore->invoke( nameOfCaller
+		                                , p01, p02, p03, p04, p05, p06
                                         , p07, p08, p09, p10, p11, p12
                                         , resultProvider);
 

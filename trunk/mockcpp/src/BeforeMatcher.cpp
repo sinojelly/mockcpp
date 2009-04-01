@@ -40,7 +40,7 @@ void BeforeMatcher::verify()
 }
 
 //////////////////////////////////////////////////////
-bool BeforeMatcher::isComplete(void) const
+bool BeforeMatcher::isCompleted(void) const
 {
     return previousCall != 0;
 }

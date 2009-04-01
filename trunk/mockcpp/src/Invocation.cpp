@@ -1,6 +1,8 @@
 
+
 #include <vector>
 
+#include <OutputStringStream.h>
 #include <Invocation.h>
 #include <RefAny.h>
 
@@ -13,12 +15,21 @@ namespace
 };
 
 ////////////////////////////////////////////////////////////////
-struct InvocationImpl
+class InvocationImpl
 {
+public:
     std::vector<RefAny> parameters;
+	std::string nameOfCaller;
     std::string toString(void) const;
+
+	InvocationImpl(const std::string& name);
 };
 
+////////////////////////////////////////////////////////////////
+InvocationImpl::InvocationImpl(const std::string &name)
+: nameOfCaller(name)
+{
+}
 ////////////////////////////////////////////////////////////////
 std::string InvocationImpl::toString() const
 {
@@ -42,7 +53,8 @@ std::string InvocationImpl::toString() const
 #define INIT_PARAMETER(i) This->parameters.push_back(p##i)
 
 Invocation::Invocation(
-                 const RefAny& p1
+                     const std::string name
+                   , const RefAny& p1
 				   , const RefAny& p2
 				   , const RefAny& p3
 				   , const RefAny& p4
@@ -55,7 +67,7 @@ Invocation::Invocation(
 				   , const RefAny& p11
 				   , const RefAny& p12
    )
-	: This(new InvocationImpl)
+	: This(new InvocationImpl(name))
 {
 	INIT_PARAMETER(1);
 	INIT_PARAMETER(2);
@@ -92,6 +104,13 @@ RefAny& Invocation::getParameter(const unsigned int i) const
 std::string Invocation::toString(void) const
 {
     return std::string("(") + This->toString() + std::string(")");
+}
+
+////////////////////////////////////////////////////////////////
+
+std::string Invocation::getNameOfCaller() const
+{
+	return This->nameOfCaller;
 }
 
 ////////////////////////////////////////////////////////////////

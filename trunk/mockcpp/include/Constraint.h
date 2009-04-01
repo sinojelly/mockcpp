@@ -9,8 +9,9 @@ MOCKCPP_NS_START
 
 class RefAny;
 
-struct Constraint
+class Constraint
 {
+public:
     virtual ~Constraint() {}
     virtual bool eval(const RefAny& inv) const = 0;
     virtual std::string toString() const = 0;

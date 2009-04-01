@@ -9,8 +9,9 @@ MOCKCPP_NS_START
 
 class Invocation;
 
-struct Matcher
+class Matcher
 {
+public:
     virtual ~Matcher() {}
     virtual bool matches(const Invocation& inv) const = 0;
     virtual void increaseInvoked(const Invocation& inv) = 0;

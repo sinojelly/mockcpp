@@ -8,14 +8,15 @@
 #include <string>
 
 MOCKCPP_NS_START
-class Stub;
 
+class Stub;
 class InvocationImpl;
 
 class Invocation
 {
 public:
-	Invocation( const RefAny& p01 = RefAny()
+	Invocation(const std::string nameOfCaller
+		 , const RefAny& p01 = RefAny()
              , const RefAny& p02 = RefAny()
              , const RefAny& p03 = RefAny()
              , const RefAny& p04 = RefAny()
@@ -33,7 +34,9 @@ public:
 
 	RefAny& getParameter(const unsigned int i) const;
 
-   std::string toString(void) const;
+	std::string getNameOfCaller() const;
+
+    std::string toString(void) const;
 
 private:
 	InvocationImpl* This;

@@ -7,7 +7,7 @@
 
 MOCKCPP_NS_START
 
-class InvokedTimesRecorder;
+struct InvokedTimesRecorder;
 class Invocation;
 
 class InvokedTimesMatcher : public Matcher

@@ -7,8 +7,9 @@
 
 MOCKCPP_NS_START
 
-struct InvocationId
+class InvocationId
 {
+public:
     InvocationId(const std::string& identity);
     std::string getId(void) const;
     std::string toString(void) const;

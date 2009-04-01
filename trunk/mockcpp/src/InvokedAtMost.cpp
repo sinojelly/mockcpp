@@ -1,4 +1,5 @@
 
+#include <OutputStringStream.h>
 #include <InvokedAtMost.h>
 #include <Asserter.h>
 #include <Formatter.h>

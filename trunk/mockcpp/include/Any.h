@@ -10,8 +10,9 @@
 
 MOCKCPP_NS_START
 
-struct Any : public AnyBase
+class Any : public AnyBase
 {
+public:
    Any();
 
    template <typename ValueType>

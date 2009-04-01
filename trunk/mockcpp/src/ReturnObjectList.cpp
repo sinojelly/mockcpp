@@ -1,4 +1,5 @@
 
+#include <OutputStringStream.h>
 #include <ReturnObjectList.h>
 #include <Asserter.h>
 
@@ -6,8 +7,9 @@
 
 MOCKCPP_NS_START
 
-struct ReturnObjectListImpl
+class ReturnObjectListImpl
 {
+public:
     typedef std::vector<Any> Objects;
 
     unsigned int firstUnused;
@@ -51,9 +53,9 @@ std::string ReturnObjectListImpl::toString() const
 ///////////////////////////////////////////////////////
 unsigned int ReturnObjectListImpl::numberOfValidObjects() const
 {
-    for (int i = objects.size()-1; i >= 0; i--)
+    for (size_t i = objects.size()-1; i >= 0; i--)
     {
-      if(!objects[i].empty()) return i+1;
+      if(!objects[i].empty()) return (unsigned int)(i+1);
     }
 
     return 0;

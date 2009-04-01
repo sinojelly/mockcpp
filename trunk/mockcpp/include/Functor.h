@@ -15,16 +15,21 @@ MOCKCPP_NS_START
 class BaseFunctor
 {
 public:
-	BaseFunctor(const std::string& fName)
-		: name(fName) {}
+	BaseFunctor(const std::string& fName, const char* cName)
+		: name(fName), nameOfCaller(cName) {}
 
 	std::string getName() const
 	{
 		return name;
 	}
 
-protected:
+	std::string getNameOfCaller() const
+	{
+		return nameOfCaller;
+	}
+private:
 	std::string name;
+	std::string nameOfCaller;
 };
 
 ////////////////////////////////////////////
@@ -32,8 +37,8 @@ template <typename F>
 struct Functor;
 
 #define FUNCTOR_CONS()    \
-    Functor(const std::string& name) \
-      : BaseFunctor(name) \
+    Functor(const std::string& name, const char* cName) \
+      : BaseFunctor(name, cName) \
     {}
 
 ////////////////////////////////////////////
@@ -45,11 +50,10 @@ struct Functor<R(DECL_ARGS(n))> : public BaseFunctor \
  \
     R operator()(DECL_PARAMS_LIST(n)) \
     { \
-		return ChainableMockMethod<R>(GlobalMockObject::instance.getMethod(name))(DECL_PARAMS(n)); \
+      return ChainableMockMethod<R>(GlobalMockObject::instance.getMethod(getName()))( \
+                                     getNameOfCaller() DECL_REST_PARAMS(n)); \
     } \
 }
-
-// return GlobalMockObject::instance.invoke<R>(getName())(DECL_PARAMS(n));
 
 FUNCTOR_DEF(0);
 FUNCTOR_DEF(1);
@@ -65,8 +69,6 @@ FUNCTOR_DEF(10);
 FUNCTOR_DEF(11);
 FUNCTOR_DEF(12);
 
-#if (__GNUC__ && __GNUC__ >= 3)
-
 #define VARDIC_FUNCTOR_DEF(n) \
 template <typename R DECL_TEMPLATE_ARGS(n)> \
 struct Functor<R(DECL_VARDIC_ARGS(n) ...)> : public BaseFunctor \
@@ -80,8 +82,8 @@ struct Functor<R(DECL_VARDIC_ARGS(n) ...)> : public BaseFunctor \
          const RefAny& p9 = RefAny(), const RefAny& p10 = RefAny(), \
          const RefAny& p11 = RefAny(), const RefAny& p12 = RefAny()) \
     { \
-	  return ChainableMockMethod<R>(GlobalMockObject::instance.getMethod(name))(DECL_PARAMS(12)); \
-	} \
+      return ChainableMockMethod<R>(GlobalMockObject::instance.getMethod(getName()))(getNameOfCaller(), DECL_PARAMS(12)); \
+    } \
 }
 
 VARDIC_FUNCTOR_DEF(0);
@@ -93,8 +95,6 @@ VARDIC_FUNCTOR_DEF(5);
 VARDIC_FUNCTOR_DEF(6);
 VARDIC_FUNCTOR_DEF(7);
 VARDIC_FUNCTOR_DEF(8);
-
-#endif
 
 MOCKCPP_NS_END
 

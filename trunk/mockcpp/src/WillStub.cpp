@@ -1,4 +1,5 @@
 
+#include <OutputStringStream.h>
 #include <WillStub.h>
 
 MOCKCPP_NS_START

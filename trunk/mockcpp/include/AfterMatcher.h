@@ -26,7 +26,7 @@ public:
    
    void verify(void);
 
-   bool isComplete(void) const;
+   bool isCompleted(void) const;
 
    void setOrderingInvocationMocker(InvocationMocker* mocker);
 

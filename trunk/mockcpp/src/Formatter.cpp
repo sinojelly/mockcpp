@@ -1,4 +1,5 @@
 
+#include <OutputStringStream.h>
 #include <Formatter.h>
 
 MOCKCPP_NS_START
