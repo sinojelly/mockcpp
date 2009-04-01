@@ -1,4 +1,5 @@
 
+#include <OutputStringStream.h>
 #include <DecoratedConstraint.h>
 #include <RefAny.h>
 

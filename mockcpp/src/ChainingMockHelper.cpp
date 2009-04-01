@@ -113,4 +113,14 @@ Constraint* smirror(const char* s)
    return new IsMirror<const char*>(s, strlen(s)+1);
 }
 
+Constraint* smirror(unsigned char* s)
+{
+   return new IsMirror<unsigned char*>(s, strlen((char*)s)+1);
+}
+
+Constraint* smirror(const unsigned char* s)
+{
+   return new IsMirror<const unsigned char*>(s, strlen((const char*)s)+1);
+}
+
 MOCKCPP_NS_END

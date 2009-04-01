@@ -34,8 +34,9 @@ const unsigned int numberOfResultHandlerFactorys = 4;
 	//sizeof(resultHandlerFactorys)/sizeof(resultHandlerFactorys[0]);
 }
 
-struct ResultImpl
+class ResultImpl
 {
+public:
     std::list<ResultHandler*> handlers;
 
     Any& getResult(const Any& result) const;

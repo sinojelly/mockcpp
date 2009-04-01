@@ -9,8 +9,9 @@ MOCKCPP_NS_START
 
 class Any;
 
-struct TypelessStub
+class TypelessStub
 {
+public:
     virtual Any& invoke(void) = 0;
     virtual std::string toString(void) const = 0;
 

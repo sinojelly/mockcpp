@@ -7,7 +7,7 @@
 
 MOCKCPP_NS_START
 
-struct ConstraintSetImpl
+class ConstraintSetImpl
 {
 public:
 
@@ -48,18 +48,18 @@ ConstraintSetImpl::toString() const
 unsigned int
 ConstraintSetImpl::numberOfValidConstraint() const
 {
-    for (int i = constraints.size()-1; i >= 0; i--)
+    for (int i = (int)constraints.size()-1; i >= 0; i--)
     {
       if(!isAnyConstraint(constraints[i]))
         return i + 1;
     }
-
+	
     return 0;
 }
 ////////////////////////////////////////////////////////////
 ConstraintSetImpl::~ConstraintSetImpl()
 {
-    for (int i=0; i<constraints.size(); i++)
+    for (int i=0; i<(int)constraints.size(); i++)
     {
       delete constraints[i];
     }
@@ -71,7 +71,7 @@ ConstraintSetImpl::~ConstraintSetImpl()
 bool
 ConstraintSetImpl::matches(const Invocation& inv) const
 {
-    for (int i=0; i<constraints.size(); i++)
+    for (int i=0; i<(int)constraints.size(); i++)
     {
       if (!constraints[i]->eval(inv.getParameter(i+1)))
       {

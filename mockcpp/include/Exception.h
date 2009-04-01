@@ -8,6 +8,8 @@
 
 #if defined(MOCKCPP_USING_CPPUNIT)
 #include <cppunit/Exception.h>
+#else
+#include <exception>
 #endif
 
 MOCKCPP_NS_START

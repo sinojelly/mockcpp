@@ -11,6 +11,7 @@
 #define __PARAM(n) p ## n
 #define END_PARAMS(n) __PARAM(n)
 #define PARAMS(n) __PARAM(n) ,
+#define REST_PARAMS(n) , __PARAM(n)
 
 #define TEMPLATE_ARG(n) typename __ARG(n)
 #define TEMPLATE_ARGS(n) , TEMPLATE_ARG(n)
@@ -28,6 +29,8 @@
 #define DECL_ARGS(n) REPEAT(n, ARGS, END_ARGS)
 #define DECL_PARAMS(n) REPEAT(n, PARAMS, END_PARAMS)
 #define DECL_PARAMS_LIST(n) REPEAT(n, ARG_DECL, END_ARG_DECL)
+
+#define DECL_REST_PARAMS(n) SIMPLE_REPEAT(n, REST_PARAMS)
 
 #endif
 

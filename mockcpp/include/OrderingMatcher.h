@@ -9,10 +9,11 @@ MOCKCPP_NS_START
 
 class InvocationMocker;
 
-struct OrderingMatcher : public Matcher
+class OrderingMatcher : public Matcher
 {
+public:
    virtual ~OrderingMatcher() {}
-   virtual bool isComplete(void) const = 0;
+   virtual bool isCompleted(void) const = 0;
    virtual void setOrderingInvocationMocker(InvocationMocker* mocker) = 0;
 };
 

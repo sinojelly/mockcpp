@@ -10,9 +10,10 @@ MOCKCPP_NS_START
 class ResultHandler;
 
 ///////////////////////////////////////////////////////////
-struct VoidResultHandlerFactory
+class VoidResultHandlerFactory
    : public ResultHandlerFactory
 {
+public:
     ResultHandler* create(
             const std::type_info& expectedTypeInfo
           , const std::string& expectedTypeString

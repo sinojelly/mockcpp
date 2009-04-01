@@ -1,4 +1,5 @@
 
+#include <OutputStringStream.h>
 #include <InvokedExactly.h>
 #include <Asserter.h>
 #include <Formatter.h>

@@ -17,7 +17,7 @@ MOCKCPP_NS_START
 	oss << "There isn't an expectation whose id is \"" \
 		 << id << "\" in namespace " << scope->getName() \
        << ", which is from : \n" << mocker->toString(); \
-	MOCKCPP_ASSERT_TRUE_MESSAGE(oss.str(), matcher->isComplete()); \
+	MOCKCPP_ASSERT_TRUE_MESSAGE(oss.str(), matcher->isCompleted()); \
 } while(0)
 
 /////////////////////////////////////////////////////////////////
@@ -74,7 +74,7 @@ void PendingMatcher::verify()
 /////////////////////////////////////////////////////////////////
 void PendingMatcher::setUpOrderingMatcher() const
 {
-    if(matcher->isComplete()) 
+    if(matcher->isCompleted()) 
       return;
 
     InvocationMocker* mocker = scope->getInvocationMocker(id);

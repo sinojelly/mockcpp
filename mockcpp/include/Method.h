@@ -9,29 +9,34 @@
 #include <IdentityBuilder.h>
 #include <StubBuilder.h>
 #include <ArgumentsMatchBuilder.h>
+#include <CallerMatchBuilder.h>
 
 MOCKCPP_NS_START
 
 class Matcher;
 
 ///////////////////////////////////////////////
-typedef InvocationMockBuilder< 
-          BeforeMatchBuilder<
+typedef InvocationMockBuilder<
+          CallerMatchBuilder<
+           BeforeMatchBuilder<
             ArgumentsMatchBuilder<
-              AfterMatchBuilder<
-                StubBuilder< 
-                  IdentityBuilder
-                >
+             AfterMatchBuilder<
+              StubBuilder< 
+                IdentityBuilder
               >
+             >
             >
-          >
-        > WorkingBuilder;
+           >
+		  >
+         > WorkingBuilder;
 
 ///////////////////////////////////////////////
 typedef InvocationMockBuilder< 
+         CallerMatchBuilder<
           ArgumentsMatchBuilder<
              StubBuilder<>
           >
+		 >
         > DefaultBuilder;
 
 ///////////////////////////////////////////////

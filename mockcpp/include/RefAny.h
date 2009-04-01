@@ -9,7 +9,7 @@
 
 MOCKCPP_NS_START
 
-struct RefAny : public AnyBase
+class RefAny : public AnyBase
 {
 public: 
 

@@ -10,8 +10,9 @@
 MOCKCPP_NS_START
 
 //////////////////////////////////////////////////////////////
-struct ChainableMockObjectImpl
+class ChainableMockObjectImpl
 {
+public:
     typedef std::list<ChainableMockMethodCore*> List;
     typedef List::iterator Iterator;
     typedef List::const_iterator ConstIterator;

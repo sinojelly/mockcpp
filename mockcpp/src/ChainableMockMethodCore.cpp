@@ -18,8 +18,9 @@
 MOCKCPP_NS_START
 
 //////////////////////////////////////////////////////////
-struct ChainableMockMethodCoreImpl
+class ChainableMockMethodCoreImpl
 {
+public:
     /////////////////////////////////////////////////////
     InvocationMockerSet mockers;
     InvocationMockerSet defaultMockers;
@@ -80,7 +81,7 @@ ChainableMockMethodCoreImpl::
 tellNoMatchedExpectation(const Invocation& inv)
 {
     return std::string("Unexpected invocation") + "\n" 
-                     + "Invoked: " + nameSpace->getName() + "::" + name + inv.toString() + "\n" 
+		+ "Invoked: " + nameSpace->getName() + "::" + name + inv.toString() + ".caller(" + inv.getNameOfCaller() + ")\n" 
                      + "Allowed: \n"
                      + this->toString();
 }
@@ -137,7 +138,8 @@ ChainableMockMethodCore::getNamespace() const
 //////////////////////////////////////////////////////////
 Any
 ChainableMockMethodCore::invoke
-             ( const RefAny& p1
+             ( const std::string& nameOfCaller
+			 , const RefAny& p1
              , const RefAny& p2
              , const RefAny& p3
              , const RefAny& p4
@@ -151,7 +153,7 @@ ChainableMockMethodCore::invoke
              , const RefAny& p12
              , SelfDescribe* &resultProvider)
 {
-	Invocation inv(p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12);
+	Invocation inv(nameOfCaller,p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12);
 	return This->invoke(inv, resultProvider);
 }
 

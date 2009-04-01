@@ -10,8 +10,9 @@ MOCKCPP_NS_START
 class Any;
 class Invocation;
 
-struct Stub : public SelfDescribe
+class Stub : public SelfDescribe
 {
+public:
     virtual ~Stub() {}
     virtual Any& invoke(const Invocation& inv) = 0;
 };

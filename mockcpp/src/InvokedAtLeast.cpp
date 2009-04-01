@@ -1,4 +1,5 @@
 
+#include <OutputStringStream.h>
 #include <InvokedAtLeast.h>
 #include <Asserter.h>
 #include <Formatter.h>
@@ -20,7 +21,7 @@ bool InvokedAtLeast::matches(const Invocation& inv) const
 ///////////////////////////////////////////////////////
 std::string InvokedAtLeast::toString(void) const
 {
-	 oss_t oss;
+    oss_t oss;
 
     oss << "atLeast(" << lowLimit << ")";
 

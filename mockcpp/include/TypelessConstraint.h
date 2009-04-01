@@ -8,8 +8,9 @@
 MOCKCPP_NS_START
 
 
-struct TypelessConstraint
+class TypelessConstraint
 {
+public:
     virtual ~TypelessConstraint() {}
     virtual bool eval(void) const = 0;
     virtual std::string toString() const = 0;

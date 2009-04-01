@@ -10,7 +10,7 @@ MOCKCPP_NS_START
 class Any;
 class SelfDescribe;
 
-struct MismatchResultHandler: public ResultHandler
+class MismatchResultHandler: public ResultHandler
 {
 public:
 

@@ -1,4 +1,5 @@
 
+#include <OutputStringStream.h>
 #include <InvokedTimesMatcher.h>
 #include <InvokedTimesRecorder.h>
 

@@ -1,4 +1,5 @@
 
+#include <OutputStringStream.h>
 #include <VoidResultHandler.h>
 #include <Any.h>
 #include <SelfDescribe.h>

@@ -10,8 +10,9 @@ MOCKCPP_NS_START
 
 class InvocationMocker;
 
-struct Namespace
+class Namespace
 {
+public:
     virtual ~Namespace() {}
 
     virtual InvocationMocker*
