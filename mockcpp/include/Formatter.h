@@ -6,6 +6,8 @@
 
 #include <string>
 #include <sstream>
+
+#include <OutputStringStream.h>
 #include <TypeString.h>
 
 MOCKCPP_NS_START
@@ -53,8 +55,11 @@ std::string toString(int i);
 std::string toString(unsigned int i);
 std::string toString(long l);
 std::string toString(unsigned long l);
+
+#if (MOCKCPP_SUPPORT_LONG_LONG == 1)
 std::string toString(long long ll);
 std::string toString(unsigned long long ll);
+#endif
 
 /////////////////////////////////////////////////////////////////
 template <typename T>
