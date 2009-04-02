@@ -1,5 +1,6 @@
 
-#include <cppunit/extensions/HelperMacros.h>
+#include <cxxtest/TestSuite.h>
+
 #include <Any.h>
 #include <IsEqual.h>
 #include <ConstraintSet.h>
@@ -8,12 +9,8 @@
 
 using namespace mockcpp;
 
-class TestConstraintSet : public CPPUNIT_NS::TestFixture
+class TestConstraintSet : public CxxTest::TestSuite
 {
-	CPPUNIT_TEST_SUITE( TestConstraintSet );
-	CPPUNIT_TEST( testShouldMatchCorrespondingInvocation );
-	CPPUNIT_TEST_SUITE_END();
-
 public:
 	void setUp() { }
 	void tearDown() { }
@@ -23,11 +20,10 @@ public:
 	void testShouldMatchCorrespondingInvocation()
 	{
 		ConstraintSet cs(eq(1), eq(2));
-		Invocation inv(1, 2);
+		Invocation inv(__FUNCTION__, 1, 2);
 
-		CPPUNIT_ASSERT(cs.matches(inv));
+		TS_ASSERT(cs.matches(inv));
 	}
 
 };
 
-CPPUNIT_TEST_SUITE_REGISTRATION( TestConstraintSet );

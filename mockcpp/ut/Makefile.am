@@ -18,6 +18,8 @@ TESTSUITES = \
  TestHolder.h \
  TestIsEqual.h \
  TestFormatter.h \
+ TestConstraintSet.h \
+ TestReturnObjectList.h \
  TestInvocation.h \
  TestInvocationMocker.h
 
