@@ -7,5 +7,7 @@ AC_PROG_CXX
 AC_CONFIG_FILES([
   Makefile
   src/Makefile
+  libs/Makefile
+  ut/Makefile
 ])
 AC_OUTPUT

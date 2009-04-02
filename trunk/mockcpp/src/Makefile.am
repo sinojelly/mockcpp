@@ -1,5 +1,5 @@
 
-AM_CPPFLAGS = -I$(top_builddir)/include 
+AM_CPPFLAGS = -I$(top_builddir)/include -I$(top_builddir)/3rdparty
 
 lib_LTLIBRARIES = libmockcpp.la
 
