@@ -32,7 +32,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-subdir = src
+subdir = libs
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
@@ -49,28 +49,9 @@ am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
 am__installdirs = "$(DESTDIR)$(libdir)"
 libLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(lib_LTLIBRARIES)
-libmockcpp_la_LIBADD =
-am_libmockcpp_la_OBJECTS = AfterMatcher.lo AnyBase.lo Any.lo \
-	Asserter.lo AssertionFailedError.lo BeforeMatcher.lo \
-	CallerMatcher.lo ChainableMockMethodCore.lo \
-	ChainableMockObject.lo ChainingMockHelper.lo ConstraintSet.lo \
-	DecoratedConstraint.lo DefaultMatcher.lo DefaultStub.lo \
-	Exception.lo ExpectsMatcher.lo Formatter.lo \
-	GlobalMockObject.lo IdentityBuilder.lo IgnoreResultHandler.lo \
-	IgnoreResultHandlerFactory.lo IgnoreReturnStub.lo \
-	Invocation.lo InvocationId.lo InvocationMocker.lo \
-	InvocationMockerSet.lo InvocationTimesMatcher.lo \
-	InvokedAtLeast.lo InvokedAtMost.lo InvokedExactly.lo \
-	InvokedOnce.lo InvokedTimesMatcher.lo IsAnythingHelper.lo \
-	MismatchResultHandler.lo MismatchResultHandlerFactory.lo \
-	NormalResultHandler.lo NormalResultHandlerFactory.lo \
-	OutBoundPointer.lo PendingMatcher.lo ProcStub.lo RefAny.lo \
-	Result.lo ReturnObjectList.lo ReturnStub.lo \
-	SimpleInvocationRecorder.lo StubsMatcher.lo \
-	TestFailureMatcher.lo TypelessConstraintAdapter.lo \
-	TypelessStubAdapter.lo TypeString.lo VoidResultHandler.lo \
-	VoidResultHandlerFactory.lo WillStub.lo
-libmockcpp_la_OBJECTS = $(am_libmockcpp_la_OBJECTS)
+libcxxtest_la_LIBADD =
+am_libcxxtest_la_OBJECTS = CxxTest.lo
+libcxxtest_la_OBJECTS = $(am_libcxxtest_la_OBJECTS)
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -83,8 +64,8 @@ CXXLD = $(CXX)
 CXXLINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	--mode=link $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
-SOURCES = $(libmockcpp_la_SOURCES)
-DIST_SOURCES = $(libmockcpp_la_SOURCES)
+SOURCES = $(libcxxtest_la_SOURCES)
+DIST_SOURCES = $(libcxxtest_la_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -196,62 +177,10 @@ sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-AM_CPPFLAGS = -I$(top_builddir)/include -I$(top_builddir)/3rdparty
-lib_LTLIBRARIES = libmockcpp.la
-libmockcpp_la_SOURCES = \
- AfterMatcher.cpp \
- AnyBase.cpp \
- Any.cpp \
- Asserter.cpp \
- AssertionFailedError.cpp \
- BeforeMatcher.cpp \
- CallerMatcher.cpp \
- ChainableMockMethodCore.cpp \
- ChainableMockObject.cpp \
- ChainingMockHelper.cpp \
- ConstraintSet.cpp \
- DecoratedConstraint.cpp \
- DefaultMatcher.cpp \
- DefaultStub.cpp \
- Exception.cpp \
- ExpectsMatcher.cpp \
- Formatter.cpp \
- GlobalMockObject.cpp \
- IdentityBuilder.cpp \
- IgnoreResultHandler.cpp \
- IgnoreResultHandlerFactory.cpp \
- IgnoreReturnStub.cpp \
- Invocation.cpp \
- InvocationId.cpp \
- InvocationMocker.cpp \
- InvocationMockerSet.cpp \
- InvocationTimesMatcher.cpp \
- InvokedAtLeast.cpp \
- InvokedAtMost.cpp \
- InvokedExactly.cpp \
- InvokedOnce.cpp \
- InvokedTimesMatcher.cpp \
- IsAnythingHelper.cpp \
- MismatchResultHandler.cpp \
- MismatchResultHandlerFactory.cpp \
- NormalResultHandler.cpp \
- NormalResultHandlerFactory.cpp \
- OutBoundPointer.cpp \
- PendingMatcher.cpp \
- ProcStub.cpp \
- RefAny.cpp \
- Result.cpp \
- ReturnObjectList.cpp \
- ReturnStub.cpp \
- SimpleInvocationRecorder.cpp \
- StubsMatcher.cpp \
- TestFailureMatcher.cpp \
- TypelessConstraintAdapter.cpp \
- TypelessStubAdapter.cpp \
- TypeString.cpp \
- VoidResultHandler.cpp \
- VoidResultHandlerFactory.cpp \
- WillStub.cpp 
+AM_CPPFLAGS = -I$(top_builddir)/3rdparty/cxxtest
+lib_LTLIBRARIES = libcxxtest.la
+libcxxtest_la_SOURCES = \
+  CxxTest.cpp
 
 all: all-am
 
@@ -266,9 +195,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  src/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --foreign  libs/Makefile'; \
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign  src/Makefile
+	  $(AUTOMAKE) --foreign  libs/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -313,8 +242,8 @@ clean-libLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-libmockcpp.la: $(libmockcpp_la_OBJECTS) $(libmockcpp_la_DEPENDENCIES) 
-	$(CXXLINK) -rpath $(libdir) $(libmockcpp_la_OBJECTS) $(libmockcpp_la_LIBADD) $(LIBS)
+libcxxtest.la: $(libcxxtest_la_OBJECTS) $(libcxxtest_la_DEPENDENCIES) 
+	$(CXXLINK) -rpath $(libdir) $(libcxxtest_la_OBJECTS) $(libcxxtest_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -322,59 +251,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/AfterMatcher.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Any.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/AnyBase.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Asserter.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/AssertionFailedError.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/BeforeMatcher.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/CallerMatcher.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ChainableMockMethodCore.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ChainableMockObject.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ChainingMockHelper.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ConstraintSet.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/DecoratedConstraint.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/DefaultMatcher.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/DefaultStub.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Exception.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ExpectsMatcher.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Formatter.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/GlobalMockObject.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/IdentityBuilder.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/IgnoreResultHandler.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/IgnoreResultHandlerFactory.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/IgnoreReturnStub.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Invocation.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/InvocationId.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/InvocationMocker.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/InvocationMockerSet.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/InvocationTimesMatcher.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/InvokedAtLeast.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/InvokedAtMost.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/InvokedExactly.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/InvokedOnce.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/InvokedTimesMatcher.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/IsAnythingHelper.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/MismatchResultHandler.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/MismatchResultHandlerFactory.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/NormalResultHandler.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/NormalResultHandlerFactory.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/OutBoundPointer.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/PendingMatcher.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ProcStub.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/RefAny.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Result.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ReturnObjectList.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ReturnStub.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/SimpleInvocationRecorder.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/StubsMatcher.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TestFailureMatcher.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TypeString.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TypelessConstraintAdapter.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TypelessStubAdapter.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/VoidResultHandler.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/VoidResultHandlerFactory.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/WillStub.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/CxxTest.Plo@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
