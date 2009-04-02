@@ -1,3 +1,3 @@
 
-SUBDIRS = src libs ut
+SUBDIRS = src libs ut ft
 dist_doc_DATA = README

@@ -9,5 +9,6 @@ AC_CONFIG_FILES([
   src/Makefile
   libs/Makefile
   ut/Makefile
+  ft/Makefile
 ])
 AC_OUTPUT
