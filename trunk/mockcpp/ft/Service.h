@@ -21,5 +21,8 @@ const int& service_f13();
 st_struct_0& service_f14();
 const st_struct_0& service_f15();
 
+int service_f16();
+int service_f17(const char* fmt, ...);
+
 #endif
 

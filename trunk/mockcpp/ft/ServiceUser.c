@@ -95,3 +95,17 @@ void func14()
 {
 	(void) MCALL(service_f15)();
 }
+
+int func15()
+{
+    MOCKABLE(service_f16);
+
+    return service_f16();
+}
+
+int func16(const char* fmt, int a, const char* s) 
+{
+   MOCKABLE(service_f17);
+
+   return service_f17(fmt, a, s);
+}
