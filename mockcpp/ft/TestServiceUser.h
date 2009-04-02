@@ -2,15 +2,21 @@
 #include <cxxtest/TestSuite.h>
 #include <mokc.h>
 #include <ServiceUser.c>
+#include <ProcStub.h>
           
+int service_f16_stub()
+{
+	return 2009;
+}
+
+int service_f17_stub(const char* fmt, ...)
+{
+	return 2008;
+}
+
 class TestServiceUser: public CxxTest::TestSuite 
 {
 public:
-   // void testAddition( void )
-   // {
-   //   TS_ASSERT( 1 + 1 > 1 );
-   //   TS_ASSERT_EQUALS( 1 + 1, 2 );
-   // }
 
    void setUp()
    {
@@ -449,7 +455,7 @@ public:
    // 
    // object pointer version
    //
-	void test_func4_should_invoke_service_f0_with_mirror()
+   void test_func4_should_invoke_service_f0_with_mirror()
    {
       st_struct_0 st1;
       st_struct_0 st2;
@@ -802,5 +808,29 @@ public:
 #endif
    }
 
+   //
+   // Sometimes, you don't want a mocked function return a specified
+   // value, but invoke a self-defined stub or another prototype-identically
+   // function. For this use case, you can use "invoke(stub)" in .will(...)
+   //
+   void test_func15_should_invoke_service_f16_with_invoking_stub()
+   {
+      MOCKER(service_f16)
+        .expects(once())
+        .will(invoke(service_f16_stub));
+
+      TS_ASSERT_EQUALS(service_f16_stub(), func15());
+   }
+
+   void test_func16_should_invoke_service_f17_with_invoking_stub()
+   {
+#if 0
+      MOCKER(service_f17)
+        .expects(once())
+        .will(invoke(service_f17_stub));
+
+      TS_ASSERT_EQUALS(service_f17_stub("%d, %s\n", 10, "abc"), func16("%d, %s\n", 10, "abc"));
+#endif
+   }
 };
 
