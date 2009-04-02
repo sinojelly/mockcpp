@@ -20,6 +20,8 @@ TESTSUITES = \
  TestFormatter.h \
  TestConstraintSet.h \
  TestReturnObjectList.h \
+ TestChainableObject.h \
+ TestChainableObject2.h \
  TestInvocation.h \
  TestInvocationMocker.h
 
