@@ -67,7 +67,7 @@ std::string toTypeAndValueString(const T& val)
 {
 	oss_t oss;
 	oss << "(" << TypeString<T>::value() << ")" << toString(val);
-   return oss.str();
+	return oss.str();
 }
 
 MOCKCPP_NS_END

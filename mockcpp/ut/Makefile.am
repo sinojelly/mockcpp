@@ -15,7 +15,11 @@ UTCG = $(CXXTEST_ROOT)/cxxtestgen.pl
 
 TESTSUITES = \
  TestAny.h \
- TestInvocation.h
+ TestHolder.h \
+ TestIsEqual.h \
+ TestFormatter.h \
+ TestInvocation.h \
+ TestInvocationMocker.h
 
 mockcpp-ut.cpp : $(TESTSUITES)
 	$(UTCG) --have-eh --have-std --part -o $@ $^
