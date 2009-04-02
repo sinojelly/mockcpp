@@ -182,7 +182,11 @@ mockcpp_ut_LDADD = $(top_builddir)/libs/libcxxtest.la $(top_srcdir)/src/libmockc
 UTCG = $(CXXTEST_ROOT)/cxxtestgen.pl
 TESTSUITES = \
  TestAny.h \
- TestInvocation.h
+ TestHolder.h \
+ TestIsEqual.h \
+ TestFormatter.h \
+ TestInvocation.h \
+ TestInvocationMocker.h
 
 all: all-am
 
