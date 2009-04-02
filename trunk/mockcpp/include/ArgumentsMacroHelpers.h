@@ -4,7 +4,7 @@
 
 #include <RepeatMacros.h>
 
-#define __ARG(n) P ## n
+#define __ARG(n) MOCKP ## n
 #define END_ARGS(n) __ARG(n)
 #define ARGS(n) __ARG(n) ,
 

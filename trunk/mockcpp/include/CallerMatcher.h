@@ -1,11 +1,9 @@
 
-
-
 #ifndef __MOCKCPP_CALLER_MATCHER_H
 #define __MOCKCPP_CALLER_MATCHER_H
 
 #include <mockcpp.h>
-#include <matcher.h>
+#include <Matcher.h>
 #include <string>
 
 MOCKCPP_NS_START
