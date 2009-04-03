@@ -15,8 +15,8 @@ class InvocationImpl;
 class Invocation
 {
 public:
-	Invocation(const std::string nameOfCaller
-		 , const RefAny& p01 = RefAny()
+    Invocation(const std::string nameOfCaller
+             , const RefAny& p01 = RefAny()
              , const RefAny& p02 = RefAny()
              , const RefAny& p03 = RefAny()
              , const RefAny& p04 = RefAny()
@@ -30,16 +30,16 @@ public:
              , const RefAny& p12 = RefAny()
     );
 
-	virtual ~Invocation();
+    virtual ~Invocation();
 
-	RefAny& getParameter(const unsigned int i) const;
+    RefAny& getParameter(const unsigned int i) const;
 
-	std::string getNameOfCaller() const;
+    std::string getNameOfCaller() const;
 
     std::string toString(void) const;
 
 private:
-	InvocationImpl* This;
+    InvocationImpl* This;
 };
 
 MOCKCPP_NS_END

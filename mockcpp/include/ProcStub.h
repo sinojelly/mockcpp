@@ -48,6 +48,7 @@ std::string getParameterMismatchString(int n
         : ProcStubBase(name, (void*)f), func(f) \
     {} 
 
+
 ///////////////////////////////////////////////////////////
 #define PROC_STUB_DEF(n) \
 template <typename R DECL_TEMPLATE_ARGS(n)> \
@@ -108,6 +109,60 @@ PROC_STUB_DEF(9);
 PROC_STUB_DEF(10);
 PROC_STUB_DEF(11);
 PROC_STUB_DEF(12);
+
+#define VARDIC_PROC_STUB_DEF(n) \
+template <typename R DECL_TEMPLATE_ARGS(n)>  \
+struct ProcStub<R(DECL_VARDIC_ARGS(n) ...)> : public ProcStubBase \
+{ \
+    typedef R (*Func)(DECL_VARDIC_ARGS(n) ...); \
+ \
+    PROC_STUB_CONS() \
+ \
+    Any& invoke(const Invocation& inv) \
+    { \
+        SIMPLE_REPEAT(n, MOCKCPP_CHECK_AND_ASSIGN_PARAMETER); \
+ \
+        result = func(DECL_PARAMS(n)); \
+        return result; \
+    } \
+ \
+private: \
+    Func func; \
+    Any result; \
+}; \
+template <typename R DECL_TEMPLATE_ARGS(n)> \
+Stub* invoke(R(*f)(DECL_VARDIC_ARGS(n) ...), const char* name = 0) \
+{ \
+    return new ProcStub<R(DECL_VARDIC_ARGS(n) ...)>(f, name?name:""); \
+} \
+template <DECL_VOID_TEMPLATE_ARGS(n)> \
+struct ProcStub<void(DECL_VARDIC_ARGS(n) ...)> : public ProcStubBase \
+{ \
+    typedef void (*Func)(DECL_VARDIC_ARGS(n) ...); \
+ \
+    PROC_STUB_CONS() \
+ \
+    Any& invoke(const Invocation& inv) \
+    { \
+        SIMPLE_REPEAT(n, MOCKCPP_CHECK_AND_ASSIGN_PARAMETER); \
+ \
+        func(DECL_PARAMS(n)); \
+        return getVoidAny(); \
+    } \
+ \
+private: \
+    Func func; \
+}
+/////////////////////////////////////////////////////
+VARDIC_PROC_STUB_DEF(0);
+VARDIC_PROC_STUB_DEF(1);
+VARDIC_PROC_STUB_DEF(2);
+VARDIC_PROC_STUB_DEF(3);
+VARDIC_PROC_STUB_DEF(4);
+VARDIC_PROC_STUB_DEF(5);
+VARDIC_PROC_STUB_DEF(6);
+VARDIC_PROC_STUB_DEF(7);
+VARDIC_PROC_STUB_DEF(8);
 
 /////////////////////////////////////////////////////
 
