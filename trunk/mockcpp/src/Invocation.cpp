@@ -19,10 +19,11 @@ class InvocationImpl
 {
 public:
     std::vector<RefAny> parameters;
-	std::string nameOfCaller;
+    std::string nameOfCaller;
+
     std::string toString(void) const;
 
-	InvocationImpl(const std::string& name);
+    InvocationImpl(const std::string& name);
 };
 
 ////////////////////////////////////////////////////////////////
@@ -55,38 +56,38 @@ std::string InvocationImpl::toString() const
 Invocation::Invocation(
                      const std::string name
                    , const RefAny& p1
-				   , const RefAny& p2
-				   , const RefAny& p3
-				   , const RefAny& p4
-				   , const RefAny& p5
-				   , const RefAny& p6
-				   , const RefAny& p7
-				   , const RefAny& p8
-				   , const RefAny& p9
-				   , const RefAny& p10
-				   , const RefAny& p11
-				   , const RefAny& p12
+                   , const RefAny& p2
+                   , const RefAny& p3
+                   , const RefAny& p4
+                   , const RefAny& p5
+                   , const RefAny& p6
+                   , const RefAny& p7
+                   , const RefAny& p8
+                   , const RefAny& p9
+                   , const RefAny& p10
+                   , const RefAny& p11
+                   , const RefAny& p12
    )
-	: This(new InvocationImpl(name))
+   : This(new InvocationImpl(name))
 {
-	INIT_PARAMETER(1);
-	INIT_PARAMETER(2);
-	INIT_PARAMETER(3);
-	INIT_PARAMETER(4);
-	INIT_PARAMETER(5);
-	INIT_PARAMETER(6);
-	INIT_PARAMETER(7);
-	INIT_PARAMETER(8);
-	INIT_PARAMETER(9);
-	INIT_PARAMETER(10);
-	INIT_PARAMETER(11);
-	INIT_PARAMETER(12);
+    INIT_PARAMETER(1);
+    INIT_PARAMETER(2);
+    INIT_PARAMETER(3);
+    INIT_PARAMETER(4);
+    INIT_PARAMETER(5);
+    INIT_PARAMETER(6);
+    INIT_PARAMETER(7);
+    INIT_PARAMETER(8);
+    INIT_PARAMETER(9);
+    INIT_PARAMETER(10);
+    INIT_PARAMETER(11);
+    INIT_PARAMETER(12);
 }
 
 ////////////////////////////////////////////////////////////////
 Invocation::~Invocation()
 {
-	delete This;
+    delete This;
 }
 
 ////////////////////////////////////////////////////////////////
@@ -94,7 +95,7 @@ RefAny& Invocation::getParameter(const unsigned int i) const
 {
     if (i < 1 || i > maxNumOfParameters )
     {
-		return getEmptyRefAny();
+       return getEmptyRefAny();
     }
 
     return This->parameters[i-1];
@@ -110,7 +111,7 @@ std::string Invocation::toString(void) const
 
 std::string Invocation::getNameOfCaller() const
 {
-	return This->nameOfCaller;
+    return This->nameOfCaller;
 }
 
 ////////////////////////////////////////////////////////////////

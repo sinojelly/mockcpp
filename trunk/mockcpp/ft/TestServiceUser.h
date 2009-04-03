@@ -824,13 +824,11 @@ public:
 
    void test_func16_should_invoke_service_f17_with_invoking_stub()
    {
-#if 0
       MOCKER(service_f17)
         .expects(once())
         .will(invoke(service_f17_stub));
 
       TS_ASSERT_EQUALS(service_f17_stub("%d, %s\n", 10, "abc"), func16("%d, %s\n", 10, "abc"));
-#endif
    }
 };
 

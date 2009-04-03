@@ -15,28 +15,29 @@ MOCKCPP_NS_START
 class BaseFunctor
 {
 public:
-	BaseFunctor(const std::string& fName, const char* cName)
-		: name(fName), nameOfCaller(cName) {}
+   BaseFunctor(const std::string& fName, const char* cName)
+      : name(fName), nameOfCaller(cName) {}
 
-	std::string getName() const
-	{
-		return name;
-	}
+   std::string getName() const
+   {
+      return name;
+   }
 
-	std::string getNameOfCaller() const
-	{
-		return nameOfCaller;
-	}
+   std::string getNameOfCaller() const
+   {
+      return nameOfCaller;
+   }
+
 private:
-	std::string name;
-	std::string nameOfCaller;
+   std::string name;
+   std::string nameOfCaller;
 };
 
 ////////////////////////////////////////////
 template <typename F>
 struct Functor;
 
-#define FUNCTOR_CONS()    \
+#define FUNCTOR_CONS()  \
     Functor(const std::string& name, const char* cName) \
       : BaseFunctor(name, cName) \
     {}
@@ -51,7 +52,7 @@ struct Functor<R(DECL_ARGS(n))> : public BaseFunctor \
     R operator()(DECL_PARAMS_LIST(n)) \
     { \
       return ChainableMockMethod<R>(GlobalMockObject::instance.getMethod(getName()))( \
-                                     getNameOfCaller() DECL_REST_PARAMS(n)); \
+                                    getNameOfCaller() DECL_REST_PARAMS(n)); \
     } \
 }
 
@@ -75,7 +76,7 @@ struct Functor<R(DECL_VARDIC_ARGS(n) ...)> : public BaseFunctor \
 { \
     FUNCTOR_CONS() \
  \
-	R operator()(const RefAny& p1 = RefAny(), const RefAny& p2 = RefAny(), \
+    R operator()(const RefAny& p1 = RefAny(), const RefAny& p2 = RefAny(), \
          const RefAny& p3 = RefAny(), const RefAny& p4 = RefAny(), \
          const RefAny& p5 = RefAny(), const RefAny& p6 = RefAny(), \
          const RefAny& p7 = RefAny(), const RefAny& p8 = RefAny(), \
@@ -97,7 +98,6 @@ VARDIC_FUNCTOR_DEF(7);
 VARDIC_FUNCTOR_DEF(8);
 
 MOCKCPP_NS_END
-
 
 #endif
 
