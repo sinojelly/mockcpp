@@ -8,7 +8,7 @@
 
 MOCKCPP_NS_START
 
-class ChainableMockMethodCore;
+class Method;
 class Matcher;
 class Stub;
 class InvocationMockerImpl;
@@ -20,10 +20,10 @@ class InvocationMocker : public SelfDescribe
 {
 public:
 
-    InvocationMocker(ChainableMockMethodCore* core);
+    InvocationMocker(Method* core);
     ~InvocationMocker();
 
-    ChainableMockMethodCore* getMethod() const;
+    Method* getMethod() const;
     void setStub(Stub* stub);
     void addMatcher(Matcher* matcher);
     bool hasBeenInvoked(void) const ;

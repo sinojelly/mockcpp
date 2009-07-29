@@ -4,6 +4,8 @@
 
 #include <mockcpp.h>
 
+//#include <ChainableMockMethodCore.h>
+
 #include <ChainableMockObject.h>
 
 MOCKCPP_NS_START

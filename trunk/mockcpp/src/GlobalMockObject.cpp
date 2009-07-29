@@ -3,7 +3,7 @@
 
 MOCKCPP_NS_START
 
-ChainableMockObject GlobalMockObject::instance("", 0);
+ChainableMockObject GlobalMockObject::instance("");
 
 void GlobalMockObject::verify()
 {

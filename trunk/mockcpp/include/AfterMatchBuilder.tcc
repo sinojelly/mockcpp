@@ -1,7 +1,7 @@
 
-#include <Namespace.h>
+#include <InvocationMockerNamespace.h>
 #include <InvocationMocker.h>
-#include <ChainableMockMethodCore.h>
+#include <Method.h>
 #include <AfterMatcher.h>
 #include <PendingMatcher.h>
 
@@ -10,15 +10,15 @@ MOCKCPP_NS_START
 //////////////////////////////////////////////////////////////////////
 template <class Builder>
 Builder&
-AfterMatchBuilder<Builder>::after(const Namespace& ns, const std::string& name)
+AfterMatchBuilder<Builder>::after(const InvocationMockerNamespace& ns, const std::string& name)
 {
-    return after(&const_cast<Namespace&>(ns), name);
+    return after(&const_cast<InvocationMockerNamespace&>(ns), name);
 }
 
 //////////////////////////////////////////////////////////////////////
 template <class Builder>
 Builder&
-AfterMatchBuilder<Builder>::after(Namespace* ns, const std::string& id)
+AfterMatchBuilder<Builder>::after(InvocationMockerNamespace* ns, const std::string& id)
 {
     getMocker()->addMatcher(
 			new PendingMatcher(

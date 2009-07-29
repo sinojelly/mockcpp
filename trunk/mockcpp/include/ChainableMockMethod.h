@@ -4,8 +4,8 @@
 
 #include <mockcpp.h>
 #include <Any.h>
-#include <ChainableMockMethodCore.h>
 #include <Invocation.h>
+#include <Invokable.h>
 #include <Result.h>
 #include <Asserter.h>
 
@@ -17,12 +17,12 @@ template <typename RT>
 class ChainableMockMethodBase
 {
 public:
-    ChainableMockMethodBase(ChainableMockMethodCore* core)
-		: methodCore(core)
+    ChainableMockMethodBase(Invokable* invokable_)
+		: invokable(invokable_)
     {}
 
     RT operator()( const std::string& nameOfCaller
-		 , const RefAny& p01 = RefAny()
+                 , const RefAny& p01 = RefAny()
                  , const RefAny& p02 = RefAny()
                  , const RefAny& p03 = RefAny()
                  , const RefAny& p04 = RefAny()
@@ -38,7 +38,7 @@ public:
     {
        SelfDescribe* resultProvider = 0;
 
-       Any anyResult = methodCore->invoke( nameOfCaller
+       Any anyResult = invokable->invoke( nameOfCaller
                                         , p01, p02, p03, p04, p05, p06
                                         , p07, p08, p09, p10, p11, p12
                                         , resultProvider);
@@ -54,29 +54,35 @@ protected:
 
 private:
 
-    ChainableMockMethodCore* methodCore;
+    Invokable* invokable;
 };
 
 
 //////////////////////////////////////////////////////////////////
-template <typename RT>
-class ChainableMockMethod : public ChainableMockMethodBase<RT>
+template <typename ReturnType>
+class ChainableMockMethod : public ChainableMockMethodBase<ReturnType>
 {
-    RT getResult(const Any& result)
+    ReturnType getResult(const Any& result)
     {
       if (result.empty())
       {
-        return RT();
+        //return ReturnType();
+         return value;
       }
 
-      return any_cast<RT>(result);
+      return any_cast<ReturnType>(result);
     }
 
 public:
 
-    ChainableMockMethod(ChainableMockMethodCore* core)
-       : ChainableMockMethodBase<RT>(core)
+    ChainableMockMethod(Invokable* invokable)
+		: ChainableMockMethodBase<ReturnType>(invokable)
     {}
+
+private:
+	
+    typedef typename TypeTraits<ReturnType>::Type nonref;
+    nonref value;
 };
 
 //////////////////////////////////////////////////////////////////
@@ -89,8 +95,8 @@ class ChainableMockMethod<void> : public ChainableMockMethodBase<void>
 
 public:
 
-    ChainableMockMethod(ChainableMockMethodCore* core)
-       : ChainableMockMethodBase<void>(core)
+    ChainableMockMethod(Invokable* invokable)
+		: ChainableMockMethodBase<void>(invokable)
     {}
 };
 

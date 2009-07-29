@@ -4,7 +4,7 @@
 #include <InvocationMocker.h>
 #include <OrderingMatcher.h>
 #include <Invocation.h>
-#include <Namespace.h>
+#include <InvocationMockerNamespace.h>
 #include <Asserter.h>
 
 #include <string>
@@ -22,7 +22,7 @@ MOCKCPP_NS_START
 
 /////////////////////////////////////////////////////////////////
 PendingMatcher::PendingMatcher(OrderingMatcher* orderingMatcher
-                 , Namespace* ns
+                 , InvocationMockerNamespace* ns
                  , const std::string& identity
                  , InvocationMocker* ThisMocker)
 	: matcher(orderingMatcher)

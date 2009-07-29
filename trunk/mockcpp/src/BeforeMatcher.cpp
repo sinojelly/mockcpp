@@ -1,6 +1,6 @@
 
 #include <BeforeMatcher.h>
-#include <Namespace.h>
+//#include <InvocationMockerNamespace.h>
 #include <InvocationMocker.h>
 #include <Asserter.h>
 #include <Invocation.h>

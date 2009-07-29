@@ -6,6 +6,7 @@
 #include <Any.h>
 #include <Asserter.h>
 #include <InvocationId.h>
+#include <Method.h>
 
 #include <list>
 #include <algorithm>
@@ -23,13 +24,13 @@ public:
 	///////////////////////////////////////////////////
     List matchers;
     bool hasBeenInvoked;
-    ChainableMockMethodCore* coreMocker;
+    Method* belongedMethod;
     InvocationId* id ;
     Stub* stub;
 
 	///////////////////////////////////////////////////
-    InvocationMockerImpl(ChainableMockMethodCore* core)
-		: coreMocker(core), hasBeenInvoked(false), id(0), stub(0)
+    InvocationMockerImpl(Method* method)
+		: belongedMethod(method), hasBeenInvoked(false), id(0), stub(0)
     {}
 
     ~InvocationMockerImpl()
@@ -60,8 +61,7 @@ InvocationMockerImpl::toString() const
 {
     std::ostringstream ss;
 
-    ss << coreMocker->getNamespace()->getName()
-       << "::method(" << coreMocker->getName() << ")";
+    ss << "method(" << belongedMethod->getName() << ")";
 
     for (ConstIterator i = matchers.begin(); i != matchers.end(); ++i)
     {
@@ -170,8 +170,8 @@ InvocationMockerImpl::invoke(const Invocation& inv)
 }
 
 ///////////////////////////////////////////////////////////
-InvocationMocker::InvocationMocker(ChainableMockMethodCore* core)
-   : This(new InvocationMockerImpl(core))
+InvocationMocker::InvocationMocker(Method* method)
+   : This(new InvocationMockerImpl(method))
 {
 }
 
@@ -182,10 +182,10 @@ InvocationMocker::~InvocationMocker()
 }
 
 ///////////////////////////////////////////////////////////
-ChainableMockMethodCore*
+Method*
 InvocationMocker::getMethod() const
 {
-    return This->coreMocker;
+    return This->belongedMethod;
 }
 
 ///////////////////////////////////////////////////////////

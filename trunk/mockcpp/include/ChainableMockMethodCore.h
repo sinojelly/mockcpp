@@ -3,34 +3,33 @@
 #define __MOCKCPP_CHAINABLE_MOCK_METHOD_CORE_H
 
 #include <mockcpp.h>
-#include <Namespace.h>
+
+#include <MethodNameGetter.h>
 #include <Method.h>
+#include <InvocationMockBuilderGetter.h>
 
 #include <string>
 
 MOCKCPP_NS_START
 
-class Any;
-class Namespace;
 class Stub;
 class ChainableMockMethodCoreImpl;
 class SelfDescribe;
 class InvokedRecorder;
+class InvocationMockerNamespace;
 
 class ChainableMockMethodCore
-		: public Method
-		, public Namespace
+      : public Method,
+		  public InvocationMockBuilderGetter
 {
 public:
 
-    ChainableMockMethodCore(const std::string& name, const Namespace* ns);
+    ChainableMockMethodCore(MethodNameGetter* methodNameGetter, InvocationMockerNamespace* ns);
     ~ChainableMockMethodCore();
 
-    std::string& getName(void) const;
-    Namespace* getNamespace() const;
-
+    // Method/Invokable
     Any invoke( const std::string& nameOfCaller
-		      , const RefAny& p1 
+              , const RefAny& p1 
               , const RefAny& p2
               , const RefAny& p3
               , const RefAny& p4
@@ -44,11 +43,19 @@ public:
               , const RefAny& p12
               , SelfDescribe* &resultProvider);
 
-    void setDefaultStub(Stub* stub);
+    // Method
+    std::string& getName(void) const;
 
+    InvocationMockerNamespace* getNamespace() const;
+
+    // InvocationMockBuilderGetter
     WorkingBuilder stubs();
     WorkingBuilder expects(Matcher* matcher);
     DefaultBuilder defaults();
+
+public:
+    // Others
+    void setDefaultStub(Stub* stub);
 
     void reset();
 

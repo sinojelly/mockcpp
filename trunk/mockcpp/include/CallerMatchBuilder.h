@@ -1,9 +1,11 @@
 
-#ifndef __MOCKCPP_CALLER_MATCH_BUILDER_H_
-#define __MOCKCPP_CALLER_MATCH_BUILDER_H_
+#ifndef __MOCKCPP_CALLER_MATCH_BUILDER_H
+#define __MOCKCPP_CALLER_MATCH_BUILDER_H
 
 #include <mockcpp.h>
+
 #include <DummyBuilder.h>
+
 #include <string>
 
 MOCKCPP_NS_START
