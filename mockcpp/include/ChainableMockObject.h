@@ -1,45 +1,55 @@
 
-#ifndef __MOCKCPP_CHAINABLE_MOCK_OBJECT_H
-#define __MOCKCPP_CHAINABLE_MOCK_OBJECT_H
+#ifndef __MOCKCPP_CHAINABLE_MOCK_OBJECT_H_
+#define __MOCKCPP_CHAINABLE_MOCK_OBJECT_H_
 
 #include <mockcpp.h>
+
 #include <ChainableMockMethod.h>
-#include <Namespace.h>
+#include <InvocationMockBuilderGetter.h>
+#include <InvocationMockerNamespace.h>
+
 #include <string>
 
 MOCKCPP_NS_START
 
-class ChainableMockMethodCore;
+class ChainableMockMethodWithName;
 class ChainableMockObjectImpl;
+class InvocationMocker;
 
-class ChainableMockObject : public Namespace
+
+class ChainableMockObject 
+      : public InvocationMockerNamespace
 {
 public:
 
-    ChainableMockObject(const std::string& name, Namespace* ns = 0);
+    ChainableMockObject(const std::string& name);
     ~ChainableMockObject();
 
     std::string& getName(void) const;
 
-    Method& method(const std::string& name);
+    // Used in test case
+    // MOCKER(foo).expects(once()).with(eq(1)).will(returnValue(2));
+    InvocationMockBuilderGetter& method(const std::string& name);
 
+    // InvocationMockerNamespace -- id("id");
+    InvocationMocker* getInvocationMocker(const std::string& id);
+
+    void verify();
+    void reset();
+
+    // Used in source code
     template <typename RT>
     ChainableMockMethod<RT> invoke(const std::string& name) const
     {
-      return ChainableMockMethod<RT>(getMethod(name)); 
+      return ChainableMockMethod<RT>(getInvokable(name)); 
     }
 
-    void verify();
+    Invokable* getInvokable(const std::string& name) const;
 
-    void reset();
+private:
 
-public:
-
-    InvocationMocker* getInvocationMocker(const std::string& name);
-
-public:
-
-    ChainableMockMethodCore* getMethod(const std::string& name) const;
+    ChainableMockMethodWithName*
+    ChainableMockObject::getMethod(const std::string& name) const;
 
 private:
 

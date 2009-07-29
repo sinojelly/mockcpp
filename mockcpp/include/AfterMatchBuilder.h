@@ -8,7 +8,7 @@
 
 MOCKCPP_NS_START
 
-class Namespace;
+class InvocationMockerNamespace;
 class InvocationMocker;
 
 template <class Builder = DummyBuilder>
@@ -17,10 +17,10 @@ class AfterMatchBuilder : public Builder
 public:
     
     Builder&
-    after(const Namespace& ns, const std::string& name);
+    after(const InvocationMockerNamespace& ns, const std::string& name);
 
     Builder&
-    after(Namespace* ns, const std::string& name);
+    after(InvocationMockerNamespace* ns, const std::string& name);
 
     Builder&
     after(const std::string& name);

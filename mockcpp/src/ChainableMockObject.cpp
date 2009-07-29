@@ -1,8 +1,14 @@
 
+#include <mockcpp.h>
+
 #include <ChainableMockObject.h>
-#include <Namespace.h>
+#include <ChainableMockMethodCore.h>
 #include <InvocationMockBuilder.h>
 #include <InvocationMocker.h>
+#include <ChainableMockMethodWithName.h>
+
+
+
 
 #include <list>
 #include <algorithm>
@@ -13,28 +19,29 @@ MOCKCPP_NS_START
 class ChainableMockObjectImpl
 {
 public:
-    typedef std::list<ChainableMockMethodCore*> List;
+    typedef std::list<ChainableMockMethodWithName*> List;
     typedef List::iterator Iterator;
     typedef List::const_iterator ConstIterator;
 
-    ChainableMockObjectImpl(const std::string& name);
+    ChainableMockObjectImpl(const std::string& name, InvocationMockerNamespace* ns);
 	 ~ChainableMockObjectImpl();
-    ChainableMockMethodCore* addMethodCore(const std::string& name, const Namespace* ns) const;
-    ChainableMockMethodCore* findMethodCore(const std::string& name) const;
+    ChainableMockMethodWithName* addMethod(const std::string& name) const;
+    ChainableMockMethodWithName* findMethod(const std::string& name) const;
     InvocationMocker* findInvocationMocker(const std::string& id);
     void reset();
     void verify();
 
     mutable List methods;
     std::string objectName;
+    InvocationMockerNamespace* invocationMockerNamespace;
 
 };
 
 //////////////////////////////////////////////////////////////
 namespace {
-void verifyCore(ChainableMockMethodCore* core)
+void verifyCore(ChainableMockMethodWithName* method)
 {
-    core->verify();
+    method->verify();
 }}
 
 void ChainableMockObjectImpl::verify()
@@ -44,10 +51,10 @@ void ChainableMockObjectImpl::verify()
 
 //////////////////////////////////////////////////////////////
 namespace {
-void resetCore(ChainableMockMethodCore* core)
+void resetCore(ChainableMockMethodWithName* method)
 {
-    core->reset();
-    delete core;
+    method->reset();
+    delete method;
 }}
 
 void ChainableMockObjectImpl::reset()
@@ -69,17 +76,18 @@ struct IsMethodNameMatch
 		: name(methodName)
     {}
 
-    bool operator()(ChainableMockMethodCore* method)
+    bool operator()(ChainableMockMethodWithName* method)
     {
-		return method->getName() == name;
+		return method->getMethodName() == name;
     }
 
     const std::string& name;
 };
 
 //////////////////////////////////////////////////////////////
-ChainableMockObjectImpl::ChainableMockObjectImpl(const std::string& name)
-   : objectName(name)
+ChainableMockObjectImpl::ChainableMockObjectImpl(const std::string& name, \
+			InvocationMockerNamespace* ns)
+   : objectName(name), invocationMockerNamespace(ns)
 {
 }
 
@@ -99,21 +107,20 @@ ChainableMockObjectImpl::findInvocationMocker(const std::string& id)
    return 0;
 }
 //////////////////////////////////////////////////////////////
-ChainableMockMethodCore*
-ChainableMockObjectImpl::addMethodCore( const std::string& name
-                                      , const Namespace* ns) const
+ChainableMockMethodWithName*
+ChainableMockObjectImpl::addMethod(const std::string& name) const
 {
-    ChainableMockMethodCore* core =
-            new ChainableMockMethodCore(name, ns);
+    ChainableMockMethodWithName* method =
+            new ChainableMockMethodWithName(name, invocationMockerNamespace);
 
-    methods.push_back(core);
+    methods.push_back(method);
 
-    return core;
+    return method;
 }
 
 //////////////////////////////////////////////////////////////
-ChainableMockMethodCore*
-ChainableMockObjectImpl::findMethodCore(const std::string& name) const
+ChainableMockMethodWithName*
+ChainableMockObjectImpl::findMethod(const std::string& name) const
 {
     ConstIterator i = std::find_if( methods.begin()
                              , methods.end()
@@ -124,9 +131,8 @@ ChainableMockObjectImpl::findMethodCore(const std::string& name) const
 
 //////////////////////////////////////////////////////////////
 ChainableMockObject::ChainableMockObject(
-		const std::string& name
-    , Namespace* ns )
-	: This(new ChainableMockObjectImpl(name))
+		const std::string& name)
+	: This(new ChainableMockObjectImpl(name, this))
 {
 }
 
@@ -137,23 +143,28 @@ ChainableMockObject::~ChainableMockObject()
 }
 
 //////////////////////////////////////////////////////////////
-Method&
+InvocationMockBuilderGetter&
 ChainableMockObject::method(const std::string& name)
 {
-    return *getMethod(name);
+    return *(getMethod(name)->getInvocationMockBuilderGetter());
 }
 
+Invokable*
+ChainableMockObject::getInvokable(const std::string& name) const
+{
+   return getMethod(name)->getInvokable();
+}
 //////////////////////////////////////////////////////////////
-ChainableMockMethodCore*
+ChainableMockMethodWithName*
 ChainableMockObject::getMethod(const std::string& name) const
 {
-    ChainableMockMethodCore* core = This->findMethodCore(name);
-    if (core != 0)
+    ChainableMockMethodWithName* method = This->findMethod(name);
+    if (method != 0)
     {
-      return core;
+      return method;
     }
 
-    return This->addMethodCore(name, this);
+    return This->addMethod(name);
 }
 
 //////////////////////////////////////////////////////////////

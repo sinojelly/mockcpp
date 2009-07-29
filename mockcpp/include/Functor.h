@@ -51,7 +51,7 @@ struct Functor<R(DECL_ARGS(n))> : public BaseFunctor \
  \
     R operator()(DECL_PARAMS_LIST(n)) \
     { \
-      return ChainableMockMethod<R>(GlobalMockObject::instance.getMethod(getName()))( \
+      return ChainableMockMethod<R>(GlobalMockObject::instance.getInvokable(getName()))( \
                                     getNameOfCaller() DECL_REST_PARAMS(n)); \
     } \
 }
@@ -83,7 +83,7 @@ struct Functor<R(DECL_VARDIC_ARGS(n) ...)> : public BaseFunctor \
          const RefAny& p9 = RefAny(), const RefAny& p10 = RefAny(), \
          const RefAny& p11 = RefAny(), const RefAny& p12 = RefAny()) \
     { \
-      return ChainableMockMethod<R>(GlobalMockObject::instance.getMethod(getName()))(getNameOfCaller(), DECL_PARAMS(12)); \
+      return ChainableMockMethod<R>(GlobalMockObject::instance.getInvokable(getName()))(getNameOfCaller(), DECL_PARAMS(12)); \
     } \
 }
 

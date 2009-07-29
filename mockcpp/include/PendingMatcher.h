@@ -11,7 +11,7 @@ MOCKCPP_NS_START
 
 class Invocation;
 class OrderingMatcher;
-class Namespace;
+class InvocationMockerNamespace;
 class InvocationMocker;
 
 class PendingMatcher : public Matcher
@@ -19,7 +19,7 @@ class PendingMatcher : public Matcher
 public:
 
    PendingMatcher(OrderingMatcher* orderingMatcher
-                 , Namespace* ns
+                 , InvocationMockerNamespace* ns
                  , const std::string& identity
                  , InvocationMocker* ThisMocker);
 
@@ -40,7 +40,7 @@ private:
 private:
 
    mutable OrderingMatcher* matcher;
-	Namespace* scope;
+	InvocationMockerNamespace* scope;
    std::string id;
    InvocationMocker* mocker;
 };

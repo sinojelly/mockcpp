@@ -2,17 +2,17 @@
 #include <cxxtest/TestSuite.h>
 #include <Any.h>
 #include <ChainableMockObject.h>
-#include <Namespace.h>
 #include <InvocationMockBuilder.h>
 #include <ChainingMockHelper.h>
+#include <ChainableMockMethodWithName.h>
 
 using namespace mockcpp;
 
 class Foo : public ChainableMockObject
 {
 public:
-	Foo(Namespace* ns = 0)
-		: ChainableMockObject("Foo", ns)
+	Foo()
+		: ChainableMockObject("Foo")
 	{}
 
 	int foo(int& i, unsigned long j)

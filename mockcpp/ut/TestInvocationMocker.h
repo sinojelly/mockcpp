@@ -2,7 +2,6 @@
 #include <cxxtest/TestSuite.h>
 #include <InvocationMocker.h>
 #include <Invocation.h>
-#include <Namespace.h>
 #include <InvocationMockBuilder.h>
 #include <ChainingMockHelper.h>
 #include <Any.h>

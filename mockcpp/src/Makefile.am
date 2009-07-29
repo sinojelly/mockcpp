@@ -12,6 +12,7 @@ libmockcpp_la_SOURCES = \
  BeforeMatcher.cpp \
  CallerMatcher.cpp \
  ChainableMockMethodCore.cpp \
+ ChainableMockMethodWithName.cpp \
  ChainableMockObject.cpp \
  ChainingMockHelper.cpp \
  ConstraintSet.cpp \

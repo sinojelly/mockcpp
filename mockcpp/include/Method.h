@@ -3,53 +3,29 @@
 #define __MOCKCPP_METHOD_H
 
 #include <mockcpp.h>
-#include <InvocationMockBuilder.h>
-#include <AfterMatchBuilder.h>
-#include <BeforeMatchBuilder.h>
-#include <IdentityBuilder.h>
-#include <StubBuilder.h>
-#include <ArgumentsMatchBuilder.h>
-#include <CallerMatchBuilder.h>
+
+#include <Any.h>
+#include <RefAny.h>
+
+#include <Invokable.h>
+
+#include <string>
 
 MOCKCPP_NS_START
 
-class Matcher;
+class SelfDescribe;
+class InvocationMockerNamespace;
 
-///////////////////////////////////////////////
-typedef InvocationMockBuilder<
-          CallerMatchBuilder<
-           BeforeMatchBuilder<
-            ArgumentsMatchBuilder<
-             AfterMatchBuilder<
-              StubBuilder< 
-                IdentityBuilder
-              >
-             >
-            >
-           >
-		  >
-         > WorkingBuilder;
-
-///////////////////////////////////////////////
-typedef InvocationMockBuilder< 
-         CallerMatchBuilder<
-          ArgumentsMatchBuilder<
-             StubBuilder<>
-          >
-		 >
-        > DefaultBuilder;
-
-///////////////////////////////////////////////
+/////////////////////////////////////////////
 struct Method
+    : public Invokable
 {
-    virtual WorkingBuilder stubs() = 0;
-    virtual WorkingBuilder expects(Matcher* matcher) = 0;
-    virtual DefaultBuilder defaults() = 0;
+    virtual std::string& getName() const = 0;
 
-    ~Method() {}
+    virtual InvocationMockerNamespace* getNamespace() const = 0;
+
+    virtual ~Method() {}
 };
-
-///////////////////////////////////////////////
 
 MOCKCPP_NS_END
 
