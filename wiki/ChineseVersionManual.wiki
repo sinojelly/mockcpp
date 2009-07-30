@@ -176,11 +176,11 @@ mockcpp可以自动的计算size参数，不需要程序员自己指定。另外
   * 一次：once ()
   * 准确的次数：exactly (n)
   * 至少：
-    # atLeast (n)
-    # atLeastOnce()
+    * atLeast (n)
+    * atLeastOnce()
   * 至多：
-    # atMost (n)
-    # atMostOnce()
+    * atMost (n)
+    * atMostOnce()
   * 不调用：never ()
 
 ===用法===
@@ -259,11 +259,11 @@ void test_should_be_able_to_process_a_text_file()
 ===约束的类型===
 
   * 之前：
-    # before (id)
-    # before (object, id)
+    * before (id)
+    * before (object, id)
   * 之后：
-    # after (id)
-    # after (object, id)
+    * after (id)
+    * after (object, id)
 
 ===相关类型===
   
