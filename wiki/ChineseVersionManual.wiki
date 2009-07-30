@@ -123,8 +123,8 @@ void test_should_throw_exception_if_open_file_failed ()
   * 相等：   eq (value) 
   * 不等：   neq (value)
   * 内存匹配
-    ＃ mirror (object)
-    ＃ mirror (address, size)
+    # mirror (object)
+    # mirror (address, size)
   * 字符串匹配：
     # smirror (str)
     # startWith (str)
@@ -176,11 +176,11 @@ mockcpp可以自动的计算size参数，不需要程序员自己指定。另外
   * 一次：once ()
   * 准确的次数：exactly (n)
   * 至少：
-    ＃ atLeast (n)
-    ＃ atLeastOnce()
+    # atLeast (n)
+    # atLeastOnce()
   * 至多：
-    ＃ atMost (n)
-    ＃ atMostOnce()
+    # atMost (n)
+    # atMostOnce()
   * 不调用：never ()
 
 ===用法===
