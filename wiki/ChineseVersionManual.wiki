@@ -86,7 +86,9 @@ struct ITextFileReader
 
     virtual ~ITextFile() {}
 };
+}}}
 
+{{{
 // 被测单元
 struct AwkProcessor
 {
@@ -94,7 +96,9 @@ struct AwkProcessor
 
     String process(const char* textFileName, String script); 
 };
+}}}
 
+{{{
 // 测试用例
 void test_should_throw_exception_if_open_file_failed ()
 {
