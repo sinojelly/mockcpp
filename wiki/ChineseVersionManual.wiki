@@ -2,7 +2,7 @@
 
 mockcpp是一个C/C++语言的mock框架。它最初出现的原因并不是为了重新发明轮子，也不是为了做Yet Another C++ mock framework。
 
-在mockcpp出现之前，在互联网上可以找到的C++ Mock框架只有*mockpp*; 在我们最初的敏捷开发实践中，它也就是我们唯一的选择。虽然 *mockpp* 是一个优秀的框架，但它的实现使用了非常复杂的模版技术，这带来了漫长的编译时间，和非常晦涩难懂的编译错误信息。这对于TDD的步伐有着非常负面的影响。另外，*mockpp*所提供的功能在某些程度下无法满足我们的需要，我们在一开始选择向*mockpp*增加这些功能，但它的复杂模版所带来的负面影响促使我们最终决定开发一个新的框架。
+在mockcpp出现之前，在互联网上可以找到的C++ Mock框架只有*mockpp*; 在我们最初的敏捷开发实践中，它也就是我们唯一的选择。虽然 *mockpp* 是一个优秀的框架，但它的实现使用了非常复杂的模版技术，这带来了漫长的编译时间，和非常晦涩难懂的编译错误信息。这对于TDD的步伐有着非常负面的影响。另外，*mockpp* 所提供的功能在某些程度下无法满足我们的需要，我们在一开始选择向*mockpp* 增加这些功能，但它的复杂模版所带来的负面影响促使我们最终决定开发一个新的框架。
 
 mockcpp致力于如下目标：
 
@@ -51,23 +51,24 @@ mock->method(&Interface::method)
 
 ===用法===
 
-函数调用行为通过will (behavior)来指定。
+函数调用行为通过_will_(behavior)来指定。
 
-returnValue()用来指定匹配的调用所返回的单个值。无论这个调用发生了多少次，指定的值总是作为返回值返回。
+_returnValue_()用来指定匹配的调用所返回的单个值。无论这个调用发生了多少次，指定的值总是作为返回值返回。
 
-在约束相同的情况下，你可能会希望一个调用每次返回的值是不相同的，这个时候你可以使用returnObjectList ()。 mock framework会按照你在returnObjectList ()中指定的返回值的顺序在匹配的调用中依次返回。当最后一个对象返回后，如果匹配的调用再次发生，mock framework将会宣布一个错误。
+在约束相同的情况下，你可能会希望一个调用每次返回的值是不相同的，这个时候你可以使用_returnObjectList_()。 mockcpp会按照你在_returnObjectList_()中指定的返回值的顺序在匹配的调用中依次返回。当最后一个对象返回后，如果匹配的调用再次发生，mockcpp将会宣告一个错误。
 
-另外，在当前的实现中，returnObjectList ()的所允许指定对象个数是有限制的，这或许在某些情况下无法直接的满足测试的需求。
+另外，在当前的实现中，_returnObjectList_()的所允许指定对象个数是有限制的，这或许在某些情况下无法直接的满足测试的需求。
 
-当希望一个匹配的调用抛出异常时，可以通过throwException (exception)来指定，即便函数定义的返回值类型是void。
+当希望一个匹配的调用抛出异常时，可以通过_throwException_(exception)来指定，即便函数定义的返回值类型是void。
 
-如果函数定义的返回值类型不是void，则一定要指定函数调用行为。 即使不关心返回值，也要通过ignoreReturnValue ()来指定。
+如果函数定义的返回值类型不是*void*，则一定要指定函数调用行为。 即使不关心返回值，也要通过_ignoreReturnValue_()来指定。
 
 ===使用时机===
 
 N/A
 
 ===最好不使用的场景===
+
 N/A
 
 ===例子===
@@ -97,19 +98,21 @@ void test_should_throw_exception_if_open_file_failed ()
 
    textFile->method(&ITextFile::open)
                    .stubs()
-                   .will(throwException(Exception(“File Not Exist”)));
+                   .will(throwException(Exception( "File Not Exist" )));
 
     ///////////////////////////////////////////////
     TS_ASSERT_THROWS( awkProcessor.process("myFile.txt", "{print $2}"), Exception);
 }
+
 }}}
 
-==2.2调用参数约束==
+==2.2 调用参数约束==
 
 ===作用===
 
-调用参数事实上是一种选择器，而不是一种约束。因为你可以在一个用例中，针对一个函数，指定多个mock调用方式。当被测函数调用这个mock函数时，mock框架会找到第一个匹配所有选择器的调用方式，然后返回这个调用方式指定的结果（返回值，抛出异常，等等）。
-但如果mock框架找不到任何匹配的调用方式，则会让这个用例失败，这就让调用参数约束间接的成为一种约束。
+调用参数事实上是一种选择器，而不是一种约束。因为你可以在一个用例中，针对一个函数，指定多个mock调用方式。当被测函数调用这个mock函数时，mockcpp会找到第一个匹配所有选择器的调用方式，然后返回这个调用方式指定的结果（返回值，抛出异常，等等）。
+
+但如果mockcpp找不到任何匹配的调用方式，则会让这个用例失败，这就让调用参数约束间接的成为一种约束。
 
 另外，由于C/C++都支持输出参数的功能（通过指针/引用），在这种情况下，调用参数约束同时具备了stub的作用。
 
@@ -117,10 +120,10 @@ void test_should_throw_exception_if_open_file_failed ()
 
 输入参数约束：
 
-  * 相等：eq (value)
-  * 不等：neq (value)
-  * 内存匹配：mirror (object)
-                         mirror (address, size)
+  || 相等 || eq (value)   ||
+  || 不等 || neq (value) ||
+  || 内存匹配 || mirror (object) ||
+                         || mirror (address, size) ||
   * 字符串匹配：
     # smirror (str)
     # startWith (str)
