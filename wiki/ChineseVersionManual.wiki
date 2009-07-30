@@ -109,6 +109,8 @@ void test_should_throw_exception_if_open_file_failed ()
                  .will(throwException(Exception( "File Not Exist" )));
 
     ///////////////////////////////////////////////
+    AwkProcessor(textFile);
+
     TS_ASSERT_THROWS( awkProcessor.process("myFile.txt", "{print $2}"), Exception);
 }
 
@@ -339,11 +341,11 @@ struct SequenceUserValidator : public IUserValidator
 // 测试用例
 void test_should_invoke_validators_in_order()
 {
-   MockObject* validator0 = new MockObject< IUserValidator *>();
+   MockObject<IUserValidate> validator0;
 
-   MockObject* validator1 = new MockObject< IUserValidator *>();
+   MockObject<IUserValidate> validator1;
 
-   MockObject* validator2 = new MockObject< IUserValidator *>();
+   MockObject<IUserValidate> validator2;
     
    ///////////////////////////////////////////////
    SequenceUserValidator::Validators validators;
@@ -354,23 +356,23 @@ void test_should_invoke_validators_in_order()
    ///////////////////////////////////////////////
    User user("darwin");
    ///////////////////////////////////////////////
-   validator0->method(&IUserValidator::validate)
-                         .expects(atLeast(1))
-			 .before(validate1, "v")
-                         .with(eq(user))
-                         .will(returnValue(true));
+   validator0.method(&IUserValidator::validate)
+                       .expects(atLeast(1))
+		       .before(validate1, "v")
+                       .with(eq(user))
+                       .will(returnValue(true));
 
-   validator1->method(&IUserValidator::validate)
-                         .expects(atLeast(1))
-                         .with(eq(user))
-                         .will(returnValue(true))
-                         .id("v");
+   validator1.method(&IUserValidator::validate)
+                       .expects(atLeast(1))
+                       .with(eq(user))
+                       .will(returnValue(true))
+                       .id("v");
 
-   validator2->method(&IUserValidator::validate)
-                         .expects(atLeast(1))
-                         .with(eq(user))
-                         .after(validate1, "v")
-                         .will(returnValue(true));    
+   validator2.method(&IUserValidator::validate)
+                       .expects(atLeast(1))
+                       .with(eq(user))
+                       .after(validate1, "v")
+                       .will(returnValue(true));    
    ///////////////////////////////////////////////
    SequenceUserValidator validator(&validators);
 
