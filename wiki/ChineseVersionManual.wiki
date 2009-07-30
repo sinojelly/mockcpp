@@ -1,3 +1,4 @@
+#labels mockcpp,manual,Chinese
 =1. 背景=
 
 mockcpp是一个C/C++语言的mock框架。它最初出现的原因并不是为了重新发明轮子，也不是为了做Yet Another C++ mock framework。
