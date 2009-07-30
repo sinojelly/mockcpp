@@ -216,7 +216,9 @@ struct ITextFileReader
 
    virtual ~ITextFile() {}
 };
+}}}
 
+{{{
 // 被测单元
 struct AwkProcessor
 {
@@ -224,7 +226,9 @@ struct AwkProcessor
 
    String process(const char* textFileName, String script); 
 };
+}}}
 
+{{{
 // 测试用例
 void test_should_be_able_to_process_a_text_file()
 {
@@ -314,7 +318,9 @@ struct IUserValidator
    
    virtual ~IUserValidator() {}
 };
+}}}
 
+{{{
 // 被测单元
 struct SequenceUserValidator : public IUserValidator
 {
@@ -327,7 +333,9 @@ struct SequenceUserValidator : public IUserValidator
  private:
    Validators* validators;
 };
+}}}
 
+{{{
 // 测试用例
 void test_should_invoke_validators_in_order()
 {
