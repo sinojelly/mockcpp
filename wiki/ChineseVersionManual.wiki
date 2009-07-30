@@ -102,11 +102,11 @@ struct AwkProcessor
 // 测试用例
 void test_should_throw_exception_if_open_file_failed ()
 {
-   MockObject* textFile = new MockObject< ITextFileReader *>();
+   MockObject<ITextFileReader> textFile;
 
-   textFile->method(&ITextFile::open)
-                   .stubs()
-                   .will(throwException(Exception( "File Not Exist" )));
+   textFile.method(&ITextFile::open)
+                 .stubs()
+                 .will(throwException(Exception( "File Not Exist" )));
 
     ///////////////////////////////////////////////
     TS_ASSERT_THROWS( awkProcessor.process("myFile.txt", "{print $2}"), Exception);
@@ -232,7 +232,7 @@ struct AwkProcessor
 // 测试用例
 void test_should_be_able_to_process_a_text_file()
 {
-   MockObject* textFile = new MockObject< ITextFileReader *>();
+   MockObject<ITextFileReader> textFile;
 
    String line1("1  A");
    String line2("2  B");
@@ -241,17 +241,17 @@ void test_should_be_able_to_process_a_text_file()
    char * fileName = "testFile";
 
    ///////////////////////////////////////////////
-   textFile->method(&ITextFile::open)
-                   .expects(atLeast(1))
-                   .with(endWith(textFile));
+   textFile.method(&ITextFile::open)
+                 .expects(atLeast(1))
+                 .with(endWith(textFile));
 
-   textFile->method(&ITextFile::close)
-                   .expects(atLeast(1))
-                   .will(ignoreReturnValue());
+   textFile.method(&ITextFile::close)
+                 .expects(atLeast(1))
+                 .will(ignoreReturnValue());
 
-   textFile->method(&ITextFile::readLine)
-                   .stubs()
-                   .will(returnObjectList(line1, line2, line3), throwException(EOFError));
+   textFile.method(&ITextFile::readLine)
+                 .stubs()
+                 .will(returnObjectList(line1, line2, line3), throwException(EOFError));
 
    ///////////////////////////////////////////////
    AwkProcessor awkProcessor(textFile);
