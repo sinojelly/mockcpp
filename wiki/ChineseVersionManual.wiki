@@ -1,5 +1,5 @@
+#summary User Manual In Chinese
 #labels Phase-Design,Manual,Chinese
-# User Manual In Chinese
 
 =1. 背景=
 
