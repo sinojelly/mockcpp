@@ -126,10 +126,10 @@ void test_should_throw_exception_if_open_file_failed ()
     * mirror (object)
     * mirror (address, size)
   * 字符串匹配：
-    # smirror (str)
-    # startWith (str)
-    # endWith (str)
-    # contains (str)
+    * smirror (str)
+    * startWith (str)
+    * endWith (str)
+    * contains (str)
   * 占位符：any ()
 
 输出参数约束：
