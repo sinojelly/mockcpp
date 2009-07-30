@@ -123,8 +123,8 @@ void test_should_throw_exception_if_open_file_failed ()
   * 相等：   eq (value) 
   * 不等：   neq (value)
   * 内存匹配
-    # mirror (object)
-    # mirror (address, size)
+    * mirror (object)
+    * mirror (address, size)
   * 字符串匹配：
     # smirror (str)
     # startWith (str)
