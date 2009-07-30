@@ -44,10 +44,10 @@ mock->method(&Interface::method)
 
 ===行为类型===
 
-  || 返回一个值         || returnValue (value)                  ||
-  || 返回一系列的值 || returnObjectList (o1, o2,…)    ||
-  || 抛出异常             || throwException (exception)  ||
-  || 忽略返回值         || ignoreReturnValue ()               ||
+  * 返回一个值：        returnValue (value)             
+  * 返回一系列的值：returnObjectList (o1, o2,…)    
+  * 抛出异常：            throwException (exception)  
+  * 忽略返回值：        ignoreReturnValue ()               
 
 ===用法===
 
@@ -120,16 +120,17 @@ void test_should_throw_exception_if_open_file_failed ()
 
 输入参数约束：
 
-  || 相等 || eq (value)   ||
-  || 不等 || neq (value) ||
-  || 内存匹配 || mirror (object) ||
-                         || mirror (address, size) ||
+  * 相等：   eq (value) 
+  * 不等：   neq (value)
+  * 内存匹配
+    ＃ mirror (object)
+    ＃ mirror (address, size)
   * 字符串匹配：
     # smirror (str)
     # startWith (str)
     # endWith (str)
     # contains (str)
-  * 占位符（没有约束）：any ()
+  * 占位符：any ()
 
 输出参数约束：
 
@@ -174,10 +175,12 @@ mockcpp可以自动的计算size参数，不需要程序员自己指定。另外
 ===约束的类型===
   * 一次：once ()
   * 准确的次数：exactly (n)
-  * 至少：atLeast (n)
-                 atLeastOnce()
-  * 至多：atMost (n)
-                 atMostOnce()
+  * 至少：
+    ＃ atLeast (n)
+    ＃ atLeastOnce()
+  * 至多：
+    ＃ atMost (n)
+    ＃ atMostOnce()
   * 不调用：never ()
 
 ===用法===
@@ -218,11 +221,11 @@ void test_should_be_able_to_process_a_text_file()
 {
    MockObject* textFile = new MockObject< ITextFileReader *>();
 
-   String line1(“1  A”);
-   String line2(“2  B”);
-   String line3(“3  C”);
+   String line1("1  A");
+   String line2("2  B");
+   String line3("3  C");
 
-   char * fileName = “testFile”;
+   char * fileName = "testFile";
 
    ///////////////////////////////////////////////
    textFile->method(&ITextFile::open)
@@ -240,9 +243,9 @@ void test_should_be_able_to_process_a_text_file()
    ///////////////////////////////////////////////
    AwkProcessor awkProcessor(textFile);
 
-   String result = awkProcessor.process(fileName, “{print $2}”);
+   String result = awkProcessor.process(fileName, "{print $2}");
     
-    TS_ASSERT_EQUALS(“A\nB\nC\n”, result);
+    TS_ASSERT_EQUALS("A\nB\nC\n", result);
 }
 
 }}}
@@ -255,12 +258,16 @@ void test_should_be_able_to_process_a_text_file()
 
 ===约束的类型===
 
-  * 之前：before (id)
-                 before (object, id)
-  * 之后：after (id)
-                 after (object, id)
-  * 相关类型
-  * 标识符：id (id)
+  * 之前：
+    # before (id)
+    # before (object, id)
+  * 之后：
+    # after (id)
+    # after (object, id)
+
+===相关类型===
+  
+标识符：id (id)
  
 ===用法===
 
@@ -328,11 +335,11 @@ void test_should_invoke_validators_in_order()
    validators.push_back(validator1);
    validators.push_back(validator2);
    ///////////////////////////////////////////////
-   User user(“darwin”);
+   User user("darwin");
    ///////////////////////////////////////////////
    validator0->method(&IUserValidator::validate)
                          .expects(atLeast(1))
-			 .before(validate1, “v”)
+			 .before(validate1, "v")
                          .with(eq(user))
                          .will(returnValue(true));
 
@@ -340,12 +347,12 @@ void test_should_invoke_validators_in_order()
                          .expects(atLeast(1))
                          .with(eq(user))
                          .will(returnValue(true))
-                         .id(“v”);
+                         .id("v");
 
    validator2->method(&IUserValidator::validate)
                          .expects(atLeast(1))
                          .with(eq(user))
-                         .after(validate1, “v”)
+                         .after(validate1, "v")
                          .will(returnValue(true));    
    ///////////////////////////////////////////////
    SequenceUserValidator validator(&validators);
