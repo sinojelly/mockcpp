@@ -2,7 +2,7 @@
 
 mockcpp是一个C/C++语言的mock框架。它最初出现的原因并不是为了重新发明轮子，也不是为了做Yet Another C++ mock framework。
 
-在mockcpp出现之前，在互联网上可以找到的C++ Mock框架只有*mockpp；在我们最初的敏捷开发实践中，它也就是我们唯一的选择。虽然*mockpp是一个优秀的框架，但它的实现使用了非常复杂的模版技术，这带来了漫长的编译时间，和非常晦涩难懂的编译错误信息。这对于TDD的步伐有着非常负面的影响。另外，*mockpp所提供的功能在某些程度下无法满足我们的需要，我们在一开始选择向*mockpp增加这些功能，但它的复杂模版所带来的负面影响促使我们最终决定开发一个新的框架。
+在mockcpp出现之前，在互联网上可以找到的C++ Mock框架只有*mockpp*; 在我们最初的敏捷开发实践中，它也就是我们唯一的选择。虽然*mockpp*是一个优秀的框架，但它的实现使用了非常复杂的模版技术，这带来了漫长的编译时间，和非常晦涩难懂的编译错误信息。这对于TDD的步伐有着非常负面的影响。另外，*mockpp*所提供的功能在某些程度下无法满足我们的需要，我们在一开始选择向*mockpp*增加这些功能，但它的复杂模版所带来的负面影响促使我们最终决定开发一个新的框架。
 
 mockcpp致力于如下目标：
 
@@ -29,11 +29,11 @@ mockcpp当前的实现支持七种类型的约束/行为：
 {{{
 mock->method(&Interface::method)
       .expects(once())
-      .before(anotherMock, “close”)
+      .before(anotherMock, "close")
       .with(eq(1), any(), neq(2.0))
-      .after(anotherMock, “open”)
+      .after(anotherMock, "open")
       .will(returnValue(true))
-      .id(“myMethod”);
+      .id("myMethod");
 }}}
 
 ==2.1函数调用行为==
@@ -44,9 +44,9 @@ mock->method(&Interface::method)
 
 ===行为类型===
 
-  * 返回一个值：returnValue (value)
-  * 返回一系列的值：returnObjectList (o1, o2,…)
-  * 抛出异常：throwException (exception)
+  || 返回一个值         || returnValue (value)  ||
+  || 返回一系列的值 || returnObjectList (o1, o2,…) ||
+  * 抛出异常：            throwException (exception)
   * 忽略返回值：ignoreReturnValue ()
 
 ===用法===
