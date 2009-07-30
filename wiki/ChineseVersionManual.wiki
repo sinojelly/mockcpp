@@ -2,7 +2,7 @@
 
 mockcpp是一个C/C++语言的mock框架。它最初出现的原因并不是为了重新发明轮子，也不是为了做Yet Another C++ mock framework。
 
-在mockcpp出现之前，在互联网上可以找到的C++ Mock框架只有*mockpp*；在我们最初的敏捷开发实践中，它也就是我们唯一的选择。虽然*mockpp*是一个优秀的框架，但它的实现使用了非常复杂的模版技术，这带来了漫长的编译时间，和非常晦涩难懂的编译错误信息。这对于TDD的步伐有着非常负面的影响。另外，*mockpp*所提供的功能在某些程度下无法满足我们的需要，我们在一开始选择向*mockpp*增加这些功能，但它的复杂模版所带来的负面影响促使我们最终决定开发一个新的框架。
+在mockcpp出现之前，在互联网上可以找到的C++ Mock框架只有*mockpp；在我们最初的敏捷开发实践中，它也就是我们唯一的选择。虽然*mockpp是一个优秀的框架，但它的实现使用了非常复杂的模版技术，这带来了漫长的编译时间，和非常晦涩难懂的编译错误信息。这对于TDD的步伐有着非常负面的影响。另外，*mockpp所提供的功能在某些程度下无法满足我们的需要，我们在一开始选择向*mockpp增加这些功能，但它的复杂模版所带来的负面影响促使我们最终决定开发一个新的框架。
 
 mockcpp致力于如下目标：
 
@@ -30,10 +30,10 @@ mockcpp当前的实现支持七种类型的约束/行为：
 mock->method(&Interface::method)
       .expects(once())
       .before(anotherMock, “close”)
-.with(eq(1), any(), neq(2.0))
-.after(anotherMock, “open”)
-.will(returnValue(true))
-.id(“myMethod”);
+      .with(eq(1), any(), neq(2.0))
+      .after(anotherMock, “open”)
+      .will(returnValue(true))
+      .id(“myMethod”);
 }}}
 
 ==2.1函数调用行为==
@@ -75,36 +75,32 @@ N/A
 // 被依赖接口
 struct ITextFileReader
 {
-   virtual void open(const char* name) = 0;
-   virtual bool close() = 0;
-   virtual String readLine() = 0;
+    virtual void open(const char* name) = 0;
+    virtual bool close() = 0;
+    virtual String readLine() = 0;
 
-   virtual ~ITextFile() {}
+    virtual ~ITextFile() {}
 };
 
 // 被测单元
 struct AwkProcessor
 {
-   AwkProcessor(ITextFileReader* fileReader);
+    AwkProcessor(ITextFileReader* fileReader);
 
-   String process(const char* textFileName, String script); 
+    String process(const char* textFileName, String script); 
 };
 
 // 测试用例
 void test_should_throw_exception_if_open_file_failed ()
 {
-MockObject* textFile = \
-new MockObject< ITextFileReader *>();
+   MockObject* textFile = new MockObject< ITextFileReader *>();
 
-textFile->method(&ITextFile::open)
-           .stubs()
-.will(throwException( \
-Exception(“File Not Exist”)));
+   textFile->method(&ITextFile::open)
+                   .stubs()
+                   .will(throwException(Exception(“File Not Exist”)));
 
-///////////////////////////////////////////////
-TS_ASSERT_THROWS( \
-awkProcessor.process(“myFile.txt”, “{print $2}”),
-Exception);
+    ///////////////////////////////////////////////
+    TS_ASSERT_THROWS( awkProcessor.process("myFile.txt", "{print $2}"), Exception);
 }
 }}}
 
@@ -125,10 +121,11 @@ Exception);
   * 不等：neq (value)
   * 内存匹配：mirror (object)
                          mirror (address, size)
-  * 字符串匹配：smirror (str)
-                             startWith (str)
-                             endWith (str)
-                             contains (str)
+  * 字符串匹配：
+    # smirror (str)
+    # startWith (str)
+    # endWith (str)
+    # contains (str)
   * 占位符（没有约束）：any ()
 
 输出参数约束：
@@ -216,37 +213,35 @@ struct AwkProcessor
 // 测试用例
 void test_should_be_able_to_process_a_text_file()
 {
-MockObject* textFile = \
-new MockObject< ITextFileReader *>();
+   MockObject* textFile = new MockObject< ITextFileReader *>();
 
-String line1(“1  A”);
-String line2(“2  B”);
-String line3(“3  C”);
+   String line1(“1  A”);
+   String line2(“2  B”);
+   String line3(“3  C”);
 
-char * fileName = “testFile”;
+   char * fileName = “testFile”;
 
-///////////////////////////////////////////////
-textFile->method(&ITextFile::open)
-           .expects(atLeast(1))
-.with(endWith(textFile));
+   ///////////////////////////////////////////////
+   textFile->method(&ITextFile::open)
+                   .expects(atLeast(1))
+                   .with(endWith(textFile));
 
-textFile->method(&ITextFile::close)
-           .expects(atLeast(1))
-.will(ignoreReturnValue());
+   textFile->method(&ITextFile::close)
+                   .expects(atLeast(1))
+                   .will(ignoreReturnValue());
 
-textFile->method(&ITextFile::readLine)
-           .stubs()
-.will(returnObjectList(line1, line2, line3),
-throwException(EOFError));
+   textFile->method(&ITextFile::readLine)
+                   .stubs()
+                   .will(returnObjectList(line1, line2, line3), throwException(EOFError));
 
-///////////////////////////////////////////////
-AwkProcessor awkProcessor(textFile);
+   ///////////////////////////////////////////////
+   AwkProcessor awkProcessor(textFile);
 
-String result = \
-awkProcessor.process(fileName, “{print $2}”);
+   String result = awkProcessor.process(fileName, “{print $2}”);
     
     TS_ASSERT_EQUALS(“A\nB\nC\n”, result);
 }
+
 }}}
 
 ==2.4 调用顺序约束==
@@ -258,7 +253,7 @@ awkProcessor.process(fileName, “{print $2}”);
 ===约束的类型===
 
   * 之前：before (id)
-                before (object, id)
+                 before (object, id)
   * 之后：after (id)
                  after (object, id)
   * 相关类型
@@ -280,10 +275,12 @@ awkProcessor.process(fileName, “{print $2}”);
 
 ===作用===
 
-当一个调用描述用到before ()/after ()等调用顺序约束时，需要给被参照的调用描述一个标识符。
+当一个调用描述用到_before_()/_after_()等调用顺序约束时，需要给被参照的调用描述一个标识符。
 
 ===用法===
-标识符通过id (identity)指定。其中identity是一个字符串。
+
+标识符通过_id_(identity)指定。其中identity是一个字符串。
+
 在一个对象范围内，identity必须唯一，否则mock framework则可能会引用到错误的调用描述。
 
 ===使用时机===
@@ -296,7 +293,7 @@ struct IUserValidator
 {
    virtual bool validate(const User&) const = 0;   
    
-virtual ~IUserValidator() {}
+   virtual ~IUserValidator() {}
 };
 
 // 被测单元
@@ -315,46 +312,42 @@ struct SequenceUserValidator : public IUserValidator
 // 测试用例
 void test_should_invoke_validators_in_order()
 {
-MockObject* validator0 = \
-new MockObject< IUserValidator *>();
+   MockObject* validator0 = new MockObject< IUserValidator *>();
 
-MockObject* validator1 = \
-new MockObject< IUserValidator *>();
+   MockObject* validator1 = new MockObject< IUserValidator *>();
 
-MockObject* validator2 = \
-new MockObject< IUserValidator *>();
+   MockObject* validator2 = new MockObject< IUserValidator *>();
     
-///////////////////////////////////////////////
-SequenceUserValidator::Validators validators;
+   ///////////////////////////////////////////////
+   SequenceUserValidator::Validators validators;
 
-validators.push_back(validator0);
-validators.push_back(validator1);
-validators.push_back(validator2);
-///////////////////////////////////////////////
-User user(“darwin”);
-///////////////////////////////////////////////
-validator0->method(&IUserValidator::validate)
-             .expects(atLeast(1))
-			   .before(validate1, “v”)
-             .with(eq(user))
-.will(returnValue(true));
+   validators.push_back(validator0);
+   validators.push_back(validator1);
+   validators.push_back(validator2);
+   ///////////////////////////////////////////////
+   User user(“darwin”);
+   ///////////////////////////////////////////////
+   validator0->method(&IUserValidator::validate)
+                         .expects(atLeast(1))
+			 .before(validate1, “v”)
+                         .with(eq(user))
+                         .will(returnValue(true));
 
-Validator1->method(&IUserValidator::validate)
-             .expects(atLeast(1))
-.with(eq(user))
-.will(returnValue(true))
-.id(“v”);
+   validator1->method(&IUserValidator::validate)
+                         .expects(atLeast(1))
+                         .with(eq(user))
+                         .will(returnValue(true))
+                         .id(“v”);
 
-Validator2->method(&IUserValidator::validate)
-             .expects(atLeast(1))
-             .with(eq(user))
-.after(validate1, “v”)
-.will(returnValue(true));    
-///////////////////////////////////////////////
-SequenceUserValidator validator(&validators);
+   validator2->method(&IUserValidator::validate)
+                         .expects(atLeast(1))
+                         .with(eq(user))
+                         .after(validate1, “v”)
+                         .will(returnValue(true));    
+   ///////////////////////////////////////////////
+   SequenceUserValidator validator(&validators);
 
-TS_ASSERT(validator.validate(user));
-    
+   TS_ASSERT(validator.validate(user)); 
 }
 
 }}}
@@ -367,4 +360,4 @@ TS_ASSERT(validator.validate(user));
 
 ===用法===
 
-调用者选择器通过caller(function)来指定。其中，function是一个字符串，应该等于调用函数的名字。
+调用者选择器通过_caller_(function)来指定。其中，function是一个字符串，应该等于调用函数的名字。
