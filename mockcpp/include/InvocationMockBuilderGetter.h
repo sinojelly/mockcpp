@@ -11,15 +11,22 @@ MOCKCPP_NS_START
 
 ///////////////////////////////////////////////
 class Matcher;
+class InvocationMockerContainer;
+class Method;
 
 ///////////////////////////////////////////////
 struct InvocationMockBuilderGetter
 {
-    virtual WorkingBuilder stubs() = 0;
-    virtual WorkingBuilder expects(Matcher* matcher) = 0;
-    virtual DefaultBuilder defaults() = 0;
+    InvocationMockBuilderGetter(InvocationMockerContainer* container, Method* method);
+    ~InvocationMockBuilderGetter();
 
-    virtual ~InvocationMockBuilderGetter() {}
+    WorkingBuilder stubs(); 
+    WorkingBuilder expects(Matcher* matcher); 
+    DefaultBuilder defaults();
+
+private:
+    InvocationMockerContainer* invocationMockerContainer;
+    Method* method;
 };
 
 ///////////////////////////////////////////////

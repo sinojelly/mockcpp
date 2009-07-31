@@ -42,6 +42,7 @@ libmockcpp_la_SOURCES = \
  MismatchResultHandlerFactory.cpp \
  NormalResultHandler.cpp \
  NormalResultHandlerFactory.cpp \
+ InvocationMockBuilderGetter.cpp \
  OutBoundPointer.cpp \
  PendingMatcher.cpp \
  ProcStub.cpp \

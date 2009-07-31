@@ -26,7 +26,7 @@ public:
 
    std::string& getMethodName() const;
    
-   InvocationMockBuilderGetter* getInvocationMockBuilderGetter() const;
+   InvocationMockBuilderGetter& getInvocationMockBuilderGetter() const;
    Invokable* getInvokable() const;
 
    InvocationMocker* getInvocationMocker(const std::string& id) const;
