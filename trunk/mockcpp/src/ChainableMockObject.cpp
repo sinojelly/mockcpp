@@ -7,9 +7,6 @@
 #include <InvocationMocker.h>
 #include <ChainableMockMethodWithName.h>
 
-
-
-
 #include <list>
 #include <algorithm>
 
@@ -146,7 +143,7 @@ ChainableMockObject::~ChainableMockObject()
 InvocationMockBuilderGetter&
 ChainableMockObject::method(const std::string& name)
 {
-    return *(getMethod(name)->getInvocationMockBuilderGetter());
+    return getMethod(name)->getInvocationMockBuilderGetter();
 }
 
 Invokable*

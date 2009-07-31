@@ -162,42 +162,10 @@ ChainableMockMethodCore::addInvocationMocker(InvocationMocker* mocker)
 }
 
 //////////////////////////////////////////////////////////
-WorkingBuilder ChainableMockMethodCore::stubs()
+void
+ChainableMockMethodCore::addDefaultInvocationMocker(InvocationMocker* mocker)
 {
-    InvocationMocker* mocker = new InvocationMocker(this);
-    mocker->addMatcher(new StubsMatcher);
-    mocker->addMatcher(new InvokedTimesMatcher(new SimpleInvocationRecorder));
-    addInvocationMocker(mocker);
-    return WorkingBuilder(mocker);
-}
-
-//////////////////////////////////////////////////////////
-WorkingBuilder ChainableMockMethodCore::expects(Matcher* matcher)
-{
-    InvocationMocker* mocker = new InvocationMocker(this);
-
-    InvokedTimesRecorder* recorder = new SimpleInvocationRecorder;
-    InvocationTimesMatcher* itMatcher = dynamic_cast<InvocationTimesMatcher*>(matcher);
-    if (itMatcher != 0)
-    {
-      itMatcher->setInvokedTimesReader(recorder);
-    }
-
-    mocker->addMatcher(new ExpectsMatcher(matcher));
-    mocker->addMatcher(new InvokedTimesMatcher(recorder));
-
-    addInvocationMocker(mocker);
-
-    return WorkingBuilder(mocker);
-}
-
-//////////////////////////////////////////////////////////
-DefaultBuilder ChainableMockMethodCore::defaults()
-{
-    InvocationMocker* mocker = new InvocationMocker(this);
-    mocker->addMatcher(new DefaultMatcher);
     This->defaultMockers.addInvocationMocker(mocker);
-    return DefaultBuilder(mocker);
 }
 
 //////////////////////////////////////////////////////////

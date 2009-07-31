@@ -2,6 +2,7 @@
 #include <ChainableMockMethodWithName.h>
 #include <ChainableMockMethodCore.h>
 #include <InvocationMockerNamespace.h>
+#include <InvocationMockBuilderGetter.h>
 
 MOCKCPP_NS_START
 
@@ -10,13 +11,15 @@ struct ChainableMockMethodWithNameImpl
 	std::string methodName;
    ChainableMockMethodCore* core;
 	InvocationMockerNamespace* invocationMockerNamespace;
+   InvocationMockBuilderGetter invocationMockerBuilderGetter;
 
 	ChainableMockMethodWithNameImpl(const std::string& name, 
 							MethodNameGetter* nameGetter, 
 							InvocationMockerNamespace* ns)
 		: methodName(name), 
         core(new ChainableMockMethodCore(nameGetter, ns)), 
-        invocationMockerNamespace(ns)
+        invocationMockerNamespace(ns),
+        invocationMockerBuilderGetter(core, core)
 	{}
 };
 
@@ -41,10 +44,10 @@ ChainableMockMethodWithName::getMethodName() const
 }
 
 //////////////////////////////////////////////////////////////////
-InvocationMockBuilderGetter*
+InvocationMockBuilderGetter&
 ChainableMockMethodWithName::getInvocationMockBuilderGetter() const
 {
-	return This->core;
+	return This->invocationMockerBuilderGetter;
 }
 
 //////////////////////////////////////////////////////////////////

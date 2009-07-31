@@ -66,7 +66,6 @@ class ChainableMockMethod : public ChainableMockMethodBase<ReturnType>
     {
       if (result.empty())
       {
-        //return ReturnType();
          return value;
       }
 
@@ -82,6 +81,8 @@ public:
 private:
 	
     typedef typename TypeTraits<ReturnType>::Type nonref;
+
+private:
     nonref value;
 };
 

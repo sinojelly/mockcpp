@@ -65,12 +65,13 @@ am_libmockcpp_la_OBJECTS = AfterMatcher.lo AnyBase.lo Any.lo \
 	InvokedOnce.lo InvokedTimesMatcher.lo IsAnythingHelper.lo \
 	MismatchResultHandler.lo MismatchResultHandlerFactory.lo \
 	NormalResultHandler.lo NormalResultHandlerFactory.lo \
-	OutBoundPointer.lo PendingMatcher.lo ProcStub.lo RefAny.lo \
-	Result.lo ReturnObjectList.lo ReturnStub.lo \
-	SimpleInvocationRecorder.lo StubsMatcher.lo \
-	TestFailureMatcher.lo TypelessConstraintAdapter.lo \
-	TypelessStubAdapter.lo TypeString.lo VoidResultHandler.lo \
-	VoidResultHandlerFactory.lo WillStub.lo
+	InvocationMockBuilderGetter.lo OutBoundPointer.lo \
+	PendingMatcher.lo ProcStub.lo RefAny.lo Result.lo \
+	ReturnObjectList.lo ReturnStub.lo SimpleInvocationRecorder.lo \
+	StubsMatcher.lo TestFailureMatcher.lo \
+	TypelessConstraintAdapter.lo TypelessStubAdapter.lo \
+	TypeString.lo VoidResultHandler.lo VoidResultHandlerFactory.lo \
+	WillStub.lo
 libmockcpp_la_OBJECTS = $(am_libmockcpp_la_OBJECTS)
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -235,6 +236,7 @@ libmockcpp_la_SOURCES = \
  MismatchResultHandlerFactory.cpp \
  NormalResultHandler.cpp \
  NormalResultHandlerFactory.cpp \
+ InvocationMockBuilderGetter.cpp \
  OutBoundPointer.cpp \
  PendingMatcher.cpp \
  ProcStub.cpp \
@@ -346,6 +348,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/IgnoreReturnStub.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Invocation.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/InvocationId.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/InvocationMockBuilderGetter.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/InvocationMocker.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/InvocationMockerSet.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/InvocationTimesMatcher.Plo@am__quote@

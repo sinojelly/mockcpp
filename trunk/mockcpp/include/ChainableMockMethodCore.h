@@ -6,7 +6,7 @@
 
 #include <MethodNameGetter.h>
 #include <Method.h>
-#include <InvocationMockBuilderGetter.h>
+#include <InvocationMockerContainer.h>
 
 #include <string>
 
@@ -20,14 +20,15 @@ class InvocationMockerNamespace;
 
 class ChainableMockMethodCore
       : public Method,
-		  public InvocationMockBuilderGetter
+		  public InvocationMockerContainer
 {
 public:
 
-    ChainableMockMethodCore(MethodNameGetter* methodNameGetter, InvocationMockerNamespace* ns);
+    ChainableMockMethodCore(MethodNameGetter* methodNameGetter, 
+                            InvocationMockerNamespace* ns);
     ~ChainableMockMethodCore();
 
-    // Method/Invokable
+    // Method
     Any invoke( const std::string& nameOfCaller
               , const RefAny& p1 
               , const RefAny& p2
@@ -43,15 +44,9 @@ public:
               , const RefAny& p12
               , SelfDescribe* &resultProvider);
 
-    // Method
     std::string& getName(void) const;
 
     InvocationMockerNamespace* getNamespace() const;
-
-    // InvocationMockBuilderGetter
-    WorkingBuilder stubs();
-    WorkingBuilder expects(Matcher* matcher);
-    DefaultBuilder defaults();
 
 public:
     // Others
@@ -62,10 +57,10 @@ public:
 
 public:
 
+    // InvocationMockContainer
     InvocationMocker* getInvocationMocker(const std::string& id);
-
-private:
     void addInvocationMocker(InvocationMocker* mocker);
+    void addDefaultInvocationMocker(InvocationMocker* mocker);
 
 private:
 
