@@ -1,6 +1,7 @@
 
 #include <InvokedOnce.h>
 #include <Asserter.h>
+#include <OutputStringStream.h>
 
 MOCKCPP_NS_START
 
@@ -12,7 +13,7 @@ InvokedOnce::InvokedOnce()
 ///////////////////////////////////////////////////////
 bool InvokedOnce::matches(const Invocation& inv) const
 {
-    return getInvokedTimes() == 0;
+    return true;
 }
 
 ///////////////////////////////////////////////////////
@@ -25,9 +26,13 @@ InvokedOnce::toString(void) const
 ///////////////////////////////////////////////////////
 void InvokedOnce::verify(void)
 {
+    oss_t oss;
+
+    oss << "Invocation is expected only once(), but it's been invoked "
+        << getInvokedTimes() << " times";
+
     MOCKCPP_ASSERT_TRUE_MESSAGE(
-         "Expected invocation was never invoked!"
-         , getInvokedTimes() > 0);
+         oss.str(), getInvokedTimes() == 1);
 }
 
 MOCKCPP_NS_END

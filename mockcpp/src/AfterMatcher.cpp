@@ -8,21 +8,28 @@
 
 MOCKCPP_NS_START
 
-///////////////////////////////////////////////////////
-AfterMatcher::AfterMatcher( InvocationMocker* previous)
-		: previousCall(previous)
-{
-}
-
+//////////////////////////////////////////////////////
+AfterMatcher::AfterMatcher()
+    : previousCall(0)
+{}
 //////////////////////////////////////////////////////
 bool AfterMatcher::matches(const Invocation& inv) const
 {
-    return previousCall? previousCall->hasBeenInvoked() : false;
+    return true;
 }
 
 //////////////////////////////////////////////////////
 void AfterMatcher::increaseInvoked(const Invocation& inv)
 {
+    oss_t oss;
+
+    oss << "Expected invoked after the invocation with id "
+        << previousCall->getId()->getId()
+        << "\", but that invocation has NOT been invoked yet.";
+
+    MOCKCPP_ASSERT_TRUE_MESSAGE(
+         oss.str(), 
+         previousCall->hasBeenInvoked());
 }
 
 //////////////////////////////////////////////////////

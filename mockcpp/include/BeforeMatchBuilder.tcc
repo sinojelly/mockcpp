@@ -22,8 +22,8 @@ BeforeMatchBuilder<Builder>::before(InvocationMockerNamespace* ns, const std::st
 {
     getMocker()->addMatcher(
 			new PendingMatcher(
-				new BeforeMatcher(ns->getInvocationMocker(id))
-				, ns , id , getMocker()));
+				new BeforeMatcher(),
+               ns , id , getMocker()));
 
     return *this;
 }

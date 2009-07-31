@@ -22,8 +22,8 @@ AfterMatchBuilder<Builder>::after(InvocationMockerNamespace* ns, const std::stri
 {
     getMocker()->addMatcher(
 			new PendingMatcher(
-				new AfterMatcher(ns->getInvocationMocker(id))
-				, ns, id, getMocker())); 
+				new AfterMatcher(),
+				  ns, id, getMocker())); 
     return *this;
 }
 

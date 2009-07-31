@@ -15,8 +15,7 @@ class Invocation;
 class AfterMatcher : public OrderingMatcher
 {
 public:
-
-   AfterMatcher(InvocationMocker* previousCall);
+   AfterMatcher();
 
 	bool matches(const Invocation& inv) const;
 

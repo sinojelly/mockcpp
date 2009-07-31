@@ -31,6 +31,11 @@ std::string InvokedAtLeast::toString(void) const
 ///////////////////////////////////////////////////////
 void InvokedAtLeast::verify(void)
 {
+    oss_t oss;
+
+    oss << "Expected at least " << lowLimit
+        << " times, but it's actually invoked " << getInvokedTimes() << " times";
+
     MOCKCPP_ASSERT_TRUE_MESSAGE(
 			"Invoked too few times" 
          , getInvokedTimes() >= lowLimit);

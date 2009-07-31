@@ -15,7 +15,8 @@ InvokedExactly::InvokedExactly(const unsigned int times)
 /////////////////////////////////////////////////////////
 bool InvokedExactly::matches(const Invocation& inv) const
 {
-	return getInvokedTimes() < expectedInvokedTimes;
+
+    return true;
 }
 
 /////////////////////////////////////////////////////////
@@ -33,10 +34,14 @@ InvokedExactly::toString(void) const
 void InvokedExactly::verify(void)
 {
 	 oss_t oss;
-   
+
+    oss << "Expected invoking exactly " << expectedInvokedTimes 
+        << " times, but it's actually invoked " << getInvokedTimes() 
+        << " times.";
+
     MOCKCPP_ASSERT_TRUE_MESSAGE(
-			"Expected invocation times and actual invoked time mismatch" 
-         , getInvokedTimes() == expectedInvokedTimes );
+         oss.str(),
+         getInvokedTimes() == expectedInvokedTimes );
 }
 
 MOCKCPP_NS_END

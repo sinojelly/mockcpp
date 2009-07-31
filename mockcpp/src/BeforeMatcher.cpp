@@ -1,6 +1,5 @@
 
 #include <BeforeMatcher.h>
-//#include <InvocationMockerNamespace.h>
 #include <InvocationMocker.h>
 #include <Asserter.h>
 #include <Invocation.h>
@@ -9,23 +8,29 @@
 
 MOCKCPP_NS_START
 
-///////////////////////////////////////////////////////
-BeforeMatcher::BeforeMatcher(
-        InvocationMocker* prev
-		)
-		: previousCall(prev)
-{
-}
+//////////////////////////////////////////////////////
+BeforeMatcher::BeforeMatcher()
+	: previousCall(0)
+{}
 
 //////////////////////////////////////////////////////
 bool BeforeMatcher::matches(const Invocation& inv) const
 {
-    return previousCall? !previousCall->hasBeenInvoked() : false;
+    return true;
 }
 
 //////////////////////////////////////////////////////
 void BeforeMatcher::increaseInvoked(const Invocation& inv)
 {
+    oss_t oss;
+
+    oss << "Expected invoked before the invocation with id \"" 
+        << previousCall->getId()->getId()
+        << "\", but that invocation has been invoked.";
+
+    MOCKCPP_ASSERT_TRUE_MESSAGE(
+         oss.str(),
+         !previousCall->hasBeenInvoked());
 }
 
 //////////////////////////////////////////////////////
