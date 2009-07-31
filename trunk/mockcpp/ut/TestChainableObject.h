@@ -31,7 +31,7 @@ public:
 	/////////////////////////////////////////////////////////
 	void testShouldSupportOrderingExpectationByAfter()
 	{
-		Foo foo;
+		Foo foo ;
 
 		foo.method("foo")
 		   .expects(once())
@@ -43,12 +43,12 @@ public:
 		   .expects(once())
 		   .with(eq(2), eq((unsigned long)2))
 		   .after("1")
-		   .will(returnValue(10));
+		   .will(returnValue(12));
 
 		int i = 2, j = 1;
 
 		TS_ASSERT_EQUALS(10, foo.foo(j, 2));
-		TS_ASSERT_EQUALS(10, foo.foo(i, 2));
+		TS_ASSERT_EQUALS(12, foo.foo(i, 2));
 
 		foo.verify();
 	}
@@ -99,7 +99,7 @@ public:
 
 		TS_ASSERT_THROWS(foo.foo(i,2), mockcpp::Exception);
 
-		TS_ASSERT_THROWS(foo.verify(), mockcpp::Exception);
+		foo.verify();
 	}
 
 	void testShouldFailIfInvocationOutOfOrder2()
@@ -110,7 +110,7 @@ public:
 	   	   .expects(once())
 	   	   .with(eq(1), eq((unsigned long)2))
 		   .will(returnValue(10))
-                   .id("1");
+            .id("1");
 
 		foo.method("foo")
 		   .expects(once())
@@ -123,7 +123,7 @@ public:
 		TS_ASSERT_THROWS(foo.foo(i, 2), mockcpp::Exception);
 		TS_ASSERT_EQUALS(10, foo.foo(j, 2));
 
-		TS_ASSERT_THROWS(foo.verify(), mockcpp::Exception);
+		foo.verify();
 	}
 
 	void testShouldFailIfReturnedTypeDoesNotMatchRequiredType2()

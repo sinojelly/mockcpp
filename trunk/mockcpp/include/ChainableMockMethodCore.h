@@ -55,7 +55,6 @@ public:
 
 public:
     // Others
-    void setDefaultStub(Stub* stub);
 
     void reset();
 
@@ -64,6 +63,8 @@ public:
 public:
 
     InvocationMocker* getInvocationMocker(const std::string& id);
+
+private:
     void addInvocationMocker(InvocationMocker* mocker);
 
 private:

@@ -14,7 +14,7 @@ InvokedAtMost::InvokedAtMost(const unsigned int times)
 ///////////////////////////////////////////////////////
 bool InvokedAtMost::matches(const Invocation& inv) const
 {
-	return getInvokedTimes() < highLimit;
+	return true;
 }
 
 ///////////////////////////////////////////////////////
@@ -30,9 +30,14 @@ std::string InvokedAtMost::toString(void) const
 ///////////////////////////////////////////////////////
 void InvokedAtMost::verify(void)
 {
+    oss_t oss;
+    
+    oss << "Expected at most " << highLimit 
+        << "times, but it's actually invoked " << getInvokedTimes() << " times";
+
     MOCKCPP_ASSERT_TRUE_MESSAGE(
-			"Invoked too many times" 
-         , getInvokedTimes() >= highLimit);
+			oss.str(),
+         getInvokedTimes() <= highLimit);
 }
 
 MOCKCPP_NS_END

@@ -75,7 +75,9 @@ void PendingMatcher::verify()
 void PendingMatcher::setUpOrderingMatcher() const
 {
     if(matcher->isCompleted()) 
+    {
       return;
+    }
 
     InvocationMocker* mocker = scope->getInvocationMocker(id);
     if(mocker != 0) {

@@ -15,8 +15,7 @@ class Invocation;
 class BeforeMatcher : public OrderingMatcher
 {
 public:
-
-   BeforeMatcher(InvocationMocker* previousCall);
+   BeforeMatcher();
 
 	bool matches(const Invocation& inv) const;
 
