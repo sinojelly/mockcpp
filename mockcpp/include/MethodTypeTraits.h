@@ -12,16 +12,6 @@ MOCKCPP_NS_START
 template <class C, typename Method>
 struct MethodTypeTraits;
 
-#define MOCKCPP_DELEGATED_METHOD_DEF(n) \
-template <int VPTRIndex, int VTBLIndex, typename R DECL_TEMPLATE_ARGS(n)> \
-struct DelegatedMethod<VPTRIndex, VTBLIndex, ArgumentsList<R DECL_REST_ARGS(n)> > \
-{ \
-   R operator()(DECL_PARAM_LIST(n)) \
-   { \
-      return R(); \
-   } \
-}
-
 #define MOCKCPP_METHOD_TYPE_TRAITS_DEF(n) \
 template <class C, class C1, typename R DECL_TEMPLATE_ARGS(n)> \
 struct MethodTypeTraits<C, R (C1::*) (DECL_ARGS(n))> \
@@ -29,7 +19,7 @@ struct MethodTypeTraits<C, R (C1::*) (DECL_ARGS(n))> \
    typedef C1 OrignalClass; \
    typedef R (C::*MethodType)(DECL_ARGS(n)); \
  \
-   typedef ArgumentsList<R, DECL_REST_ARGS(n)> ArgumentsList; \
+   typedef ArgumentsList<R DECL_REST_ARGS(n)> ArgumentsList; \
 }
 
 #define MOCKCPP_CONST_METHOD_TYPE_TRAITS_DEF(n) \
@@ -39,7 +29,7 @@ struct MethodTypeTraits<C, R (C1::*) (DECL_ARGS(n)) const> \
    typedef C1 OrignalClass; \
    typedef R (C::*MethodType)(DECL_ARGS(n)) const; \
  \
-   typedef ArgumentsListConst<R, DECL_REST_ARGS(n)> ArgumentsList; \
+   typedef ArgumentsListConst<R DECL_REST_ARGS(n)> ArgumentsList; \
 }
 
 MOCKCPP_METHOD_TYPE_TRAITS_DEF(0);

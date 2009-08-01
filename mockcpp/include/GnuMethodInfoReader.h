@@ -36,8 +36,8 @@ void* getAddrOfMethod(Method input)
 	m.method = input;
 
    oss_t oss;
-   oss << "Method address should be even, please make sure the method ",
-       << getDemangledName(typeid(Method)) << " is not an virtual method";
+   oss << "Method address should be even, please make sure the method "
+       << TypeString<Method>::value() << " is NOT a virtual method";
  
 	MOCKCPP_ASSERT_TRUE_MESSAGE(
 		oss.str(),
@@ -56,8 +56,8 @@ GnuMethodDescription getGnuDescOfVirtualMethod(Method input)
 	m.method = input;
 
    oss_t oss;
-   oss << "Virtual method address should be odd, please make sure the method ",
-       << getDemangledName(typeid(Method)) << " is an virtual method";
+   oss << "Virtual method address should be odd, please make sure the method "
+       << TypeString<Method>::value() << " is a virtual method";
  
 	MOCKCPP_ASSERT_TRUE_MESSAGE(
 		oss.str(),
@@ -70,14 +70,14 @@ GnuMethodDescription getGnuDescOfVirtualMethod(Method input)
 template <class C, typename Method>
 int getIndexOfMethod(Method method)
 {
-   return (getGnuDescOfVirtualMethod(method).u.index - 1)/sizeof(void*);
+   return (getGnuDescOfVirtualMethod<C, Method>(method).u.index - 1)/sizeof(void*);
 }
 
 ///////////////////////////////////////////////////////////
 template <class C, typename Method>
-int getDeltaOfMethod(Method input)
+int getDeltaOfMethod(Method method)
 {
-   return getGnuDescOfVirtualMethod(method).delta/sizeof(void*);
+   return getGnuDescOfVirtualMethod<C, Method>(method).delta/sizeof(void*);
 }
 ///////////////////////////////////////////////////////////
 

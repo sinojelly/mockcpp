@@ -4,7 +4,7 @@
 
 #include <config.h>
 
-#if MOCKCPP_NO_NAMESPACE
+#if !MOCKCPP_NO_NAMESPACE
 # define MOCKCPP_NS mockcpp
 # define MOCKCPP_NS_START namespace MOCKCPP_NS{
 # define MOCKCPP_NS_END }

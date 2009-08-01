@@ -186,7 +186,9 @@ TESTSUITES = \
  TestReturnObjectList.h \
  TestChainableObject.h \
  TestInvocation.h \
- TestInvocationMocker.h
+ TestInvocationMocker.h \
+ TestMethodInfoReader.h \
+ TestDelegatedMethod.h
 
 all: all-am
 
