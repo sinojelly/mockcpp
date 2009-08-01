@@ -7,6 +7,7 @@
 #define __ARG(n) MOCKP ## n
 #define END_ARGS(n) __ARG(n)
 #define ARGS(n) __ARG(n) ,
+#define REST_ARGS(n) , __ARG(n)
 
 #define __PARAM(n) p ## n
 #define END_PARAMS(n) __PARAM(n)
@@ -30,6 +31,7 @@
 #define DECL_PARAMS(n) REPEAT(n, PARAMS, END_PARAMS)
 #define DECL_PARAMS_LIST(n) REPEAT(n, ARG_DECL, END_ARG_DECL)
 
+#define DECL_REST_ARGS(n) SIMPLE_REPEAT(n, REST_ARGS)
 #define DECL_REST_PARAMS(n) SIMPLE_REPEAT(n, REST_PARAMS)
 
 #endif

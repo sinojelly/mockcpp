@@ -49,18 +49,16 @@ public:
     InvocationMockerNamespace* getNamespace() const;
 
 public:
-    // Others
-
-    void reset();
-
-    void verify();
-
-public:
 
     // InvocationMockContainer
     InvocationMocker* getInvocationMocker(const std::string& id);
     void addInvocationMocker(InvocationMocker* mocker);
     void addDefaultInvocationMocker(InvocationMocker* mocker);
+
+public:
+    // Others
+    void reset();
+    void verify();
 
 private:
 
