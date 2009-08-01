@@ -17,7 +17,9 @@ struct DelegatedMethod;
 template <int VPTRIndex, int VTBLIndex, typename R DECL_TEMPLATE_ARGS(n)> \
 struct DelegatedMethod<VPTRIndex, VTBLIndex, ArgumentsList<R DECL_REST_ARGS(n)> > \
 { \
-	R operator()(DECL_PARAM_LIST(n)) \
+   enum { IsConst = 0 }; \
+   enum { NumberOfParameters = n }; \
+	R operator()(DECL_PARAMS_LIST(n)) \
    { \
       return R(); \
    } \
@@ -27,7 +29,9 @@ struct DelegatedMethod<VPTRIndex, VTBLIndex, ArgumentsList<R DECL_REST_ARGS(n)> 
 template <int VPTRIndex, int VTBLIndex, typename R DECL_TEMPLATE_ARGS(n)> \
 struct DelegatedMethod<VPTRIndex, VTBLIndex, ArgumentsListConst<R DECL_REST_ARGS(n)> > \
 { \
-	R operator()(DECL_PARAM_LIST(n)) \
+   enum { IsConst = 1 }; \
+   enum { NumberOfParameters = n }; \
+	R operator()(DECL_PARAMS_LIST(n)) \
    { \
       return R(); \
    } \
@@ -41,9 +45,6 @@ MOCKCPP_CONST_DELEGATED_METHOD_DEF(1);
 
 MOCKCPP_DELEGATED_METHOD_DEF(2);
 MOCKCPP_CONST_DELEGATED_METHOD_DEF(2);
-
-MOCKCPP_DELEGATED_METHOD_DEF(3);
-MOCKCPP_CONST_DELEGATED_METHOD_DEF(3);
 
 MOCKCPP_DELEGATED_METHOD_DEF(3);
 MOCKCPP_CONST_DELEGATED_METHOD_DEF(3);

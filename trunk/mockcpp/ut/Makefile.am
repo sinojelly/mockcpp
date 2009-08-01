@@ -22,7 +22,9 @@ TESTSUITES = \
  TestReturnObjectList.h \
  TestChainableObject.h \
  TestInvocation.h \
- TestInvocationMocker.h
+ TestInvocationMocker.h \
+ TestMethodInfoReader.h \
+ TestDelegatedMethod.h
 
 mockcpp-ut.cpp : $(TESTSUITES)
 	$(UTCG) --have-eh --have-std --part -o $@ $^
