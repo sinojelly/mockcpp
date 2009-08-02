@@ -230,5 +230,182 @@ public:
 
        TS_ASSERT_THROWS(((Interface*)mock)->base01(16), Exception);
    }
+
+   // before()
+   void testShouldSupportBeforeOnOneObject()
+   {
+       MockObject<Interface> mock;
+
+       mock.method(&Interface::base01)
+           .stubs()
+           .before("1")
+           .with(eq(12))
+           .will(returnValue(true));
+
+       mock.method(&Interface::base01)
+           .stubs()
+           .with(eq(21))
+           .will(returnValue(false))
+           .id("1");
+
+       TS_ASSERT(((Interface*)mock)->base01(12));
+       TS_ASSERT(((Interface*)mock)->base01(12));
+
+       TS_ASSERT(!((Interface*)mock)->base01(21));
+       TS_ASSERT(!((Interface*)mock)->base01(21));
+   }
+
+   // before()
+   void testShouldThrowAnExceptionIfYouDidNotInvokeTheOneFirstlyWhichYouSaidItShouldBeInvokedBeforeAnother()
+   {
+       MockObject<Interface> mock;
+
+       mock.method(&Interface::base01)
+           .stubs()
+           .before("1")
+           .with(eq(12))
+           .will(returnValue(true));
+
+       mock.method(&Interface::base01)
+           .stubs()
+           .with(eq(21))
+           .will(returnValue(false))
+           .id("1");
+
+       TS_ASSERT(!((Interface*)mock)->base01(21));
+
+       TS_ASSERT_THROWS(((Interface*)mock)->base01(12), Exception);
+   }
+
+   // before()
+   void testShouldSupportBeforeOnDifferentObject()
+   {
+       MockObject<Interface> mock0;
+       MockObject<Interface> mock1;
+
+       mock0.method(&Interface::base01)
+           .stubs()
+           .before(mock1, "1")
+           .with(eq(12))
+           .will(returnValue(true));
+
+       mock1.method(&Interface::base01)
+           .stubs()
+           .with(eq(12))
+           .will(returnValue(false))
+           .id("1");
+
+       TS_ASSERT(((Interface*)mock0)->base01(12));
+       TS_ASSERT(!((Interface*)mock1)->base01(12));
+   }
+
+   // before()
+   void testShouldThrowAnExceptionIfYouDidNotInvokeTheOneFirstlyWhichYouSaidItShouldBeInvokedBeforeAnother1()
+   {
+       MockObject<Interface> mock0;
+       MockObject<Interface> mock1;
+
+       mock0.method(&Interface::base01)
+           .stubs()
+           .before(mock1, "1")
+           .with(eq(12))
+           .will(returnValue(true));
+
+       mock1.method(&Interface::base01)
+           .stubs()
+           .with(eq(12))
+           .will(returnValue(false))
+           .id("1");
+
+       TS_ASSERT(!((Interface*)mock1)->base01(12));
+       TS_ASSERT_THROWS(((Interface*)mock0)->base01(12), Exception);
+   }
+
+   // after()
+   void testShouldSupportAfterOnOneObject()
+   {
+       MockObject<Interface> mock;
+
+       mock.method(&Interface::base01)
+           .stubs()
+           .with(eq(12))
+           .after("1")
+           .will(returnValue(true));
+
+       mock.method(&Interface::base01)
+           .stubs()
+           .with(eq(21))
+           .will(returnValue(false))
+           .id("1");
+
+       TS_ASSERT(!((Interface*)mock)->base01(21));
+       TS_ASSERT(!((Interface*)mock)->base01(21));
+
+       TS_ASSERT(((Interface*)mock)->base01(12));
+       TS_ASSERT(((Interface*)mock)->base01(12));
+   }
+
+   // after()
+   void testShouldThrowAnExceptionIfYouHaveInvokedTheOneWhichYouSaidItShouldBeInvokedAfterAnother()
+   {
+       MockObject<Interface> mock;
+
+       mock.method(&Interface::base01)
+           .stubs()
+           .with(eq(12))
+           .after("1")
+           .will(returnValue(true));
+
+       mock.method(&Interface::base01)
+           .stubs()
+           .with(eq(21))
+           .will(returnValue(false))
+           .id("1");
+
+       TS_ASSERT_THROWS(((Interface*)mock)->base01(12), Exception);
+   }
+
+   // after()
+   void testShouldSupportAfterOnDifferentObject()
+   {
+       MockObject<Interface> mock0;
+       MockObject<Interface> mock1;
+
+       mock0.method(&Interface::base01)
+           .stubs()
+           .with(eq(12))
+           .after(mock1, "1")
+           .will(returnValue(true));
+
+       mock1.method(&Interface::base01)
+           .stubs()
+           .with(eq(12))
+           .will(returnValue(false))
+           .id("1");
+
+       TS_ASSERT(!((Interface*)mock1)->base01(12));
+       TS_ASSERT(((Interface*)mock0)->base01(12));
+   }
+
+   // after()
+   void testShouldThrowAnExceptionIfYouHaveInvokedTheOneWhichYouSaidItShouldBeInvokedAfterAnother1()
+   {
+       MockObject<Interface> mock0;
+       MockObject<Interface> mock1;
+
+       mock0.method(&Interface::base01)
+           .stubs()
+           .with(eq(12))
+           .after(mock1, "1")
+           .will(returnValue(true));
+
+       mock1.method(&Interface::base01)
+           .stubs()
+           .with(eq(12))
+           .will(returnValue(false))
+           .id("1");
+
+       TS_ASSERT_THROWS(((Interface*)mock0)->base01(12), Exception);
+   }
 };
 
