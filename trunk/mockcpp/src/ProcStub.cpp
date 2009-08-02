@@ -25,6 +25,11 @@ ProcStubBase::~ProcStubBase()
     delete This;
 }
 
+bool ProcStubBase::isCompleted() const
+{
+    return true;
+}
+
 std::string ProcStubBase::toString() const
 {
     oss_t oss;

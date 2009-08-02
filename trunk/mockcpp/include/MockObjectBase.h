@@ -16,6 +16,8 @@ struct MockObjectBase : public ChainableMockObjectBase
 
    ~MockObjectBase();
 
+   void reset();
+
 protected:
 
    InvocationMockBuilderGetter

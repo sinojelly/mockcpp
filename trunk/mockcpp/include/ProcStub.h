@@ -24,6 +24,8 @@ public:
 
     ~ProcStubBase();
 
+    bool isCompleted() const;
+
     std::string toString() const;
     
 private:

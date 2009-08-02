@@ -18,6 +18,8 @@ struct VirtualTableImpl
    void validateIndexOfVptr(unsigned int index);
    void validateVptr(void** vptr);
 
+   void reset();
+
    void** vtbl;
    void* vptr[MOCKCPP_MAX_INHERITANCE+1];
    unsigned int numberOfVptr;
@@ -90,6 +92,17 @@ VirtualTableImpl::validateIndexOfVptr(unsigned int index)
       "mockcpp internal error. please report it to darwin.yuan@gmail.com.",
       index < numberOfVptr);
 }
+
+/////////////////////////////////////////////////////////////////
+void
+VirtualTableImpl::reset()
+{
+   void * defaultMethodAddr = getAddrOfMethod(&DefaultMethodHolder::method);
+   for(unsigned int i=0; i<numberOfVptr*MOCKCPP_MAX_VTBL_SIZE; i++)
+   {
+      vtbl[i] = defaultMethodAddr;
+   }
+}
 /////////////////////////////////////////////////////////////////
 VirtualTableImpl::VirtualTableImpl(IndexInvokableGetter* getter
      , unsigned int numberOfVPTR)
@@ -109,13 +122,9 @@ VirtualTableImpl::VirtualTableImpl(IndexInvokableGetter* getter
       vptr[i] = &vtbl[i*MOCKCPP_MAX_VTBL_SIZE];
    }
 
-   void * defaultMethodAddr = getAddrOfMethod(&DefaultMethodHolder::method);
-   for(unsigned int i=0; i<numberOfVptr*MOCKCPP_MAX_VTBL_SIZE; i++)
-   {
-      vtbl[i] = defaultMethodAddr;
-   }
-
    vptr[MOCKCPP_MAX_INHERITANCE] = (void*)this;
+
+   reset();
 }
 
 /////////////////////////////////////////////////////////////////
@@ -150,6 +159,12 @@ VirtualTable::addMethod(void* methodAddr, unsigned int indexOfVtbl, unsigned int
     This->vtbl[indexOfVptr*MOCKCPP_MAX_VTBL_SIZE + indexOfVtbl] = methodAddr;
 }
 
+/////////////////////////////////////////////////////////////////
+void
+VirtualTable::reset()
+{
+    This->reset();
+}
 /////////////////////////////////////////////////////////////////
 IndexInvokableGetter*
 VirtualTable::getInvokableGetter(void* caller, unsigned int vptrIndex)
