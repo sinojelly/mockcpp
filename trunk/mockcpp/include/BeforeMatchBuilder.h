@@ -15,13 +15,13 @@ class BeforeMatchBuilder : public Builder
 {
 public:
     
-    Builder&
+    BeforeMatchBuilder&
 	 before(const InvocationMockerNamespace& ns, const std::string& name);
 
-    Builder&
+    BeforeMatchBuilder&
 	 before(InvocationMockerNamespace* ns, const std::string& name);
 
-    Builder&
+    BeforeMatchBuilder&
 	 before(const std::string& name);
 
 private:

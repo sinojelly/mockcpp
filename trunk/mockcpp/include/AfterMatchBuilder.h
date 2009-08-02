@@ -16,13 +16,13 @@ class AfterMatchBuilder : public Builder
 {
 public:
     
-    Builder&
+    AfterMatchBuilder&
     after(const InvocationMockerNamespace& ns, const std::string& name);
 
-    Builder&
+    AfterMatchBuilder&
     after(InvocationMockerNamespace* ns, const std::string& name);
 
-    Builder&
+    AfterMatchBuilder&
     after(const std::string& name);
 
 private:
