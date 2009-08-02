@@ -9,7 +9,7 @@ MOCKCPP_NS_START
 
 //////////////////////////////////////////////////////////////////////
 template <class Builder>
-Builder&
+BeforeMatchBuilder<Builder>&
 BeforeMatchBuilder<Builder>::before(const InvocationMockerNamespace& ns, const std::string& name)
 {
     return before(&const_cast<InvocationMockerNamespace&>(ns), name);
@@ -17,7 +17,7 @@ BeforeMatchBuilder<Builder>::before(const InvocationMockerNamespace& ns, const s
 
 //////////////////////////////////////////////////////////////////////
 template <class Builder>
-Builder&
+BeforeMatchBuilder<Builder>&
 BeforeMatchBuilder<Builder>::before(InvocationMockerNamespace* ns, const std::string& id)
 {
     getMocker()->addMatcher(
@@ -30,7 +30,7 @@ BeforeMatchBuilder<Builder>::before(InvocationMockerNamespace* ns, const std::st
 
 //////////////////////////////////////////////////////////////////////
 template <class Builder>
-Builder&
+BeforeMatchBuilder<Builder>&
 BeforeMatchBuilder<Builder>::before(const std::string& name)
 {
     return before(getMocker()->getMethod()->getNamespace(), name);

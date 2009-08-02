@@ -424,6 +424,97 @@ public:
        TS_ASSERT_THROWS(((Interface*)mock0)->base01(12), Exception);
    }
 
+   // before()
+   void testShouldSupportMultipleBeforeSpecification()
+   {
+       MockObject<Interface> mock0;
+       MockObject<Interface> mock1;
+       MockObject<Interface> mock2;
+
+       mock0.method(&Interface::base01)
+           .stubs()
+           .before(mock1, "1")
+           .before(mock2, "1")
+           .with(eq(12))
+           .will(returnValue(true));
+
+       mock1.method(&Interface::base01)
+           .stubs()
+           .with(eq(12))
+           .will(returnValue(false))
+           .id("1");
+
+       mock2.method(&Interface::base01)
+           .stubs()
+           .with(eq(12))
+           .will(returnValue(false))
+           .id("1");
+
+       TS_ASSERT(((Interface*)mock0)->base01(12));
+       TS_ASSERT(!((Interface*)mock1)->base01(12));
+       TS_ASSERT(!((Interface*)mock2)->base01(12));
+   }
+
+   // before()
+   void testShouldThrowExceptionIfAnyOfOrderDefinedInBeforeSpecifactionIsBroken()
+   {
+       MockObject<Interface> mock0;
+       MockObject<Interface> mock1;
+       MockObject<Interface> mock2;
+
+       mock0.method(&Interface::base01)
+           .stubs()
+           .before(mock1, "1")
+           .before(mock2, "1")
+           .with(eq(12))
+           .will(returnValue(true));
+
+       mock1.method(&Interface::base01)
+           .stubs()
+           .with(eq(12))
+           .will(returnValue(false))
+           .id("1");
+
+       mock2.method(&Interface::base01)
+           .stubs()
+           .with(eq(12))
+           .will(returnValue(false))
+           .id("1");
+
+       TS_ASSERT(!((Interface*)mock1)->base01(12));
+       TS_ASSERT_THROWS(((Interface*)mock0)->base01(12), Exception);
+   }
+
+   // before()
+   void testShouldThrowExceptionIfAnyOfOrderDefinedInBeforeSpecifactionIsBroken1()
+   {
+       MockObject<Interface> mock0;
+       MockObject<Interface> mock1;
+       MockObject<Interface> mock2;
+
+       mock0.method(&Interface::base01)
+           .stubs()
+           .before(mock1, "1")
+           .before(mock2, "1")
+           .with(eq(12))
+           .will(returnValue(true));
+
+       mock1.method(&Interface::base01)
+           .stubs()
+           .with(eq(12))
+           .will(returnValue(false))
+           .id("1");
+
+       mock2.method(&Interface::base01)
+           .stubs()
+           .with(eq(12))
+           .will(returnValue(false))
+           .id("1");
+
+       TS_ASSERT(!((Interface*)mock2)->base01(12));
+       TS_ASSERT_THROWS(((Interface*)mock0)->base01(12), Exception);
+   }
+
    // after()
    void testShouldSupportAfterOnOneObject()
    {
@@ -508,6 +599,97 @@ public:
            .will(returnValue(false))
            .id("1");
 
+       TS_ASSERT_THROWS(((Interface*)mock0)->base01(12), Exception);
+   }
+
+   // after()
+   void testShouldSupportSpecifyMultipleAfterConstraits()
+   {
+       MockObject<Interface> mock0;
+       MockObject<Interface> mock1;
+       MockObject<Interface> mock2;
+
+       mock0.method(&Interface::base01)
+           .stubs()
+           .with(eq(12))
+           .after(mock1, "1")
+           .after(mock2, "1")
+           .will(returnValue(true));
+
+       mock1.method(&Interface::base01)
+           .stubs()
+           .with(eq(12))
+           .will(returnValue(false))
+           .id("1");
+
+       mock2.method(&Interface::base01)
+           .stubs()
+           .with(eq(12))
+           .will(returnValue(false))
+           .id("1");
+
+       TS_ASSERT(!((Interface*)mock1)->base01(12));
+       TS_ASSERT(!((Interface*)mock2)->base01(12));
+       TS_ASSERT(((Interface*)mock0)->base01(12));
+   }
+
+   // after()
+   void testShouldThrowExceptionIfInvocationOrderIsNotAsAfterSpecification()
+   {
+       MockObject<Interface> mock0;
+       MockObject<Interface> mock1;
+       MockObject<Interface> mock2;
+
+       mock0.method(&Interface::base01)
+           .stubs()
+           .with(eq(12))
+           .after(mock1, "1")
+           .after(mock2, "1")
+           .will(returnValue(true));
+
+       mock1.method(&Interface::base01)
+           .stubs()
+           .with(eq(12))
+           .will(returnValue(false))
+           .id("1");
+
+       mock2.method(&Interface::base01)
+           .stubs()
+           .with(eq(12))
+           .will(returnValue(false))
+           .id("1");
+
+       TS_ASSERT(!((Interface*)mock1)->base01(12));
+       TS_ASSERT_THROWS(((Interface*)mock0)->base01(12), Exception);
+   }
+
+   // after()
+   void testShouldThrowExceptionIfInvocationOrderIsNotAsAfterSpecification1()
+   {
+       MockObject<Interface> mock0;
+       MockObject<Interface> mock1;
+       MockObject<Interface> mock2;
+
+       mock0.method(&Interface::base01)
+           .stubs()
+           .with(eq(12))
+           .after(mock1, "1")
+           .after(mock2, "1")
+           .will(returnValue(true));
+
+       mock1.method(&Interface::base01)
+           .stubs()
+           .with(eq(12))
+           .will(returnValue(false))
+           .id("1");
+
+       mock2.method(&Interface::base01)
+           .stubs()
+           .with(eq(12))
+           .will(returnValue(false))
+           .id("1");
+
+       TS_ASSERT(!((Interface*)mock2)->base01(12));
        TS_ASSERT_THROWS(((Interface*)mock0)->base01(12), Exception);
    }
 };
