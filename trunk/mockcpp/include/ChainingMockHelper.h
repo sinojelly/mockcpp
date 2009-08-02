@@ -9,6 +9,7 @@
 #include <OutBound.h>
 #include <OutBoundPointer.h>
 #include <IncrementStub.h>
+#include <ThrowExceptionStub.h>
 #include <TypelessStubAdapter.h>
 #include <Any.h>
 
@@ -133,6 +134,11 @@ Stub* increase(const T& from)
    return new TypelessStubAdapter(new IncrementStub<T>(from));
 }
 
+template <typename T>
+Stub* throws(const T& ex)
+{
+   return new TypelessStubAdapter(new ThrowExceptionStub<T>(ex));
+}
 
 MOCKCPP_NS_END
 

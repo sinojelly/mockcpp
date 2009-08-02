@@ -7,6 +7,7 @@ using namespace mockcpp;
 
 class TestMockObject : public CxxTest::TestSuite
 {
+
 	struct Base0
    {
       virtual int  base00() = 0;
@@ -114,6 +115,19 @@ public:
        TS_ASSERT_EQUALS(9, ((Interface*)mock)->base00());
        TS_ASSERT_EQUALS(10, ((Interface*)mock)->base00());
        TS_ASSERT_EQUALS(11, ((Interface*)mock)->base00());
+   }
+
+   // throws()
+   void testShouldBeAbleThrowAnException()
+   {
+       MockObject<Interface> mock;
+
+       mock.method(&Interface::base00).stubs().will(increase(1, 3)).then(throws(10));
+
+       TS_ASSERT_EQUALS(1, ((Interface*)mock)->base00());
+       TS_ASSERT_EQUALS(2, ((Interface*)mock)->base00());
+       TS_ASSERT_EQUALS(3, ((Interface*)mock)->base00());
+       TS_ASSERT_THROWS_EQUALS(((Interface*)mock)->base00(), int& e, e, 10);
    }
 
    // once()
