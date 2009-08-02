@@ -31,7 +31,7 @@ mockcpp当前的实现支持七种类型的约束/行为：
 除了调用次数约束之外，所有其它的调用约束或行为都可以任意。但一旦你使用其中的一部分或全部，则必须按照上面所列的顺序给出。比如：
 
 {{{
-mock->method(&Interface::method)
+mock.method(&Interface::method)
       .expects(once())
       .before(anotherMock, "close")
       .with(eq(1), any(), neq(2.0))
@@ -51,12 +51,25 @@ mock->method(&Interface::method)
 
   * 返回一个值：        returnValue (value)             
   * 返回一系列的值：returnObjectList (o1, o2,…)    
-  * 抛出异常：            throwException (exception)  
+  * 抛出异常：            throws (exception)  
   * 忽略返回值：        ignoreReturnValue ()               
+  * 转调一个stub函数：invoke(stubFunction)
+  * 重复返回一个值： repeat(value, times)
+  * 步增一个值：increase(from, to)/increase(from)
 
 ===用法===
 
-函数调用行为通过_will_(behavior)来指定。
+函数调用行为通过_will_(behavior)/_then_(behavior)来指定。_then_()必须在_will_()之后。_will_()只会出现一次，但_then_可以出现任意多次。比如：
+
+{{{
+     mock.method(&Interface::foo)
+                .stubs()
+                .will(returnValue(10))
+                .then(repeat(20, 5))
+                .then(throws(std::exception));
+}}}
+
+当你使用_will_()/_then()_来指定*_函数调用行为_*时，指定的*_函数调用行为_*将会按照指定的顺序依次发生作用，如果指定的最后一个*_函数调用行为_*发生了作用之后，仍然有进一步的调用发生，如果其它约束条件都满足，则最后一个*_函数调用行为_*将持续发生作用。
 
 _returnValue_()用来指定匹配的调用所返回的单个值。无论这个调用发生了多少次，指定的值总是作为返回值返回。
 
@@ -64,9 +77,10 @@ _returnValue_()用来指定匹配的调用所返回的单个值。无论这个�
 
 另外，在当前的实现中，_returnObjectList_()的所允许指定对象个数是有限制的，这或许在某些情况下无法直接的满足测试的需求。
 
-当希望一个匹配的调用抛出异常时，可以通过_throwException_(exception)来指定，即便函数定义的返回值类型是void。
+当希望一个匹配的调用抛出异常时，可以通过_throws_(exception)来指定，即便函数定义的返回值类型是void。
 
 如果函数定义的返回值类型不是*void* ，则一定要指定函数调用行为。 即使不关心返回值，也要通过_ignoreReturnValue_()来指定。
+
 
 ===使用时机===
 
