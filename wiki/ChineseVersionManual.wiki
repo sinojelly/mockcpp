@@ -279,7 +279,8 @@ void test_should_be_able_to_process_a_text_file()
 
    textFile.method(&ITextFile::readLine)
                  .stubs()
-                 .will(returnObjectList(line1, line2, line3), throwException(EOFError));
+                 .will(returnObjectList(line1, line2, line3))
+                 .then(throwException(EOFError));
 
    ///////////////////////////////////////////////
    AwkProcessor awkProcessor(textFile);
@@ -312,7 +313,52 @@ void test_should_be_able_to_process_a_text_file()
  
 ===用法===
 
-见例子
+_before_()/_after()可以在一个*_调用规范_*中指定多次，以满足复杂的调用序列要求。比如:
+
+{{{
+      MockObject<Interface> mock;
+
+      mock.method(&Interface::foo)
+                 .stubs()
+                 .will(returnValue(10))
+                 .id("foo");
+
+      mock.method(&Interface::bar)
+                 .stubs()
+                 .will(returnValue(true))
+                 .id("bar");
+
+      mock.method(&Interface::fix)
+                 .stubs()
+                 .after("foo")
+                 .after("bar")
+                 .will(returnValue(true));
+}}}
+
+当_before_()/_after()_需要参照的调用发生在其它对象上时，你可以通过另外一个参数来指定对象。比如：
+
+
+{{{
+      MockObject<Interface> mock0;
+      MockObject<Interface> mock1;
+      MockObject<Interface> mock2;
+      
+      mock0.method(&Interface::foo)
+                 .stubs()
+                 .will(returnValue(10))
+                 .id("foo");
+
+      mock1.method(&Interface::foo)
+                 .stubs()
+                 .will(returnValue(1))
+                 .id("foo");
+
+      mock2.method(&Interface::foo)
+                 .stubs()
+                 .after(mock0, "foo")
+                 .after(mock1, "foo")
+                 .will(returnValue(11));
+}}}
 
 ===使用时机===
 
