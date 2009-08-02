@@ -24,7 +24,10 @@ TESTSUITES = \
  TestInvocation.h \
  TestInvocationMocker.h \
  TestMethodInfoReader.h \
- TestDelegatedMethod.h
+ TestDelegatedMethod.h \
+ TestVirtualTable.h \
+ TestChainableMockMethodNameKey.h \
+ TestChainableMockMethodContainer.h
 
 mockcpp-ut.cpp : $(TESTSUITES)
 	$(UTCG) --have-eh --have-std --part -o $@ $^

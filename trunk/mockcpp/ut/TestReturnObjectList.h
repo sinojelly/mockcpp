@@ -4,7 +4,6 @@
 #include <ChainableMockObject.h>
 #include <InvocationMockBuilder.h>
 #include <ChainingMockHelper.h>
-#include <ChainableMockMethodWithName.h>
 
 using namespace mockcpp;
 

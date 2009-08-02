@@ -4,52 +4,43 @@
 
 #include <mockcpp.h>
 
+#include <ChainableMockObjectBase.h>
 #include <ChainableMockMethod.h>
 #include <InvocationMockBuilderGetter.h>
-#include <InvocationMockerNamespace.h>
 
 #include <string>
 
 MOCKCPP_NS_START
 
-class ChainableMockMethodWithName;
 class ChainableMockObjectImpl;
-class InvocationMocker;
+class Invokable;
 
 
 class ChainableMockObject 
-      : public InvocationMockerNamespace
+      : public ChainableMockObjectBase
 {
 public:
 
     ChainableMockObject(const std::string& name);
+
     ~ChainableMockObject();
 
-    std::string& getName(void) const;
+    // Building-invocation-mocker time interface -- Used in test case
+    InvocationMockBuilderGetter method(const std::string& name);
 
-    // Used in test case
-    // MOCKER(foo).expects(once()).with(eq(1)).will(returnValue(2));
-    InvocationMockBuilderGetter& method(const std::string& name);
-
-    // InvocationMockerNamespace -- id("id");
-    InvocationMocker* getInvocationMocker(const std::string& id);
-
-    void verify();
-    void reset();
-
-    // Used in source code
+    // Invoking time interface --  Used in Functor
     template <typename RT>
-    ChainableMockMethod<RT> invoke(const std::string& name) const
+    ChainableMockMethod<RT> invoke(const std::string& name) 
     {
       return ChainableMockMethod<RT>(getInvokable(name)); 
     }
 
-    Invokable* getInvokable(const std::string& name) const;
+    void reset();
 
 private:
 
-    ChainableMockMethodWithName*
-    ChainableMockObject::getMethod(const std::string& name) const;
+    // It's only for template-method invoke. we have to make it visible.
+    Invokable* getInvokable(const std::string& name); 
 
 private:
 

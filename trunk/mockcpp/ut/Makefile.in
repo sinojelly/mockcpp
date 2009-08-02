@@ -188,7 +188,10 @@ TESTSUITES = \
  TestInvocation.h \
  TestInvocationMocker.h \
  TestMethodInfoReader.h \
- TestDelegatedMethod.h
+ TestDelegatedMethod.h \
+ TestVirtualTable.h \
+ TestChainableMockMethodNameKey.h \
+ TestChainableMockMethodContainer.h
 
 all: all-am
 
