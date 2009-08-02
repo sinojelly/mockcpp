@@ -24,7 +24,7 @@ struct DelegatedMethod<VPTRIndex, VTBLIndex, ArgumentsList<R DECL_REST_ARGS(n)> 
    enum { NumberOfParameters = n }; \
 	R operator()(DECL_PARAMS_LIST(n)) \
    { \
-      IndexInvokableGetter* getter = VirtualTable::getInvokableGetter(this); \
+      IndexInvokableGetter* getter = VirtualTable::getInvokableGetter(this, VPTRIndex); \
       return ChainableMockMethod<R>(getter->getInvokable(VPTRIndex, VTBLIndex))("" DECL_REST_PARAMS(n)); \
    } \
 }
@@ -37,7 +37,7 @@ struct DelegatedMethod<VPTRIndex, VTBLIndex, ArgumentsListConst<R DECL_REST_ARGS
    enum { NumberOfParameters = n }; \
 	R operator()(DECL_PARAMS_LIST(n)) \
    { \
-      IndexInvokableGetter* getter = VirtualTable::getInvokableGetter(this); \
+      IndexInvokableGetter* getter = VirtualTable::getInvokableGetter(this, VPTRIndex); \
       return ChainableMockMethod<R>(getter->getInvokable(VPTRIndex, VTBLIndex))("" DECL_REST_PARAMS(n)); \
    } \
 }

@@ -18,7 +18,7 @@ class TestMockObject : public CxxTest::TestSuite
    struct Base1
    {
       virtual void base10() = 0;
-      virtual long base11(bool) const = 0;
+      virtual long base11(const std::string&) const = 0;
 
       virtual ~Base1() {}
    };
@@ -313,6 +313,25 @@ public:
            .will(returnValue(false));
 
        TS_ASSERT_THROWS(((Interface*)mock)->base01(16), Exception);
+   }
+
+   // startWith()
+   void testShouldBeAbleToSelectAppropriateInvocationToInvokeByStartWith()
+   {
+       MockObject<Interface> mock;
+
+       mock.method(&Interface::base11)
+           .stubs()
+           .with(startWith("abcd"))
+           .will(returnValue((long)1));
+
+       mock.method(&Interface::base11)
+           .stubs()
+           .with(startWith("1234"))
+           .will(returnValue((long)2));
+
+       TS_ASSERT_EQUALS(1, ((Interface*)mock)->base11("abcdefg"));
+       TS_ASSERT_EQUALS(2, ((Interface*)mock)->base11("1234567"));
    }
 
    // before()

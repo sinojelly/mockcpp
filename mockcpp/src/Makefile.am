@@ -66,4 +66,8 @@ libmockcpp_la_SOURCES = \
  ChainableMockMethodContainer.cpp \
  ChainableMockMethodNameKey.cpp \
  ChainableMockMethodIndexKey.cpp \
- StubContainer.cpp
+ StubContainer.cpp \
+ StringConstraint.cpp \
+ IsStringStartWith.cpp \
+ IsStringEndWith.cpp \
+ IsStringContains.cpp

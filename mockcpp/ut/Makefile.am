@@ -28,6 +28,9 @@ TESTSUITES = \
  TestVirtualTable.h \
  TestMockObject.h \
  TestStubContainter.h \
+ TestIsStringStartWith.h \
+ TestIsStringEndWith.h \
+ TestIsStringContains.h \
  TestChainableMockMethodNameKey.h \
  TestChainableMockMethodContainer.h
 

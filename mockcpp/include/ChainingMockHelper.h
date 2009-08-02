@@ -91,7 +91,20 @@ Constraint* mirror(T* p, size_t size = 0)
 ///////////////////////////////////////////////////////////////////
 Constraint* mirror(void* p, size_t size);
 
+Constraint* startWith(char*);
+Constraint* startWith(const char*);
+Constraint* startWith(unsigned char*);
+Constraint* startWith(unsigned const char*);
 
+Constraint* endWith(char*);
+Constraint* endWith(const char*);
+Constraint* endWith(unsigned char*);
+Constraint* endWith(unsigned const char*);
+
+Constraint* contains(char*);
+Constraint* contains(const char*);
+Constraint* contains(unsigned char*);
+Constraint* contains(unsigned const char*);
 ///////////////////////////////////////////////////////////////////
 // smirror
 ///////////////////////////////////////////////////////////////////
