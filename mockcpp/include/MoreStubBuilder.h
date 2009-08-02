@@ -15,7 +15,7 @@ class MoreStubBuilder : public Builder
 {
 public:
 
-    Builder& then(Stub* stub);
+    MoreStubBuilder& then(Stub* stub);
 
 private:
 

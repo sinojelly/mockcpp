@@ -48,7 +48,7 @@ public:
    }
 
    // then()
-   void testShouldBeAbleReturnTheExpectedValueAccordingToTheSequenceOfStubs()
+   void testShouldBeAbleToReturnTheExpectedValueAccordingToTheSequenceOfStubs()
    {
        MockObject<Interface> mock;
 
@@ -57,6 +57,25 @@ public:
        TS_ASSERT_EQUALS(20, ((Interface*)mock)->base00());
        TS_ASSERT_EQUALS(10, ((Interface*)mock)->base00());
        TS_ASSERT_EQUALS(10, ((Interface*)mock)->base00());
+   }
+
+   // then()
+   void testShouldBeAbleToSupportMultipleThenSpecification()
+   {
+       MockObject<Interface> mock;
+
+       mock.method(&Interface::base00)
+           .stubs()
+           .will(returnValue(20))
+           .then(returnValue(10))
+           .then(returnValue(1))
+           .then(returnValue(5));
+
+       TS_ASSERT_EQUALS(20, ((Interface*)mock)->base00());
+       TS_ASSERT_EQUALS(10, ((Interface*)mock)->base00());
+       TS_ASSERT_EQUALS(1, ((Interface*)mock)->base00());
+       TS_ASSERT_EQUALS(5, ((Interface*)mock)->base00());
+       TS_ASSERT_EQUALS(5, ((Interface*)mock)->base00());
    }
 
    // repeat()
