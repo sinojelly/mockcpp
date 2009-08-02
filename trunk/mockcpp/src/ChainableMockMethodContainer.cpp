@@ -18,6 +18,9 @@ struct ChainableMockMethodContainerImpl
    typedef List::iterator Iterator;
    typedef List::const_iterator ConstIterator;
 
+   ChainableMockMethodContainerImpl()
+      : verified(false) {}
+
    ~ChainableMockMethodContainerImpl();
 
    ChainableMockMethodCore*
@@ -31,6 +34,7 @@ struct ChainableMockMethodContainerImpl
    void reset();
    void verify();
 
+   bool verified;
    List methods;
 };
 
@@ -54,6 +58,7 @@ ChainableMockMethodContainerImpl::reset()
 {
     for_each(methods.begin(), methods.end(), resetMethod);
     methods.clear();
+    verified = false;
 }
 
 /////////////////////////////////////////////////////////////////////////
@@ -68,6 +73,10 @@ namespace
 void
 ChainableMockMethodContainerImpl::verify()
 {
+    if(verified) return;
+
+    verified = true;
+
     for_each(methods.begin(), methods.end(), verifyMethod);
 }
 /////////////////////////////////////////////////////////////////////////

@@ -68,14 +68,14 @@ GnuMethodDescription getGnuDescOfVirtualMethod(Method input)
 
 ///////////////////////////////////////////////////////////
 template <class C, typename Method>
-int getIndexOfMethod(Method method)
+unsigned int getIndexOfMethod(Method method)
 {
    return (getGnuDescOfVirtualMethod<C, Method>(method).u.index - 1)/sizeof(void*);
 }
 
 ///////////////////////////////////////////////////////////
 template <class C, typename Method>
-int getDeltaOfMethod(Method method)
+unsigned int getDeltaOfMethod(Method method)
 {
    return getGnuDescOfVirtualMethod<C, Method>(method).delta/sizeof(void*);
 }

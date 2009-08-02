@@ -15,6 +15,7 @@ public:
     InvokedAtMost(const unsigned int times);
 
     bool matches(const Invocation& inv) const;
+    void increaseInvoked(const Invocation& inv);
 
     void verify(void);
 

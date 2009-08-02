@@ -5,13 +5,13 @@
 #include <mockcpp.h>
 
 #include <ChainableMockMethodKey.h>
-#include <MethodNameGetter.h>
+
+#include <string>
 
 MOCKCPP_NS_START
 
 struct ChainableMockMethodNameKey
     : public ChainableMockMethodKey
-    , public MethodNameGetter
 {
    ChainableMockMethodNameKey(const std::string& name);
 

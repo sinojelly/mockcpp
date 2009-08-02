@@ -14,6 +14,7 @@ libmockcpp_la_SOURCES = \
  ChainableMockMethodCore.cpp \
  ChainableMockObjectBase.cpp \
  ChainableMockObject.cpp \
+ MockObjectBase.cpp \
  ChainingMockHelper.cpp \
  ConstraintSet.cpp \
  DecoratedConstraint.cpp \
@@ -61,4 +62,5 @@ libmockcpp_la_SOURCES = \
  WillStub.cpp \
  VirtualTable.cpp \
  ChainableMockMethodContainer.cpp \
- ChainableMockMethodNameKey.cpp
+ ChainableMockMethodNameKey.cpp \
+ ChainableMockMethodIndexKey.cpp

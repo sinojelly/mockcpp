@@ -38,7 +38,7 @@ public:
 	void setUp()
    {
       key = new ChainableMockMethodNameKey("method");
-		method = new ChainableMockMethodCore(key, &ns);
+		method = new ChainableMockMethodCore("method", &ns);
    }
 
 	void tearDown()
