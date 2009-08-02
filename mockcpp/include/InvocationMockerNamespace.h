@@ -4,11 +4,15 @@
 
 #include <mockcpp.h>
 
+#include <string>
+
 MOCKCPP_NS_START
+
+struct InvocationMocker;
 
 struct InvocationMockerNamespace
 {
-   virtual InvocationMocker* getInvocationMocker(const std::string& id) = 0;
+   virtual InvocationMocker* getInvocationMocker(const std::string& id) const = 0;
    virtual std::string& getName(void) const = 0;
 
    virtual ~InvocationMockerNamespace() {}

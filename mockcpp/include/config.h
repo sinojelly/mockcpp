@@ -12,6 +12,12 @@
 #define MOCKCPP_MAX_INHERITANCE 2
 
 ///////////////////////////////////////////////////
+#if !MOCKCPP_ALLOW_MULTI_INHERITANCE
+#undef MOCKCPP_MAX_INHERITANCE
+#define MOCKCPP_MAX_INHERITANCE 1
+#endif
+
+///////////////////////////////////////////////////
 #ifndef MOCKCPP_MAX_PARAMETERS
 #define MOCKCPP_MAX_PARAMETERS 6
 #endif

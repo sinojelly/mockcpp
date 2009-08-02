@@ -53,7 +53,7 @@ libmockcpp_la_LIBADD =
 am_libmockcpp_la_OBJECTS = AfterMatcher.lo AnyBase.lo Any.lo \
 	Asserter.lo AssertionFailedError.lo BeforeMatcher.lo \
 	CallerMatcher.lo ChainableMockMethodCore.lo \
-	ChainableMockMethodWithName.lo ChainableMockObject.lo \
+	ChainableMockObjectBase.lo ChainableMockObject.lo \
 	ChainingMockHelper.lo ConstraintSet.lo DecoratedConstraint.lo \
 	DefaultMatcher.lo DefaultStub.lo Exception.lo \
 	ExpectsMatcher.lo Formatter.lo GlobalMockObject.lo \
@@ -71,7 +71,8 @@ am_libmockcpp_la_OBJECTS = AfterMatcher.lo AnyBase.lo Any.lo \
 	StubsMatcher.lo TestFailureMatcher.lo \
 	TypelessConstraintAdapter.lo TypelessStubAdapter.lo \
 	TypeString.lo VoidResultHandler.lo VoidResultHandlerFactory.lo \
-	WillStub.lo
+	WillStub.lo VirtualTable.lo ChainableMockMethodContainer.lo \
+	ChainableMockMethodNameKey.lo
 libmockcpp_la_OBJECTS = $(am_libmockcpp_la_OBJECTS)
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -206,7 +207,7 @@ libmockcpp_la_SOURCES = \
  BeforeMatcher.cpp \
  CallerMatcher.cpp \
  ChainableMockMethodCore.cpp \
- ChainableMockMethodWithName.cpp \
+ ChainableMockObjectBase.cpp \
  ChainableMockObject.cpp \
  ChainingMockHelper.cpp \
  ConstraintSet.cpp \
@@ -252,7 +253,10 @@ libmockcpp_la_SOURCES = \
  TypeString.cpp \
  VoidResultHandler.cpp \
  VoidResultHandlerFactory.cpp \
- WillStub.cpp 
+ WillStub.cpp \
+ VirtualTable.cpp \
+ ChainableMockMethodContainer.cpp \
+ ChainableMockMethodNameKey.cpp
 
 all: all-am
 
@@ -330,9 +334,11 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/AssertionFailedError.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/BeforeMatcher.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/CallerMatcher.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ChainableMockMethodContainer.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ChainableMockMethodCore.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ChainableMockMethodWithName.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ChainableMockMethodNameKey.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ChainableMockObject.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ChainableMockObjectBase.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ChainingMockHelper.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ConstraintSet.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/DecoratedConstraint.Plo@am__quote@
@@ -375,6 +381,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TypeString.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TypelessConstraintAdapter.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TypelessStubAdapter.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/VirtualTable.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/VoidResultHandler.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/VoidResultHandlerFactory.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/WillStub.Plo@am__quote@

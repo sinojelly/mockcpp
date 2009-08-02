@@ -12,7 +12,7 @@ libmockcpp_la_SOURCES = \
  BeforeMatcher.cpp \
  CallerMatcher.cpp \
  ChainableMockMethodCore.cpp \
- ChainableMockMethodWithName.cpp \
+ ChainableMockObjectBase.cpp \
  ChainableMockObject.cpp \
  ChainingMockHelper.cpp \
  ConstraintSet.cpp \
@@ -58,4 +58,7 @@ libmockcpp_la_SOURCES = \
  TypeString.cpp \
  VoidResultHandler.cpp \
  VoidResultHandlerFactory.cpp \
- WillStub.cpp 
+ WillStub.cpp \
+ VirtualTable.cpp \
+ ChainableMockMethodContainer.cpp \
+ ChainableMockMethodNameKey.cpp
