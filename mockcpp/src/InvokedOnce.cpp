@@ -17,6 +17,18 @@ bool InvokedOnce::matches(const Invocation& inv) const
 }
 
 ///////////////////////////////////////////////////////
+void InvokedOnce::increaseInvoked(const Invocation& inv)
+{
+    oss_t oss;
+
+    oss << "Invocation is expected only once(), but you are trying to "
+        << "invoke more than that";
+
+    MOCKCPP_ASSERT_TRUE_MESSAGE(
+         oss.str(), getInvokedTimes() < 1);
+   
+}
+///////////////////////////////////////////////////////
 std::string
 InvokedOnce::toString(void) const
 {

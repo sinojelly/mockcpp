@@ -46,12 +46,6 @@ public:
    }
 
 	/////////////////////////////////////////////////////////
-   void testShouldBeAMethodNameGetter()
-   {
-      TS_ASSERT(dynamic_cast<MethodNameGetter*>(key) != 0);
-   }
-
-	/////////////////////////////////////////////////////////
    void testShouldBeEqualToItself()
    {
       TS_ASSERT(key->equals(key));

@@ -38,7 +38,7 @@ ChainableMockMethodCore*
 ChainableMockObjectImpl::addMethod(const std::string& name, InvocationMockerNamespace* ns) 
 {
     ChainableMockMethodNameKey* key = new ChainableMockMethodNameKey(name);
-    ChainableMockMethodCore* method = new ChainableMockMethodCore(key, ns);
+    ChainableMockMethodCore* method = new ChainableMockMethodCore(name, ns);
 
     container->addMethod(key, method);
 

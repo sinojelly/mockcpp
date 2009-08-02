@@ -54,10 +54,10 @@ am_libmockcpp_la_OBJECTS = AfterMatcher.lo AnyBase.lo Any.lo \
 	Asserter.lo AssertionFailedError.lo BeforeMatcher.lo \
 	CallerMatcher.lo ChainableMockMethodCore.lo \
 	ChainableMockObjectBase.lo ChainableMockObject.lo \
-	ChainingMockHelper.lo ConstraintSet.lo DecoratedConstraint.lo \
-	DefaultMatcher.lo DefaultStub.lo Exception.lo \
-	ExpectsMatcher.lo Formatter.lo GlobalMockObject.lo \
-	IdentityBuilder.lo IgnoreResultHandler.lo \
+	MockObjectBase.lo ChainingMockHelper.lo ConstraintSet.lo \
+	DecoratedConstraint.lo DefaultMatcher.lo DefaultStub.lo \
+	Exception.lo ExpectsMatcher.lo Formatter.lo \
+	GlobalMockObject.lo IdentityBuilder.lo IgnoreResultHandler.lo \
 	IgnoreResultHandlerFactory.lo IgnoreReturnStub.lo \
 	Invocation.lo InvocationId.lo InvocationMocker.lo \
 	InvocationMockerSet.lo InvocationTimesMatcher.lo \
@@ -72,7 +72,7 @@ am_libmockcpp_la_OBJECTS = AfterMatcher.lo AnyBase.lo Any.lo \
 	TypelessConstraintAdapter.lo TypelessStubAdapter.lo \
 	TypeString.lo VoidResultHandler.lo VoidResultHandlerFactory.lo \
 	WillStub.lo VirtualTable.lo ChainableMockMethodContainer.lo \
-	ChainableMockMethodNameKey.lo
+	ChainableMockMethodNameKey.lo ChainableMockMethodIndexKey.lo
 libmockcpp_la_OBJECTS = $(am_libmockcpp_la_OBJECTS)
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -209,6 +209,7 @@ libmockcpp_la_SOURCES = \
  ChainableMockMethodCore.cpp \
  ChainableMockObjectBase.cpp \
  ChainableMockObject.cpp \
+ MockObjectBase.cpp \
  ChainingMockHelper.cpp \
  ConstraintSet.cpp \
  DecoratedConstraint.cpp \
@@ -256,7 +257,8 @@ libmockcpp_la_SOURCES = \
  WillStub.cpp \
  VirtualTable.cpp \
  ChainableMockMethodContainer.cpp \
- ChainableMockMethodNameKey.cpp
+ ChainableMockMethodNameKey.cpp \
+ ChainableMockMethodIndexKey.cpp
 
 all: all-am
 
@@ -336,6 +338,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/CallerMatcher.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ChainableMockMethodContainer.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ChainableMockMethodCore.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ChainableMockMethodIndexKey.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ChainableMockMethodNameKey.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ChainableMockObject.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ChainableMockObjectBase.Plo@am__quote@
@@ -366,6 +369,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/IsAnythingHelper.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/MismatchResultHandler.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/MismatchResultHandlerFactory.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/MockObjectBase.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/NormalResultHandler.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/NormalResultHandlerFactory.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/OutBoundPointer.Plo@am__quote@

@@ -4,7 +4,6 @@
 
 #include <mockcpp.h>
 
-#include <MethodNameGetter.h>
 #include <Method.h>
 #include <InvocationMockerContainer.h>
 
@@ -24,7 +23,7 @@ class ChainableMockMethodCore
 {
 public:
 
-    ChainableMockMethodCore(MethodNameGetter* methodNameGetter, 
+    ChainableMockMethodCore(const std::string& name, 
                             InvocationMockerNamespace* ns);
     ~ChainableMockMethodCore();
 

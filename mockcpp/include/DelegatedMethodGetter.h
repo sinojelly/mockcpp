@@ -4,7 +4,7 @@
 
 #include <mockcpp.h>
 
-#include <OutputStream.h>
+#include <OutputStringStream.h>
 #include <Asserter.h>
 #include <MethodTypeTraits.h>
 #include <DelegatedMethod.h>

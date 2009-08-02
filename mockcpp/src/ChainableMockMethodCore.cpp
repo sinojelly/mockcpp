@@ -21,15 +21,15 @@ MOCKCPP_NS_START
 class ChainableMockMethodCoreImpl
 {
 public:
-    MethodNameGetter* methodNameGetter;
+    std::string methodName;
     /////////////////////////////////////////////////////
     InvocationMockerSet mockers;
     InvocationMockerSet defaultMockers;
     InvocationMockerNamespace* invocationMockerNamespace;
 
 	 /////////////////////////////////////////////////////
-    ChainableMockMethodCoreImpl(MethodNameGetter* nameGetter, InvocationMockerNamespace* ns)
-            : methodNameGetter(nameGetter), invocationMockerNamespace(ns) {}
+    ChainableMockMethodCoreImpl(const std::string& name, InvocationMockerNamespace* ns)
+            : methodName(name), invocationMockerNamespace(ns) {}
 
     ~ChainableMockMethodCoreImpl();
    
@@ -80,7 +80,7 @@ ChainableMockMethodCoreImpl::
 tellNoMatchedExpectation(const Invocation& inv)
 {
     return std::string("Unexpected invocation") + "\n" 
-		+ "Invoked: " + methodNameGetter->getMethodName() + inv.toString() + ".caller(" + inv.getNameOfCaller() + ")\n" 
+		+ "Invoked: " + methodName + inv.toString() + ".caller(" + inv.getNameOfCaller() + ")\n" 
                      + "Allowed: \n"
                      + this->toString();
 }
@@ -109,8 +109,8 @@ ChainableMockMethodCoreImpl::invoke(const Invocation& inv
 
 //////////////////////////////////////////////////////////
 ChainableMockMethodCore::
-ChainableMockMethodCore(MethodNameGetter* nameGetter, InvocationMockerNamespace* ns)
-   : This(new ChainableMockMethodCoreImpl(nameGetter, ns))
+ChainableMockMethodCore(const std::string& name, InvocationMockerNamespace* ns)
+   : This(new ChainableMockMethodCoreImpl(name, ns))
 {
 }
 
@@ -123,7 +123,7 @@ ChainableMockMethodCore::~ChainableMockMethodCore()
 std::string&
 ChainableMockMethodCore::getName() const
 {
-   return This->methodNameGetter->getMethodName();
+   return This->methodName;
 }
 //////////////////////////////////////////////////////////
 Any
