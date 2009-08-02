@@ -65,11 +65,22 @@ mock.method(&Interface::method)
      mock.method(&Interface::foo)
                 .stubs()
                 .will(returnValue(10))
-                .then(repeat(20, 5))
-                .then(throws(std::exception));
+                .then(repeat(20, 2))
+                .then(throws(std::exception))
+                .then(returnValue(5));
 }}}
 
-当你使用_will_()/_then()_来指定*_函数调用行为_*时，指定的*_函数调用行为_*将会按照指定的顺序依次发生作用，如果指定的最后一个*_函数调用行为_*发生了作用之后，仍然有进一步的调用发生，如果其它约束条件都满足，则最后一个*_函数调用行为_*将持续发生作用。
+当你使用_will_()/_then()_来指定*_函数调用行为_*时，指定的*_函数调用行为_*将会按照指定的顺序依次发生作用，如果指定的最后一个*_函数调用行为_*发生了作用之后，仍然有进一步的调用发生，如果其它约束条件都满足，则最后一个*_函数调用行为_*将持续发生作用。比如上一个例子将会产生如下结果：
+
+{{{
+    TS_ASSERT_EQUALS(10, ((Interface*)mock)->foo());
+    TS_ASSERT_EQUALS(20, ((Interface*)mock)->foo());
+    TS_ASSERT_EQUALS(20, ((Interface*)mock)->foo()); 
+    TS_ASSERT_THROWS(((Interface*)mock)->foo(), std::exception); 
+    TS_ASSERT_EQUALS(5, ((Interface*)mock)->foo()); 
+    TS_ASSERT_EQUALS(5, ((Interface*)mock)->foo()); 
+    TS_ASSERT_EQUALS(5, ((Interface*)mock)->foo()); 
+}}}
 
 _returnValue_()用来指定匹配的调用所返回的单个值。无论这个调用发生了多少次，指定的值总是作为返回值返回。
 
