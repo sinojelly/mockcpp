@@ -5,7 +5,8 @@
 MOCKCPP_NS_START
 
 template<class Builder>
-Builder& MoreStubBuilder<Builder>::then(Stub* stub)
+MoreStubBuilder<Builder>&
+MoreStubBuilder<Builder>::then(Stub* stub)
 {
     getMocker()->addStub(new ThenStub(stub));
     return *this;
