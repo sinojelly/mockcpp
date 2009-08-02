@@ -163,7 +163,7 @@ public:
 
       Interface* pInterface = (Interface*) vtbl.toPointerToInterface();
 
-      IndexInvokableGetter* getter = VirtualTable::getInvokableGetter(vtbl.toPointerToInterface());
+      IndexInvokableGetter* getter = VirtualTable::getInvokableGetter(vtbl.toPointerToInterface(), 0);
 
       TS_ASSERT_EQUALS(getter, &indexInvokableGetter);
    }

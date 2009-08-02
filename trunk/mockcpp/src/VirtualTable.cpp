@@ -152,9 +152,9 @@ VirtualTable::addMethod(void* methodAddr, unsigned int indexOfVtbl, unsigned int
 
 /////////////////////////////////////////////////////////////////
 IndexInvokableGetter*
-VirtualTable::getInvokableGetter(void* caller)
+VirtualTable::getInvokableGetter(void* caller, unsigned int vptrIndex)
 {
-   void** vptr = (void**)caller;
+   void** vptr = &((void**)caller)[-vptrIndex];
 
    VirtualTableImpl* pThis = (VirtualTableImpl*)vptr[MOCKCPP_MAX_INHERITANCE];
 

@@ -15,6 +15,9 @@
 #include <IsMirror.h>
 #include <IgnoreReturnStub.h>
 #include <RepeatStub.h>
+#include <IsStringStartWith.h>
+#include <IsStringEndWith.h>
+#include <IsStringContains.h>
 
 MOCKCPP_NS_START
 
@@ -128,6 +131,66 @@ Constraint* smirror(unsigned char* s)
 Constraint* smirror(const unsigned char* s)
 {
    return new IsMirror<const unsigned char*>(s, strlen((const char*)s)+1);
+}
+
+Constraint* startWith(char* s)
+{
+    return new IsStringStartWith(s);
+}
+
+Constraint* startWith(const char* s)
+{
+    return new IsStringStartWith(s);
+}
+
+Constraint* startWith(unsigned char* s)
+{
+    return new IsStringStartWith((char*)s);
+}
+
+Constraint* startWith(unsigned const char* s)
+{
+    return new IsStringStartWith((const char*)s);
+}
+
+Constraint* endWith(char* s)
+{
+    return new IsStringEndWith(s);
+}
+
+Constraint* endWith(const char* s)
+{
+    return new IsStringEndWith(s);
+}
+
+Constraint* endWith(unsigned char* s)
+{
+    return new IsStringEndWith((char*)s);
+}
+
+Constraint* endWith(unsigned const char* s)
+{
+    return new IsStringEndWith((const char*)s);
+}
+
+Constraint* contains(char* s)
+{
+    return new IsStringContains(s);
+}
+
+Constraint* contains(const char* s)
+{
+    return new IsStringContains(s);
+}
+
+Constraint* contains(unsigned char* s)
+{
+    return new IsStringContains((char*)s);
+}
+
+Constraint* contains(unsigned const char* s)
+{
+    return new IsStringContains((const char*)s);
 }
 
 MOCKCPP_NS_END

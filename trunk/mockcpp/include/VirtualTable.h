@@ -19,7 +19,7 @@ struct VirtualTable
 
    void addMethod(void* methodAddr, unsigned int indexOfVtbl, unsigned int indexofVptr = 0);
 
-   static IndexInvokableGetter* getInvokableGetter(void* Caller);
+   static IndexInvokableGetter* getInvokableGetter(void* Caller, unsigned int indexOfVptr);
 
 private:
 	VirtualTableImpl* This;
