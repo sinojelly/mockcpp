@@ -25,6 +25,8 @@ struct MockObjectBaseImpl : public IndexInvokableGetter
    VirtualTable* vtbl;
    ChainableMockMethodContainer* container;
 
+   void reset();
+
 private:
    ChainableMockMethodCore*
    createMethod(const std::string& name, void* addr, \
@@ -44,6 +46,12 @@ MockObjectBaseImpl::~MockObjectBaseImpl()
    delete vtbl;
 }
 
+////////////////////////////////////////////////////////////////////////
+void MockObjectBaseImpl::reset()
+{
+    vtbl->reset();
+    container->reset();
+}
 ////////////////////////////////////////////////////////////////////////
 Invokable*
 MockObjectBaseImpl::getInvokable(unsigned int vptrIndex, unsigned int vtblIndex) const
@@ -112,6 +120,11 @@ MockObjectBase::toPointerToInterface() const
    return This->vtbl->toPointerToInterface();
 }
 
+void
+MockObjectBase::reset()
+{
+   This->reset();
+}
 ////////////////////////////////////////////////////////////////////////
 
 

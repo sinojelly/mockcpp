@@ -19,6 +19,8 @@ struct VirtualTable
 
    void addMethod(void* methodAddr, unsigned int indexOfVtbl, unsigned int indexofVptr = 0);
 
+   void reset();
+
    static IndexInvokableGetter* getInvokableGetter(void* Caller, unsigned int indexOfVptr);
 
 private:

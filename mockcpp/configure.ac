@@ -10,5 +10,8 @@ AC_CONFIG_FILES([
   libs/Makefile
   ut/Makefile
   ft/Makefile
+  samples/cpp/Makefile
+  samples/cpp/src/Makefile
+  samples/cpp/ut/Makefile
 ])
 AC_OUTPUT
