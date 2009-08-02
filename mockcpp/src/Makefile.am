@@ -20,6 +20,7 @@ libmockcpp_la_SOURCES = \
  DecoratedConstraint.cpp \
  DefaultMatcher.cpp \
  DefaultStub.cpp \
+ RepeatStub.cpp \
  Exception.cpp \
  ExpectsMatcher.cpp \
  Formatter.cpp \
@@ -60,7 +61,9 @@ libmockcpp_la_SOURCES = \
  VoidResultHandler.cpp \
  VoidResultHandlerFactory.cpp \
  WillStub.cpp \
+ ThenStub.cpp \
  VirtualTable.cpp \
  ChainableMockMethodContainer.cpp \
  ChainableMockMethodNameKey.cpp \
- ChainableMockMethodIndexKey.cpp
+ ChainableMockMethodIndexKey.cpp \
+ StubContainer.cpp

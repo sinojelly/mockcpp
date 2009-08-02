@@ -5,12 +5,18 @@ MOCKCPP_NS_START
 
 /////////////////////////////////////////////////////
 ReturnStub::ReturnStub(const Any& value)
-		: returnValue(value)
+		: returnValue(value), hasBeenInvoked(false)
 {}
 
 /////////////////////////////////////////////////////
+bool ReturnStub::isCompleted() const
+{
+   return hasBeenInvoked;
+}
+/////////////////////////////////////////////////////
 Any& ReturnStub::invoke(void)
 {
+    hasBeenInvoked = true;
     return returnValue;
 }
 

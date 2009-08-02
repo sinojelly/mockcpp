@@ -34,7 +34,7 @@ public:
 
 	/////////////////////////////////////////////////////////
 
-   // returnValue()
+   // will()
    void testShouldBeAbleReturnTheExpectedValue()
    {
        MockObject<Interface> mock;
@@ -44,6 +44,76 @@ public:
        TS_ASSERT_EQUALS(20, ((Interface*)mock)->base00());
        TS_ASSERT_EQUALS(20, ((Interface*)mock)->base00());
        TS_ASSERT_EQUALS(20, ((Interface*)mock)->base00());
+   }
+
+   // then()
+   void testShouldBeAbleReturnTheExpectedValueAccordingToTheSequenceOfStubs()
+   {
+       MockObject<Interface> mock;
+
+       mock.method(&Interface::base00).stubs().will(returnValue(20)).then(returnValue(10));
+
+       TS_ASSERT_EQUALS(20, ((Interface*)mock)->base00());
+       TS_ASSERT_EQUALS(10, ((Interface*)mock)->base00());
+       TS_ASSERT_EQUALS(10, ((Interface*)mock)->base00());
+   }
+
+   // repeat()
+   void testShouldBeAbleReturnValueRepeatedly()
+   {
+       MockObject<Interface> mock;
+
+       mock.method(&Interface::base00).stubs().will(repeat(20, 2)).then(returnValue(10));
+
+       TS_ASSERT_EQUALS(20, ((Interface*)mock)->base00());
+       TS_ASSERT_EQUALS(20, ((Interface*)mock)->base00());
+       TS_ASSERT_EQUALS(10, ((Interface*)mock)->base00());
+   }
+
+   // repeat()
+   void testShouldThrowExceptionAfterRepeatingSpecifiedTimesAndNoSubsequentStubSpecified()
+   {
+       MockObject<Interface> mock;
+
+       mock.method(&Interface::base00).stubs().will(repeat(20, 2));
+
+       TS_ASSERT_EQUALS(20, ((Interface*)mock)->base00());
+       TS_ASSERT_EQUALS(20, ((Interface*)mock)->base00());
+       
+       TS_ASSERT_THROWS(((Interface*)mock)->base00(), Exception);
+   }
+
+   // increase()
+   void testShouldBeAbleReturnValueIncrementallyWithinAScope()
+   {
+       MockObject<Interface> mock;
+
+       mock.method(&Interface::base00).stubs().will(increase(1, 3)).then(returnValue(10));
+
+       TS_ASSERT_EQUALS(1, ((Interface*)mock)->base00());
+       TS_ASSERT_EQUALS(2, ((Interface*)mock)->base00());
+       TS_ASSERT_EQUALS(3, ((Interface*)mock)->base00());
+       TS_ASSERT_EQUALS(10, ((Interface*)mock)->base00());
+   }
+
+   // increase()
+   void testShouldBeAbleReturnValueIncrementallyWithoutEnding()
+   {
+       MockObject<Interface> mock;
+
+       mock.method(&Interface::base00).stubs().will(increase(1)).then(returnValue(10));
+
+       TS_ASSERT_EQUALS(1, ((Interface*)mock)->base00());
+       TS_ASSERT_EQUALS(2, ((Interface*)mock)->base00());
+       TS_ASSERT_EQUALS(3, ((Interface*)mock)->base00());
+       TS_ASSERT_EQUALS(4, ((Interface*)mock)->base00());
+       TS_ASSERT_EQUALS(5, ((Interface*)mock)->base00());
+       TS_ASSERT_EQUALS(6, ((Interface*)mock)->base00());
+       TS_ASSERT_EQUALS(7, ((Interface*)mock)->base00());
+       TS_ASSERT_EQUALS(8, ((Interface*)mock)->base00());
+       TS_ASSERT_EQUALS(9, ((Interface*)mock)->base00());
+       TS_ASSERT_EQUALS(10, ((Interface*)mock)->base00());
+       TS_ASSERT_EQUALS(11, ((Interface*)mock)->base00());
    }
 
    // once()

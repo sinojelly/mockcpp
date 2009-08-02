@@ -15,6 +15,11 @@ TypelessStubAdapter::~TypelessStubAdapter()
 {
 	delete stub;
 }
+
+bool TypelessStubAdapter::isCompleted() const
+{
+   return stub->isCompleted();
+}
 ////////////////////////////////////////////////////////
 Any& TypelessStubAdapter::invoke(const Invocation& inv)
 {

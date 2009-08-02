@@ -14,6 +14,7 @@ class Stub : public SelfDescribe
 {
 public:
     virtual ~Stub() {}
+    virtual bool isCompleted() const = 0;
     virtual Any& invoke(const Invocation& inv) = 0;
 };
 

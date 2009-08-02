@@ -56,7 +56,7 @@ am_libmockcpp_la_OBJECTS = AfterMatcher.lo AnyBase.lo Any.lo \
 	ChainableMockObjectBase.lo ChainableMockObject.lo \
 	MockObjectBase.lo ChainingMockHelper.lo ConstraintSet.lo \
 	DecoratedConstraint.lo DefaultMatcher.lo DefaultStub.lo \
-	Exception.lo ExpectsMatcher.lo Formatter.lo \
+	RepeatStub.lo Exception.lo ExpectsMatcher.lo Formatter.lo \
 	GlobalMockObject.lo IdentityBuilder.lo IgnoreResultHandler.lo \
 	IgnoreResultHandlerFactory.lo IgnoreReturnStub.lo \
 	Invocation.lo InvocationId.lo InvocationMocker.lo \
@@ -71,8 +71,9 @@ am_libmockcpp_la_OBJECTS = AfterMatcher.lo AnyBase.lo Any.lo \
 	StubsMatcher.lo TestFailureMatcher.lo \
 	TypelessConstraintAdapter.lo TypelessStubAdapter.lo \
 	TypeString.lo VoidResultHandler.lo VoidResultHandlerFactory.lo \
-	WillStub.lo VirtualTable.lo ChainableMockMethodContainer.lo \
-	ChainableMockMethodNameKey.lo ChainableMockMethodIndexKey.lo
+	WillStub.lo ThenStub.lo VirtualTable.lo \
+	ChainableMockMethodContainer.lo ChainableMockMethodNameKey.lo \
+	ChainableMockMethodIndexKey.lo StubContainer.lo
 libmockcpp_la_OBJECTS = $(am_libmockcpp_la_OBJECTS)
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -215,6 +216,7 @@ libmockcpp_la_SOURCES = \
  DecoratedConstraint.cpp \
  DefaultMatcher.cpp \
  DefaultStub.cpp \
+ RepeatStub.cpp \
  Exception.cpp \
  ExpectsMatcher.cpp \
  Formatter.cpp \
@@ -255,10 +257,12 @@ libmockcpp_la_SOURCES = \
  VoidResultHandler.cpp \
  VoidResultHandlerFactory.cpp \
  WillStub.cpp \
+ ThenStub.cpp \
  VirtualTable.cpp \
  ChainableMockMethodContainer.cpp \
  ChainableMockMethodNameKey.cpp \
- ChainableMockMethodIndexKey.cpp
+ ChainableMockMethodIndexKey.cpp \
+ StubContainer.cpp
 
 all: all-am
 
@@ -376,12 +380,15 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/PendingMatcher.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ProcStub.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/RefAny.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/RepeatStub.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Result.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ReturnObjectList.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ReturnStub.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/SimpleInvocationRecorder.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/StubContainer.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/StubsMatcher.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TestFailureMatcher.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ThenStub.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TypeString.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TypelessConstraintAdapter.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TypelessStubAdapter.Plo@am__quote@

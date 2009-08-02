@@ -1,6 +1,6 @@
 
-#ifndef __MOCKCPP_RETURN_STUB_H
-#define __MOCKCPP_RETURN_STUB_H
+#ifndef __MOCKCPP_REPEAT_STUB_H
+#define __MOCKCPP_REPEAT_STUB_H
 
 #include <mockcpp.h>
 #include <TypelessStub.h>
@@ -8,11 +8,11 @@
 
 MOCKCPP_NS_START
 
-class ReturnStub : public TypelessStub
+class RepeatStub : public TypelessStub
 {
 public:
 
-    ReturnStub(const Any& value);
+    RepeatStub(const Any& value, unsigned int times);
 
     bool isCompleted() const;
 
@@ -24,8 +24,9 @@ public:
 
 private:
 
-    bool hasBeenInvoked;
     Any returnValue;
+    unsigned int repeatedTimes;
+    const unsigned int repeatTimes;
 };
 
 MOCKCPP_NS_END

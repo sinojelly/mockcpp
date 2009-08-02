@@ -1,38 +1,38 @@
 
 #include <OutputStringStream.h>
-#include <WillStub.h>
+#include <ThenStub.h>
 
 MOCKCPP_NS_START
 
 //////////////////////////////////////////////
-WillStub::WillStub(Stub* stub)
+ThenStub::ThenStub(Stub* stub)
 	: expectedStub(stub)
 {
 }
 
 //////////////////////////////////////////////
-WillStub::~WillStub()
+ThenStub::~ThenStub()
 {
     delete expectedStub;
 }
 
 //////////////////////////////////////////////
-bool WillStub::isCompleted() const
+bool ThenStub::isCompleted() const
 {
     return expectedStub->isCompleted();
 }
 //////////////////////////////////////////////
-Any& WillStub::invoke(const Invocation& inv)
+Any& ThenStub::invoke(const Invocation& inv)
 {
     return expectedStub->invoke(inv);
 }
     
 //////////////////////////////////////////////
-std::string WillStub::toString() const
+std::string ThenStub::toString() const
 {
     oss_t oss;
 
-    oss << ".will(" << expectedStub->toString() << ")";
+    oss << ".then(" << expectedStub->toString() << ")";
 
     return oss.str();
 }
