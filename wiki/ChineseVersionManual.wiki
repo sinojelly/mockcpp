@@ -59,7 +59,7 @@ mock.method(&Interface::method)
 
 ===用法===
 
-函数调用行为通过_will_(behavior)/_then_(behavior)来指定。_then_()必须在_will_()之后。_will_()只会出现一次，但_then_可以出现任意多次。比如：
+函数调用行为通过_will_(behavior)/_then_(behavior)来指定。_then_()必须在_will_()之后。_will_()只会出现一次，但_then_()可以出现任意多次。比如：
 
 {{{
      mock.method(&Interface::foo)
