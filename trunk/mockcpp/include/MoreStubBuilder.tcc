@@ -1,0 +1,15 @@
+
+#include <InvocationMocker.h>
+#include <ThenStub.h>
+
+MOCKCPP_NS_START
+
+template<class Builder>
+Builder& MoreStubBuilder<Builder>::then(Stub* stub)
+{
+    getMocker()->addStub(new ThenStub(stub));
+    return *this;
+}
+
+MOCKCPP_NS_END
+

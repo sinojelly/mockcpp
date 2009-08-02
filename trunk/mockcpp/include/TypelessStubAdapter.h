@@ -16,6 +16,8 @@ struct TypelessStubAdapter : public Stub
 
     ~TypelessStubAdapter();
 
+    bool isCompleted() const;
+
     Any& invoke(const Invocation& inv);
 
     std::string toString(void) const;

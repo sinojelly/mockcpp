@@ -8,6 +8,8 @@
 #include <IsMirror.h>
 #include <OutBound.h>
 #include <OutBoundPointer.h>
+#include <IncrementStub.h>
+#include <TypelessStubAdapter.h>
 #include <Any.h>
 
 MOCKCPP_NS_START
@@ -101,6 +103,8 @@ Constraint* smirror(const unsigned char* s);
 /////////////////////////////////////////////////////////////////
 Stub* returnValue(const Any& val);
 
+Stub* repeat(const Any& val, unsigned int repeatTimes);
+
 Stub* ignoreReturnValue();
 
 Stub* returnObjectList( const Any& o01
@@ -116,6 +120,18 @@ Stub* returnObjectList( const Any& o01
                       , const Any& o11 = Any()
                       , const Any& o12 = Any());
 
+
+template <typename T>
+Stub* increase(const T& from, const T& to)
+{
+   return new TypelessStubAdapter(new IncrementStub<T>(from, to));
+}
+
+template <typename T>
+Stub* increase(const T& from)
+{
+   return new TypelessStubAdapter(new IncrementStub<T>(from));
+}
 
 
 MOCKCPP_NS_END

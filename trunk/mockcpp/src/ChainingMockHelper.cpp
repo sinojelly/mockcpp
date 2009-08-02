@@ -14,6 +14,7 @@
 #include <OutBoundPointer.h>
 #include <IsMirror.h>
 #include <IgnoreReturnStub.h>
+#include <RepeatStub.h>
 
 MOCKCPP_NS_START
 
@@ -65,6 +66,12 @@ Matcher* never()
 Stub* returnValue(const Any& val)
 {
    return new TypelessStubAdapter(new ReturnStub(val));
+}
+
+//////////////////////////////////////////////////////////////////
+Stub* repeat(const Any& val, unsigned int repeatTimes)
+{
+   return new TypelessStubAdapter(new RepeatStub(val, repeatTimes));
 }
 
 //////////////////////////////////////////////////////////////////

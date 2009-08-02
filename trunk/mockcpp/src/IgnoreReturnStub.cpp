@@ -5,9 +5,21 @@
 MOCKCPP_NS_START
 
 /////////////////////////////////////////////////////
+IgnoreReturnStub::IgnoreReturnStub()
+   : hasBeenInvoked(false)
+{
+}
+/////////////////////////////////////////////////////
+bool
+IgnoreReturnStub::isCompleted() const
+{
+    return hasBeenInvoked;
+}
+/////////////////////////////////////////////////////
 Any&
 IgnoreReturnStub::invoke()
 {
+    hasBeenInvoked = true;
     return getIgnore();
 }
 

@@ -8,6 +8,7 @@
 #include <CallerMatchBuilder.h>
 #include <ArgumentsMatchBuilder.h>
 #include <StubBuilder.h>
+#include <MoreStubBuilder.h>
 
 MOCKCPP_NS_START
 
@@ -15,7 +16,9 @@ MOCKCPP_NS_START
 typedef InvocationMockBuilder< 
          CallerMatchBuilder<
           ArgumentsMatchBuilder<
-             StubBuilder<>
+           StubBuilder<
+            MoreStubBuilder<>
+           >
           >
          >
         > DefaultBuilder;

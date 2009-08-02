@@ -24,7 +24,7 @@ public:
     ~InvocationMocker();
 
     Method* getMethod() const;
-    void setStub(Stub* stub);
+    void addStub(Stub* stub);
     void addMatcher(Matcher* matcher);
     bool hasBeenInvoked(void) const ;
 

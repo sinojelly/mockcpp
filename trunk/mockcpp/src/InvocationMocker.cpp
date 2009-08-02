@@ -7,12 +7,22 @@
 #include <Asserter.h>
 #include <InvocationId.h>
 #include <Method.h>
+#include <StubContainer.h>
 
 #include <list>
 #include <algorithm>
 
 MOCKCPP_NS_START
 
+namespace
+{
+   const std::string normalSpace = "     ";
+
+   const std::string& space()
+   {
+	    return normalSpace;
+   }
+}
 ///////////////////////////////////////////////////////////
 class InvocationMockerImpl
 {
@@ -26,11 +36,11 @@ public:
     bool hasBeenInvoked;
     Method* belongedMethod;
     InvocationId* id ;
-    Stub* stub;
 
+    StubContainer stubs;
 	///////////////////////////////////////////////////
     InvocationMockerImpl(Method* method)
-		: belongedMethod(method), hasBeenInvoked(false), id(0), stub(0)
+		: belongedMethod(method), hasBeenInvoked(false), id(0), stubs(space())
     {}
 
     ~InvocationMockerImpl()
@@ -46,15 +56,7 @@ public:
 };
 
 /////////////////////////////////////////////////////////
-namespace
-{
-const std::string normalSpace = "     ";
 
-const std::string& space()
-{
-	return normalSpace;
-}
-}
 
 std::string
 InvocationMockerImpl::toString() const
@@ -68,10 +70,7 @@ InvocationMockerImpl::toString() const
       ss << "\n" << space() << (*i)->toString();
     }
 
-    if (stub != 0)
-    {
-      ss << "\n" << space() << stub->toString();
-    }
+    ss << stubs.toString();
 
     if(id != 0)
     {
@@ -114,11 +113,7 @@ void InvocationMockerImpl::reset()
 
     matchers.clear();
 
-    if (stub != 0)
-    {
-      delete stub;
-      stub = 0;
-    }
+    stubs.reset();
 
     if (id != 0)
     {
@@ -161,6 +156,7 @@ InvocationMockerImpl::invoke(const Invocation& inv)
 
     hasBeenInvoked = true;
 
+    Stub* stub = stubs.getStub();
     if (stub != 0)
     {
       return stub->invoke(inv);
@@ -209,9 +205,9 @@ bool InvocationMocker::hasBeenInvoked(void) const
 }
 
 ///////////////////////////////////////////////////////////
-void InvocationMocker::setStub(Stub* stub) 
+void InvocationMocker::addStub(Stub* stub) 
 {
-    This->stub = stub;
+    This->stubs.addStub(stub);
 }
 
 ///////////////////////////////////////////////////////////

@@ -27,6 +27,7 @@ TESTSUITES = \
  TestDelegatedMethod.h \
  TestVirtualTable.h \
  TestMockObject.h \
+ TestStubContainter.h \
  TestChainableMockMethodNameKey.h \
  TestChainableMockMethodContainer.h
 

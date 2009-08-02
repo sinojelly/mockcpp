@@ -30,6 +30,7 @@ public:
 
     ~ReturnObjectList();
 
+    bool isCompleted(void) const;
     Any& invoke(void);
 
     std::string toString(void) const;

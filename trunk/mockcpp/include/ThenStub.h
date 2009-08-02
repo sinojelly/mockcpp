@@ -1,6 +1,6 @@
 
-#ifndef __MOCKCPP_WILL_STUB_H
-#define __MOCKCPP_WILL_STUB_H
+#ifndef __MOCKCPP_THEN_STUB_H
+#define __MOCKCPP_THEN_STUB_H
 
 #include <mockcpp.h>
 #include <Stub.h>
@@ -10,11 +10,11 @@ MOCKCPP_NS_START
 class Any;
 class Invocation;
 
-struct WillStub : public Stub
+struct ThenStub : public Stub
 {
-    WillStub(Stub* stub);
+    ThenStub(Stub* stub);
 
-    ~WillStub();
+    ~ThenStub();
 
     bool isCompleted(void) const;
     Any& invoke(const Invocation& inv);

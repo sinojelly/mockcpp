@@ -7,7 +7,7 @@ MOCKCPP_NS_START
 template<class Builder>
 Builder& StubBuilder<Builder>::will(Stub* stub)
 {
-    getMocker()->setStub(new WillStub(stub));
+    getMocker()->addStub(new WillStub(stub));
     return *this;
 }
 

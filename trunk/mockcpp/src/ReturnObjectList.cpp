@@ -18,6 +18,8 @@ public:
 
     ReturnObjectListImpl() : firstUnused(0) {}
 
+    bool isCompleted() const;
+
     unsigned int numberOfValidObjects() const;
 
     Any& invoke();
@@ -61,6 +63,11 @@ unsigned int ReturnObjectListImpl::numberOfValidObjects() const
     return 0;
 }
 
+///////////////////////////////////////////////////////
+bool ReturnObjectListImpl::isCompleted() const
+{
+    return firstUnused < numberOfValidObjects();
+}
 ///////////////////////////////////////////////////////
 Any& ReturnObjectListImpl::invoke()
 {
@@ -134,6 +141,11 @@ const std::type_info& ReturnObjectList::type() const
     return This->type();   
 }
 
+///////////////////////////////////////////////////
+bool ReturnObjectList::isCompleted() const
+{
+    return This->isCompleted();
+}
 ///////////////////////////////////////////////////
 
 MOCKCPP_NS_END

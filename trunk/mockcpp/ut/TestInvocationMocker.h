@@ -22,7 +22,7 @@ public:
 		InvocationMocker mocker(0);
 		Invocation inv(__FUNCTION__);
 
-		mocker.setStub(returnValue(10));
+		mocker.addStub(returnValue(10));
 
 		TS_ASSERT(10 == any_cast<int>(mocker.invoke(inv)));
 	}
