@@ -30,7 +30,7 @@ std::string toString(T* s)
 	oss << "0x";
 	oss.flags (std::ios::hex);
 	oss.fill('0'); oss.width(8);
-	oss << reinterpret_cast<int>(s);
+	oss << reinterpret_cast<unsigned long>(s);
 
 	return oss.str();
 }
