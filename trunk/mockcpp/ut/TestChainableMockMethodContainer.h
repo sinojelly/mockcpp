@@ -33,16 +33,24 @@ private:
     InvocationMockerNamespaceStub ns;
     ChainableMockMethodCore* method;
 
+private:
+
+   MemoryCheckPoint checkpoint;
+
 public:
-   
+
 	void setUp()
    {
+      checkpoint = mockcppSetCheckPoint();
+
       key = new ChainableMockMethodNameKey("method");
 		method = new ChainableMockMethodCore("method", &ns);
+
    }
 
 	void tearDown()
    {
+      MOCKCPP_CHECK_POINT_VERIFY(checkpoint);
    }
 
 	/////////////////////////////////////////////////////////
@@ -58,6 +66,9 @@ public:
    {
       MOCKCPP_NS::ChainableMockMethodContainer container;
       TS_ASSERT(0 == container.getMethod(key));
+
+      delete key;
+		delete method;
    }
 
    void testShouldThrowExceptionIfAMethodWithTheSameKeyHasBeedAdded()

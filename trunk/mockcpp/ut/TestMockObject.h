@@ -1,6 +1,8 @@
 
 #include <cxxtest/TestSuite.h>
 
+#include <MemoryCheckPoint.h>
+
 #include <MockObject.h>
 
 using namespace mockcpp;
@@ -29,9 +31,22 @@ class TestMockObject : public CxxTest::TestSuite
       virtual void b(bool) {}
    };
 
+
+private:
+
+	MemoryCheckPoint checkpoint;
+
 public:
-	void setUp() { }
-	void tearDown() { }
+
+	void setUp()
+   {
+		checkpoint = mockcppSetCheckPoint();
+
+   }
+	void tearDown()
+   {
+      MOCKCPP_CHECK_POINT_VERIFY(checkpoint);
+   }
 
 	/////////////////////////////////////////////////////////
 

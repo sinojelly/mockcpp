@@ -70,4 +70,5 @@ libmockcpp_la_SOURCES = \
  StringConstraint.cpp \
  IsStringStartWith.cpp \
  IsStringEndWith.cpp \
- IsStringContains.cpp
+ IsStringContains.cpp \
+ MemoryCheckPoint.cpp

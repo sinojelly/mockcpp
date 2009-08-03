@@ -8,7 +8,9 @@ assertTrue(unsigned srcline, const char* srcfile
 			, const std::string &message, bool condition)
 {
   if (!condition)
+  {
     fail(srcline, srcfile, message);
+  }
 }
 
 void

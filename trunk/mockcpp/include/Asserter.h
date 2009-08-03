@@ -32,11 +32,11 @@ void assertEquals(unsigned srcline, const char* srcfile,
 void assertEquals(unsigned srcline, const char* srcfile,
                   const char *expected, const char *actual);
 
-#define MOCKCPP_ASSERT_EQUALS_MESSAGE(msg, a, b) assertEquals(__LINE__, __FILE__, msg, a, b)
-#define MOCKCPP_ASSERT_EQUALS(a, b)  assertEquals(__LINE__, __FILE__, "invalid: " #a " == " #b, a, b)
-#define MOCKCPP_ASSERT_TRUE_MESSAGE(msg, cond) assertTrue(__LINE__, __FILE__, msg, cond)
-#define MOCKCPP_ASSERT_FALSE_MESSAGE(msg, cond) assertFalse(__LINE__, __FILE__, msg, cond)
-#define MOCKCPP_FAIL(msg)  fail(__LINE__, __FILE__, msg)
+#define MOCKCPP_ASSERT_EQUALS_MESSAGE(msg, a, b) MOCKCPP_NS::assertEquals(__LINE__, __FILE__, msg, a, b)
+#define MOCKCPP_ASSERT_EQUALS(a, b)  MOCKCPP_NS::assertEquals(__LINE__, __FILE__, "invalid: " #a " == " #b, a, b)
+#define MOCKCPP_ASSERT_TRUE_MESSAGE(msg, cond) MOCKCPP_NS::assertTrue(__LINE__, __FILE__, msg, cond)
+#define MOCKCPP_ASSERT_FALSE_MESSAGE(msg, cond) MOCKCPP_NS::assertFalse(__LINE__, __FILE__, msg, cond)
+#define MOCKCPP_FAIL(msg)  MOCKCPP_NS::fail(__LINE__, __FILE__, msg)
 
 MOCKCPP_NS_END
 

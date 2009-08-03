@@ -1,15 +1,28 @@
 
 #include <cxxtest/TestSuite.h>
-#include <Any.h>
+#include <MemoryCheckPoint.h>
 #include <IsStringEndWith.h>
 
 using namespace mockcpp;
 
 class TestIsStringEndWith: public CxxTest::TestSuite
 {
+private:
+
+   MemoryCheckPoint checkpoint;
+
 public:
-	void setUp() { }
-	void tearDown() { }
+
+   void setUp()
+   {
+      checkpoint = mockcppSetCheckPoint();
+
+   }
+   void tearDown()
+   {
+      MOCKCPP_CHECK_POINT_VERIFY(checkpoint);
+   }
+
 
 	/////////////////////////////////////////////////////////
 

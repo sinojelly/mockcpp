@@ -2,9 +2,9 @@
 #include <cxxtest/TestSuite.h>
 #include <StubContainer.h>
 #include <Any.h>
+#include <MemoryCheckPoint.h>
 
 using namespace mockcpp;
-
 
 class TestStubContainer : public CxxTest::TestSuite
 {
@@ -29,9 +29,22 @@ class TestStubContainer : public CxxTest::TestSuite
        unsigned int limit;
    };
 
+private:
+
+   MemoryCheckPoint checkpoint;
+
 public:
-	void setUp() { }
-	void tearDown() { }
+
+   void setUp()
+   {
+      checkpoint = mockcppSetCheckPoint();
+
+   }
+   void tearDown()
+   {
+      MOCKCPP_CHECK_POINT_VERIFY(checkpoint);
+   }
+
 
 	/////////////////////////////////////////////////////////
 
