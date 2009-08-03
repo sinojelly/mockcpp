@@ -1,6 +1,6 @@
 
 #include <cxxtest/TestSuite.h>
-
+#include <MemoryCheckPoint.h>
 #include <ChainableMockMethodNameKey.h>
 
 class TestChainableMockMethodNameKey: public CxxTest::TestSuite
@@ -26,10 +26,16 @@ class TestChainableMockMethodNameKey: public CxxTest::TestSuite
       std::string methodName;
    };
 
+private:
+
+   MemoryCheckPoint checkpoint;
+
 public:
 
 	void setUp()
    {
+      checkpoint = mockcppSetCheckPoint();
+
       key = new ChainableMockMethodNameKey("method"); 
    }
 
@@ -37,6 +43,8 @@ public:
    {
       delete key;
       key = 0;
+
+      MOCKCPP_CHECK_POINT_VERIFY(checkpoint);
    }
 
 	/////////////////////////////////////////////////////////

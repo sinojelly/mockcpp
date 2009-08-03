@@ -6,5 +6,7 @@
 #include <MockObject.h>
 #include <ChainingMockHelper.h>
 
+#define METHOD(m) method(&m, #m)
+
 #endif
 

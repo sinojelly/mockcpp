@@ -1,6 +1,7 @@
 
 #include <cxxtest/TestSuite.h>
 
+#include <MemoryCheckPoint.h>
 #include <VirtualTable.h>
 #include <IndexInvokableGetter.h>
 #include <Invokable.h>
@@ -43,9 +44,22 @@ class TestVirtualTable: public CxxTest::TestSuite
       virtual void a() {}
       virtual void b(bool) {}
    };
+
+private:
+
+   MemoryCheckPoint checkpoint;
+
 public:
-	void setUp() { }
-	void tearDown() { }
+
+   void setUp()
+   {
+      checkpoint = mockcppSetCheckPoint();
+
+   }
+   void tearDown()
+   {
+      MOCKCPP_CHECK_POINT_VERIFY(checkpoint);
+   }
 
 	/////////////////////////////////////////////////////////
 

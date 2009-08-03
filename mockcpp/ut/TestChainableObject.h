@@ -4,6 +4,7 @@
 #include <ChainableMockObject.h>
 #include <InvocationMockBuilder.h>
 #include <ChainingMockHelper.h>
+#include <MemoryCheckPoint.h>
 
 using namespace mockcpp;
 
@@ -23,10 +24,22 @@ class TestChainableObject : public CxxTest::TestSuite
 			return invoke<int>("foo")("foo", i, j);
 		}
 	};
+
+private:
+
+   MemoryCheckPoint checkpoint;
+
 public:
 
-	void setUp() { }
-	void tearDown() { }
+   void setUp()
+   {
+      checkpoint = mockcppSetCheckPoint();
+
+   }
+   void tearDown()
+   {
+      MOCKCPP_CHECK_POINT_VERIFY(checkpoint);
+   }
 
 	/////////////////////////////////////////////////////////
 	void testShouldSupportOrderingExpectationByAfter()

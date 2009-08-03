@@ -1,9 +1,9 @@
 
 #include <cxxtest/TestSuite.h>
+#include <MemoryCheckPoint.h>
+#include <DelegatedMethod.h>
 
-#include <Delegatedmethod.h>
-
-class TestDelegated: public CxxTest::TestSuite
+class TestDelegatedMethod: public CxxTest::TestSuite
 {
 	struct Base0
    {
@@ -26,9 +26,23 @@ class TestDelegated: public CxxTest::TestSuite
       virtual void b(bool) {}
       void c() {}
    };
+
+private:
+
+   MemoryCheckPoint checkpoint;
+
 public:
-	void setUp() { }
-	void tearDown() { }
+
+   void setUp()
+   {
+      checkpoint = mockcppSetCheckPoint();
+
+   }
+   void tearDown()
+   {
+      MOCKCPP_CHECK_POINT_VERIFY(checkpoint);
+   }
+
 
 	/////////////////////////////////////////////////////////
 
