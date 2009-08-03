@@ -135,7 +135,7 @@ void test_should_throw_exception_if_open_file_failed ()
                  .will(throwException(Exception( "File Not Exist" )));
 
     ///////////////////////////////////////////////
-    AwkProcessor(textFile);
+    AwkProcessor awkProcessor(textFile);
 
     TS_ASSERT_THROWS( awkProcessor.process("myFile.txt", "{print $2}"), Exception);
 }
@@ -271,7 +271,7 @@ void test_should_be_able_to_process_a_text_file()
    ///////////////////////////////////////////////
    textFile.method(&ITextFile::open)
                  .expects(atLeast(1))
-                 .with(endWith(textFile));
+                 .with(endWith(fileName));
 
    textFile.method(&ITextFile::close)
                  .expects(atLeast(1))
@@ -280,7 +280,7 @@ void test_should_be_able_to_process_a_text_file()
    textFile.method(&ITextFile::readLine)
                  .stubs()
                  .will(returnObjectList(line1, line2, line3))
-                 .then(throwException(EOFError));
+                 .then(throws(EOFError));
 
    ///////////////////////////////////////////////
    AwkProcessor awkProcessor(textFile);
