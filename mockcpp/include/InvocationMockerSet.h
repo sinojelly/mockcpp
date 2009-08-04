@@ -4,6 +4,7 @@
 
 #include <mockcpp.h>
 
+#include <string>
 #include <list>
 
 MOCKCPP_NS_START
