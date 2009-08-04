@@ -27,7 +27,7 @@ struct StubContainerImpl
 
    Stub* getStub() const;
 
-   ConstIterator StubContainerImpl::getCurrentStub() const;
+   ConstIterator getCurrentStub() const;
   
    std::string toString() const;
    

@@ -111,13 +111,13 @@ struct DelegatedMethodGetter
 #define DELEGATED_METHOD_GET_BY_VPTR(N, I) \
 case N: \
 { \
-   return DelegatedMethodGetter<N, ArgumentsList>::get(I); \
+   return DelegatedMethodGetter<N, MethodArgumentsList>::get(I); \
 }
 
 template <class C, typename Method>
 void* getDelegatedFunction(unsigned int vptrIndex, unsigned int vtblIndex, Method m)
 {
-   typedef typename MethodTypeTraits<C, Method>::ArgumentsList ArgumentsList; 
+   typedef typename MethodTypeTraits<C, Method>::MethodArgumentsList MethodArgumentsList; 
    
    switch(vptrIndex)
    {

@@ -3,6 +3,8 @@
 
 #include <typeinfo>
 
+#include <stdlib.h>
+
 #if (__GNUC__ && __GNUC__ > 3) || (__MSC_VER && __MSC_VER > 1300)
 #include <cxxabi.h>
 #endif
@@ -20,7 +22,7 @@ std::string getDemangledName(const std::type_info& typeInfo)
 
    std::string result(name);
 
-   free(name);
+   ::free(name);
    
    return result;
 #else

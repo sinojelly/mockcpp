@@ -1,6 +1,7 @@
 
 #include <cxxtest/TestSuite.h>
 #include <Formatter.h>
+#include <stdio.h>
 
 using namespace mockcpp;
 
@@ -258,21 +259,32 @@ public:
 	void testShouldBeAbleToStringnizeLong()
 	{
 		long l = 1234;
-		std::string expected("(long)0x4d2/1234");
+
+      char buf[50];
+      ::sprintf(buf, "(long)0x%lx/%ld", l, l);
+		std::string expected(buf);
+
 		TS_ASSERT_EQUALS(expected, toTypeAndValueString(l));
 	}
 
 	void testShouldBeAbleToStringnizeUnsignedLong()
 	{
 		unsigned long l = 1234;
-		std::string expected("(unsigned long)0x4d2/1234");
+
+      char buf[50];
+      ::sprintf(buf, "(unsigned long)0x%lx/%ld", l, l);
+		std::string expected(buf);
 		TS_ASSERT_EQUALS(expected, toTypeAndValueString(l));
 	}
 
 	void testShouldBeAbleToStringnizeNegativeLong()
 	{
 		long l = -1234;
-		std::string expected("(long)0xfffffb2e/-1234");
+
+      char buf[50];
+      ::sprintf(buf, "(long)0x%lx/%ld", l, l);
+		std::string expected(buf);
+
 		TS_ASSERT_EQUALS(expected, toTypeAndValueString(l));
 	}
 
