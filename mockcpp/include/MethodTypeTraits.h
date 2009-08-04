@@ -19,7 +19,7 @@ struct MethodTypeTraits<C, R (C1::*) (DECL_ARGS(n))> \
    typedef C1 OrignalClass; \
    typedef R (C::*MethodType)(DECL_ARGS(n)); \
  \
-   typedef ArgumentsList<R DECL_REST_ARGS(n)> ArgumentsList; \
+   typedef ArgumentsList<R DECL_REST_ARGS(n)> MethodArgumentsList; \
 }
 
 #define MOCKCPP_CONST_METHOD_TYPE_TRAITS_DEF(n) \
@@ -29,7 +29,7 @@ struct MethodTypeTraits<C, R (C1::*) (DECL_ARGS(n)) const> \
    typedef C1 OrignalClass; \
    typedef R (C::*MethodType)(DECL_ARGS(n)) const; \
  \
-   typedef ArgumentsListConst<R DECL_REST_ARGS(n)> ArgumentsList; \
+   typedef ArgumentsListConst<R DECL_REST_ARGS(n)> MethodArgumentsList; \
 }
 
 MOCKCPP_METHOD_TYPE_TRAITS_DEF(0);

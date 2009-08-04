@@ -169,7 +169,7 @@ VirtualTable::reset()
 IndexInvokableGetter*
 VirtualTable::getInvokableGetter(void* caller, unsigned int vptrIndex)
 {
-   void** vptr = &((void**)caller)[-vptrIndex];
+   void** vptr = &((void**)caller)[-(int)vptrIndex];
 
    VirtualTableImpl* pThis = (VirtualTableImpl*)vptr[MOCKCPP_MAX_INHERITANCE];
 
