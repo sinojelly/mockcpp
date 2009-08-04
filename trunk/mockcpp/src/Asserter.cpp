@@ -1,5 +1,6 @@
 
 #include <Asserter.h>
+#include <string.h>
 
 MOCKCPP_NS_START
 
@@ -49,7 +50,7 @@ assertEquals(unsigned srcline, const char* srcfile,
                   const std::string& message,
                   const char *expected, const char *actual)
 {
-	if (strcmp(expected, actual) != 0)
+	if (::strcmp(expected, actual) != 0)
 		fail(srcline, srcfile, message);
 }
 
