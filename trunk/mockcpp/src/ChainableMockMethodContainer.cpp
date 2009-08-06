@@ -69,6 +69,7 @@ namespace
     value.second->verify();
   }
 }
+
 /////////////////////////////////////////////////////////////////////////
 void
 ChainableMockMethodContainerImpl::verify()
@@ -79,6 +80,7 @@ ChainableMockMethodContainerImpl::verify()
 
     for_each(methods.begin(), methods.end(), verifyMethod);
 }
+
 /////////////////////////////////////////////////////////////////////////
 ChainableMockMethodContainerImpl::~ChainableMockMethodContainerImpl()
 {
@@ -92,11 +94,11 @@ ChainableMockMethodContainerImpl::addMethod(ChainableMockMethodKey* key, \
 {
     methods.push_back(ValueType(key, method));
 }
+
 /////////////////////////////////////////////////////////////////////////
 ChainableMockMethodContainer::ChainableMockMethodContainer()
    : This(new ChainableMockMethodContainerImpl())
 {
-    
 }
 
 /////////////////////////////////////////////////////////////////////////
@@ -120,6 +122,7 @@ ChainableMockMethodContainerImpl::findInvocationMocker(const std::string& id) co
 
    return 0;
 }
+
 /////////////////////////////////////////////////////////////////////////
 namespace
 {
@@ -156,6 +159,7 @@ ChainableMockMethodContainer::getMethod(ChainableMockMethodKey* key) const
 {
     return This->getMethod(key);
 }
+
 /////////////////////////////////////////////////////////////////////////
 void
 ChainableMockMethodContainer::addMethod(ChainableMockMethodKey* key, \

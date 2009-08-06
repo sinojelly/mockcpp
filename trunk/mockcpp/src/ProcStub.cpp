@@ -3,6 +3,7 @@
 
 MOCKCPP_NS_START
 
+///////////////////////////////////////////////////////////////
 class ProcStubBaseImpl
 {
 public:
@@ -16,20 +17,24 @@ public:
     void* address;
 };
 
+///////////////////////////////////////////////////////////////
 ProcStubBase::ProcStubBase(const std::string& name, void* addr)
    : This(new ProcStubBaseImpl(name, addr))
 {}
 
+///////////////////////////////////////////////////////////////
 ProcStubBase::~ProcStubBase()
 {
     delete This;
 }
 
+///////////////////////////////////////////////////////////////
 bool ProcStubBase::isCompleted() const
 {
     return true;
 }
 
+///////////////////////////////////////////////////////////////
 std::string ProcStubBase::toString() const
 {
     oss_t oss;
@@ -39,6 +44,7 @@ std::string ProcStubBase::toString() const
     return oss.str();
 }
 
+///////////////////////////////////////////////////////////////
 std::string ProcStubBaseImpl::describeSelf() const
 {
     if(procName.size() > 0)
@@ -51,7 +57,9 @@ std::string ProcStubBaseImpl::describeSelf() const
     return oss.str();
 }
 
-std::string getParameterMismatchString(int n, std::string p, const Invocation& inv)
+///////////////////////////////////////////////////////////////
+std::string getParameterMismatchString(int n, 
+               std::string p, const Invocation& inv)
 {
     oss_t oss;
     oss << "Parameter " << n << " mismatch, required: [" << p  << "]"
@@ -59,5 +67,7 @@ std::string getParameterMismatchString(int n, std::string p, const Invocation& i
 
     return oss.str();
 }
+
+///////////////////////////////////////////////////////////////
 
 MOCKCPP_NS_END

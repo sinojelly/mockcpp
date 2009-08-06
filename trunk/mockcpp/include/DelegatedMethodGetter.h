@@ -4,8 +4,6 @@
 
 #include <mockcpp.h>
 
-#include <OutputStringStream.h>
-#include <Asserter.h>
 #include <MethodTypeTraits.h>
 #include <DelegatedMethod.h>
 #include <MethodInfoReader.h>
@@ -17,6 +15,8 @@ case I: \
 { \
     return getAddrOfMethod(&DelegatedMethod<N, I, ArgumentsList>::operator()); \
 } \
+
+void maxVtblSizeTooBigError();
 
 template <int VPTRIndex, typename ArgumentsList>
 struct DelegatedMethodGetter
@@ -96,18 +96,13 @@ struct DelegatedMethodGetter
 #endif
       }
 
-      oss_t oss;
-
-      oss << "VTBL index exceeds the limitation of configuration ("
-          << MOCKCPP_MAX_VTBL_SIZE;
-
-		MOCKCPP_ASSERT_TRUE_MESSAGE(
-			oss.str(), false);
+		maxVtblSizeTooBigError();
 
       return 0;
    }
 };
 
+////////////////////////////////////////////////
 #define DELEGATED_METHOD_GET_BY_VPTR(N, I) \
 case N: \
 { \

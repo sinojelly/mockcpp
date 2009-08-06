@@ -16,7 +16,8 @@ struct ChainableMockObjectImpl
       : container(c)
    {}
 
-   ChainableMockMethodCore* getMethod(const std::string& name, InvocationMockerNamespace* ns);
+   ChainableMockMethodCore*
+   getMethod(const std::string& name, InvocationMockerNamespace* ns);
    
    void reset();
 
@@ -24,7 +25,9 @@ struct ChainableMockObjectImpl
 
 private:
 
-   ChainableMockMethodCore* addMethod(const std::string& name, InvocationMockerNamespace* ns); 
+   ChainableMockMethodCore* 
+   addMethod(const std::string& name, InvocationMockerNamespace* ns); 
+
 };
 
 //////////////////////////////////////////////////////////////
@@ -33,9 +36,11 @@ ChainableMockObjectImpl::reset()
 {
     container->reset();
 }
+
 //////////////////////////////////////////////////////////////
 ChainableMockMethodCore*
-ChainableMockObjectImpl::addMethod(const std::string& name, InvocationMockerNamespace* ns) 
+ChainableMockObjectImpl::
+addMethod(const std::string& name, InvocationMockerNamespace* ns) 
 {
     ChainableMockMethodNameKey* key = new ChainableMockMethodNameKey(name);
     ChainableMockMethodCore* method = new ChainableMockMethodCore(name, ns);
@@ -46,7 +51,8 @@ ChainableMockObjectImpl::addMethod(const std::string& name, InvocationMockerName
 }
 //////////////////////////////////////////////////////////////
 ChainableMockMethodCore*
-ChainableMockObjectImpl::getMethod(const std::string& name, InvocationMockerNamespace* ns) 
+ChainableMockObjectImpl::
+getMethod(const std::string& name, InvocationMockerNamespace* ns) 
 {
     ChainableMockMethodNameKey key(name);
 
@@ -61,7 +67,8 @@ ChainableMockObjectImpl::getMethod(const std::string& name, InvocationMockerName
 
 //////////////////////////////////////////////////////////////
 ChainableMockObject::ChainableMockObject(const std::string& name)
-    : ChainableMockObjectBase(name), This(new ChainableMockObjectImpl(this->getMethodContainer()))
+    : ChainableMockObjectBase(name)
+    , This(new ChainableMockObjectImpl(this->getMethodContainer()))
 {
 }
 

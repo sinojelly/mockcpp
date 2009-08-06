@@ -10,31 +10,32 @@
 
 MOCKCPP_NS_START
 
-namespace {
-struct IsIdEqual
+namespace
 {
-   bool operator()(InvocationMocker* mocker) const
+   struct IsIdEqual
    {
-      const InvocationId* const invId = mocker->getId();
-      return invId && invId->getId() == id;
+      bool operator()(InvocationMocker* mocker) const
+      {
+         const InvocationId* const invId = mocker->getId();
+         return invId && invId->getId() == id;
+      }
+
+      IsIdEqual(const std::string& identity)
+         : id(identity)
+      {}
+
+      const std::string& id;
+   };
+
+   void deleteMocker(InvocationMocker* mocker)
+   {
+      delete mocker;
    }
 
-   IsIdEqual(const std::string& identity)
-      : id(identity)
-   {}
-
-   const std::string& id;
-};
-
-void deleteMocker(InvocationMocker* mocker)
-{
-    delete mocker;
-}
-
-void verifyMocker(InvocationMocker* mocker)
-{
-    mocker->verify();
-}
+   void verifyMocker(InvocationMocker* mocker)
+   {
+       mocker->verify();
+   }
 
 } // namespace
 
@@ -46,7 +47,9 @@ InvocationMockerSet::getInvocationMocker(const std::string& id) const
                             , mockers.end()
                             , IsIdEqual(id));
    if(i == mockers.end())
+   {
       return 0;
+   }
 
    return (*i);
 }
@@ -80,7 +83,7 @@ InvocationMockerSet::toString() const
     oss_t oss;
     ConstIterator i = mockers.begin();
     for(; i != mockers.end(); i++) {
-      oss << (*i)->toString() << "\n\n"; 
+       oss << (*i)->toString() << "\n\n"; 
     }
 
     return oss.str();

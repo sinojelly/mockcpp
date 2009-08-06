@@ -28,6 +28,7 @@ struct MockObjectBaseImpl : public IndexInvokableGetter
    void reset();
 
 private:
+
    ChainableMockMethodCore*
    createMethod(const std::string& name, void* addr, \
        unsigned int vptrIndex, unsigned int vtblIndex, \
@@ -40,6 +41,7 @@ MockObjectBaseImpl(unsigned int numberOfVptr, ChainableMockMethodContainer* c)
     : vtbl(new VirtualTable(this, numberOfVptr)), container(c)
 {
 }
+
 ////////////////////////////////////////////////////////////////////////
 MockObjectBaseImpl::~MockObjectBaseImpl()
 {
@@ -52,9 +54,11 @@ void MockObjectBaseImpl::reset()
     vtbl->reset();
     container->reset();
 }
+
 ////////////////////////////////////////////////////////////////////////
 Invokable*
-MockObjectBaseImpl::getInvokable(unsigned int vptrIndex, unsigned int vtblIndex) const
+MockObjectBaseImpl::
+getInvokable(unsigned int vptrIndex, unsigned int vtblIndex) const
 {
     ChainableMockMethodIndexKey key(vptrIndex, vtblIndex);
 
@@ -63,12 +67,15 @@ MockObjectBaseImpl::getInvokable(unsigned int vptrIndex, unsigned int vtblIndex)
 
 ////////////////////////////////////////////////////////////////////////
 ChainableMockMethodCore*
-MockObjectBaseImpl::createMethod(const std::string& name, void* addr, \
-       unsigned int vptrIndex, unsigned int vtblIndex, InvocationMockerNamespace* ns)
+MockObjectBaseImpl::
+createMethod(const std::string& name, void* addr, \
+       unsigned int vptrIndex, unsigned int vtblIndex, \
+       InvocationMockerNamespace* ns)
 {
     ChainableMockMethodIndexKey* key = \
              new ChainableMockMethodIndexKey(vptrIndex, vtblIndex);
-    ChainableMockMethodCore* method = new ChainableMockMethodCore(name, ns);
+    ChainableMockMethodCore* method = \
+             new ChainableMockMethodCore(name, ns);
     
     container->addMethod(key, method);
 
@@ -94,7 +101,8 @@ MockObjectBaseImpl::getMethod(const std::string& name, void* addr, \
 
 ////////////////////////////////////////////////////////////////////////
 MockObjectBase::MockObjectBase(const std::string& objName, unsigned int numberOfVptr)
-   : ChainableMockObjectBase(objName), This(new MockObjectBaseImpl(numberOfVptr, this->getMethodContainer()))
+   : ChainableMockObjectBase(objName)
+   , This(new MockObjectBaseImpl(numberOfVptr, this->getMethodContainer()))
 {
 }
 
@@ -106,10 +114,13 @@ MockObjectBase::~MockObjectBase()
 
 ////////////////////////////////////////////////////////////////////////
 InvocationMockBuilderGetter
-MockObjectBase::createInvocationMockerBuilderGetter(const std::string& name, \
+MockObjectBase::
+createInvocationMockerBuilderGetter(const std::string& name, \
           void* addr, unsigned int vptrIndex, unsigned int vtblIndex)
 {
-   ChainableMockMethodCore* method = This->getMethod(name, addr, vptrIndex, vtblIndex, this);
+   ChainableMockMethodCore* method = \
+          This->getMethod(name, addr, vptrIndex, vtblIndex, this);
+
    return InvocationMockBuilderGetter(method, method);
 }
 
@@ -120,12 +131,14 @@ MockObjectBase::toPointerToInterface() const
    return This->vtbl->toPointerToInterface();
 }
 
+////////////////////////////////////////////////////////////////////////
 void
 MockObjectBase::reset()
 {
    This->reset();
 }
+
 ////////////////////////////////////////////////////////////////////////
 
-
 MOCKCPP_NS_END
+

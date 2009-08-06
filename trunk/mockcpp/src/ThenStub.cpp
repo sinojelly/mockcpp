@@ -21,6 +21,7 @@ bool ThenStub::isCompleted() const
 {
     return expectedStub->isCompleted();
 }
+
 //////////////////////////////////////////////
 Any& ThenStub::invoke(const Invocation& inv)
 {

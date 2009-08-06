@@ -19,13 +19,15 @@ public:
 };
 
 //////////////////////////////////////////////////////////////
-ChainableMockObjectBaseImpl::ChainableMockObjectBaseImpl(const std::string& name)
+ChainableMockObjectBaseImpl::
+ChainableMockObjectBaseImpl(const std::string& name)
    : objectName(name)
 {
 }
 
 //////////////////////////////////////////////////////////////
-ChainableMockObjectBase::ChainableMockObjectBase(const std::string& name)
+ChainableMockObjectBase::
+ChainableMockObjectBase(const std::string& name)
 	: This(new ChainableMockObjectBaseImpl(name))
 {
 }
@@ -38,7 +40,8 @@ ChainableMockObjectBase::~ChainableMockObjectBase()
 
 //////////////////////////////////////////////////////////////
 InvocationMocker*
-ChainableMockObjectBase::getInvocationMocker(const std::string& id) const
+ChainableMockObjectBase::
+getInvocationMocker(const std::string& id) const
 {
     return This->container.findInvocationMocker(id);
 }
@@ -63,6 +66,7 @@ ChainableMockObjectBase::getMethodContainer() const
 {
    return &This->container;
 }
+
 //////////////////////////////////////////////////////////////
 
 MOCKCPP_NS_END

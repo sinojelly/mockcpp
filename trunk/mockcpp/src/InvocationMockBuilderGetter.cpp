@@ -18,11 +18,13 @@ InvocationMockBuilderGetter::
 InvocationMockBuilderGetter(InvocationMockerContainer* container, Method* m)
 	: invocationMockerContainer(container), method(m)
 {
+
 }
 ///////////////////////////////////////////////////////////
 InvocationMockBuilderGetter::~InvocationMockBuilderGetter()
 {
 }
+
 //////////////////////////////////////////////////////////
 WorkingBuilder InvocationMockBuilderGetter::stubs()
 {
@@ -66,6 +68,7 @@ DefaultBuilder InvocationMockBuilderGetter::defaults()
     return DefaultBuilder(mocker);
 }
 
+//////////////////////////////////////////////////////////
 
 MOCKCPP_NS_END
 
