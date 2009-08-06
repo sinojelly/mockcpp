@@ -9,7 +9,6 @@ MOCKCPP_NS_START
 
 struct VirtualTableImpl
 {
-
 	VirtualTableImpl(IndexInvokableGetter* getter, unsigned int numberOfVptr);
    ~VirtualTableImpl();
 
@@ -27,15 +26,15 @@ struct VirtualTableImpl
 };
 
 /////////////////////////////////////////////////////////////////
-namespace {
-struct DefaultMethodHolder
+namespace
 {
-  void method()
-  {
-     MOCKCPP_FAIL("The method you are invoking is not specified by mocker."); 
-  }
-};
-
+   struct DefaultMethodHolder
+   {
+      void method()
+      {
+         MOCKCPP_FAIL("The method you are invoking is not specified by mocker."); 
+      }
+   };
 }
 
 /////////////////////////////////////////////////////////////////
@@ -103,6 +102,7 @@ VirtualTableImpl::reset()
       vtbl[i] = defaultMethodAddr;
    }
 }
+
 /////////////////////////////////////////////////////////////////
 VirtualTableImpl::VirtualTableImpl(IndexInvokableGetter* getter
      , unsigned int numberOfVPTR)
@@ -165,6 +165,7 @@ VirtualTable::reset()
 {
     This->reset();
 }
+
 /////////////////////////////////////////////////////////////////
 IndexInvokableGetter*
 VirtualTable::getInvokableGetter(void* caller, unsigned int vptrIndex)

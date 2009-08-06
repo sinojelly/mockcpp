@@ -71,6 +71,7 @@ FUNCTOR_DEF(10);
 FUNCTOR_DEF(11);
 FUNCTOR_DEF(12);
 
+///////////////////////////////////////////////////////
 #define VARDIC_FUNCTOR_DEF(n) \
 template <typename R DECL_TEMPLATE_ARGS(n)> \
 struct Functor<R(DECL_VARDIC_ARGS(n) ...)> : public BaseFunctor \
@@ -98,6 +99,8 @@ VARDIC_FUNCTOR_DEF(5);
 VARDIC_FUNCTOR_DEF(6);
 VARDIC_FUNCTOR_DEF(7);
 VARDIC_FUNCTOR_DEF(8);
+
+/////////////////////////////////////////////////////////////////////////////
 
 MOCKCPP_NS_END
 

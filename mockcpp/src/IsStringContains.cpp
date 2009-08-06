@@ -8,12 +8,7 @@ bool
 IsStringContains::eval(const RefAny& value) const
 {
     char* s = tryToCastParameterToString(value);
-    if(s == 0)
-    {
-       return false;
-    }
-
-    if(::strlen(s) < str.size())
+    if(s == 0 || ::strlen(s) < str.size())
     {
        return false;
     }

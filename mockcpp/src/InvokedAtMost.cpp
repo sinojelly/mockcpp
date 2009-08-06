@@ -44,6 +44,7 @@ std::string InvokedAtMost::toString(void) const
 ///////////////////////////////////////////////////////
 void InvokedAtMost::verify(void)
 {
+// We won't need to verify it here, it was checked at runtime.
 #if 0
     oss_t oss;
     

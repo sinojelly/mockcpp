@@ -49,7 +49,7 @@ public:
 	{
        IsStringStartWith constraint("abcd");
 
-       char* s = "abcdefg";
+       char* s = (char*)"abcdefg";
 
        TS_ASSERT(constraint.eval(s));
 	}
@@ -58,7 +58,7 @@ public:
 	{
        IsStringStartWith constraint("abcd");
 
-       char* s = "abccefg";
+       char* s = (char*)"abccefg";
 
        TS_ASSERT(!constraint.eval(s));
 	}

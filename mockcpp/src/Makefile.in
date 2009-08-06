@@ -75,7 +75,8 @@ am_libmockcpp_la_OBJECTS = AfterMatcher.lo AnyBase.lo Any.lo \
 	ChainableMockMethodContainer.lo ChainableMockMethodNameKey.lo \
 	ChainableMockMethodIndexKey.lo StubContainer.lo \
 	StringConstraint.lo IsStringStartWith.lo IsStringEndWith.lo \
-	IsStringContains.lo MemoryCheckPoint.lo
+	IsStringContains.lo MemoryCheckPoint.lo \
+	DelegatedMethodGetter.lo
 libmockcpp_la_OBJECTS = $(am_libmockcpp_la_OBJECTS)
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -269,7 +270,8 @@ libmockcpp_la_SOURCES = \
  IsStringStartWith.cpp \
  IsStringEndWith.cpp \
  IsStringContains.cpp \
- MemoryCheckPoint.cpp
+ MemoryCheckPoint.cpp \
+ DelegatedMethodGetter.cpp
 
 all: all-am
 
@@ -358,6 +360,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/DecoratedConstraint.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/DefaultMatcher.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/DefaultStub.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/DelegatedMethodGetter.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Exception.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ExpectsMatcher.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Formatter.Plo@am__quote@

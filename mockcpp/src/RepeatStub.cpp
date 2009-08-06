@@ -15,6 +15,7 @@ bool RepeatStub::isCompleted() const
 {
    return repeatedTimes >= repeatTimes;
 }
+
 /////////////////////////////////////////////////////
 Any& RepeatStub::invoke(void)
 {

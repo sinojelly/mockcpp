@@ -6,6 +6,7 @@
 
 MOCKCPP_NS_START
 
+//////////////////////////////////////////
 template <typename T>
 struct IsRef
 {
@@ -13,6 +14,7 @@ struct IsRef
 	static const bool outBoundable = false;
 };
 
+//////////////////////////////////////////
 template <typename T>
 struct IsRef<T&>
 {
@@ -20,6 +22,7 @@ struct IsRef<T&>
 	static const bool outBoundable = true;
 };
 
+//////////////////////////////////////////
 template <typename T>
 struct IsRef<const T&>
 {
@@ -27,6 +30,7 @@ struct IsRef<const T&>
 	static const bool outBoundable = false;
 };
 
+//////////////////////////////////////////
 
 MOCKCPP_NS_END
 

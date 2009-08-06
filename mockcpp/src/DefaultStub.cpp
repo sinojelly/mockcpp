@@ -32,6 +32,8 @@ std::string DefaultStub::toString() const
     return oss.str();
 }
 
+//////////////////////////////////////////////
+
 MOCKCPP_NS_END
 
 

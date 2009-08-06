@@ -43,5 +43,7 @@ std::string ExpectsMatcher::toString() const
     return oss.str();
 }
 
+///////////////////////////////////////////////////////////
+
 MOCKCPP_NS_END
 

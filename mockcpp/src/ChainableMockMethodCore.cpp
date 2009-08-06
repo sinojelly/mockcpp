@@ -80,9 +80,10 @@ ChainableMockMethodCoreImpl::
 tellNoMatchedExpectation(const Invocation& inv)
 {
     return std::string("Unexpected invocation") + "\n" 
-		+ "Invoked: " + methodName + inv.toString() + ".caller(" + inv.getNameOfCaller() + ")\n" 
-                     + "Allowed: \n"
-                     + this->toString();
+       + "Invoked: " + methodName + inv.toString() 
+       + ".caller(" + inv.getNameOfCaller() + ")\n" 
+       + "Allowed: \n"
+       + this->toString();
 }
 
 /////////////////////////////////////////////////////////////
@@ -102,9 +103,9 @@ ChainableMockMethodCoreImpl::invoke(const Invocation& inv
       return result;
     }
 
-	MOCKCPP_FAIL(tellNoMatchedExpectation(inv));
+	 MOCKCPP_FAIL(tellNoMatchedExpectation(inv));
    
-	return getEmptyAny();
+	 return getEmptyAny();
 }
 
 //////////////////////////////////////////////////////////
@@ -120,11 +121,13 @@ ChainableMockMethodCore::~ChainableMockMethodCore()
     delete This;
 }
 
+//////////////////////////////////////////////////////////
 std::string&
 ChainableMockMethodCore::getName() const
 {
    return This->methodName;
 }
+
 //////////////////////////////////////////////////////////
 Any
 ChainableMockMethodCore::invoke
@@ -143,8 +146,8 @@ ChainableMockMethodCore::invoke
              , const RefAny& p12
              , SelfDescribe* &resultProvider)
 {
-	Invocation inv(nameOfCaller,p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12);
-	return This->invoke(inv, resultProvider);
+    Invocation inv(nameOfCaller,p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11,p12);
+    return This->invoke(inv, resultProvider);
 }
 
 //////////////////////////////////////////////////////////

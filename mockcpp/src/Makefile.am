@@ -71,4 +71,5 @@ libmockcpp_la_SOURCES = \
  IsStringStartWith.cpp \
  IsStringEndWith.cpp \
  IsStringContains.cpp \
- MemoryCheckPoint.cpp
+ MemoryCheckPoint.cpp \
+ DelegatedMethodGetter.cpp
