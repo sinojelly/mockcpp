@@ -1,6 +1,7 @@
 
 #include <cxxtest/TestSuite.h>
 
+#include <MemoryCheckPoint.h>
 #include <ChainableMockMethodContainer.h>
 #include <ChainableMockMethodCore.h>
 #include <InvocationMockBuilderGetter.h>
