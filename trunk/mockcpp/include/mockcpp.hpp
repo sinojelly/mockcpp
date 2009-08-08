@@ -5,6 +5,7 @@
 #include <mockcpp.h>
 #include <MockObject.h>
 #include <ChainingMockHelper.h>
+#include <MemoryCheckPoint.h>
 
 #define METHOD(m) method(&m, #m)
 
