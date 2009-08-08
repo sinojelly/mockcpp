@@ -3,7 +3,7 @@
 #include <Any.h>
 #include <IsEqual.h>
 
-using namespace mockcpp;
+USING_MOCKCPP_NS
 
 class TestIsEqual : public CxxTest::TestSuite
 {

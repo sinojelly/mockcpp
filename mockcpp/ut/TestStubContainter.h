@@ -4,7 +4,7 @@
 #include <Any.h>
 #include <MemoryCheckPoint.h>
 
-using namespace mockcpp;
+USING_MOCKCPP_NS
 
 class TestStubContainer : public CxxTest::TestSuite
 {

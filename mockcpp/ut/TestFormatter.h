@@ -3,7 +3,7 @@
 #include <Formatter.h>
 #include <stdio.h>
 
-using namespace mockcpp;
+USING_MOCKCPP_NS
 
 class TestFormatter : public CxxTest::TestSuite
 {

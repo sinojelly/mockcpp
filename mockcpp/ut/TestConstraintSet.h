@@ -7,7 +7,7 @@
 #include <ChainingMockHelper.h>
 #include <Invocation.h>
 
-using namespace mockcpp;
+USING_MOCKCPP_NS
 
 class TestConstraintSet : public CxxTest::TestSuite
 {

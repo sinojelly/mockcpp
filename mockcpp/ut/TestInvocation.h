@@ -3,7 +3,7 @@
 #include <Invocation.h>
 #include <Any.h>
 
-using namespace mockcpp;
+USING_MOCKCPP_NS
 
 class TestInvocation: public CxxTest::TestSuite
 {

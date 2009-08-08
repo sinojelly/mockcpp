@@ -5,7 +5,7 @@
 
 #include <MockObject.h>
 
-using namespace mockcpp;
+USING_MOCKCPP_NS
 
 class TestMockObject : public CxxTest::TestSuite
 {

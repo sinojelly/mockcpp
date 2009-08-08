@@ -5,7 +5,7 @@
 
 #include <IsStringStartWith.h>
 
-using namespace mockcpp;
+USING_MOCKCPP_NS
 
 class TestIsStringStartWith: public CxxTest::TestSuite
 {
