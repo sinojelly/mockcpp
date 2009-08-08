@@ -3,7 +3,7 @@
 #include <MemoryCheckPoint.h>
 #include <IsStringEndWith.h>
 
-using namespace mockcpp;
+USING_MOCKCPP_NS
 
 class TestIsStringEndWith: public CxxTest::TestSuite
 {

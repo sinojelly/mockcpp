@@ -6,9 +6,7 @@
 #include <ChainingMockHelper.h>
 #include <MemoryCheckPoint.h>
 
-using namespace mockcpp;
-
-
+USING_MOCKCPP_NS
 
 class TestChainableObject : public CxxTest::TestSuite
 {
@@ -110,7 +108,7 @@ public:
 
 		TS_ASSERT_EQUALS(10, foo.foo(j, 2));
 
-		TS_ASSERT_THROWS(foo.foo(i,2), mockcpp::Exception);
+		TS_ASSERT_THROWS(foo.foo(i,2), Exception);
 
 		foo.verify();
 	}
@@ -133,7 +131,7 @@ public:
 
 		int i = 2, j = 1;
 
-		TS_ASSERT_THROWS(foo.foo(i, 2), mockcpp::Exception);
+		TS_ASSERT_THROWS(foo.foo(i, 2), Exception);
 		TS_ASSERT_EQUALS(10, foo.foo(j, 2));
 
 		foo.verify();
@@ -149,7 +147,7 @@ public:
 
 		int i = 2;
 
-		TS_ASSERT_THROWS(foo.foo(i, 2), mockcpp::Exception);
+		TS_ASSERT_THROWS(foo.foo(i, 2), Exception);
 
 		foo.verify();
 	}
@@ -165,7 +163,7 @@ public:
 
 		int i = 1;
 
-		TS_ASSERT_THROWS(foo.foo(i,2), mockcpp::Exception);
+		TS_ASSERT_THROWS(foo.foo(i,2), Exception);
 
 		foo.verify();
 	}
@@ -181,7 +179,7 @@ public:
 
 		int i = 2;
 
-		TS_ASSERT_THROWS(foo.foo(i,2), mockcpp::Exception);
+		TS_ASSERT_THROWS(foo.foo(i,2), Exception);
 
 		foo.verify();
 	}

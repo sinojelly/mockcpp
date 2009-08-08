@@ -5,7 +5,7 @@
 #include <InvocationMockBuilder.h>
 #include <ChainingMockHelper.h>
 
-using namespace mockcpp;
+USING_MOCKCPP_NS
 
 class Foo : public ChainableMockObject
 {
@@ -58,7 +58,7 @@ public:
 		int i = 1;
 
 		TS_ASSERT_EQUALS(3, foo.foo(i, 4));
-		TS_ASSERT_THROWS(foo.foo(i,4), mockcpp::Exception);
+		TS_ASSERT_THROWS(foo.foo(i,4), Exception);
 		//TS_ASSERT_EQUALS(4, foo.foo(i, 4));
 		TS_ASSERT_EQUALS(5, foo.foo(i, 4));
 
@@ -80,7 +80,7 @@ public:
 		TS_ASSERT_EQUALS(4, foo.foo(i, 4));
 		TS_ASSERT_EQUALS(5, foo.foo(i, 4));
 
-		TS_ASSERT_THROWS(foo.foo(i,4), mockcpp::Exception);
+		TS_ASSERT_THROWS(foo.foo(i,4), Exception);
 
 		foo.verify();
 	}

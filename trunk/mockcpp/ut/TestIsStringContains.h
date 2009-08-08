@@ -3,7 +3,7 @@
 #include <MemoryCheckPoint.h>
 #include <IsStringContains.h>
 
-using namespace mockcpp;
+USING_MOCKCPP_NS
 
 class TestIsStringContains: public CxxTest::TestSuite
 {

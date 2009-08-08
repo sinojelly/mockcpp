@@ -42,7 +42,7 @@ void
 VirtualTableImpl::validateVptr(void** pVptr)
 {
    MOCKCPP_ASSERT_TRUE_MESSAGE(
-     "mockcpp internal error(1018). please report this bug to darwin.yuan@gmail.com",
+     PACKAGE " internal error(1018). please report this bug to " PACKAGE_BUGREPORT ".",
      pVptr == vptr);
 }
 /////////////////////////////////////////////////////////////////
@@ -56,8 +56,8 @@ VirtualTableImpl::validateNumberOfVptr()
        << numberOfVptr 
        << "), or it's not a pure virtual class. "
        << "Here are some hints for you: \n"
-       << "1. mockcpp only supports mocking pure virtual class; \n"
-       << "2. you can change the MOCKCPP_MAX_INHERITANCE setting to maximun 7, then rebuild mockcpp; \n"
+       << "1. " PACKAGE " only supports mocking pure virtual class; \n"
+       << "2. you can change the MOCKCPP_MAX_INHERITANCE setting to maximun 7, then rebuild " PACKAGE "; \n"
        << "3. you can refine your design to make it simpler.";
 
    MOCKCPP_ASSERT_TRUE_MESSAGE(
@@ -72,7 +72,7 @@ VirtualTableImpl::validateIndexOfVtbl(unsigned int index)
 
    oss << "Did you define too many methods in an interface? "
        << "Probably you should refine your design, "
-       << "or you can reconfig mockcpp MOCKCPP_MAX_VTBL_SIZE bigger, "
+       << "or you can reconfig MOCKCPP_MAX_VTBL_SIZE bigger, "
        << "it's current setting is " 
        << MOCKCPP_MAX_VTBL_SIZE 
        << ", the biggest value it could be set is 50. "
@@ -88,7 +88,7 @@ void
 VirtualTableImpl::validateIndexOfVptr(unsigned int index)
 {
    MOCKCPP_ASSERT_TRUE_MESSAGE(
-      "mockcpp internal error. please report it to darwin.yuan@gmail.com.",
+      PACKAGE " internal error. please report it to " PACKAGE_BUGREPORT ".",
       index < numberOfVptr);
 }
 

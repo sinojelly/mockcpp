@@ -7,7 +7,7 @@
 #include <Any.h>
 #include <InvokedTimesRecorder.h>
 
-using namespace mockcpp;
+USING_MOCKCPP_NS
 
 class TestInvocationMocker : public CxxTest::TestSuite
 {

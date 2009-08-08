@@ -1,11 +1,8 @@
-
-
 #include <cxxtest/TestSuite.h>
 #include <ValueHolder.h>
 #include <RefHolder.h>
 
-
-using namespace mockcpp;
+USING_MOCKCPP_NS
 
 struct A
 {

@@ -167,7 +167,7 @@ ChainableMockMethodContainer::addMethod(ChainableMockMethodKey* key, \
 {
     if(getMethod(key) != 0)
     {
-       MOCKCPP_FAIL("internal error (1022), please report this bug to darwin.yuan@gmail.com.");
+       MOCKCPP_FAIL("internal error (1022), please report this bug to" PACKAGE_BUGREPORT ".");
     }
 
     This->addMethod(key, method);
