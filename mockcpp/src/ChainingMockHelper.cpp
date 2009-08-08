@@ -153,6 +153,11 @@ Constraint* startWith(unsigned const char* s)
     return new IsStringStartWith((const char*)s);
 }
 
+Constraint* startWith(const std::string& s)
+{
+    return new IsStringStartWith(s);
+}
+
 Constraint* endWith(char* s)
 {
     return new IsStringEndWith(s);
@@ -173,6 +178,11 @@ Constraint* endWith(unsigned const char* s)
     return new IsStringEndWith((const char*)s);
 }
 
+Constraint* endWith(const std::string& s)
+{
+    return new IsStringEndWith(s);
+}
+
 Constraint* contains(char* s)
 {
     return new IsStringContains(s);
@@ -191,6 +201,11 @@ Constraint* contains(unsigned char* s)
 Constraint* contains(unsigned const char* s)
 {
     return new IsStringContains((const char*)s);
+}
+
+Constraint* contains(const std::string& s)
+{
+    return new IsStringContains(s);
 }
 
 MOCKCPP_NS_END
