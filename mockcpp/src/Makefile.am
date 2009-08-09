@@ -82,7 +82,8 @@ libmockcpp_la_SOURCES = \
  IsStringEndWith.cpp \
  IsStringContains.cpp \
  MemoryCheckPoint.cpp \
- DelegatedMethodGetter.cpp
+ DelegatedMethodGetter.cpp \
+ DieStub.cpp
 
 ALLOW_MI = @MOCKCPP_ALLOW_MI@
 MAX_INHERITANCE = @MOCKCPP_MI@
