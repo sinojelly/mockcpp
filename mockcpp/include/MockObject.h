@@ -27,7 +27,6 @@ struct MockObject : public MockObjectBase
 
    ~MockObject()
    {
-      verify();
    }
 
    operator Interface* ()
