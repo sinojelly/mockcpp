@@ -870,6 +870,11 @@ F77
 FFLAGS
 ac_ct_F77
 LIBTOOL
+PYTHON
+MOCKCPP_ALLOW_MI
+MOCKCPP_MI
+MOCKCPP_MVS
+MOCKCPP_MAX_PARAMS
 LIBOBJS
 LTLIBOBJS'
 ac_subst_files=''
@@ -4300,7 +4305,7 @@ ia64-*-hpux*)
   ;;
 *-*-irix6*)
   # Find out which ABI we are using.
-  echo '#line 4303 "configure"' > conftest.$ac_ext
+  echo '#line 4308 "configure"' > conftest.$ac_ext
   if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
@@ -7031,11 +7036,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:7034: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:7039: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:7038: \$? = $ac_status" >&5
+   echo "$as_me:7043: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -7299,11 +7304,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:7302: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:7307: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:7306: \$? = $ac_status" >&5
+   echo "$as_me:7311: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -7403,11 +7408,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:7406: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:7411: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:7410: \$? = $ac_status" >&5
+   echo "$as_me:7415: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -9711,7 +9716,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 9714 "configure"
+#line 9719 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -9811,7 +9816,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 9814 "configure"
+#line 9819 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -12147,11 +12152,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:12150: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:12155: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:12154: \$? = $ac_status" >&5
+   echo "$as_me:12159: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -12251,11 +12256,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:12254: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:12259: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:12258: \$? = $ac_status" >&5
+   echo "$as_me:12263: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -13821,11 +13826,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:13824: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:13829: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:13828: \$? = $ac_status" >&5
+   echo "$as_me:13833: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -13925,11 +13930,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:13928: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:13933: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:13932: \$? = $ac_status" >&5
+   echo "$as_me:13937: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -16123,11 +16128,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:16126: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:16131: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:16130: \$? = $ac_status" >&5
+   echo "$as_me:16135: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -16391,11 +16396,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:16394: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:16399: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:16398: \$? = $ac_status" >&5
+   echo "$as_me:16403: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -16495,11 +16500,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:16498: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:16503: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:16502: \$? = $ac_status" >&5
+   echo "$as_me:16507: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -19629,6 +19634,104 @@ else
 fi
 
 
+if test -n "$ac_tool_prefix"; then
+  # Extract the first word of "${ac_tool_prefix}python", so it can be a program name with args.
+set dummy ${ac_tool_prefix}python; ac_word=$2
+{ echo "$as_me:$LINENO: checking for $ac_word" >&5
+echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6; }
+if test "${ac_cv_prog_PYTHON+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  if test -n "$PYTHON"; then
+  ac_cv_prog_PYTHON="$PYTHON" # Let the user override the test.
+else
+as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+  for ac_exec_ext in '' $ac_executable_extensions; do
+  if { test -f "$as_dir/$ac_word$ac_exec_ext" && $as_test_x "$as_dir/$ac_word$ac_exec_ext"; }; then
+    ac_cv_prog_PYTHON="${ac_tool_prefix}python"
+    echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+done
+IFS=$as_save_IFS
+
+fi
+fi
+PYTHON=$ac_cv_prog_PYTHON
+if test -n "$PYTHON"; then
+  { echo "$as_me:$LINENO: result: $PYTHON" >&5
+echo "${ECHO_T}$PYTHON" >&6; }
+else
+  { echo "$as_me:$LINENO: result: no" >&5
+echo "${ECHO_T}no" >&6; }
+fi
+
+
+fi
+if test -z "$ac_cv_prog_PYTHON"; then
+  ac_ct_PYTHON=$PYTHON
+  # Extract the first word of "python", so it can be a program name with args.
+set dummy python; ac_word=$2
+{ echo "$as_me:$LINENO: checking for $ac_word" >&5
+echo $ECHO_N "checking for $ac_word... $ECHO_C" >&6; }
+if test "${ac_cv_prog_ac_ct_PYTHON+set}" = set; then
+  echo $ECHO_N "(cached) $ECHO_C" >&6
+else
+  if test -n "$ac_ct_PYTHON"; then
+  ac_cv_prog_ac_ct_PYTHON="$ac_ct_PYTHON" # Let the user override the test.
+else
+as_save_IFS=$IFS; IFS=$PATH_SEPARATOR
+for as_dir in $PATH
+do
+  IFS=$as_save_IFS
+  test -z "$as_dir" && as_dir=.
+  for ac_exec_ext in '' $ac_executable_extensions; do
+  if { test -f "$as_dir/$ac_word$ac_exec_ext" && $as_test_x "$as_dir/$ac_word$ac_exec_ext"; }; then
+    ac_cv_prog_ac_ct_PYTHON="python"
+    echo "$as_me:$LINENO: found $as_dir/$ac_word$ac_exec_ext" >&5
+    break 2
+  fi
+done
+done
+IFS=$as_save_IFS
+
+fi
+fi
+ac_ct_PYTHON=$ac_cv_prog_ac_ct_PYTHON
+if test -n "$ac_ct_PYTHON"; then
+  { echo "$as_me:$LINENO: result: $ac_ct_PYTHON" >&5
+echo "${ECHO_T}$ac_ct_PYTHON" >&6; }
+else
+  { echo "$as_me:$LINENO: result: no" >&5
+echo "${ECHO_T}no" >&6; }
+fi
+
+  if test "x$ac_ct_PYTHON" = x; then
+    PYTHON="{ { echo "$as_me:$LINENO: error: python could not be found on this system." >&5
+echo "$as_me: error: python could not be found on this system." >&2;}
+   { (exit 1); exit 1; }; }"
+  else
+    case $cross_compiling:$ac_tool_warned in
+yes:)
+{ echo "$as_me:$LINENO: WARNING: In the future, Autoconf will not detect cross-tools
+whose name does not start with the host triplet.  If you think this
+configuration is useful to you, please write to autoconf@gnu.org." >&5
+echo "$as_me: WARNING: In the future, Autoconf will not detect cross-tools
+whose name does not start with the host triplet.  If you think this
+configuration is useful to you, please write to autoconf@gnu.org." >&2;}
+ac_tool_warned=yes ;;
+esac
+    PYTHON=$ac_ct_PYTHON
+  fi
+else
+  PYTHON="$ac_cv_prog_PYTHON"
+fi
+
 
 # mockcpp Namespace
 mockcpp_no_namespace=0
@@ -19656,9 +19759,9 @@ cat >>confdefs.h <<_ACEOF
 _ACEOF
 
 
-
 # Allow Multiple Inheritance
 mockcpp_allow_mi=1
+MOCKCPP_ALLOW_MI=yes
 { echo "$as_me:$LINENO: checking for enble multiple inheritance" >&5
 echo $ECHO_N "checking for enble multiple inheritance... $ECHO_C" >&6; }
 if test "${mockcpp_cv_allow_mi+set}" = set; then
@@ -19676,11 +19779,14 @@ fi
 echo "${ECHO_T}$mockcpp_cv_allow_mi" >&6; }
 if test "$mockcpp_cv_allow_mi" = no; then
    mockcpp_allow_mi=0
+   MOCKCPP_ALLOW_MI=no
 fi
 
 cat >>confdefs.h <<_ACEOF
 #define MOCKCPP_ALLOW_MULTI_INHERITANCE $mockcpp_allow_mi
 _ACEOF
+
+
 
 
 # MOCKCPP_MAX_INHERITANCE
@@ -19694,6 +19800,7 @@ cat >>confdefs.h <<_ACEOF
 #define MOCKCPP_MAX_INHERITANCE $max_inheritance
 _ACEOF
 
+
 else
    { { echo "$as_me:$LINENO: error: max inheritance should not greater than 5 or less than 1, you should probably refine your design.
                     or the value you specified is not an integer." >&5
@@ -19701,8 +19808,11 @@ echo "$as_me: error: max inheritance should not greater than 5 or less than 1, y
                     or the value you specified is not an integer." >&2;}
    { (exit 1); exit 1; }; }
 fi
+MOCKCPP_MI=$max_inheritance
+
 
 # MOCKCPP_MAX_VTBL_SIZE
+
 if test "x${max_vtbl_size}" == "x"; then
    max_vtbl_size=10
 fi
@@ -19713,6 +19823,7 @@ cat >>confdefs.h <<_ACEOF
 #define MOCKCPP_MAX_VTBL_SIZE $max_vtbl_size
 _ACEOF
 
+
 else
    { { echo "$as_me:$LINENO: error: virtual table size should not greater than 50 or less than 3, you should probably refine your design.
                     or the value you specified is not an integer." >&5
@@ -19720,6 +19831,8 @@ echo "$as_me: error: virtual table size should not greater than 50 or less than 
                     or the value you specified is not an integer." >&2;}
    { (exit 1); exit 1; }; }
 fi
+MOCKCPP_MVS=$max_vtbl_size
+
 
 # MOCKCPP_MAX_PARAMETERS
 if test "x${max_parameters}" == "x"; then
@@ -19739,9 +19852,9 @@ echo "$as_me: error: parameter number should not greater than 15 or less than 3,
                     or the value you specified is not an integer." >&2;}
    { (exit 1); exit 1; }; }
 fi
+MOCKCPP_MAX_PARAMS=$max_parameters
 
 
-ac_config_headers="$ac_config_headers include/config.h"
 
 ac_config_files="$ac_config_files Makefile src/Makefile libs/Makefile ut/Makefile ft/Makefile samples/cpp/Makefile samples/cpp/src/Makefile samples/cpp/ut/Makefile"
 
@@ -19823,7 +19936,37 @@ test "x$prefix" = xNONE && prefix=$ac_default_prefix
 # Let make expand exec_prefix.
 test "x$exec_prefix" = xNONE && exec_prefix='${prefix}'
 
-DEFS=-DHAVE_CONFIG_H
+# Transform confdefs.h into DEFS.
+# Protect against shell expansion while executing Makefile rules.
+# Protect against Makefile macro expansion.
+#
+# If the first sed substitution is executed (which looks for macros that
+# take arguments), then branch to the quote section.  Otherwise,
+# look for a macro that doesn't take arguments.
+ac_script='
+t clear
+:clear
+s/^[	 ]*#[	 ]*define[	 ][	 ]*\([^	 (][^	 (]*([^)]*)\)[	 ]*\(.*\)/-D\1=\2/g
+t quote
+s/^[	 ]*#[	 ]*define[	 ][	 ]*\([^	 ][^	 ]*\)[	 ]*\(.*\)/-D\1=\2/g
+t quote
+b any
+:quote
+s/[	 `~#$^&*(){}\\|;'\''"<>?]/\\&/g
+s/\[/\\&/g
+s/\]/\\&/g
+s/\$/$$/g
+H
+:any
+${
+	g
+	s/^\n//
+	s/\n/ /g
+	p
+}
+'
+DEFS=`sed -n "$ac_script" confdefs.h`
+
 
 ac_libobjs=
 ac_ltlibobjs=
@@ -20186,7 +20329,6 @@ _ACEOF
 cat >>$CONFIG_STATUS <<_ACEOF
 # Files that config.status was made for.
 config_files="$ac_config_files"
-config_headers="$ac_config_headers"
 config_commands="$ac_config_commands"
 
 _ACEOF
@@ -20205,14 +20347,9 @@ Usage: $0 [OPTIONS] [FILE]...
       --recheck    update $as_me by reconfiguring in the same conditions
   --file=FILE[:TEMPLATE]
 		   instantiate the configuration file FILE
-  --header=FILE[:TEMPLATE]
-		   instantiate the configuration header FILE
 
 Configuration files:
 $config_files
-
-Configuration headers:
-$config_headers
 
 Configuration commands:
 $config_commands
@@ -20267,16 +20404,7 @@ do
     $ac_shift
     CONFIG_FILES="$CONFIG_FILES $ac_optarg"
     ac_need_defaults=false;;
-  --header | --heade | --head | --hea )
-    $ac_shift
-    CONFIG_HEADERS="$CONFIG_HEADERS $ac_optarg"
-    ac_need_defaults=false;;
-  --he | --h)
-    # Conflict between --help and --header
-    { echo "$as_me: error: ambiguous option: $1
-Try \`$0 --help' for more information." >&2
-   { (exit 1); exit 1; }; };;
-  --help | --hel | -h )
+  --he | --h |  --help | --hel | -h )
     echo "$ac_cs_usage"; exit ;;
   -q | -quiet | --quiet | --quie | --qui | --qu | --q \
   | -silent | --silent | --silen | --sile | --sil | --si | --s)
@@ -20337,7 +20465,6 @@ for ac_config_target in $ac_config_targets
 do
   case $ac_config_target in
     "depfiles") CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;
-    "include/config.h") CONFIG_HEADERS="$CONFIG_HEADERS include/config.h" ;;
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "src/Makefile") CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
     "libs/Makefile") CONFIG_FILES="$CONFIG_FILES libs/Makefile" ;;
@@ -20360,7 +20487,6 @@ done
 # bizarre bug on SunOS 4.1.3.
 if $ac_need_defaults; then
   test "${CONFIG_FILES+set}" = set || CONFIG_FILES=$config_files
-  test "${CONFIG_HEADERS+set}" = set || CONFIG_HEADERS=$config_headers
   test "${CONFIG_COMMANDS+set}" = set || CONFIG_COMMANDS=$config_commands
 fi
 
@@ -20550,11 +20676,16 @@ F77!$F77$ac_delim
 FFLAGS!$FFLAGS$ac_delim
 ac_ct_F77!$ac_ct_F77$ac_delim
 LIBTOOL!$LIBTOOL$ac_delim
+PYTHON!$PYTHON$ac_delim
+MOCKCPP_ALLOW_MI!$MOCKCPP_ALLOW_MI$ac_delim
+MOCKCPP_MI!$MOCKCPP_MI$ac_delim
+MOCKCPP_MVS!$MOCKCPP_MVS$ac_delim
+MOCKCPP_MAX_PARAMS!$MOCKCPP_MAX_PARAMS$ac_delim
 LIBOBJS!$LIBOBJS$ac_delim
 LTLIBOBJS!$LTLIBOBJS$ac_delim
 _ACEOF
 
-  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 6; then
+  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 11; then
     break
   elif $ac_last_try; then
     { { echo "$as_me:$LINENO: error: could not make $CONFIG_STATUS" >&5
@@ -20611,7 +20742,7 @@ cat >>$CONFIG_STATUS <<\_ACEOF
 fi # test -n "$CONFIG_FILES"
 
 
-for ac_tag in  :F $CONFIG_FILES  :H $CONFIG_HEADERS    :C $CONFIG_COMMANDS
+for ac_tag in  :F $CONFIG_FILES      :C $CONFIG_COMMANDS
 do
   case $ac_tag in
   :[FHLC]) ac_mode=$ac_tag; continue;;
@@ -20857,137 +20988,7 @@ which seems to be undefined.  Please make sure it is defined." >&2;}
   *) rm -f "$ac_file"; mv "$tmp/out" $ac_file;;
   esac
  ;;
-  :H)
-  #
-  # CONFIG_HEADER
-  #
-_ACEOF
 
-# Transform confdefs.h into a sed script `conftest.defines', that
-# substitutes the proper values into config.h.in to produce config.h.
-rm -f conftest.defines conftest.tail
-# First, append a space to every undef/define line, to ease matching.
-echo 's/$/ /' >conftest.defines
-# Then, protect against being on the right side of a sed subst, or in
-# an unquoted here document, in config.status.  If some macros were
-# called several times there might be several #defines for the same
-# symbol, which is useless.  But do not sort them, since the last
-# AC_DEFINE must be honored.
-ac_word_re=[_$as_cr_Letters][_$as_cr_alnum]*
-# These sed commands are passed to sed as "A NAME B PARAMS C VALUE D", where
-# NAME is the cpp macro being defined, VALUE is the value it is being given.
-# PARAMS is the parameter list in the macro definition--in most cases, it's
-# just an empty string.
-ac_dA='s,^\\([	 #]*\\)[^	 ]*\\([	 ]*'
-ac_dB='\\)[	 (].*,\\1define\\2'
-ac_dC=' '
-ac_dD=' ,'
-
-uniq confdefs.h |
-  sed -n '
-	t rset
-	:rset
-	s/^[	 ]*#[	 ]*define[	 ][	 ]*//
-	t ok
-	d
-	:ok
-	s/[\\&,]/\\&/g
-	s/^\('"$ac_word_re"'\)\(([^()]*)\)[	 ]*\(.*\)/ '"$ac_dA"'\1'"$ac_dB"'\2'"${ac_dC}"'\3'"$ac_dD"'/p
-	s/^\('"$ac_word_re"'\)[	 ]*\(.*\)/'"$ac_dA"'\1'"$ac_dB$ac_dC"'\2'"$ac_dD"'/p
-  ' >>conftest.defines
-
-# Remove the space that was appended to ease matching.
-# Then replace #undef with comments.  This is necessary, for
-# example, in the case of _POSIX_SOURCE, which is predefined and required
-# on some systems where configure will not decide to define it.
-# (The regexp can be short, since the line contains either #define or #undef.)
-echo 's/ $//
-s,^[	 #]*u.*,/* & */,' >>conftest.defines
-
-# Break up conftest.defines:
-ac_max_sed_lines=50
-
-# First sed command is:	 sed -f defines.sed $ac_file_inputs >"$tmp/out1"
-# Second one is:	 sed -f defines.sed "$tmp/out1" >"$tmp/out2"
-# Third one will be:	 sed -f defines.sed "$tmp/out2" >"$tmp/out1"
-# et cetera.
-ac_in='$ac_file_inputs'
-ac_out='"$tmp/out1"'
-ac_nxt='"$tmp/out2"'
-
-while :
-do
-  # Write a here document:
-    cat >>$CONFIG_STATUS <<_ACEOF
-    # First, check the format of the line:
-    cat >"\$tmp/defines.sed" <<\\CEOF
-/^[	 ]*#[	 ]*undef[	 ][	 ]*$ac_word_re[	 ]*\$/b def
-/^[	 ]*#[	 ]*define[	 ][	 ]*$ac_word_re[(	 ]/b def
-b
-:def
-_ACEOF
-  sed ${ac_max_sed_lines}q conftest.defines >>$CONFIG_STATUS
-  echo 'CEOF
-    sed -f "$tmp/defines.sed"' "$ac_in >$ac_out" >>$CONFIG_STATUS
-  ac_in=$ac_out; ac_out=$ac_nxt; ac_nxt=$ac_in
-  sed 1,${ac_max_sed_lines}d conftest.defines >conftest.tail
-  grep . conftest.tail >/dev/null || break
-  rm -f conftest.defines
-  mv conftest.tail conftest.defines
-done
-rm -f conftest.defines conftest.tail
-
-echo "ac_result=$ac_in" >>$CONFIG_STATUS
-cat >>$CONFIG_STATUS <<\_ACEOF
-  if test x"$ac_file" != x-; then
-    echo "/* $configure_input  */" >"$tmp/config.h"
-    cat "$ac_result" >>"$tmp/config.h"
-    if diff $ac_file "$tmp/config.h" >/dev/null 2>&1; then
-      { echo "$as_me:$LINENO: $ac_file is unchanged" >&5
-echo "$as_me: $ac_file is unchanged" >&6;}
-    else
-      rm -f $ac_file
-      mv "$tmp/config.h" $ac_file
-    fi
-  else
-    echo "/* $configure_input  */"
-    cat "$ac_result"
-  fi
-  rm -f "$tmp/out12"
-# Compute $ac_file's index in $config_headers.
-_am_stamp_count=1
-for _am_header in $config_headers :; do
-  case $_am_header in
-    $ac_file | $ac_file:* )
-      break ;;
-    * )
-      _am_stamp_count=`expr $_am_stamp_count + 1` ;;
-  esac
-done
-echo "timestamp for $ac_file" >`$as_dirname -- $ac_file ||
-$as_expr X$ac_file : 'X\(.*[^/]\)//*[^/][^/]*/*$' \| \
-	 X$ac_file : 'X\(//\)[^/]' \| \
-	 X$ac_file : 'X\(//\)$' \| \
-	 X$ac_file : 'X\(/\)' \| . 2>/dev/null ||
-echo X$ac_file |
-    sed '/^X\(.*[^/]\)\/\/*[^/][^/]*\/*$/{
-	    s//\1/
-	    q
-	  }
-	  /^X\(\/\/\)[^/].*/{
-	    s//\1/
-	    q
-	  }
-	  /^X\(\/\/\)$/{
-	    s//\1/
-	    q
-	  }
-	  /^X\(\/\).*/{
-	    s//\1/
-	    q
-	  }
-	  s/.*/./; q'`/stamp-h$_am_stamp_count
- ;;
 
   :C)  { echo "$as_me:$LINENO: executing $ac_file commands" >&5
 echo "$as_me: executing $ac_file commands" >&6;}

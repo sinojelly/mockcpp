@@ -3,6 +3,16 @@ AM_CPPFLAGS = -I$(top_builddir)/include -I$(top_builddir)/3rdparty
 
 lib_LTLIBRARIES = libmockcpp.la
 
+EXTRA_HEADERS = \
+ $(top_builddir)/include/DelegatedMethodDef.h \
+ $(top_builddir)/include/DelegatedMethodGetDef.h \
+ $(top_builddir)/include/DelegatedMethodGetByVptrDef.h \
+ $(top_builddir)/include/ArgumentListDef.h  \
+ $(top_builddir)/include/MethodTypeTraitsDef.h
+
+BUILT_SOURCES = $(EXTRA_HEADERS)
+CLEANFILES = $(EXTRA_HEADERS)
+
 libmockcpp_la_SOURCES = \
  AfterMatcher.cpp \
  AnyBase.cpp \
@@ -73,3 +83,22 @@ libmockcpp_la_SOURCES = \
  IsStringContains.cpp \
  MemoryCheckPoint.cpp \
  DelegatedMethodGetter.cpp
+
+ALLOW_MI = @MOCKCPP_ALLOW_MI@
+MAX_INHERITANCE = @MOCKCPP_MI@
+MAX_VTBL_SIZE = @MOCKCPP_MVS@
+MAX_PARAMETERS = @MOCKCPP_MAX_PARAMS@
+
+EXTRA_VTBL_HEADERS_DEFS = --allow-mi=$(ALLOW_MI) --max-inheritance=$(MAX_INHERITANCE) \
+                        --max-vtbl-size=$(MAX_VTBL_SIZE) --include-path=$(top_builddir)/include
+
+EXTRA_PARAMS_HEADERS_DEFS = --max-parameters=$(MAX_PARAMETERS) --include-path=$(top_builddir)/include
+
+
+$(top_builddir)/include/DelegatedMethodDef.h: FORCE
+	$(PYTHON) $(top_builddir)/src/generate_vtbl_related_files.py $(EXTRA_VTBL_HEADERS_DEFS)
+
+$(top_builddir)/include/DelegatedMethodGetByVptrDef.h: FORCE
+	$(PYTHON) $(top_builddir)/src/generate_arg_related_files.py $(EXTRA_PARAMS_HEADERS_DEFS)
+
+FORCE:

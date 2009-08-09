@@ -39,7 +39,6 @@ am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(install_sh) -d
-CONFIG_HEADER = $(top_builddir)/include/config.h
 CONFIG_CLEAN_FILES =
 am__vpath_adj_setup = srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`;
 am__vpath_adj = case $$p in \
@@ -79,7 +78,7 @@ am_libmockcpp_la_OBJECTS = AfterMatcher.lo AnyBase.lo Any.lo \
 	IsStringContains.lo MemoryCheckPoint.lo \
 	DelegatedMethodGetter.lo
 libmockcpp_la_OBJECTS = $(am_libmockcpp_la_OBJECTS)
-DEFAULT_INCLUDES = -I. -I$(top_builddir)/include@am__isrc@
+DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
 CXXCOMPILE = $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) \
@@ -137,6 +136,10 @@ LN_S = @LN_S@
 LTLIBOBJS = @LTLIBOBJS@
 MAKEINFO = @MAKEINFO@
 MKDIR_P = @MKDIR_P@
+MOCKCPP_ALLOW_MI = @MOCKCPP_ALLOW_MI@
+MOCKCPP_MAX_PARAMS = @MOCKCPP_MAX_PARAMS@
+MOCKCPP_MI = @MOCKCPP_MI@
+MOCKCPP_MVS = @MOCKCPP_MVS@
 OBJEXT = @OBJEXT@
 PACKAGE = @PACKAGE@
 PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
@@ -145,6 +148,7 @@ PACKAGE_STRING = @PACKAGE_STRING@
 PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
+PYTHON = @PYTHON@
 RANLIB = @RANLIB@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
@@ -203,6 +207,15 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AM_CPPFLAGS = -I$(top_builddir)/include -I$(top_builddir)/3rdparty
 lib_LTLIBRARIES = libmockcpp.la
+EXTRA_HEADERS = \
+ $(top_builddir)/include/DelegatedMethodDef.h \
+ $(top_builddir)/include/DelegatedMethodGetDef.h \
+ $(top_builddir)/include/DelegatedMethodGetByVptrDef.h \
+ $(top_builddir)/include/ArgumentListDef.h  \
+ $(top_builddir)/include/MethodTypeTraitsDef.h
+
+BUILT_SOURCES = $(EXTRA_HEADERS)
+CLEANFILES = $(EXTRA_HEADERS)
 libmockcpp_la_SOURCES = \
  AfterMatcher.cpp \
  AnyBase.cpp \
@@ -274,7 +287,16 @@ libmockcpp_la_SOURCES = \
  MemoryCheckPoint.cpp \
  DelegatedMethodGetter.cpp
 
-all: all-am
+ALLOW_MI = @MOCKCPP_ALLOW_MI@
+MAX_INHERITANCE = @MOCKCPP_MI@
+MAX_VTBL_SIZE = @MOCKCPP_MVS@
+MAX_PARAMETERS = @MOCKCPP_MAX_PARAMS@
+EXTRA_VTBL_HEADERS_DEFS = --allow-mi=$(ALLOW_MI) --max-inheritance=$(MAX_INHERITANCE) \
+                        --max-vtbl-size=$(MAX_VTBL_SIZE) --include-path=$(top_builddir)/include
+
+EXTRA_PARAMS_HEADERS_DEFS = --max-parameters=$(MAX_PARAMETERS) --include-path=$(top_builddir)/include
+all: $(BUILT_SOURCES)
+	$(MAKE) $(AM_MAKEFLAGS) all-am
 
 .SUFFIXES:
 .SUFFIXES: .cpp .lo .o .obj
@@ -515,13 +537,15 @@ distdir: $(DISTFILES)
 	  fi; \
 	done
 check-am: all-am
-check: check-am
+check: $(BUILT_SOURCES)
+	$(MAKE) $(AM_MAKEFLAGS) check-am
 all-am: Makefile $(LTLIBRARIES)
 installdirs:
 	for dir in "$(DESTDIR)$(libdir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
-install: install-am
+install: $(BUILT_SOURCES)
+	$(MAKE) $(AM_MAKEFLAGS) install-am
 install-exec: install-exec-am
 install-data: install-data-am
 uninstall: uninstall-am
@@ -538,6 +562,7 @@ install-strip:
 mostlyclean-generic:
 
 clean-generic:
+	-test -z "$(CLEANFILES)" || rm -f $(CLEANFILES)
 
 distclean-generic:
 	-test -z "$(CONFIG_CLEAN_FILES)" || rm -f $(CONFIG_CLEAN_FILES)
@@ -545,6 +570,7 @@ distclean-generic:
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
 	@echo "it deletes files that may require special tools to rebuild."
+	-test -z "$(BUILT_SOURCES)" || rm -f $(BUILT_SOURCES)
 clean: clean-am
 
 clean-am: clean-generic clean-libLTLIBRARIES clean-libtool \
@@ -620,6 +646,14 @@ uninstall-am: uninstall-libLTLIBRARIES
 	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
 	tags uninstall uninstall-am uninstall-libLTLIBRARIES
 
+
+$(top_builddir)/include/DelegatedMethodDef.h: FORCE
+	$(PYTHON) $(top_builddir)/src/generate_vtbl_related_files.py $(EXTRA_VTBL_HEADERS_DEFS)
+
+$(top_builddir)/include/DelegatedMethodGetByVptrDef.h: FORCE
+	$(PYTHON) $(top_builddir)/src/generate_arg_related_files.py $(EXTRA_PARAMS_HEADERS_DEFS)
+
+FORCE:
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

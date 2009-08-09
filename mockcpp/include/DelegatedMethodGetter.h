@@ -16,7 +16,7 @@ case I: \
     return getAddrOfMethod(&DelegatedMethod<N, I, ArgumentsList>::operator()); \
 } \
 
-void maxVtblSizeTooBigError();
+void maxVtblSizeTooBigError(unsigned int index);
 
 template <int VPTRIndex, typename ArgumentsList>
 struct DelegatedMethodGetter
@@ -25,78 +25,11 @@ struct DelegatedMethodGetter
    {
 		switch(index)
       {
-
-      DELEGATED_METHOD_GET(VPTRIndex, 0)
-      DELEGATED_METHOD_GET(VPTRIndex, 1)
-      DELEGATED_METHOD_GET(VPTRIndex, 2)
-      DELEGATED_METHOD_GET(VPTRIndex, 3)
-      DELEGATED_METHOD_GET(VPTRIndex, 4)
-
-#if (MOCKCPP_MAX_VTBL_SIZE > 5)
-      DELEGATED_METHOD_GET(VPTRIndex, 5)
-      DELEGATED_METHOD_GET(VPTRIndex, 6)
-      DELEGATED_METHOD_GET(VPTRIndex, 7)
-      DELEGATED_METHOD_GET(VPTRIndex, 8)
-      DELEGATED_METHOD_GET(VPTRIndex, 9)
-#endif
-
-#if (MOCKCPP_MAX_VTBL_SIZE > 10)
-      DELEGATED_METHOD_GET(VPTRIndex, 10)
-      DELEGATED_METHOD_GET(VPTRIndex, 11)
-      DELEGATED_METHOD_GET(VPTRIndex, 12)
-      DELEGATED_METHOD_GET(VPTRIndex, 13)
-      DELEGATED_METHOD_GET(VPTRIndex, 14)
-#endif
-
-#if (MOCKCPP_MAX_VTBL_SIZE > 15)
-      DELEGATED_METHOD_GET(VPTRIndex, 15)
-      DELEGATED_METHOD_GET(VPTRIndex, 16)
-      DELEGATED_METHOD_GET(VPTRIndex, 17)
-      DELEGATED_METHOD_GET(VPTRIndex, 18)
-      DELEGATED_METHOD_GET(VPTRIndex, 19)
-#endif
-
-#if (MOCKCPP_MAX_VTBL_SIZE > 20)
-      DELEGATED_METHOD_GET(VPTRIndex, 20)
-      DELEGATED_METHOD_GET(VPTRIndex, 21)
-      DELEGATED_METHOD_GET(VPTRIndex, 22)
-      DELEGATED_METHOD_GET(VPTRIndex, 23)
-      DELEGATED_METHOD_GET(VPTRIndex, 24)
-      DELEGATED_METHOD_GET(VPTRIndex, 25)
-      DELEGATED_METHOD_GET(VPTRIndex, 26)
-      DELEGATED_METHOD_GET(VPTRIndex, 27)
-      DELEGATED_METHOD_GET(VPTRIndex, 28)
-      DELEGATED_METHOD_GET(VPTRIndex, 29)
-#endif
-
-#if (MOCKCPP_MAX_VTBL_SIZE > 30)
-      DELEGATED_METHOD_GET(VPTRIndex, 30)
-      DELEGATED_METHOD_GET(VPTRIndex, 31)
-      DELEGATED_METHOD_GET(VPTRIndex, 32)
-      DELEGATED_METHOD_GET(VPTRIndex, 33)
-      DELEGATED_METHOD_GET(VPTRIndex, 34)
-      DELEGATED_METHOD_GET(VPTRIndex, 35)
-      DELEGATED_METHOD_GET(VPTRIndex, 36)
-      DELEGATED_METHOD_GET(VPTRIndex, 37)
-      DELEGATED_METHOD_GET(VPTRIndex, 38)
-      DELEGATED_METHOD_GET(VPTRIndex, 39)
-#endif
-
-#if (MOCKCPP_MAX_VTBL_SIZE > 40)
-      DELEGATED_METHOD_GET(VPTRIndex, 40)
-      DELEGATED_METHOD_GET(VPTRIndex, 41)
-      DELEGATED_METHOD_GET(VPTRIndex, 42)
-      DELEGATED_METHOD_GET(VPTRIndex, 43)
-      DELEGATED_METHOD_GET(VPTRIndex, 44)
-      DELEGATED_METHOD_GET(VPTRIndex, 45)
-      DELEGATED_METHOD_GET(VPTRIndex, 46)
-      DELEGATED_METHOD_GET(VPTRIndex, 47)
-      DELEGATED_METHOD_GET(VPTRIndex, 48)
-      DELEGATED_METHOD_GET(VPTRIndex, 49)
-#endif
+#     include <DelegatedMethodGetDef.h>
+      default: break;
       }
 
-		maxVtblSizeTooBigError();
+		maxVtblSizeTooBigError(index);
 
       return 0;
    }
@@ -109,6 +42,8 @@ case N: \
    return DelegatedMethodGetter<N, MethodArgumentsList>::get(I); \
 }
 
+void maxInheritanceTooBigError(unsigned int index);
+
 template <class C, typename Method>
 void* getDelegatedFunction(unsigned int vptrIndex, unsigned int vtblIndex, Method m)
 {
@@ -116,38 +51,13 @@ void* getDelegatedFunction(unsigned int vptrIndex, unsigned int vtblIndex, Metho
    
    switch(vptrIndex)
    {
-   DELEGATED_METHOD_GET_BY_VPTR(0, vtblIndex)
-
-#if MOCKCPP_ALLOW_MULTI_INHERITANCE && (MOCKCPP_MAX_INHERITANCE > 1)
-   DELEGATED_METHOD_GET_BY_VPTR(1, vtblIndex)
-#endif
-
-#if defined(MOCKCPP_ALLOW_MULTI_INHERITANCE) && \
-    defined(MOCKCPP_MAX_INHERITANCE) && (MOCKCPP_MAX_INHERITANCE > 2)
-   DELEGATED_METHOD_GET_BY_VPTR(2, vtblIndex)
-#endif
-
-#if defined(MOCKCPP_ALLOW_MULTI_INHERITANCE) && \
-    defined(MOCKCPP_MAX_INHERITANCE) && (MOCKCPP_MAX_INHERITANCE > 3)
-   DELEGATED_METHOD_GET_BY_VPTR(3, vtblIndex)
-#endif
-
-#if defined(MOCKCPP_ALLOW_MULTI_INHERITANCE) && \
-    defined(MOCKCPP_MAX_INHERITANCE) && (MOCKCPP_MAX_INHERITANCE > 4)
-   DELEGATED_METHOD_GET_BY_VPTR(4, vtblIndex)
-#endif
-
-#if defined(MOCKCPP_ALLOW_MULTI_INHERITANCE) && \
-    defined(MOCKCPP_MAX_INHERITANCE) && (MOCKCPP_MAX_INHERITANCE > 5)
-   DELEGATED_METHOD_GET_BY_VPTR(5, vtblIndex)
-#endif
-
-#if defined(MOCKCPP_ALLOW_MULTI_INHERITANCE) && \
-    defined(MOCKCPP_MAX_INHERITANCE) && (MOCKCPP_MAX_INHERITANCE > 6)
-   DELEGATED_METHOD_GET_BY_VPTR(6, vtblIndex)
-#endif
-
+#     include <DelegatedMethodGetByVptrDef.h>
+   default:
+      break;
    }
+
+	maxInheritanceTooBigError(vptrIndex);
+
    return 0;
 }
 
