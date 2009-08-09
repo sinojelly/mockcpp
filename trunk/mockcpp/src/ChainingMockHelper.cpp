@@ -18,6 +18,7 @@
 #include <IsStringStartWith.h>
 #include <IsStringEndWith.h>
 #include <IsStringContains.h>
+#include <DieStub.h>
 
 MOCKCPP_NS_START
 
@@ -83,6 +84,10 @@ Stub* ignoreReturnValue()
    return new TypelessStubAdapter(new IgnoreReturnStub());
 }
 
+Stub* die(int code)
+{
+   return new TypelessStubAdapter(new DieStub(code));
+}
 //////////////////////////////////////////////////////////////////
 Stub* returnObjectList( const Any& o01
                       , const Any& o02 

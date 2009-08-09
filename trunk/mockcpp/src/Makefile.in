@@ -76,7 +76,7 @@ am_libmockcpp_la_OBJECTS = AfterMatcher.lo AnyBase.lo Any.lo \
 	ChainableMockMethodIndexKey.lo StubContainer.lo \
 	StringConstraint.lo IsStringStartWith.lo IsStringEndWith.lo \
 	IsStringContains.lo MemoryCheckPoint.lo \
-	DelegatedMethodGetter.lo
+	DelegatedMethodGetter.lo DieStub.lo
 libmockcpp_la_OBJECTS = $(am_libmockcpp_la_OBJECTS)
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
@@ -285,7 +285,8 @@ libmockcpp_la_SOURCES = \
  IsStringEndWith.cpp \
  IsStringContains.cpp \
  MemoryCheckPoint.cpp \
- DelegatedMethodGetter.cpp
+ DelegatedMethodGetter.cpp \
+ DieStub.cpp
 
 ALLOW_MI = @MOCKCPP_ALLOW_MI@
 MAX_INHERITANCE = @MOCKCPP_MI@
@@ -384,6 +385,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/DefaultMatcher.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/DefaultStub.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/DelegatedMethodGetter.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/DieStub.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Exception.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ExpectsMatcher.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Formatter.Plo@am__quote@

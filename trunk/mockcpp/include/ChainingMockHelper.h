@@ -126,6 +126,8 @@ Constraint* smirror(const unsigned char* s);
 ///////////////////////////////////////////////////////////////////
 
 /////////////////////////////////////////////////////////////////
+Stub* die(int code = 0);
+
 Stub* returnValue(const Any& val);
 
 Stub* repeat(const Any& val, unsigned int repeatTimes);
