@@ -4,35 +4,34 @@
 
 MOCKCPP_NS_START
 
+///////////////////////////////////////////////////////////
 bool
-IsStringContains::eval(const RefAny& value) const
+IsStringContains::predict(const std::string& input
+               , const std::string& target) const
 {
-    char* s = tryToCastParameterToString(value);
-    if(s == 0 || ::strlen(s) < str.size())
-    {
-       return false;
-    }
+   const char* s = input.c_str();
+   int len = input.size() - target.size() + 1;
+   for(int i=0; i < len; i++)
+   {
+      if(!::strncmp(&s[i], target.c_str(), target.size()))
+      {
+         return true;
+      }
+   }
 
-    int len = ::strlen(s) - str.size() + 1;
-    for(int i=0; i < len; i++)
-    {
-       if(!::strncmp(&s[i], str.c_str(), str.size()))
-       {
-           return true;
-       }
-    }
-
-    return false;
+   return false;
 }
 
-std::string IsStringContains::toString() const
+///////////////////////////////////////////////////////////
+std::string
+IsStringContains::toString(const std::string& target) const
 {
     oss_t oss;
-
-    oss << "contains(\"" << str << "\")";
-
+    oss << "contains(\"" << target << "\")";
     return oss.str();
 }
+
+///////////////////////////////////////////////////////////
 
 MOCKCPP_NS_END
 

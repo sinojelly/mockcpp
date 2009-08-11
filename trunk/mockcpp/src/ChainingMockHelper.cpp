@@ -15,6 +15,7 @@
 #include <IsMirror.h>
 #include <IgnoreReturnStub.h>
 #include <RepeatStub.h>
+#include <StringConstraint.h>
 #include <IsStringStartWith.h>
 #include <IsStringEndWith.h>
 #include <IsStringContains.h>
@@ -138,79 +139,49 @@ Constraint* smirror(const unsigned char* s)
    return new IsMirror<const unsigned char*>(s, strlen((const char*)s)+1);
 }
 
-Constraint* startWith(char* s)
-{
-    return new IsStringStartWith(s);
-}
-
-Constraint* startWith(const char* s)
-{
-    return new IsStringStartWith(s);
-}
-
 Constraint* startWith(unsigned char* s)
 {
-    return new IsStringStartWith((char*)s);
+    return new StringConstraint((char*)s, new IsStringStartWith());
 }
 
 Constraint* startWith(unsigned const char* s)
 {
-    return new IsStringStartWith((const char*)s);
+    return new StringConstraint((const char*)s, new IsStringStartWith());
 }
 
 Constraint* startWith(const std::string& s)
 {
-    return new IsStringStartWith(s);
-}
-
-Constraint* endWith(char* s)
-{
-    return new IsStringEndWith(s);
-}
-
-Constraint* endWith(const char* s)
-{
-    return new IsStringEndWith(s);
+    return new StringConstraint(s, new IsStringStartWith());
 }
 
 Constraint* endWith(unsigned char* s)
 {
-    return new IsStringEndWith((char*)s);
+    return new StringConstraint((char*)s, new IsStringEndWith());
 }
 
 Constraint* endWith(unsigned const char* s)
 {
-    return new IsStringEndWith((const char*)s);
+    return new StringConstraint((const char*)s, new IsStringEndWith());
 }
 
 Constraint* endWith(const std::string& s)
 {
-    return new IsStringEndWith(s);
-}
-
-Constraint* contains(char* s)
-{
-    return new IsStringContains(s);
-}
-
-Constraint* contains(const char* s)
-{
-    return new IsStringContains(s);
+    return new StringConstraint(s, new IsStringEndWith());
 }
 
 Constraint* contains(unsigned char* s)
 {
-    return new IsStringContains((char*)s);
+    return new StringConstraint((char*)s, new IsStringContains());
 }
 
 Constraint* contains(unsigned const char* s)
 {
-    return new IsStringContains((const char*)s);
+    return new StringConstraint((const char*)s, new IsStringContains());
 }
 
 Constraint* contains(const std::string& s)
 {
-    return new IsStringContains(s);
+    return new StringConstraint(s, new IsStringContains());
 }
 
 MOCKCPP_NS_END

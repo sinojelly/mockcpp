@@ -1,5 +1,8 @@
 
+#include <unistd.h>
+
 #include <DieStub.h>
+
 
 MOCKCPP_NS_START
 

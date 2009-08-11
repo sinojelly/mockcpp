@@ -4,19 +4,14 @@
 
 #include <mockcpp.h>
 
-#include <Constraint.h>
-#include <StringConstraint.h>
+#include <StringPredict.h>
 
 MOCKCPP_NS_START
 
-struct IsStringContains : public StringConstraint
+struct IsStringContains : public StringPredict
 {
-    IsStringContains(const std::string& s)
-       : StringConstraint(s)
-    {}
-
-    bool eval(const RefAny& value) const;
-    std::string toString() const;
+   bool predict(const std::string& input, const std::string& target) const;
+   std::string toString(const std::string& target) const;
 };
 
 MOCKCPP_NS_END

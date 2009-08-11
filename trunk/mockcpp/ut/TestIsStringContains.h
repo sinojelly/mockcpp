@@ -25,110 +25,61 @@ public:
 
 	/////////////////////////////////////////////////////////
 
-	void testShouldReturnTrueIfTheParameterDoesContainsSpecifiedString()
+	void testShouldReturnTrueIfTheInputDoesContainsSpecifiedString()
 	{
-       IsStringContains constraint("abcd");
+       IsStringContains predict;
 
-       std::string s("1abcdef");
+       std::string input("efgabcd12");
+       std::string target("abcd");
 
-       TS_ASSERT(constraint.eval(s));
+       TS_ASSERT(predict.predict(input, target));
 	}
 
-	void testShouldReturnFalseIfTheParameterDoesNotContainsSpecifiedString()
+	void testShouldReturnTrueIfTheInputStartWithSpecifiedString()
 	{
-       IsStringContains constraint("abcd");
+       IsStringContains predict;
 
-       std::string s("1abcfefg");
+       std::string input("gabcd12");
+       std::string target("abcd");
 
-       TS_ASSERT(!constraint.eval(s));
+       TS_ASSERT(predict.predict(input, target));
 	}
 
-	void testShouldReturnTrueIfTheParameterDoesContainsSpecifiedPChar()
+	void testShouldReturnTrueIfTheInputEndWithSpecifiedString()
 	{
-       IsStringContains constraint("abcd");
+       IsStringContains predict;
 
-       char* s = "1abcdefg";
+       std::string input("g12abcd");
+       std::string target("abcd");
 
-       TS_ASSERT(constraint.eval(s));
+       TS_ASSERT(predict.predict(input, target));
 	}
 
-	void testShouldReturnFalseIfTheParameterDoesNotContainsSpecifiedPChar()
+	void testShouldReturnTrueIfTheInputEqualsSpecifiedString()
 	{
-       IsStringContains constraint("abcd");
+       IsStringContains predict;
 
-       char* s = "1abccefg";
+       std::string input("abcd");
+       std::string target("abcd");
 
-       TS_ASSERT(!constraint.eval(s));
+       TS_ASSERT(predict.predict(input, target));
 	}
 
-	void testShouldReturnTrueIfTheParameterDoesContainsSpecifiedPUChar()
+	void testShouldReturnFalseIfTheInputDoesNotContainsSpecifiedString()
 	{
-       IsStringContains constraint("abcd");
+       IsStringContains predict;
 
-       unsigned char* s = (unsigned char*)"1abcdefg";
+       std::string input("efgafbcd12");
+       std::string target("abcd");
 
-       TS_ASSERT(constraint.eval(s));
-	}
-
-	void testShouldReturnFalseIfTheParameterDoesNotContainsSpecifiedPUChar()
-	{
-       IsStringContains constraint("abcd");
-
-       unsigned char* s = (unsigned char*)"1abccefg";
-
-       TS_ASSERT(!constraint.eval(s));
-	}
-
-	void testShouldReturnTrueIfTheParameterDoesContainsSpecifiedConstPChar()
-	{
-       IsStringContains constraint("abcd");
-
-       const char* s = "123abcd";
-
-       TS_ASSERT(constraint.eval(s));
-	}
-
-	void testShouldReturnFalseIfTheParameterDoesNotContainsSpecifiedConstPChar()
-	{
-       IsStringContains constraint("abcd");
-
-       const char* s = "12abccefg";
-
-       TS_ASSERT(!constraint.eval(s));
-	}
-
-	void testShouldReturnTrueIfTheParameterDoesContainsSpecifiedConstPUChar()
-	{
-       IsStringContains constraint("abcd");
-
-       unsigned const char* s = (unsigned const char*)"123abcd";
-
-       TS_ASSERT(constraint.eval(s));
-	}
-
-	void testShouldReturnFalseIfTheParameterDoesNotContainsSpecifiedConstPUChar()
-	{
-       IsStringContains constraint("abcd");
-
-       unsigned const char* s = (unsigned const char*)"12abccefg";
-
-       TS_ASSERT(!constraint.eval(s));
-	}
-
-	void testShouldReturnFalseIfTheParameterIsAnNullPointer()
-	{
-       IsStringContains constraint("abcd");
-
-       const char* s = 0;
-
-       TS_ASSERT(!constraint.eval(s));
+       TS_ASSERT(!predict.predict(input, target));
 	}
 
 	void testShouldBeAbleConvertToRequiredFormattedString()
 	{
-       IsStringContains constraint("abcd");
+       IsStringContains predict;
 
-       TS_ASSERT_EQUALS(std::string("contains(\"abcd\")"), constraint.toString());
+       TS_ASSERT_EQUALS(std::string("contains(\"abcd\")"), predict.toString("abcd"));
 	}
 };
 

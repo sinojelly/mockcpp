@@ -4,28 +4,21 @@
 
 MOCKCPP_NS_START
 
+////////////////////////////////////////////////////////////////////
 bool
-IsStringStartWith::eval(const RefAny& value) const
+IsStringStartWith::predict(const std::string& input,
+                           const std::string& target) const 
 {
-    char* s = tryToCastParameterToString(value);
-    if(s == 0)
-    {
-       return false;
-    }
-
-    if(::strlen(s) < str.size())
-    {
-       return false;
-    }
-
-    return !::strncmp(s, str.c_str(), str.size());
+   return !::strncmp(input.c_str(), target.c_str(), target.size());
 }
 
-std::string IsStringStartWith::toString() const
+////////////////////////////////////////////////////////////////////
+std::string
+IsStringStartWith::toString(const std::string& target) const
 {
     oss_t oss;
 
-    oss << "startWith(\"" << str << "\")";
+    oss << "startWith(\"" << target << "\")";
 
     return oss.str();
 }
