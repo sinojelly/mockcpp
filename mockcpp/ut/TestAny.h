@@ -40,5 +40,18 @@ public:
 		TS_ASSERT(any_castable<int>(ref));
 	}
 
+   void testShouldBeAbleStorePChar()
+   {
+		RefAny ref((char*)"abcd");
+
+		TS_ASSERT(any_castable<char*>(ref));
+   }
+   
+   void testShouldBeAbleStoreNullPchar()
+   {
+		RefAny ref((char*)0);
+
+		TS_ASSERT(any_castable<char*>(ref));
+   }
 };
 

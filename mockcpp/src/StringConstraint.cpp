@@ -1,37 +1,84 @@
 
+#include <StringPredict.h>
 #include <StringConstraint.h>
-#include <iostream>
 
 MOCKCPP_NS_START
 
-char * StringConstraint::tryToCastParameterToString(const RefAny& val) const
+template <typename Char>
+std::string castToString(const RefAny& val)
 {
-    if(any_castable<char*>(val))
-    {
-       return any_cast<char*>(val);
-    }
+   Char* p = any_cast<Char*>(val);
+   if(p == 0)
+   {
+      return std::string((char*)"");
+   }
 
-    if(any_castable<unsigned char*>(val))
-    {
-       return (char*)any_cast<unsigned char*>(val);
-    }
+   return std::string((char*)p);
+}
+////////////////////////////////////////////////////////
+static std::string tryToCastParameterToString(const RefAny& val) 
+{
+   if(any_castable<char*>(val))
+   {
+      return castToString<char>(val);
+   }
 
-    if(any_castable<const char*>(val))
-    {
-       return const_cast<char*>(any_cast<const char*>(val));
-    }
+   if(any_castable<unsigned char*>(val))
+   {
+      return castToString<unsigned char>(val);
+   }
 
-    if(any_castable<unsigned const char*>(val))
-    {
-       return (char*)const_cast<unsigned char*>(any_cast<unsigned const char*>(val));
-    }
+   if(any_castable<const char*>(val))
+   {
+      return castToString<const char>(val);
+   }
 
-    if(any_castable<std::string>(val))
-    {
-       return const_cast<char*>(any_cast<std::string>(val).c_str());
-    }
+   if(any_castable<unsigned const char*>(val))
+   {
+      return castToString<unsigned const char>(val);
+   }
 
-    return 0;
+   if(any_castable<std::string>(val))
+   {
+      return any_cast<std::string>(val).c_str();
+   }
+
+   return std::string("");
+}
+
+////////////////////////////////////////////////////////
+StringConstraint::StringConstraint(const std::string& s, StringPredict* pred)
+      : str(s), predict(pred)
+{}
+
+////////////////////////////////////////////////////////
+StringConstraint::~StringConstraint()
+{
+   delete predict;
+}
+
+////////////////////////////////////////////////////////
+bool StringConstraint::eval(const RefAny& value) const
+{
+	std::string s;
+	s = tryToCastParameterToString(value);
+	if(s.size() == 0)
+	{
+		return false;
+	}
+
+   if(s.size() < str.size())
+   {
+      return false;
+   }
+   
+   return predict->predict(s, str);
+}
+
+////////////////////////////////////////////////////////
+std::string StringConstraint::toString() const
+{
+   return predict->toString(str);
 }
 
 MOCKCPP_NS_END

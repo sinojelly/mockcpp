@@ -201,7 +201,8 @@ TESTSUITES = \
  TestIsStringEndWith.h \
  TestIsStringContains.h \
  TestChainableMockMethodNameKey.h \
- TestChainableMockMethodContainer.h
+ TestChainableMockMethodContainer.h \
+ TestStringConstraint.h
 
 all: all-am
 

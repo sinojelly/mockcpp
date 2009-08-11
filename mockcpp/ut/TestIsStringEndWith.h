@@ -28,108 +28,29 @@ public:
 
 	void testShouldReturnTrueIfTheParameterDoesEndWithSpecifiedString()
 	{
-       IsStringEndWith constraint("abcd");
+       IsStringEndWith predict;
 
-       std::string s("efgabcd");
+       std::string input("efgabcd");
+       std::string target("abcd");
 
-       TS_ASSERT(constraint.eval(s));
+       TS_ASSERT(predict.predict(input, target));
 	}
 
 	void testShouldReturnFalseIfTheParameterDoesNotEndWithSpecifiedString()
 	{
-       IsStringEndWith constraint("abcd");
+       IsStringEndWith predict;
 
-       std::string s("efgabcf");
+       std::string input("efagbcd");
+       std::string target("abcd");
 
-       TS_ASSERT(!constraint.eval(s));
-	}
-
-	void testShouldReturnTrueIfTheParameterDoesEndWithSpecifiedPChar()
-	{
-       IsStringEndWith constraint("abcd");
-
-       char* s = "efgabcd";
-
-       TS_ASSERT(constraint.eval(s));
-	}
-
-	void testShouldReturnFalseIfTheParameterDoesNotEndWithSpecifiedPChar()
-	{
-       IsStringEndWith constraint("abcd");
-
-       char* s = "efgabcc";
-
-       TS_ASSERT(!constraint.eval(s));
-	}
-
-	void testShouldReturnTrueIfTheParameterDoesEndWithSpecifiedPUChar()
-	{
-       IsStringEndWith constraint("abcd");
-
-       unsigned char* s = (unsigned char*)"efgabcd";
-
-       TS_ASSERT(constraint.eval(s));
-	}
-
-	void testShouldReturnFalseIfTheParameterDoesNotEndWithSpecifiedPUChar()
-	{
-       IsStringEndWith constraint("abcd");
-
-       unsigned char* s = (unsigned char*)"efgabcc";
-
-       TS_ASSERT(!constraint.eval(s));
-	}
-
-	void testShouldReturnTrueIfTheParameterDoesEndWithSpecifiedConstPChar()
-	{
-       IsStringEndWith constraint("abcd");
-
-       const char* s = "abcd";
-
-       TS_ASSERT(constraint.eval(s));
-	}
-
-	void testShouldReturnFalseIfTheParameterDoesNotEndWithSpecifiedConstPChar()
-	{
-       IsStringEndWith constraint("abcd");
-
-       const char* s = "efgabcc";
-
-       TS_ASSERT(!constraint.eval(s));
-	}
-
-	void testShouldReturnTrueIfTheParameterDoesEndWithSpecifiedConstPUChar()
-	{
-       IsStringEndWith constraint("abcd");
-
-       unsigned const char* s = (unsigned const char*)"abcd";
-
-       TS_ASSERT(constraint.eval(s));
-	}
-
-	void testShouldReturnFalseIfTheParameterDoesNotEndWithSpecifiedConstPUChar()
-	{
-       IsStringEndWith constraint("abcd");
-
-       unsigned const char* s = (unsigned const char*)"efgabcc";
-
-       TS_ASSERT(!constraint.eval(s));
-	}
-
-	void testShouldReturnFalseIfTheParameterIsAnNullPointer()
-	{
-       IsStringEndWith constraint("abcd");
-
-       const char* s = 0;
-
-       TS_ASSERT(!constraint.eval(s));
+       TS_ASSERT(!predict.predict(input, target));
 	}
 
 	void testShouldBeAbleConvertToRequiredFormattedString()
 	{
-       IsStringEndWith constraint("abcd");
+       IsStringEndWith predict;
 
-       TS_ASSERT_EQUALS(std::string("endWith(\"abcd\")"), constraint.toString());
+       TS_ASSERT_EQUALS(std::string("endWith(\"abcd\")"), predict.toString("abcd"));
 	}
 };
 

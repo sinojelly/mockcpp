@@ -3,24 +3,28 @@
 #define __MOCKCPP_STRING_CONSTRAINT_H
 
 #include <mockcpp.h>
+
+#include <string>
+
 #include <Constraint.h>
 #include <RefAny.h>
 
 MOCKCPP_NS_START
 
-class StringConstraint: public Constraint
+struct StringPredict;
+
+struct StringConstraint: public Constraint
 {
-public:
-    StringConstraint(const std::string s)
-      : str(s)
-    {}
+    StringConstraint(const std::string& s, StringPredict* pred);
+    ~StringConstraint();
 
-protected:
-    char * tryToCastParameterToString(const RefAny& val) const;
+    bool eval(const RefAny& val) const;
 
-protected:
+    std::string toString() const;
 
+private:
    std::string str;
+   StringPredict* predict;
 };
 
 MOCKCPP_NS_END
