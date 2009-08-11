@@ -18,7 +18,16 @@ template <typename T> struct TypeString
 	static std::string value()
 	{
        return getDemangledName(typeid(T));
-    }
+   }
+};
+
+template <>
+struct TypeString<std::string>
+{
+	static std::string value()
+	{
+      return "std::string";
+   }
 };
 
 MOCKCPP_NS_END
