@@ -27,7 +27,7 @@ class TestMockObject : public CxxTest::TestSuite
 
    struct Interface: public Base0, public Base1
    {
-      virtual void a() {}
+      virtual const std::string& a() {}
       virtual void b(bool) {}
    };
 
@@ -725,6 +725,20 @@ public:
 
        TS_ASSERT(!((Interface*)mock2)->base01(12));
        TS_ASSERT_THROWS(((Interface*)mock0)->base01(12), Exception);
+   }
+
+   // returnValue(ref)
+   void testShouldBeAbleToSupportReturningReference()
+   {
+      MockObject<Interface> mock;
+
+      const std::string str("abcdefg");
+
+      mock.method(&Interface::a)
+          .stubs()
+          .will(returnValue(str));
+
+      TS_ASSERT_EQUALS(str, ((Interface*)mock)->a());
    }
 };
 
