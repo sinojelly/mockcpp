@@ -33,7 +33,8 @@ TESTSUITES = \
  TestIsStringContains.h \
  TestChainableMockMethodNameKey.h \
  TestChainableMockMethodContainer.h \
- TestStringConstraint.h
+ TestStringConstraint.h \
+ TestIncrementStub.h
 
 mockcpp-ut.cpp : $(TESTSUITES)
 	$(UTCG) --have-eh --have-std --part -o $@ $^
