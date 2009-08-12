@@ -202,7 +202,8 @@ TESTSUITES = \
  TestIsStringContains.h \
  TestChainableMockMethodNameKey.h \
  TestChainableMockMethodContainer.h \
- TestStringConstraint.h
+ TestStringConstraint.h \
+ TestIncrementStub.h
 
 all: all-am
 
