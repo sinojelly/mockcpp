@@ -35,3 +35,6 @@ def getOpt(longOpts):
 		print >> sys.stderr, str(err)
 		usage(longOpts)
 		sys.exit(2)
+
+def getContent(lines):
+   return "\n".join(lines) + "\n"
