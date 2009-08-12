@@ -252,8 +252,14 @@ public:
 
 	void testShouldBeAbleToStringnizeNegativeInt()
 	{
-		std::string expected("(int)0xfffffb2e/-1234");
-		TS_ASSERT_EQUALS(expected, toTypeAndValueString(-1234));
+		int i = -1234;
+
+      char buf[50];
+      ::sprintf(buf, "(int)0x%x/%d", i, i);
+
+		std::string expected(buf);
+
+		TS_ASSERT_EQUALS(expected, toTypeAndValueString(i));
 	}
    
 	void testShouldBeAbleToStringnizeLong()
