@@ -22,7 +22,7 @@ def getDelegatedMethodGetDefContent(maxVtblSize):
    for i in range(0, maxVtblSize):
       lines.append(lineStr % i)
 
-   return "\n".join(lines)
+   return getContent(lines)
 
 def generateDelegatedMethodGetDef(includePath, maxVtblSize):
    content = getDelegatedMethodGetDefContent(maxVtblSize)
@@ -34,7 +34,7 @@ def getDelegatedMethodGetByVptrDefContent(maxInheritance):
    for i in range(0, maxInheritance):
       lines.append(lineStr % i)
 
-   return "\n".join(lines)
+   return getContent(lines)
 
 def generateDelegatedMethodGetByIndexDef(includePath, maxInheritance):
    content = getDelegatedMethodGetByVptrDefContent(maxInheritance)

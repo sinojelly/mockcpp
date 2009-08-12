@@ -36,20 +36,10 @@ public:
 
     Any& invoke(void)
     {
-        oss_t oss;
-
-        oss << "Returned value has increased to specified end value"
-            << "(" << to << ")";
-
-        MOCKCPP_ASSERT_TRUE_MESSAGE(
-           oss.str(),
-           current <= to);
-
-        value = Any(current);
-
-        current++;
-
-        return value;
+       checkEnd();
+       value = Any(current);
+       current++;
+       return value;
     }
 
     std::string toString(void) const
@@ -72,6 +62,22 @@ public:
     {
         return typeid(T);
     }
+
+private:
+
+   void checkEnd()
+   {
+      if(!hasEnd)
+      {
+         return;
+      }
+      oss_t oss;
+      oss << "Returned value has increased to specified end value"
+            << "(" << to << ")";
+      MOCKCPP_ASSERT_TRUE_MESSAGE(
+           oss.str(),
+           current <= to);
+   }
 
 private:
 

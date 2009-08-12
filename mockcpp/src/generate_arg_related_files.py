@@ -19,7 +19,7 @@ def getArgumentListDefContent(maxParameters):
    for i in range(0, maxParameters+1):
       lines.append(lineStr % i)
 
-   return "\n".join(lines)
+   return getContent(lines)
 
 def generateArgumentListDef(includePath, maxParameters):
    content = getArgumentListDefContent(maxParameters)
@@ -33,7 +33,7 @@ def getMethodTypeTraitsDefContent(maxParameters):
       lines.append(lineStr0 % i)
       lines.append(lineStr1 % i)
 
-   return "\n".join(lines)
+   return getContent(lines)
 
 def generateMethodTypeTraitsDef(includePath, maxParameters):
    content = getMethodTypeTraitsDefContent(maxParameters)
@@ -47,7 +47,7 @@ def getDelegatedMethodDefContent(maxParameters):
       lines.append(lineStr0 % i)
       lines.append(lineStr1 % i)
 
-   return "\n".join(lines)
+   return getContent(lines)
 
 def generateDelegatedMethodDef(includePath, maxParameters):
    content = getDelegatedMethodDefContent(maxParameters)
