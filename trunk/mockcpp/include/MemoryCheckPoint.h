@@ -8,11 +8,16 @@
 
 MOCKCPP_NS_START
 
-typedef int MemoryCheckPoint;
+struct MemoryCheckPoint
+{
+   size_t memory;
+   unsigned int fds;
+};
 
 MemoryCheckPoint mockcppSetCheckPoint();
-void mockcppVerifyCheckPoint(MemoryCheckPoint mcp, \
+void mockcppVerifyCheckPoint(const MemoryCheckPoint& mcp, \
      const char* file, const char* func) throw (Exception);
+
 
 #define MOCKCPP_CHECK_POINT_VERIFY(checkpoint) do { \
       mockcppVerifyCheckPoint(checkpoint, __FILE__, __FUNCTION__); \

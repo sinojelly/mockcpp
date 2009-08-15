@@ -6,6 +6,10 @@
 #include <new>
 #include <stdlib.h>
 
+#include <unistd.h>
+#include <fcntl.h>
+#include <errno.h>
+
 MOCKCPP_NS_START
 
 //////////////////////////////////////////////////////////////////
@@ -14,19 +18,51 @@ namespace
    size_t allocatedSize = 0;
 }
 
-//////////////////////////////////////////////////////////////////
-MemoryCheckPoint mockcppSetCheckPoint()
+unsigned int getNumberOfOpenFiles()
 {
-   return allocatedSize;
+    unsigned int maxNumberOfOpenFiles = ::getdtablesize();
+    unsigned int openedFiles = 0;
+    for(unsigned int fd = 0; fd < maxNumberOfOpenFiles; fd++)
+    {
+       int flags = 0;
+       do{
+         flags = ::fcntl(fd, F_GETFD, 0);
+       } while(flags == -1 && errno == EINTR);
+
+       if(flags != -1)
+       {
+         openedFiles++;
+       }
+    }
+
+    return openedFiles;
 }
 
 //////////////////////////////////////////////////////////////////
-void mockcppVerifyCheckPoint(MemoryCheckPoint mcp, const char* file, const char* func) throw (Exception)
+MemoryCheckPoint mockcppSetCheckPoint()
 {
-   if(mcp != allocatedSize)
+   MemoryCheckPoint cp;
+
+   cp.memory = allocatedSize;
+   cp.fds = getNumberOfOpenFiles();
+
+   return cp;
+}
+
+//////////////////////////////////////////////////////////////////
+void mockcppVerifyCheckPoint(const MemoryCheckPoint& mcp, const char* file, const char* func) throw (Exception)
+{
+   if(mcp.memory != allocatedSize)
    {
       oss_t oss;
       oss << file << ":" << func << " : memory leak";
+      MOCKCPP_FAIL(oss.str());
+   }
+
+   if(mcp.fds != getNumberOfOpenFiles())
+   {
+      oss_t oss;
+      oss << file << ":" << func << " : resource leak";
       MOCKCPP_FAIL(oss.str());
    }
 }
