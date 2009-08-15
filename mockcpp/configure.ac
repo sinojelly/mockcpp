@@ -4,7 +4,8 @@ AC_CONFIG_SRCDIR([src/Any.cpp])
 AM_INIT_AUTOMAKE([-Wall -Werror foreign])
 AC_PROG_LIBTOOL
 AC_PROG_CXX
-AC_CHECK_TOOL([PYTHON], [python], [AC_MSG_ERROR([python could not be found on this system.])])
+AM_PATH_PYTHON([2.5],, [:])
+AM_CONDITIONAL([HAVE_PYTHON], [test "$PYTHON" != :])
 
 # mockcpp Namespace
 mockcpp_no_namespace=0
@@ -55,7 +56,7 @@ AC_SUBST(MOCKCPP_MI)
 # MOCKCPP_MAX_VTBL_SIZE
 
 if test "x${max_vtbl_size}" == "x"; then
-   max_vtbl_size=10
+   max_vtbl_size=20
 fi
 
 if test ! $max_vtbl_size -gt 50 && test $max_vtbl_size -gt 2; then

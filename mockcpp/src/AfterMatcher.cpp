@@ -23,7 +23,7 @@ void AfterMatcher::increaseInvoked(const Invocation& inv)
 {
     oss_t oss;
 
-    oss << "Expected invoked after the invocation with id "
+    oss << "Expected invoked after the invocation with id \""
         << previousCall->getId()->getId()
         << "\", but that invocation has NOT been invoked yet.";
 
