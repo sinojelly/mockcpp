@@ -1,6 +1,6 @@
 
-#include <NormalResultHandlerFactory.h>
-#include <NormalResultHandler.h>
+#include <mockcpp/NormalResultHandlerFactory.h>
+#include <mockcpp/NormalResultHandler.h>
 
 MOCKCPP_NS_START
 

@@ -1,15 +1,15 @@
 
-#include <InvocationMockBuilderGetter.h>
-#include <InvocationMockerContainer.h>
-#include <StubsMatcher.h>
-#include <ExpectsMatcher.h>
-#include <InvokedTimesMatcher.h>
-#include <InvocationTimesMatcher.h>
-#include <InvokedTimesRecorder.h>
-#include <SimpleInvocationRecorder.h>
-#include <InvocationMocker.h>
-#include <DefaultMatcher.h>
-#include <Method.h>
+#include <mockcpp/InvocationMockBuilderGetter.h>
+#include <mockcpp/InvocationMockerContainer.h>
+#include <mockcpp/StubsMatcher.h>
+#include <mockcpp/ExpectsMatcher.h>
+#include <mockcpp/InvokedTimesMatcher.h>
+#include <mockcpp/InvocationTimesMatcher.h>
+#include <mockcpp/InvokedTimesRecorder.h>
+#include <mockcpp/SimpleInvocationRecorder.h>
+#include <mockcpp/InvocationMocker.h>
+#include <mockcpp/DefaultMatcher.h>
+#include <mockcpp/Method.h>
 
 MOCKCPP_NS_START
 

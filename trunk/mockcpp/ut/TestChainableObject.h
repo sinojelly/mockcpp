@@ -1,10 +1,10 @@
 
 #include <cxxtest/TestSuite.h>
-#include <Any.h>
-#include <ChainableMockObject.h>
-#include <InvocationMockBuilder.h>
-#include <ChainingMockHelper.h>
-#include <MemoryCheckPoint.h>
+#include <mockcpp/Any.h>
+#include <mockcpp/ChainableMockObject.h>
+#include <mockcpp/InvocationMockBuilder.h>
+#include <mockcpp/ChainingMockHelper.h>
+#include <mockcpp/MemoryCheckPoint.h>
 
 USING_MOCKCPP_NS
 

@@ -1,6 +1,6 @@
 
-#include <TestFailureMatcher.h>
-#include <Asserter.h>
+#include <mockcpp/TestFailureMatcher.h>
+#include <mockcpp/Asserter.h>
 
 MOCKCPP_NS_START
 

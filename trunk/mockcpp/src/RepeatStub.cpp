@@ -1,7 +1,7 @@
 
-#include <RepeatStub.h>
-#include <Asserter.h>
-#include <OutputStringStream.h>
+#include <mockcpp/RepeatStub.h>
+#include <mockcpp/Asserter.h>
+#include <mockcpp/OutputStringStream.h>
 
 MOCKCPP_NS_START
 

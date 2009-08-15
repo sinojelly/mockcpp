@@ -1,8 +1,8 @@
 
 #include <cxxtest/TestSuite.h>
-#include <Any.h>
-#include <RefAny.h>
-#include <IsRef.h>
+#include <mockcpp/Any.h>
+#include <mockcpp/RefAny.h>
+#include <mockcpp/IsRef.h>
 
 USING_MOCKCPP_NS
           

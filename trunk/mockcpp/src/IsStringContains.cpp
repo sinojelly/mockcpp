@@ -1,6 +1,6 @@
 
-#include <IsStringContains.h>
-#include <OutputStringStream.h>
+#include <mockcpp/IsStringContains.h>
+#include <mockcpp/OutputStringStream.h>
 
 MOCKCPP_NS_START
 

@@ -1,6 +1,6 @@
 
-#include <TypelessConstraintAdapter.h>
-#include <TypelessConstraint.h>
+#include <mockcpp/TypelessConstraintAdapter.h>
+#include <mockcpp/TypelessConstraint.h>
 
 MOCKCPP_NS_START
 

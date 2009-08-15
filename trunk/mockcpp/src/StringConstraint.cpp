@@ -1,6 +1,6 @@
 
-#include <StringPredict.h>
-#include <StringConstraint.h>
+#include <mockcpp/StringPredict.h>
+#include <mockcpp/StringConstraint.h>
 
 MOCKCPP_NS_START
 

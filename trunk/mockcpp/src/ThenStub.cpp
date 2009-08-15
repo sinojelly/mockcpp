@@ -1,6 +1,6 @@
 
-#include <OutputStringStream.h>
-#include <ThenStub.h>
+#include <mockcpp/OutputStringStream.h>
+#include <mockcpp/ThenStub.h>
 
 MOCKCPP_NS_START
 

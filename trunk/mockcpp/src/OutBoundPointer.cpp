@@ -1,7 +1,7 @@
 
-#include <OutBoundPointer.h>
-#include <Formatter.h>
-#include <Asserter.h>
+#include <mockcpp/OutBoundPointer.h>
+#include <mockcpp/Formatter.h>
+#include <mockcpp/Asserter.h>
 
 MOCKCPP_NS_START
 

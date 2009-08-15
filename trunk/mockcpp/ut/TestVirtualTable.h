@@ -1,10 +1,10 @@
 
 #include <cxxtest/TestSuite.h>
 
-#include <MemoryCheckPoint.h>
-#include <VirtualTable.h>
-#include <IndexInvokableGetter.h>
-#include <Invokable.h>
+#include <mockcpp/MemoryCheckPoint.h>
+#include <mockcpp/VirtualTable.h>
+#include <mockcpp/IndexInvokableGetter.h>
+#include <mockcpp/Invokable.h>
 
 struct IndexInvokableGetterStub : public IndexInvokableGetter
 {

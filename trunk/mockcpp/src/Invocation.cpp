@@ -2,9 +2,9 @@
 
 #include <vector>
 
-#include <OutputStringStream.h>
-#include <Invocation.h>
-#include <RefAny.h>
+#include <mockcpp/OutputStringStream.h>
+#include <mockcpp/Invocation.h>
+#include <mockcpp/RefAny.h>
 
 MOCKCPP_NS_START
 

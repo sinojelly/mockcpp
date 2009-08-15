@@ -1,13 +1,13 @@
 
-#include <InvocationMocker.h>
-#include <ChainableMockMethodCore.h>
-#include <Matcher.h>
-#include <Stub.h>
-#include <Any.h>
-#include <Asserter.h>
-#include <InvocationId.h>
-#include <Method.h>
-#include <StubContainer.h>
+#include <mockcpp/InvocationMocker.h>
+#include <mockcpp/ChainableMockMethodCore.h>
+#include <mockcpp/Matcher.h>
+#include <mockcpp/Stub.h>
+#include <mockcpp/Any.h>
+#include <mockcpp/Asserter.h>
+#include <mockcpp/InvocationId.h>
+#include <mockcpp/Method.h>
+#include <mockcpp/StubContainer.h>
 
 #include <list>
 #include <algorithm>

@@ -1,8 +1,8 @@
 
-#include <MismatchResultHandler.h>
-#include <Any.h>
-#include <SelfDescribe.h>
-#include <Asserter.h>
+#include <mockcpp/MismatchResultHandler.h>
+#include <mockcpp/Any.h>
+#include <mockcpp/SelfDescribe.h>
+#include <mockcpp/Asserter.h>
 
 MOCKCPP_NS_START
 

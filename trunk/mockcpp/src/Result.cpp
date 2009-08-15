@@ -1,14 +1,14 @@
 
-#include <Result.h>
-#include <SelfDescribe.h>
-#include <ResultHandler.h>
-#include <Any.h>
+#include <mockcpp/Result.h>
+#include <mockcpp/SelfDescribe.h>
+#include <mockcpp/ResultHandler.h>
+#include <mockcpp/Any.h>
 
-#include <IgnoreResultHandlerFactory.h>
-#include <VoidResultHandlerFactory.h>
-#include <MismatchResultHandlerFactory.h>
-#include <NormalResultHandlerFactory.h>
-#include <SelfDescribe.h>
+#include <mockcpp/IgnoreResultHandlerFactory.h>
+#include <mockcpp/VoidResultHandlerFactory.h>
+#include <mockcpp/MismatchResultHandlerFactory.h>
+#include <mockcpp/NormalResultHandlerFactory.h>
+#include <mockcpp/SelfDescribe.h>
 
 #include <typeinfo>
 #include <list>

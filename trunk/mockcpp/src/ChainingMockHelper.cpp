@@ -1,25 +1,25 @@
 
-#include <mockcpp.h>
+#include <mockcpp/mockcpp.h>
 
-#include <Matcher.h>
-#include <TypelessStubAdapter.h>
-#include <InvokedOnce.h>
-#include <InvokedAtLeast.h>
-#include <InvokedAtMost.h>
-#include <InvokedExactly.h>
-#include <TestFailureMatcher.h>
-#include <ReturnStub.h>
-#include <ReturnObjectList.h>
-#include <Constraint.h>
-#include <OutBoundPointer.h>
-#include <IsMirror.h>
-#include <IgnoreReturnStub.h>
-#include <RepeatStub.h>
-#include <StringConstraint.h>
-#include <IsStringStartWith.h>
-#include <IsStringEndWith.h>
-#include <IsStringContains.h>
-#include <DieStub.h>
+#include <mockcpp/Matcher.h>
+#include <mockcpp/TypelessStubAdapter.h>
+#include <mockcpp/InvokedOnce.h>
+#include <mockcpp/InvokedAtLeast.h>
+#include <mockcpp/InvokedAtMost.h>
+#include <mockcpp/InvokedExactly.h>
+#include <mockcpp/TestFailureMatcher.h>
+#include <mockcpp/ReturnStub.h>
+#include <mockcpp/ReturnObjectList.h>
+#include <mockcpp/Constraint.h>
+#include <mockcpp/OutBoundPointer.h>
+#include <mockcpp/IsMirror.h>
+#include <mockcpp/IgnoreReturnStub.h>
+#include <mockcpp/RepeatStub.h>
+#include <mockcpp/StringConstraint.h>
+#include <mockcpp/IsStringStartWith.h>
+#include <mockcpp/IsStringEndWith.h>
+#include <mockcpp/IsStringContains.h>
+#include <mockcpp/DieStub.h>
 
 MOCKCPP_NS_START
 

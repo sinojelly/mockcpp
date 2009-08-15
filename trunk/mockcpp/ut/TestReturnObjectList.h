@@ -1,9 +1,9 @@
 
 #include <cxxtest/TestSuite.h>
-#include <Any.h>
-#include <ChainableMockObject.h>
-#include <InvocationMockBuilder.h>
-#include <ChainingMockHelper.h>
+#include <mockcpp/Any.h>
+#include <mockcpp/ChainableMockObject.h>
+#include <mockcpp/InvocationMockBuilder.h>
+#include <mockcpp/ChainingMockHelper.h>
 
 USING_MOCKCPP_NS
 

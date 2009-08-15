@@ -1,9 +1,9 @@
 
 #include <cxxtest/TestSuite.h>
 
-#include <MemoryCheckPoint.h>
+#include <mockcpp/MemoryCheckPoint.h>
 
-#include <IsStringStartWith.h>
+#include <mockcpp/IsStringStartWith.h>
 
 USING_MOCKCPP_NS
 

@@ -1,11 +1,11 @@
 
 #include <cxxtest/TestSuite.h>
-#include <InvocationMocker.h>
-#include <Invocation.h>
-#include <InvocationMockBuilder.h>
-#include <ChainingMockHelper.h>
-#include <Any.h>
-#include <InvokedTimesRecorder.h>
+#include <mockcpp/InvocationMocker.h>
+#include <mockcpp/Invocation.h>
+#include <mockcpp/InvocationMockBuilder.h>
+#include <mockcpp/ChainingMockHelper.h>
+#include <mockcpp/Any.h>
+#include <mockcpp/InvokedTimesRecorder.h>
 
 USING_MOCKCPP_NS
 

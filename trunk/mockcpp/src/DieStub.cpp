@@ -1,7 +1,7 @@
 
 #include <unistd.h>
 
-#include <DieStub.h>
+#include <mockcpp/DieStub.h>
 
 
 MOCKCPP_NS_START

@@ -1,5 +1,5 @@
 
-#include <mockcpp.h>
+#include <mockcpp/mockcpp.h>
 
 #include <typeinfo>
 

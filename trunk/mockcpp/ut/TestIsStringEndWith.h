@@ -1,7 +1,7 @@
 
 #include <cxxtest/TestSuite.h>
-#include <MemoryCheckPoint.h>
-#include <IsStringEndWith.h>
+#include <mockcpp/MemoryCheckPoint.h>
+#include <mockcpp/IsStringEndWith.h>
 
 USING_MOCKCPP_NS
 

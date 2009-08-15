@@ -1,6 +1,6 @@
 
-#include <MismatchResultHandlerFactory.h>
-#include <MismatchResultHandler.h>
+#include <mockcpp/MismatchResultHandlerFactory.h>
+#include <mockcpp/MismatchResultHandler.h>
 
 MOCKCPP_NS_START
 

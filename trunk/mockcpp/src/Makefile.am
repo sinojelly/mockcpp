@@ -1,14 +1,18 @@
 
-AM_CPPFLAGS = -I$(top_builddir)/include -I$(top_builddir)/3rdparty
+MOCKCPP_INCLUDE_PATH = $(top_builddir)/include
+MOCKCPP_HEADERS_PATH = $(top_builddir)/include/mockcpp
+
+AM_CPPFLAGS = -I$(MOCKCPP_INCLUDE_PATH) -I$(top_builddir)/3rdparty
+
 
 lib_LTLIBRARIES = libmockcpp.la
 
 EXTRA_HEADERS = \
- $(top_builddir)/include/DelegatedMethodDef.h \
- $(top_builddir)/include/DelegatedMethodGetDef.h \
- $(top_builddir)/include/DelegatedMethodGetByVptrDef.h \
- $(top_builddir)/include/ArgumentListDef.h  \
- $(top_builddir)/include/MethodTypeTraitsDef.h
+ $(MOCKCPP_HEADERS_PATH)/DelegatedMethodDef.h \
+ $(MOCKCPP_HEADERS_PATH)/DelegatedMethodGetDef.h \
+ $(MOCKCPP_HEADERS_PATH)/DelegatedMethodGetByVptrDef.h \
+ $(MOCKCPP_HEADERS_PATH)/ArgumentsListDef.h  \
+ $(MOCKCPP_HEADERS_PATH)/MethodTypeTraitsDef.h
 
 BUILT_SOURCES = $(EXTRA_HEADERS)
 CLEANFILES = $(EXTRA_HEADERS)
@@ -91,15 +95,15 @@ MAX_VTBL_SIZE = @MOCKCPP_MVS@
 MAX_PARAMETERS = @MOCKCPP_MAX_PARAMS@
 
 EXTRA_VTBL_HEADERS_DEFS = --allow-mi=$(ALLOW_MI) --max-inheritance=$(MAX_INHERITANCE) \
-                        --max-vtbl-size=$(MAX_VTBL_SIZE) --include-path=$(top_builddir)/include
+                        --max-vtbl-size=$(MAX_VTBL_SIZE) --include-path=$(MOCKCPP_HEADERS_PATH)
 
-EXTRA_PARAMS_HEADERS_DEFS = --max-parameters=$(MAX_PARAMETERS) --include-path=$(top_builddir)/include
+EXTRA_PARAMS_HEADERS_DEFS = --max-parameters=$(MAX_PARAMETERS) --include-path=$(MOCKCPP_HEADERS_PATH)
 
 
-$(top_builddir)/include/DelegatedMethodDef.h: FORCE
+$(MOCKCPP_HEADERS_PATH)/DelegatedMethodDef.h: FORCE
 	$(PYTHON) $(top_builddir)/src/generate_vtbl_related_files.py $(EXTRA_VTBL_HEADERS_DEFS)
 
-$(top_builddir)/include/DelegatedMethodGetByVptrDef.h: FORCE
+$(MOCKCPP_HEADERS_PATH)/DelegatedMethodGetByVptrDef.h: FORCE
 	$(PYTHON) $(top_builddir)/src/generate_arg_related_files.py $(EXTRA_PARAMS_HEADERS_DEFS)
 
 FORCE:

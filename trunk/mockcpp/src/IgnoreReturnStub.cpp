@@ -1,6 +1,6 @@
 
-#include <IgnoreReturnStub.h>
-#include <Ignore.h>
+#include <mockcpp/IgnoreReturnStub.h>
+#include <mockcpp/Ignore.h>
 
 MOCKCPP_NS_START
 

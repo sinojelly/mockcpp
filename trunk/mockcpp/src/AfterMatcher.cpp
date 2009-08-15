@@ -1,10 +1,10 @@
 
-#include <AfterMatcher.h>
-#include <InvocationMocker.h>
-#include <Asserter.h>
-#include <Invocation.h>
-#include <InvocationId.h>
-#include <ChainableMockMethodCore.h>
+#include <mockcpp/AfterMatcher.h>
+#include <mockcpp/InvocationMocker.h>
+#include <mockcpp/Asserter.h>
+#include <mockcpp/Invocation.h>
+#include <mockcpp/InvocationId.h>
+#include <mockcpp/ChainableMockMethodCore.h>
 
 MOCKCPP_NS_START
 

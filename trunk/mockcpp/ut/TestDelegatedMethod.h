@@ -1,7 +1,7 @@
 
 #include <cxxtest/TestSuite.h>
-#include <MemoryCheckPoint.h>
-#include <DelegatedMethod.h>
+#include <mockcpp/MemoryCheckPoint.h>
+#include <mockcpp/DelegatedMethod.h>
 
 class TestDelegatedMethod: public CxxTest::TestSuite
 {

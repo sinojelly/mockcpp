@@ -1,7 +1,7 @@
 
-#include <InvokedOnce.h>
-#include <Asserter.h>
-#include <OutputStringStream.h>
+#include <mockcpp/InvokedOnce.h>
+#include <mockcpp/Asserter.h>
+#include <mockcpp/OutputStringStream.h>
 
 MOCKCPP_NS_START
 

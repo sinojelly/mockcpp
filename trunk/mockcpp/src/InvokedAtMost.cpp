@@ -1,8 +1,8 @@
 
-#include <OutputStringStream.h>
-#include <InvokedAtMost.h>
-#include <Asserter.h>
-#include <Formatter.h>
+#include <mockcpp/OutputStringStream.h>
+#include <mockcpp/InvokedAtMost.h>
+#include <mockcpp/Asserter.h>
+#include <mockcpp/Formatter.h>
 
 #include <iostream>
 

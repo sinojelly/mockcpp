@@ -1,7 +1,7 @@
 
-#include <mockcpp.h>
-#include <AnyBase.h>
-#include <Holder.h>
+#include <mockcpp/mockcpp.h>
+#include <mockcpp/AnyBase.h>
+#include <mockcpp/Holder.h>
 
 MOCKCPP_NS_START
 

@@ -1,7 +1,7 @@
 
-#include <IgnoreResultHandlerFactory.h>
-#include <IgnoreResultHandler.h>
-#include <SelfDescribe.h>
+#include <mockcpp/IgnoreResultHandlerFactory.h>
+#include <mockcpp/IgnoreResultHandler.h>
+#include <mockcpp/SelfDescribe.h>
 
 MOCKCPP_NS_START
 

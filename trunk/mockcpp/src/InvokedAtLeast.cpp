@@ -1,8 +1,8 @@
 
-#include <OutputStringStream.h>
-#include <InvokedAtLeast.h>
-#include <Asserter.h>
-#include <Formatter.h>
+#include <mockcpp/OutputStringStream.h>
+#include <mockcpp/InvokedAtLeast.h>
+#include <mockcpp/Asserter.h>
+#include <mockcpp/Formatter.h>
 
 MOCKCPP_NS_START
 

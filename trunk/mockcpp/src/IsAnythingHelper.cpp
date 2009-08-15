@@ -1,6 +1,6 @@
 
-#include <IsAnything.h>
-#include <TypelessConstraintAdapter.h>
+#include <mockcpp/IsAnything.h>
+#include <mockcpp/TypelessConstraintAdapter.h>
 
 MOCKCPP_NS_START
 

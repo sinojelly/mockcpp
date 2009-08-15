@@ -1,6 +1,6 @@
 
-#include <StubsMatcher.h>
-#include <Invocation.h>
+#include <mockcpp/StubsMatcher.h>
+#include <mockcpp/Invocation.h>
 
 MOCKCPP_NS_START
 

@@ -1,11 +1,11 @@
 
-#include <mockcpp.h>
+#include <mockcpp/mockcpp.h>
 
-#include <ChainableMockObject.h>
-#include <ChainableMockMethodCore.h>
-#include <InvocationMockBuilderGetter.h>
-#include <ChainableMockMethodNameKey.h>
-#include <InvocationMockerNamespace.h>
+#include <mockcpp/ChainableMockObject.h>
+#include <mockcpp/ChainableMockMethodCore.h>
+#include <mockcpp/InvocationMockBuilderGetter.h>
+#include <mockcpp/ChainableMockMethodNameKey.h>
+#include <mockcpp/InvocationMockerNamespace.h>
 
 MOCKCPP_NS_START
 

@@ -1,7 +1,7 @@
 
-#include <mockcpp.h>
+#include <mockcpp/mockcpp.h>
 
-#include <RefAny.h>
+#include <mockcpp/RefAny.h>
 
 MOCKCPP_NS_START
 

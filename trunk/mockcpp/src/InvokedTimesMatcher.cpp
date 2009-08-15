@@ -1,7 +1,7 @@
 
-#include <OutputStringStream.h>
-#include <InvokedTimesMatcher.h>
-#include <InvokedTimesRecorder.h>
+#include <mockcpp/OutputStringStream.h>
+#include <mockcpp/InvokedTimesMatcher.h>
+#include <mockcpp/InvokedTimesRecorder.h>
 
 MOCKCPP_NS_START
 

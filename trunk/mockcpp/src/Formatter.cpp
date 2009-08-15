@@ -1,6 +1,6 @@
 
-#include <OutputStringStream.h>
-#include <Formatter.h>
+#include <mockcpp/OutputStringStream.h>
+#include <mockcpp/Formatter.h>
 
 MOCKCPP_NS_START
 

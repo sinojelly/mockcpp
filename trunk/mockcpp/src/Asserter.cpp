@@ -1,5 +1,5 @@
 
-#include <Asserter.h>
+#include <mockcpp/Asserter.h>
 #include <string.h>
 
 MOCKCPP_NS_START
