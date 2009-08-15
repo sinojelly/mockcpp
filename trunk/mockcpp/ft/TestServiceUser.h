@@ -17,9 +17,9 @@
 ***/
 
 #include <cxxtest/TestSuite.h>
-#include <mokc.h>
+#include <mockcpp/mokc.h>
 #include <ServiceUser.c>
-#include <ProcStub.h>
+#include <mockcpp/ProcStub.h>
           
 int service_f16_stub()
 {
