@@ -17,7 +17,7 @@
 ***/
 
 #include <Service.h>
-#include <mockable.h>
+#include <mockcpp/mockable.h>
 
 int func1()
 {

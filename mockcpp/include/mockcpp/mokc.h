@@ -20,8 +20,8 @@
 #define __MOCKCPP_MOKC_H
 
 #ifdef __cplusplus
-#  include <ChainingMockHelper.h>
-#  include <Functor.h>
+#  include <mockcpp/ChainingMockHelper.h>
+#  include <mockcpp/Functor.h>
 
 #  define MOCKER(function) MOCKCPP_NS::GlobalMockObject::instance.method(#function)
 
