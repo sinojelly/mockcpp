@@ -1,9 +1,9 @@
 
-#include <InvocationMockerSet.h>
-#include <InvocationMocker.h>
-#include <Any.h>
-#include <Invocation.h>
-#include <InvocationId.h>
+#include <mockcpp/InvocationMockerSet.h>
+#include <mockcpp/InvocationMocker.h>
+#include <mockcpp/Any.h>
+#include <mockcpp/Invocation.h>
+#include <mockcpp/InvocationId.h>
 
 #include <list>
 #include <algorithm>

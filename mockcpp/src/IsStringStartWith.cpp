@@ -1,6 +1,6 @@
 
-#include <IsStringStartWith.h>
-#include <OutputStringStream.h>
+#include <mockcpp/IsStringStartWith.h>
+#include <mockcpp/OutputStringStream.h>
 
 MOCKCPP_NS_START
 

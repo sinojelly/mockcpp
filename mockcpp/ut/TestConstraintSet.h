@@ -1,11 +1,11 @@
 
 #include <cxxtest/TestSuite.h>
 
-#include <Any.h>
-#include <IsEqual.h>
-#include <ConstraintSet.h>
-#include <ChainingMockHelper.h>
-#include <Invocation.h>
+#include <mockcpp/Any.h>
+#include <mockcpp/IsEqual.h>
+#include <mockcpp/ConstraintSet.h>
+#include <mockcpp/ChainingMockHelper.h>
+#include <mockcpp/Invocation.h>
 
 USING_MOCKCPP_NS
 

@@ -1,5 +1,5 @@
 
-#include "ProcStub.h"
+#include <mockcpp/ProcStub.h>
 
 MOCKCPP_NS_START
 

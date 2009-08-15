@@ -1,6 +1,6 @@
 
-#include <OutputStringStream.h>
-#include <WillStub.h>
+#include <mockcpp/OutputStringStream.h>
+#include <mockcpp/WillStub.h>
 
 MOCKCPP_NS_START
 

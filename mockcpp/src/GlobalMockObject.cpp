@@ -1,5 +1,5 @@
 
-#include <Functor.h>
+#include <mockcpp/Functor.h>
 
 MOCKCPP_NS_START
 

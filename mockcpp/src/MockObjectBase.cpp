@@ -1,12 +1,12 @@
 
-#include <MockObjectBase.h>
-#include <IndexInvokableGetter.h>
-#include <Invokable.h>
-#include <VirtualTable.h>
-#include <ChainableMockMethodCore.h>
-#include <ChainableMockMethodIndexKey.h>
-#include <ChainableMockMethodContainer.h>
-#include <InvocationMockBuilderGetter.h>
+#include <mockcpp/MockObjectBase.h>
+#include <mockcpp/IndexInvokableGetter.h>
+#include <mockcpp/Invokable.h>
+#include <mockcpp/VirtualTable.h>
+#include <mockcpp/ChainableMockMethodCore.h>
+#include <mockcpp/ChainableMockMethodIndexKey.h>
+#include <mockcpp/ChainableMockMethodContainer.h>
+#include <mockcpp/InvocationMockBuilderGetter.h>
 
 MOCKCPP_NS_START
 

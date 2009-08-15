@@ -1,7 +1,7 @@
 
-#include <IdentityBuilder.h>
-#include <InvocationMocker.h>
-#include <InvocationId.h>
+#include <mockcpp/IdentityBuilder.h>
+#include <mockcpp/InvocationMocker.h>
+#include <mockcpp/InvocationId.h>
 
 MOCKCPP_NS_START
 

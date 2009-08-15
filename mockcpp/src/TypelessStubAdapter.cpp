@@ -1,7 +1,7 @@
 
-#include <TypelessStubAdapter.h>
-#include <TypelessStub.h>
-#include <Any.h>
+#include <mockcpp/TypelessStubAdapter.h>
+#include <mockcpp/TypelessStub.h>
+#include <mockcpp/Any.h>
 
 MOCKCPP_NS_START
 

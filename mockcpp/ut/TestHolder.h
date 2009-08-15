@@ -1,6 +1,6 @@
 #include <cxxtest/TestSuite.h>
-#include <ValueHolder.h>
-#include <RefHolder.h>
+#include <mockcpp/ValueHolder.h>
+#include <mockcpp/RefHolder.h>
 
 USING_MOCKCPP_NS
 

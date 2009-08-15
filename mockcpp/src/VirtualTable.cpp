@@ -1,8 +1,8 @@
 
-#include <VirtualTable.h>
-#include <Asserter.h>
-#include <OutputStringStream.h>
-#include <MethodInfoReader.h>
+#include <mockcpp/VirtualTable.h>
+#include <mockcpp/Asserter.h>
+#include <mockcpp/OutputStringStream.h>
+#include <mockcpp/MethodInfoReader.h>
 
 
 MOCKCPP_NS_START

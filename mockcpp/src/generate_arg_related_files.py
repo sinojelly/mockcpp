@@ -5,7 +5,7 @@ import os.path
 from get_long_opt import *
 
 delegatedMethodDefFileName = "DelegatedMethodDef.h"
-argumentListDefFileName = "ArgumentListDef.h"
+argumentListDefFileName = "ArgumentsListDef.h"
 methodTypeTraitsDefFileName = "MethodTypeTraitsDef.h"
 maxParametersOpt   = LongOptString("max-parameters", "12")
 includePathOpt      = LongOptString("include-path", "/home/darwin/mockcpp/include")

@@ -1,8 +1,8 @@
 
 #include <cxxtest/TestSuite.h>
-#include <StubContainer.h>
-#include <Any.h>
-#include <MemoryCheckPoint.h>
+#include <mockcpp/StubContainer.h>
+#include <mockcpp/Any.h>
+#include <mockcpp/MemoryCheckPoint.h>
 
 USING_MOCKCPP_NS
 

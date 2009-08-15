@@ -1,7 +1,7 @@
 
 #include <string.h>
-#include <IsStringEndWith.h>
-#include <OutputStringStream.h>
+#include <mockcpp/IsStringEndWith.h>
+#include <mockcpp/OutputStringStream.h>
 
 MOCKCPP_NS_START
 

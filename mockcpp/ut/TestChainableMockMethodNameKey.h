@@ -1,7 +1,7 @@
 
 #include <cxxtest/TestSuite.h>
-#include <MemoryCheckPoint.h>
-#include <ChainableMockMethodNameKey.h>
+#include <mockcpp/MemoryCheckPoint.h>
+#include <mockcpp/ChainableMockMethodNameKey.h>
 
 class TestChainableMockMethodNameKey: public CxxTest::TestSuite
 {

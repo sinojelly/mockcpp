@@ -1,8 +1,8 @@
 
-#include <ChainableMockMethodContainer.h>
-#include <ChainableMockMethodCore.h>
-#include <ChainableMockMethodKey.h>
-#include <Asserter.h>
+#include <mockcpp/ChainableMockMethodContainer.h>
+#include <mockcpp/ChainableMockMethodCore.h>
+#include <mockcpp/ChainableMockMethodKey.h>
+#include <mockcpp/Asserter.h>
 
 #include <list>
 #include <utility>

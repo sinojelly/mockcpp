@@ -1,6 +1,6 @@
 
-#include <InvocationTimesMatcher.h>
-#include <InvokedTimesReader.h>
+#include <mockcpp/InvocationTimesMatcher.h>
+#include <mockcpp/InvokedTimesReader.h>
 
 MOCKCPP_NS_START
 

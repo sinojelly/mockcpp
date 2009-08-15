@@ -1,7 +1,7 @@
 
-#include <StubContainer.h>
-#include <Stub.h>
-#include <OutputStringStream.h>
+#include <mockcpp/StubContainer.h>
+#include <mockcpp/Stub.h>
+#include <mockcpp/OutputStringStream.h>
 #include <list>
 
 MOCKCPP_NS_START

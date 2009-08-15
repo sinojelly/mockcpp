@@ -1,7 +1,7 @@
 
 #include <cxxtest/TestSuite.h>
 
-#include <IncrementStub.h>
+#include <mockcpp/IncrementStub.h>
 
 USING_MOCKCPP_NS
 

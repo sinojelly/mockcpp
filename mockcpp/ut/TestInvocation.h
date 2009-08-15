@@ -1,7 +1,7 @@
 
 #include <cxxtest/TestSuite.h>
-#include <Invocation.h>
-#include <Any.h>
+#include <mockcpp/Invocation.h>
+#include <mockcpp/Any.h>
 
 USING_MOCKCPP_NS
 

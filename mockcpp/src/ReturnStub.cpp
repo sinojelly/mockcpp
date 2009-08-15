@@ -1,5 +1,5 @@
 
-#include <ReturnStub.h>
+#include <mockcpp/ReturnStub.h>
 
 MOCKCPP_NS_START
 

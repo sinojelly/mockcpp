@@ -1,5 +1,5 @@
 
-#include <ChainableMockMethodNameKey.h>
+#include <mockcpp/ChainableMockMethodNameKey.h>
 
 MOCKCPP_NS_START
 

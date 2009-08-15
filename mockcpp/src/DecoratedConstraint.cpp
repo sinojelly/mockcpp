@@ -1,7 +1,7 @@
 
-#include <OutputStringStream.h>
-#include <DecoratedConstraint.h>
-#include <RefAny.h>
+#include <mockcpp/OutputStringStream.h>
+#include <mockcpp/DecoratedConstraint.h>
+#include <mockcpp/RefAny.h>
 
 MOCKCPP_NS_START
 

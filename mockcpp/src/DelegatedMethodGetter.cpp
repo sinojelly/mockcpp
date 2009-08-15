@@ -1,7 +1,7 @@
 
-#include <mockcpp.h>
-#include <OutputStringStream.h>
-#include <Asserter.h>
+#include <mockcpp/mockcpp.h>
+#include <mockcpp/OutputStringStream.h>
+#include <mockcpp/Asserter.h>
 
 MOCKCPP_NS_START
 

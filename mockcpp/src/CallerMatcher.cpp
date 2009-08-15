@@ -1,7 +1,7 @@
 
-#include <OutputStringStream.h>
-#include <CallerMatcher.h>
-#include <Invocation.h>
+#include <mockcpp/OutputStringStream.h>
+#include <mockcpp/CallerMatcher.h>
+#include <mockcpp/Invocation.h>
 
 MOCKCPP_NS_START
 

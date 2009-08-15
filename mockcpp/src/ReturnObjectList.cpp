@@ -1,7 +1,7 @@
 
-#include <OutputStringStream.h>
-#include <ReturnObjectList.h>
-#include <Asserter.h>
+#include <mockcpp/OutputStringStream.h>
+#include <mockcpp/ReturnObjectList.h>
+#include <mockcpp/Asserter.h>
 
 #include <vector>
 

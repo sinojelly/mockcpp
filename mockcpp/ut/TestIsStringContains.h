@@ -1,7 +1,7 @@
 
 #include <cxxtest/TestSuite.h>
-#include <MemoryCheckPoint.h>
-#include <IsStringContains.h>
+#include <mockcpp/MemoryCheckPoint.h>
+#include <mockcpp/IsStringContains.h>
 
 USING_MOCKCPP_NS
 

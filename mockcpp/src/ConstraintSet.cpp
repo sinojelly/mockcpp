@@ -1,7 +1,7 @@
 
-#include <ConstraintSet.h>
-#include <Constraint.h>
-#include <Invocation.h>
+#include <mockcpp/ConstraintSet.h>
+#include <mockcpp/Constraint.h>
+#include <mockcpp/Invocation.h>
 
 #include <vector>
 

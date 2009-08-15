@@ -1,9 +1,9 @@
 
 #include <cxxtest/TestSuite.h>
 
-#include <MemoryCheckPoint.h>
+#include <mockcpp/MemoryCheckPoint.h>
 
-#include <MockObject.h>
+#include <mockcpp/MockObject.h>
 
 USING_MOCKCPP_NS
 

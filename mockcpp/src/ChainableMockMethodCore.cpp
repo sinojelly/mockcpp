@@ -1,19 +1,19 @@
 
-#include <Any.h>
-#include <Stub.h>
-#include <Asserter.h>
-#include <Invocation.h>
-#include <InvocationId.h>
-#include <DefaultMatcher.h>
-#include <StubsMatcher.h>
-#include <ExpectsMatcher.h>
-#include <InvocationMocker.h>
-#include <InvokedTimesMatcher.h>
-#include <InvocationMockerSet.h>
-#include <InvokedTimesRecorder.h>
-#include <InvocationTimesMatcher.h>
-#include <ChainableMockMethodCore.h>
-#include <SimpleInvocationRecorder.h>
+#include <mockcpp/Any.h>
+#include <mockcpp/Stub.h>
+#include <mockcpp/Asserter.h>
+#include <mockcpp/Invocation.h>
+#include <mockcpp/InvocationId.h>
+#include <mockcpp/DefaultMatcher.h>
+#include <mockcpp/StubsMatcher.h>
+#include <mockcpp/ExpectsMatcher.h>
+#include <mockcpp/InvocationMocker.h>
+#include <mockcpp/InvokedTimesMatcher.h>
+#include <mockcpp/InvocationMockerSet.h>
+#include <mockcpp/InvokedTimesRecorder.h>
+#include <mockcpp/InvocationTimesMatcher.h>
+#include <mockcpp/ChainableMockMethodCore.h>
+#include <mockcpp/SimpleInvocationRecorder.h>
 
 MOCKCPP_NS_START
 

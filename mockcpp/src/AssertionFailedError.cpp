@@ -1,5 +1,5 @@
 
-#include <AssertionFailedError.h>
+#include <mockcpp/AssertionFailedError.h>
 
 MOCKCPP_NS_START
 

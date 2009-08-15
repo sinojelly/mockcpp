@@ -1,7 +1,7 @@
 
-#include <MemoryCheckPoint.h>
-#include <Asserter.h>
-#include <OutputStringStream.h>
+#include <mockcpp/MemoryCheckPoint.h>
+#include <mockcpp/Asserter.h>
+#include <mockcpp/OutputStringStream.h>
 
 #include <new>
 #include <stdlib.h>

@@ -1,6 +1,6 @@
 
 #include <cxxtest/TestSuite.h>
-#include <Formatter.h>
+#include <mockcpp/Formatter.h>
 #include <stdio.h>
 
 USING_MOCKCPP_NS

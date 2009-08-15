@@ -1,7 +1,7 @@
 
-#include <IgnoreResultHandler.h>
-#include <Any.h>
-#include <Ignore.h>
+#include <mockcpp/IgnoreResultHandler.h>
+#include <mockcpp/Any.h>
+#include <mockcpp/Ignore.h>
 
 MOCKCPP_NS_START
 

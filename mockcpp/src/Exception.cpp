@@ -1,5 +1,5 @@
 
-#include <Exception.h>
+#include <mockcpp/Exception.h>
 
 MOCKCPP_NS_START
 

@@ -1,7 +1,7 @@
 
 #include <cxxtest/TestSuite.h>
-#include <Any.h>
-#include <IsEqual.h>
+#include <mockcpp/Any.h>
+#include <mockcpp/IsEqual.h>
 
 USING_MOCKCPP_NS
 

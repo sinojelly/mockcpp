@@ -1,6 +1,6 @@
 
-#include <ExpectsMatcher.h>
-#include <Invocation.h>
+#include <mockcpp/ExpectsMatcher.h>
+#include <mockcpp/Invocation.h>
 
 MOCKCPP_NS_START
 

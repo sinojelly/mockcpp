@@ -1,10 +1,10 @@
 
 #include <cxxtest/TestSuite.h>
 
-#include <MemoryCheckPoint.h>
-#include <ChainableMockMethodContainer.h>
-#include <ChainableMockMethodCore.h>
-#include <InvocationMockBuilderGetter.h>
+#include <mockcpp/MemoryCheckPoint.h>
+#include <mockcpp/ChainableMockMethodContainer.h>
+#include <mockcpp/ChainableMockMethodCore.h>
+#include <mockcpp/InvocationMockBuilderGetter.h>
 
 
 class TestChainableMockMethodContainer : public CxxTest::TestSuite

@@ -1,11 +1,11 @@
 
-#include <mockcpp.h>
-#include <PendingMatcher.h>
-#include <InvocationMocker.h>
-#include <OrderingMatcher.h>
-#include <Invocation.h>
-#include <InvocationMockerNamespace.h>
-#include <Asserter.h>
+#include <mockcpp/mockcpp.h>
+#include <mockcpp/PendingMatcher.h>
+#include <mockcpp/InvocationMocker.h>
+#include <mockcpp/OrderingMatcher.h>
+#include <mockcpp/Invocation.h>
+#include <mockcpp/InvocationMockerNamespace.h>
+#include <mockcpp/Asserter.h>
 
 #include <string>
 

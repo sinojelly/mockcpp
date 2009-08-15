@@ -1,7 +1,7 @@
 
 #include <cxxtest/TestSuite.h>
 
-#include <MethodInfoReader.h>
+#include <mockcpp/MethodInfoReader.h>
 
 class TestMethodInfoReader : public CxxTest::TestSuite
 {

@@ -1,7 +1,7 @@
 
-#include <VoidResultHandlerFactory.h>
-#include <VoidResultHandler.h>
-#include <SelfDescribe.h>
+#include <mockcpp/VoidResultHandlerFactory.h>
+#include <mockcpp/VoidResultHandler.h>
+#include <mockcpp/SelfDescribe.h>
 #include <string>
 
 MOCKCPP_NS_START

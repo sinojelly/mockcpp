@@ -1,6 +1,6 @@
 
-#include <DefaultMatcher.h>
-#include <Invocation.h>
+#include <mockcpp/DefaultMatcher.h>
+#include <mockcpp/Invocation.h>
 
 MOCKCPP_NS_START
 

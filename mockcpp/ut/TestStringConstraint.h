@@ -1,9 +1,9 @@
 
 #include <cxxtest/TestSuite.h>
 
-#include <StringConstraint.h>
+#include <mockcpp/StringConstraint.h>
 
-#include <StringPredict.h>
+#include <mockcpp/StringPredict.h>
 
 USING_MOCKCPP_NS
 

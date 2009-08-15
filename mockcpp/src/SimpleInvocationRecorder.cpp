@@ -1,8 +1,8 @@
 
-#include <SimpleInvocationRecorder.h>
-#include <Asserter.h>
-#include <Formatter.h>
-#include <Invocation.h>
+#include <mockcpp/SimpleInvocationRecorder.h>
+#include <mockcpp/Asserter.h>
+#include <mockcpp/Formatter.h>
+#include <mockcpp/Invocation.h>
 
 MOCKCPP_NS_START
 
