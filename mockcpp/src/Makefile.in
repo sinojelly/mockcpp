@@ -14,6 +14,7 @@
 
 @SET_MAKE@
 
+
 VPATH = @srcdir@
 pkgdatadir = $(datadir)/@PACKAGE@
 pkglibdir = $(libdir)/@PACKAGE@
@@ -33,7 +34,8 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 subdir = src
-DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
+DIST_COMMON = $(pkginclude_HEADERS) $(srcdir)/Makefile.am \
+	$(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
@@ -46,11 +48,11 @@ am__vpath_adj = case $$p in \
     *) f=$$p;; \
   esac;
 am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
-am__installdirs = "$(DESTDIR)$(libdir)"
+am__installdirs = "$(DESTDIR)$(libdir)" "$(DESTDIR)$(pkgincludedir)"
 libLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(lib_LTLIBRARIES)
 libmockcpp_la_LIBADD =
-am_libmockcpp_la_OBJECTS = AfterMatcher.lo AnyBase.lo Any.lo \
+nodist_libmockcpp_la_OBJECTS = AfterMatcher.lo AnyBase.lo Any.lo \
 	Asserter.lo AssertionFailedError.lo BeforeMatcher.lo \
 	CallerMatcher.lo ChainableMockMethodCore.lo \
 	ChainableMockObjectBase.lo ChainableMockObject.lo \
@@ -77,7 +79,7 @@ am_libmockcpp_la_OBJECTS = AfterMatcher.lo AnyBase.lo Any.lo \
 	StringConstraint.lo IsStringStartWith.lo IsStringEndWith.lo \
 	IsStringContains.lo MemoryCheckPoint.lo \
 	DelegatedMethodGetter.lo DieStub.lo
-libmockcpp_la_OBJECTS = $(am_libmockcpp_la_OBJECTS)
+libmockcpp_la_OBJECTS = $(nodist_libmockcpp_la_OBJECTS)
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -90,8 +92,10 @@ CXXLD = $(CXX)
 CXXLINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	--mode=link $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
-SOURCES = $(libmockcpp_la_SOURCES)
-DIST_SOURCES = $(libmockcpp_la_SOURCES)
+SOURCES = $(nodist_libmockcpp_la_SOURCES)
+DIST_SOURCES =
+pkgincludeHEADERS_INSTALL = $(INSTALL_HEADER)
+HEADERS = $(pkginclude_HEADERS)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -224,9 +228,156 @@ EXTRA_HEADERS = \
  $(MOCKCPP_HEADERS_PATH)/ArgumentsListDef.h  \
  $(MOCKCPP_HEADERS_PATH)/MethodTypeTraitsDef.h
 
+pkginclude_HEADERS = \
+  $(MOCKCPP_HEADERS_PATH)/AfterMatchBuilder.h \
+  $(MOCKCPP_HEADERS_PATH)/AfterMatchBuilder.tcc \
+  $(MOCKCPP_HEADERS_PATH)/AfterMatcher.h \
+  $(MOCKCPP_HEADERS_PATH)/Any.h \
+  $(MOCKCPP_HEADERS_PATH)/AnyBase.h \
+  $(MOCKCPP_HEADERS_PATH)/ArgumentsList.h \
+  $(MOCKCPP_HEADERS_PATH)/ArgumentsListDef.h \
+  $(MOCKCPP_HEADERS_PATH)/ArgumentsMacroHelpers.h \
+  $(MOCKCPP_HEADERS_PATH)/ArgumentsMatchBuilder.h \
+  $(MOCKCPP_HEADERS_PATH)/ArgumentsMatchBuilder.tcc \
+  $(MOCKCPP_HEADERS_PATH)/Asserter.h \
+  $(MOCKCPP_HEADERS_PATH)/AssertionFailedError.h \
+  $(MOCKCPP_HEADERS_PATH)/BeforeMatchBuilder.h \
+  $(MOCKCPP_HEADERS_PATH)/BeforeMatchBuilder.tcc \
+  $(MOCKCPP_HEADERS_PATH)/BeforeMatcher.h \
+  $(MOCKCPP_HEADERS_PATH)/CallerMatchBuilder.h \
+  $(MOCKCPP_HEADERS_PATH)/CallerMatchBuilder.tcc \
+  $(MOCKCPP_HEADERS_PATH)/CallerMatcher.h \
+  $(MOCKCPP_HEADERS_PATH)/ChainableMockMethod.h \
+  $(MOCKCPP_HEADERS_PATH)/ChainableMockMethodContainer.h \
+  $(MOCKCPP_HEADERS_PATH)/ChainableMockMethodCore.h \
+  $(MOCKCPP_HEADERS_PATH)/ChainableMockMethodIndexKey.h \
+  $(MOCKCPP_HEADERS_PATH)/ChainableMockMethodKey.h \
+  $(MOCKCPP_HEADERS_PATH)/ChainableMockMethodNameKey.h \
+  $(MOCKCPP_HEADERS_PATH)/ChainableMockObject.h \
+  $(MOCKCPP_HEADERS_PATH)/ChainableMockObjectBase.h \
+  $(MOCKCPP_HEADERS_PATH)/ChainingMockHelper.h \
+  $(MOCKCPP_HEADERS_PATH)/Constraint.h \
+  $(MOCKCPP_HEADERS_PATH)/ConstraintSet.h \
+  $(MOCKCPP_HEADERS_PATH)/DecoratedConstraint.h \
+  $(MOCKCPP_HEADERS_PATH)/DefaultBuilder.h \
+  $(MOCKCPP_HEADERS_PATH)/DefaultMatcher.h \
+  $(MOCKCPP_HEADERS_PATH)/DefaultStub.h \
+  $(MOCKCPP_HEADERS_PATH)/DelegatedMethod.h \
+  $(MOCKCPP_HEADERS_PATH)/DelegatedMethodDef.h \
+  $(MOCKCPP_HEADERS_PATH)/DelegatedMethodGetByVptrDef.h \
+  $(MOCKCPP_HEADERS_PATH)/DelegatedMethodGetDef.h \
+  $(MOCKCPP_HEADERS_PATH)/DelegatedMethodGetter.h \
+  $(MOCKCPP_HEADERS_PATH)/DieStub.h \
+  $(MOCKCPP_HEADERS_PATH)/DummyBuilder.h \
+  $(MOCKCPP_HEADERS_PATH)/EqualityUtil.h \
+  $(MOCKCPP_HEADERS_PATH)/Exception.h \
+  $(MOCKCPP_HEADERS_PATH)/ExpectsMatcher.h \
+  $(MOCKCPP_HEADERS_PATH)/Formatter.h \
+  $(MOCKCPP_HEADERS_PATH)/Functor.h \
+  $(MOCKCPP_HEADERS_PATH)/GlobalMockObject.h \
+  $(MOCKCPP_HEADERS_PATH)/GnuMethodInfoReader.h \
+  $(MOCKCPP_HEADERS_PATH)/Holder.h \
+  $(MOCKCPP_HEADERS_PATH)/IdentityBuilder.h \
+  $(MOCKCPP_HEADERS_PATH)/Ignore.h \
+  $(MOCKCPP_HEADERS_PATH)/IgnoreHandler.h \
+  $(MOCKCPP_HEADERS_PATH)/IgnoreResultHandler.h \
+  $(MOCKCPP_HEADERS_PATH)/IgnoreResultHandlerFactory.h \
+  $(MOCKCPP_HEADERS_PATH)/IgnoreReturnStub.h \
+  $(MOCKCPP_HEADERS_PATH)/IncrementStub.h \
+  $(MOCKCPP_HEADERS_PATH)/IndexInvokableGetter.h \
+  $(MOCKCPP_HEADERS_PATH)/Invocation.h \
+  $(MOCKCPP_HEADERS_PATH)/InvocationId.h \
+  $(MOCKCPP_HEADERS_PATH)/InvocationMockBuilder.h \
+  $(MOCKCPP_HEADERS_PATH)/InvocationMockBuilder.tcc \
+  $(MOCKCPP_HEADERS_PATH)/InvocationMockBuilderGetter.h \
+  $(MOCKCPP_HEADERS_PATH)/InvocationMocker.h \
+  $(MOCKCPP_HEADERS_PATH)/InvocationMockerContainer.h \
+  $(MOCKCPP_HEADERS_PATH)/InvocationMockerNamespace.h \
+  $(MOCKCPP_HEADERS_PATH)/InvocationMockerSet.h \
+  $(MOCKCPP_HEADERS_PATH)/InvocationTimesMatcher.h \
+  $(MOCKCPP_HEADERS_PATH)/InvocationWithReturnType.h \
+  $(MOCKCPP_HEADERS_PATH)/Invokable.h \
+  $(MOCKCPP_HEADERS_PATH)/InvokedAtLeast.h \
+  $(MOCKCPP_HEADERS_PATH)/InvokedAtMost.h \
+  $(MOCKCPP_HEADERS_PATH)/InvokedExactly.h \
+  $(MOCKCPP_HEADERS_PATH)/InvokedOnce.h \
+  $(MOCKCPP_HEADERS_PATH)/InvokedTimesMatcher.h \
+  $(MOCKCPP_HEADERS_PATH)/InvokedTimesReader.h \
+  $(MOCKCPP_HEADERS_PATH)/InvokedTimesRecorder.h \
+  $(MOCKCPP_HEADERS_PATH)/IsAnything.h \
+  $(MOCKCPP_HEADERS_PATH)/IsAnythingHelper.h \
+  $(MOCKCPP_HEADERS_PATH)/IsConst.h \
+  $(MOCKCPP_HEADERS_PATH)/IsEqual.h \
+  $(MOCKCPP_HEADERS_PATH)/IsMirror.h \
+  $(MOCKCPP_HEADERS_PATH)/IsNotEqual.h \
+  $(MOCKCPP_HEADERS_PATH)/IsRef.h \
+  $(MOCKCPP_HEADERS_PATH)/IsStringContains.h \
+  $(MOCKCPP_HEADERS_PATH)/IsStringEndWith.h \
+  $(MOCKCPP_HEADERS_PATH)/IsStringStartWith.h \
+  $(MOCKCPP_HEADERS_PATH)/Matcher.h \
+  $(MOCKCPP_HEADERS_PATH)/MemoryCheckPoint.h \
+  $(MOCKCPP_HEADERS_PATH)/Method.h \
+  $(MOCKCPP_HEADERS_PATH)/MethodInfoReader.h \
+  $(MOCKCPP_HEADERS_PATH)/MethodTypeTraits.h \
+  $(MOCKCPP_HEADERS_PATH)/MethodTypeTraitsDef.h \
+  $(MOCKCPP_HEADERS_PATH)/MismatchResultHandler.h \
+  $(MOCKCPP_HEADERS_PATH)/MismatchResultHandlerFactory.h \
+  $(MOCKCPP_HEADERS_PATH)/MockObject.h \
+  $(MOCKCPP_HEADERS_PATH)/MockObjectBase.h \
+  $(MOCKCPP_HEADERS_PATH)/MoreStubBuilder.h \
+  $(MOCKCPP_HEADERS_PATH)/MoreStubBuilder.tcc \
+  $(MOCKCPP_HEADERS_PATH)/NormalResultHandler.h \
+  $(MOCKCPP_HEADERS_PATH)/NormalResultHandlerFactory.h \
+  $(MOCKCPP_HEADERS_PATH)/OrderingMatcher.h \
+  $(MOCKCPP_HEADERS_PATH)/OutBound.h \
+  $(MOCKCPP_HEADERS_PATH)/OutBoundPointer.h \
+  $(MOCKCPP_HEADERS_PATH)/OutputStringStream.h \
+  $(MOCKCPP_HEADERS_PATH)/PendingMatcher.h \
+  $(MOCKCPP_HEADERS_PATH)/PlaceHolder.h \
+  $(MOCKCPP_HEADERS_PATH)/ProcStub.h \
+  $(MOCKCPP_HEADERS_PATH)/RefAny.h \
+  $(MOCKCPP_HEADERS_PATH)/RefHolder.h \
+  $(MOCKCPP_HEADERS_PATH)/RepeatMacros.h \
+  $(MOCKCPP_HEADERS_PATH)/RepeatStub.h \
+  $(MOCKCPP_HEADERS_PATH)/Result.h \
+  $(MOCKCPP_HEADERS_PATH)/ResultHandler.h \
+  $(MOCKCPP_HEADERS_PATH)/ResultHandlerFactory.h \
+  $(MOCKCPP_HEADERS_PATH)/ReturnObjectList.h \
+  $(MOCKCPP_HEADERS_PATH)/ReturnStub.h \
+  $(MOCKCPP_HEADERS_PATH)/SelfDescribe.h \
+  $(MOCKCPP_HEADERS_PATH)/SimpleInvocationRecorder.h \
+  $(MOCKCPP_HEADERS_PATH)/StatelessMatcher.h \
+  $(MOCKCPP_HEADERS_PATH)/StringConstraint.h \
+  $(MOCKCPP_HEADERS_PATH)/StringPredict.h \
+  $(MOCKCPP_HEADERS_PATH)/Stub.h \
+  $(MOCKCPP_HEADERS_PATH)/StubBuilder.h \
+  $(MOCKCPP_HEADERS_PATH)/StubBuilder.tcc \
+  $(MOCKCPP_HEADERS_PATH)/StubContainer.h \
+  $(MOCKCPP_HEADERS_PATH)/StubsMatcher.h \
+  $(MOCKCPP_HEADERS_PATH)/TestFailureMatcher.h \
+  $(MOCKCPP_HEADERS_PATH)/ThenStub.h \
+  $(MOCKCPP_HEADERS_PATH)/ThrowExceptionStub.h \
+  $(MOCKCPP_HEADERS_PATH)/TypeString.h \
+  $(MOCKCPP_HEADERS_PATH)/TypeTraits.h \
+  $(MOCKCPP_HEADERS_PATH)/TypelessConstraint.h \
+  $(MOCKCPP_HEADERS_PATH)/TypelessConstraintAdapter.h \
+  $(MOCKCPP_HEADERS_PATH)/TypelessStub.h \
+  $(MOCKCPP_HEADERS_PATH)/TypelessStubAdapter.h \
+  $(MOCKCPP_HEADERS_PATH)/ValueHolder.h \
+  $(MOCKCPP_HEADERS_PATH)/VirtualTable.h \
+  $(MOCKCPP_HEADERS_PATH)/Void.h \
+  $(MOCKCPP_HEADERS_PATH)/VoidResultHandler.h \
+  $(MOCKCPP_HEADERS_PATH)/VoidResultHandlerFactory.h \
+  $(MOCKCPP_HEADERS_PATH)/WillStub.h \
+  $(MOCKCPP_HEADERS_PATH)/WorkingBuilder.h \
+  $(MOCKCPP_HEADERS_PATH)/mockable.h \
+  $(MOCKCPP_HEADERS_PATH)/mockcpp.h \
+  $(MOCKCPP_HEADERS_PATH)/mockcpp.hpp \
+  $(MOCKCPP_HEADERS_PATH)/mokc.h 
+
 BUILT_SOURCES = $(EXTRA_HEADERS)
 CLEANFILES = $(EXTRA_HEADERS)
-libmockcpp_la_SOURCES = \
+nodist_libmockcpp_la_SOURCES = \
  AfterMatcher.cpp \
  AnyBase.cpp \
  Any.cpp \
@@ -473,6 +624,23 @@ mostlyclean-libtool:
 
 clean-libtool:
 	-rm -rf .libs _libs
+install-pkgincludeHEADERS: $(pkginclude_HEADERS)
+	@$(NORMAL_INSTALL)
+	test -z "$(pkgincludedir)" || $(MKDIR_P) "$(DESTDIR)$(pkgincludedir)"
+	@list='$(pkginclude_HEADERS)'; for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  f=$(am__strip_dir) \
+	  echo " $(pkgincludeHEADERS_INSTALL) '$$d$$p' '$(DESTDIR)$(pkgincludedir)/$$f'"; \
+	  $(pkgincludeHEADERS_INSTALL) "$$d$$p" "$(DESTDIR)$(pkgincludedir)/$$f"; \
+	done
+
+uninstall-pkgincludeHEADERS:
+	@$(NORMAL_UNINSTALL)
+	@list='$(pkginclude_HEADERS)'; for p in $$list; do \
+	  f=$(am__strip_dir) \
+	  echo " rm -f '$(DESTDIR)$(pkgincludedir)/$$f'"; \
+	  rm -f "$(DESTDIR)$(pkgincludedir)/$$f"; \
+	done
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
@@ -551,9 +719,9 @@ distdir: $(DISTFILES)
 check-am: all-am
 check: $(BUILT_SOURCES)
 	$(MAKE) $(AM_MAKEFLAGS) check-am
-all-am: Makefile $(LTLIBRARIES)
+all-am: Makefile $(LTLIBRARIES) $(HEADERS)
 installdirs:
-	for dir in "$(DESTDIR)$(libdir)"; do \
+	for dir in "$(DESTDIR)$(libdir)" "$(DESTDIR)$(pkgincludedir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: $(BUILT_SOURCES)
@@ -604,7 +772,7 @@ info: info-am
 
 info-am:
 
-install-data-am:
+install-data-am: install-pkgincludeHEADERS
 
 install-dvi: install-dvi-am
 
@@ -640,7 +808,7 @@ ps: ps-am
 
 ps-am:
 
-uninstall-am: uninstall-libLTLIBRARIES
+uninstall-am: uninstall-libLTLIBRARIES uninstall-pkgincludeHEADERS
 
 .MAKE: install-am install-strip
 
@@ -652,11 +820,12 @@ uninstall-am: uninstall-libLTLIBRARIES
 	install-dvi-am install-exec install-exec-am install-html \
 	install-html-am install-info install-info-am \
 	install-libLTLIBRARIES install-man install-pdf install-pdf-am \
-	install-ps install-ps-am install-strip installcheck \
-	installcheck-am installdirs maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-compile \
-	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
-	tags uninstall uninstall-am uninstall-libLTLIBRARIES
+	install-pkgincludeHEADERS install-ps install-ps-am \
+	install-strip installcheck installcheck-am installdirs \
+	maintainer-clean maintainer-clean-generic mostlyclean \
+	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
+	pdf pdf-am ps ps-am tags uninstall uninstall-am \
+	uninstall-libLTLIBRARIES uninstall-pkgincludeHEADERS
 
 
 $(MOCKCPP_HEADERS_PATH)/DelegatedMethodDef.h: FORCE

@@ -232,6 +232,36 @@ an Autoconf bug.  Until the bug is fixed you can use this workaround:
      Look for the package's source code in directory DIR.  Usually
      `configure' can determine that directory automatically.
 
+`--enable-mockcpp-namespace'
+`--disable-mockcpp-namespace'
+     Enable/disable mockcpp namespace. You can use MOCKCPP_NS as the
+     namespace in your source code to avoid the influence of this option.
+
+`--enable-multi-inheritance'
+`--disable-multi-inheritance'
+     Enable/disable multiple inheritance. If you disable this option,
+     trying to mock an interface which directly/indirectly inherits
+     from more than 1 other interfaces, an runtime error will be
+     encountered.
+
+`max_inheritance=NUMBER'
+     Specify the maximum number of interfaces that a mocked interface
+     is allowed to inherits from. If it exceeds this number, a runtime
+     error will be encountered. Its default value is now 2, and the 
+     maximum allowed value is 5.
+
+`max-vtbl-size=SIZE'
+     Specify the maximum size of virtual table. If the virtual table
+     size of your mocked class is larger than this setting, a runtime
+     error will be encountered. Its default value is now 20, and the
+     maximum allowed value is 50.
+
+`max_parameters'
+     Specify the maximum number of parameters that a mocked method is
+     allow to have. If the actually parameters are more than this setting,
+     a compiling error will happen. Its default value is now 12, and the
+     maximum allowed value is 15.
+
 `configure' also accepts some other, not widely useful, options.  Run
 `configure --help' for more details.
 

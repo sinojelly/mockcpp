@@ -1,10 +1,10 @@
 
-		Mockcpp --- A C/C++ Mock Framework
+		mockcpp --- A C/C++ Mock Framework
 		-------------------------------------
 		 http://code.google.com/p/mockcpp
 
 
-It's a jmock-like C/C++ Mock Framework, which doesn't use complex template technique which will result in very heavy compiling overhead.
+mockcpp is a jmock-like generic C/C++ Mock Framework, which doesn't use complex template technique which will result in very heavy compiling overhead.
 
 For Unix/Linux --including cygwin -- installation notes, see INSTALL.
 
