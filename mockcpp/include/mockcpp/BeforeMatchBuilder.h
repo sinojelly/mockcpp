@@ -41,6 +41,8 @@ public:
     BeforeMatchBuilder&
 	 before(const std::string& name);
 
+    virtual ~BeforeMatchBuilder() {}
+
 private:
 
     void

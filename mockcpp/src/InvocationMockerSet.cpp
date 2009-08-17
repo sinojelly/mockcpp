@@ -107,7 +107,7 @@ InvocationMockerSet::toString() const
 }
 
 //////////////////////////////////////////////////////////////
-Any& 
+const Any& 
 InvocationMockerSet::invoke(const Invocation& inv
 				, SelfDescribe* &resultProvider)
 {

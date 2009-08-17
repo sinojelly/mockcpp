@@ -45,7 +45,8 @@ public:
     ~ChainableMockMethodCore();
 
     // Method
-    Any invoke( const std::string& nameOfCaller
+    const Any& 
+        invoke( const std::string& nameOfCaller
               , const RefAny& p1 
               , const RefAny& p2
               , const RefAny& p3

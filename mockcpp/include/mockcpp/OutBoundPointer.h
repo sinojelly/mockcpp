@@ -40,7 +40,7 @@ class OutBoundPointerBase<T*>: public DecoratedConstraint
 {
 public:
     OutBoundPointerBase(T* p, size_t size, Constraint* constraint)
-      : sizeOfBuffer(size), DecoratedConstraint(constraint)
+      : DecoratedConstraint(constraint), sizeOfBuffer(size)
     {
       if (size != 0)
       {
@@ -92,9 +92,8 @@ private:
 
 private:
 
-    T* pointer;
-
     size_t sizeOfBuffer;
+    T* pointer;
 };
 
 //////////////////////////////////////////////////////////////////////

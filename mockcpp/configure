@@ -19650,12 +19650,12 @@ fi
 
         if test -n "$PYTHON"; then
       # If the user set $PYTHON, use it and don't search something else.
-      { echo "$as_me:$LINENO: checking whether $PYTHON version >= 2.5" >&5
-echo $ECHO_N "checking whether $PYTHON version >= 2.5... $ECHO_C" >&6; }
+      { echo "$as_me:$LINENO: checking whether $PYTHON version >= 2.4" >&5
+echo $ECHO_N "checking whether $PYTHON version >= 2.4... $ECHO_C" >&6; }
       prog="import sys, string
 # split strings by '.' and convert to numeric.  Append some zeros
 # because we need at least 4 digits for the hex conversion.
-minver = map(int, string.split('2.5', '.')) + [0, 0, 0]
+minver = map(int, string.split('2.4', '.')) + [0, 0, 0]
 minverhex = 0
 for i in xrange(0, 4): minverhex = (minverhex << 8) + minver[i]
 sys.exit(sys.hexversion < minverhex)"
@@ -19676,8 +19676,8 @@ fi
     else
       # Otherwise, try each interpreter until we find one that satisfies
       # VERSION.
-      { echo "$as_me:$LINENO: checking for a Python interpreter with version >= 2.5" >&5
-echo $ECHO_N "checking for a Python interpreter with version >= 2.5... $ECHO_C" >&6; }
+      { echo "$as_me:$LINENO: checking for a Python interpreter with version >= 2.4" >&5
+echo $ECHO_N "checking for a Python interpreter with version >= 2.4... $ECHO_C" >&6; }
 if test "${am_cv_pathless_PYTHON+set}" = set; then
   echo $ECHO_N "(cached) $ECHO_C" >&6
 else
@@ -19687,7 +19687,7 @@ else
 	  prog="import sys, string
 # split strings by '.' and convert to numeric.  Append some zeros
 # because we need at least 4 digits for the hex conversion.
-minver = map(int, string.split('2.5', '.')) + [0, 0, 0]
+minver = map(int, string.split('2.4', '.')) + [0, 0, 0]
 minverhex = 0
 for i in xrange(0, 4): minverhex = (minverhex << 8) + minver[i]
 sys.exit(sys.hexversion < minverhex)"

@@ -42,6 +42,8 @@ public:
     AfterMatchBuilder&
     after(const std::string& name);
 
+    virtual ~AfterMatchBuilder() {}
+
 private:
     void
     setupOrderingAfterMatchers(InvocationMocker* mocker);

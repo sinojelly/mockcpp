@@ -35,6 +35,8 @@ class CallerMatchBuilder : public Builder
 public:
 	Builder& caller(const std::string& nameOfCaller);
 
+   virtual ~CallerMatchBuilder() {}
+
 private:
 
     virtual InvocationMocker* getMocker() const = 0;

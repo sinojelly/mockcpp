@@ -47,6 +47,8 @@ public:
                  , Constraint* c12 = any()
     );
 
+    virtual ~ArgumentsMatchBuilder() {}
+
 private:
 
     virtual InvocationMocker* getMocker() const = 0;

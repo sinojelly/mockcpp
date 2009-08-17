@@ -50,8 +50,8 @@ public:
 
 	///////////////////////////////////////////////////
     List matchers;
-    bool hasBeenInvoked;
     Method* belongedMethod;
+    bool hasBeenInvoked;
     InvocationId* id ;
 
     StubContainer stubs;

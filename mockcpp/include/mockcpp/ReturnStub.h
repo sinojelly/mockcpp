@@ -40,9 +40,9 @@ public:
     const std::type_info& type() const;
 
 private:
-
-    bool hasBeenInvoked;
     Any returnValue;
+    bool hasBeenInvoked;
+
 };
 
 MOCKCPP_NS_END

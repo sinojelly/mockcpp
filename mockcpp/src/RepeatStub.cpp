@@ -24,7 +24,7 @@ MOCKCPP_NS_START
 
 /////////////////////////////////////////////////////
 RepeatStub::RepeatStub(const Any& value, unsigned int times)
-		: returnValue(value), repeatTimes(times), repeatedTimes(0)
+		: returnValue(value), repeatedTimes(0), repeatTimes(times)
 {}
 
 /////////////////////////////////////////////////////
