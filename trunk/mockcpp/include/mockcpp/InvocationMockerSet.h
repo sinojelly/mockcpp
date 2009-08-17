@@ -45,7 +45,7 @@ public:
     void reset();
     void verify();
 
-    Any& invoke(const Invocation& inv, SelfDescribe* &resultProvider);
+    const Any& invoke(const Invocation& inv, SelfDescribe* &resultProvider);
 
     std::string toString() const;
 

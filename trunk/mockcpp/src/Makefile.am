@@ -2,16 +2,22 @@
 MOCKCPP_INCLUDE_PATH = $(top_builddir)/include
 MOCKCPP_HEADERS_PATH = $(top_builddir)/include/mockcpp
 
-AM_CPPFLAGS = -I$(MOCKCPP_INCLUDE_PATH) -I$(top_builddir)/3rdparty
+AM_CPPFLAGS = -I$(MOCKCPP_INCLUDE_PATH) -I$(top_builddir)/3rdparty -Wall
 
 lib_LTLIBRARIES = libmockcpp.la
 
-EXTRA_HEADERS = \
+ARG_RELATED_HEADER_FILES =  \
  $(MOCKCPP_HEADERS_PATH)/DelegatedMethodDef.h \
- $(MOCKCPP_HEADERS_PATH)/DelegatedMethodGetDef.h \
- $(MOCKCPP_HEADERS_PATH)/DelegatedMethodGetByVptrDef.h \
  $(MOCKCPP_HEADERS_PATH)/ArgumentsListDef.h  \
  $(MOCKCPP_HEADERS_PATH)/MethodTypeTraitsDef.h
+
+VBTL_RELATED_HEADER_FILES = \
+ $(MOCKCPP_HEADERS_PATH)/DelegatedMethodGetDef.h \
+ $(MOCKCPP_HEADERS_PATH)/DelegatedMethodGetByVptrDef.h 
+
+EXTRA_HEADERS = \
+ $(ARG_RELATED_HEADER_FILES) \
+ $(VBTL_RELATED_HEADER_FILES)
 
 pkginclude_HEADERS= \
   $(MOCKCPP_HEADERS_PATH)/AfterMatchBuilder.h \
@@ -246,10 +252,10 @@ EXTRA_VTBL_HEADERS_DEFS = --allow-mi=$(ALLOW_MI) --max-inheritance=$(MAX_INHERIT
 EXTRA_PARAMS_HEADERS_DEFS = --max-parameters=$(MAX_PARAMETERS) --include-path=$(MOCKCPP_HEADERS_PATH)
 
 
-$(MOCKCPP_HEADERS_PATH)/DelegatedMethodDef.h: FORCE
+$(ARG_RELATED_HEADER_FILES) : FORCE
 	$(PYTHON) $(top_builddir)/src/generate_vtbl_related_files.py $(EXTRA_VTBL_HEADERS_DEFS)
 
-$(MOCKCPP_HEADERS_PATH)/DelegatedMethodGetByVptrDef.h: FORCE
+$(VBTL_RELATED_HEADER_FILES) : FORCE
 	$(PYTHON) $(top_builddir)/src/generate_arg_related_files.py $(EXTRA_PARAMS_HEADERS_DEFS)
 
 FORCE:

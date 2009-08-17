@@ -65,6 +65,8 @@ public:
        return getResult(result.getResult(anyResult));
     }
 
+    virtual ~ChainableMockMethodBase() {}
+
 protected:
 
     virtual RT getResult(const Any& result) = 0;

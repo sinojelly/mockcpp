@@ -34,7 +34,8 @@ class SelfDescribe;
 ///////////////////////////////////////////////
 struct Invokable
 {
-    virtual Any invoke( const std::string& nameOfCaller
+    virtual const Any&
+        invoke( const std::string& nameOfCaller
               , const RefAny& p1
               , const RefAny& p2
               , const RefAny& p3

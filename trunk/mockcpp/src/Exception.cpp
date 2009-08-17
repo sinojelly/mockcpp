@@ -24,9 +24,9 @@ MOCKCPP_NS_START
 
 Exception::Exception (unsigned line, const char* file, const std::string& msg )
 	: std::exception()
+	, message(msg)
 	, srcline(line)
 	, srcfile(file)
-	, message(msg)
 {
 }
 

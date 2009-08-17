@@ -53,7 +53,7 @@ public:
     InvocationMocker* getInvocationMocker(const std::string& id) const;
     std::string tellNoMatchedExpectation(const Invocation& inv);
     std::string toString() const;
-    Any invoke(const Invocation& inv, SelfDescribe* &resultProvider);
+    const Any& invoke(const Invocation& inv, SelfDescribe* &resultProvider);
     void reset();
     void verify();
 };
@@ -104,20 +104,20 @@ tellNoMatchedExpectation(const Invocation& inv)
 }
 
 /////////////////////////////////////////////////////////////
-Any
+const Any&
 ChainableMockMethodCoreImpl::invoke(const Invocation& inv
                                    , SelfDescribe* &resultProvider)
 {
-    Any result = mockers.invoke(inv, resultProvider);
-    if (!result.empty())
+    const Any& result1 = mockers.invoke(inv, resultProvider);
+    if (!result1.empty())
     {
-      return result;
+      return result1;
     }
 
-    result = defaultMockers.invoke(inv, resultProvider);
-    if (!result.empty())
+    const Any& result2 = defaultMockers.invoke(inv, resultProvider);
+    if (!result2.empty())
     {
-      return result;
+      return result2;
     }
 
 	 MOCKCPP_FAIL(tellNoMatchedExpectation(inv));
@@ -146,7 +146,7 @@ ChainableMockMethodCore::getName() const
 }
 
 //////////////////////////////////////////////////////////
-Any
+const Any&
 ChainableMockMethodCore::invoke
              ( const std::string& nameOfCaller
              , const RefAny& p1

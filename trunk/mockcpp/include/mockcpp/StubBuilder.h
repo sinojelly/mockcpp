@@ -34,6 +34,8 @@ public:
 
     Builder& will(Stub* stub);
 
+    virtual ~StubBuilder() {}
+
 private:
 
     virtual InvocationMocker* getMocker() const = 0;

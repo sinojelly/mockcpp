@@ -36,6 +36,8 @@ public:
             const std::type_info& expectedTypeInfo
           , const std::string& expectedTypeString
           , const SelfDescribe* selfDescriber) = 0;
+
+    virtual ~ResultHandlerFactory() {}
 };
 
 MOCKCPP_NS_END

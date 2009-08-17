@@ -4,7 +4,7 @@ AC_CONFIG_SRCDIR([src/Any.cpp])
 AM_INIT_AUTOMAKE([-Wall -Werror foreign])
 AC_PROG_LIBTOOL
 AC_PROG_CXX
-AM_PATH_PYTHON([2.5],, [:])
+AM_PATH_PYTHON([2.4],, [:])
 AM_CONDITIONAL([HAVE_PYTHON], [test "$PYTHON" != :])
 
 # mockcpp Namespace
