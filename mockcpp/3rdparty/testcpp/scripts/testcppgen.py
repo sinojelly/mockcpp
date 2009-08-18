@@ -44,7 +44,7 @@ def getOpt(longOpts):
       sys.exit(2)
 
 allFixtures = []
-fixture_re = re.compile( r'^(?P<fixtureDef>\s*(class|struct)\s*(?P<fixtureName>[A-Za-z_]\w*)\s*:\s*public\s+(testcpp\s*::)?\s*TestFixture\w*)' )
+fixture_re = re.compile( r'^(?P<fixtureDef>\s*(class|struct)\s*(?P<fixtureName>[A-Za-z_]\w*)\s*:\s*public\s+((testcpp|TESTCPP_NS)\s*::)?\s*TestFixture\w*)' )
 case_re = re.compile( r'^(?P<caseDef>\s*void\s+(?P<caseName>test\w*)\(\s*(void){0,1}\s*\))' )
 if0_re = re.compile( r'^\s*#\s*if\s+0\s*(//.*)?$' )
 if0_re2 = re.compile( r'^\s*#\s*if\s+0\s*(/\*.*\*/\s*)?$' )
@@ -454,7 +454,8 @@ def generateTarget(target, fixtureFiles, allFixtures):
 
    generateHeaders(FILE, fixtureFiles)
 
-   generateFixtures(FILE, os.path.basename(target).split('.')[0], allFixtures)
+   if len(allFixtures) > 0:
+      generateFixtures(FILE, os.path.basename(target).split('.')[0], allFixtures)
 
    FILE.close()
 

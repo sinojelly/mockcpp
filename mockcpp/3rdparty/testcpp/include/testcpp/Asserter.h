@@ -11,14 +11,14 @@ TESTCPP_NS_START
 //////////////////////////////////////////////////////////////////
 #define TS_ASSERT(expr) do { \
    if(!(expr)) {\
-      throw AssertionFailure(__FILE__, __LINE__, "expected (" #expr "), but turns out it's not true"); \
+      throw TESTCPP_NS::AssertionFailure(__FILE__, __LINE__, "expected (" #expr "), but turns out it's not true"); \
    } \
 }while(0)
 
 //////////////////////////////////////////////////////////////////
 #define TS_ASSERT_FALSE(expr) do { \
    if(expr) {\
-      throw AssertionFailure(__FILE__, __LINE__, "expected (" #expr ") being false, but turns out it's true"); \
+      throw TESTCPP_NS::AssertionFailure(__FILE__, __LINE__, "expected (" #expr ") being false, but turns out it's true"); \
    } \
 }while(0)
 
@@ -27,7 +27,7 @@ TESTCPP_NS_START
    if(expected != value) { \
       std::stringstream ss; \
       ss << "expected (" #expected " == " #value "), but actually got (" << expected << " != " << value << ")"; \
-      throw AssertionFailure(__FILE__, __LINE__, ss.str()); \
+      throw TESTCPP_NS::AssertionFailure(__FILE__, __LINE__, ss.str()); \
    } \
 }while(0)
 
@@ -36,7 +36,7 @@ TESTCPP_NS_START
    if(expected == value) {\
       std::stringstream ss; \
       ss << "expected (" #expected " != " #value "), but actually got (" << expected << " == " << value << ")" \
-      throw AssertionFailure(__FILE__, __LINE__, ss.str()); \
+      throw TESTCPP_NS::AssertionFailure(__FILE__, __LINE__, ss.str()); \
    } \
 }while(0)
 
@@ -49,7 +49,7 @@ TESTCPP_NS_START
       testcpp_caught_exception = true; \
    } \
    if(!testcpp_caught_exception) { \
-      throw AssertionFailure(__FILE__, __LINE__, "expected " #expr " will throw an exception of type " #except ", but actually not."); \
+      throw TESTCPP_NS::AssertionFailure(__FILE__, __LINE__, "expected " #expr " will throw an exception of type " #except ", but actually not."); \
    } \
 }while(0)
 
@@ -62,7 +62,7 @@ TESTCPP_NS_START
       testcpp_caught_exception = true; \
    } \
    if(!testcpp_caught_exception) { \
-      throw AssertionFailure(__FILE__, __LINE__, "expected " #expr " will throw exception of any type, but actually not."); \
+      throw TESTCPP_NS::AssertionFailure(__FILE__, __LINE__, "expected " #expr " will throw exception of any type, but actually not."); \
    } \
 }while(0)
 
@@ -71,7 +71,7 @@ TESTCPP_NS_START
    try { \
       expr; \
    }catch(...){ \
-      throw AssertionFailure(__FILE__, __LINE__, "expected " #expr " will not throw exceptions, but it actually did."); \
+      throw TESTCPP_NS::AssertionFailure(__FILE__, __LINE__, "expected " #expr " will not throw exceptions, but it actually did."); \
    } \
 }while(0)
 
@@ -79,7 +79,7 @@ TESTCPP_NS_START
 #define TS_ASSERT_THROWS_EQUALS(expr, except, expected, value) do { \
    try { \
       expr; \
-      throw AssertionFailure(__FILE__, __LINE__, "expected " #expr " will throw an exception of type " #except ", but actually not."); \
+      throw TESTCPP_NS::AssertionFailure(__FILE__, __LINE__, "expected " #expr " will throw an exception of type " #except ", but actually not."); \
    }catch(except){ \
       TS_ASSERT_EQUALS(expected, value); \
    } \
@@ -87,7 +87,7 @@ TESTCPP_NS_START
 
 //////////////////////////////////////////////////////////////////
 #define TS_FAIL(msg) do { \
-    throw AssertionFailure(__FILE__, __LINE__, msg); \
+    throw TESTCPP_NS::AssertionFailure(__FILE__, __LINE__, msg); \
 }while(0)
 
 //////////////////////////////////////////////////////////////////
