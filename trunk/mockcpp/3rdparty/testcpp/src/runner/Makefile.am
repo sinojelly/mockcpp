@@ -20,6 +20,7 @@ nodist_libtestcpprunner_la_SOURCES = \
   SimpleTestResultDispatcher.cpp \
   SimpleTestResultReporter.cpp \
   SimpleTestCaseResultReporter.cpp \
+  SimpleTestSuiteResultReporter.cpp \
   TestFixtureSandboxRunnerFactory.cpp \
   LTTestListenerLoader.cpp \
   OptionList.cpp \

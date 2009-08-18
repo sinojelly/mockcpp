@@ -16,7 +16,6 @@ struct TestSuiteResultCollector
    virtual void startTestSuite(TestSuiteInfoReader*) = 0;
    virtual void endTestSuite(TestSuiteInfoReader*) = 0;
    virtual void addSuiteError(TestSuiteInfoReader*, const std::string&) = 0;
-   virtual void addError(const std::string&) = 0;
 
 	virtual ~TestSuiteResultCollector() {}
 };

@@ -4,12 +4,12 @@
 
 #include <testcpp/testcpp.h>
 
-#include <testcpp/runner/TestSuiteResultCollector.h>
+#include <testcpp/runner/TestResultCollector.h>
 
 TESTCPP_NS_START
 
 struct TestListener
-   : public TestSuiteResultCollector
+   : public TestResultCollector
 {
    virtual ~TestListener() {}
 };

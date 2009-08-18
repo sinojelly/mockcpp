@@ -15,7 +15,8 @@ TESTCPP_NS_START
 
 struct LTTestListenerLoaderImpl
 {
-   LTTestListenerLoaderImpl(const std::string& path)
+   LTTestListenerLoaderImpl(
+      const std::string& path)
       : handle(0)
       , listener(0)
       , name(path)
@@ -24,7 +25,12 @@ struct LTTestListenerLoaderImpl
 	~LTTestListenerLoaderImpl();
    void destroyListener();
 
-   void load(TestRunnerContext* context);
+   void doLoad(TestRunnerContext* context);
+   void load( TestRunnerContext* context
+            , const std::list<std::string>& searchingPaths);
+
+   const char*
+   addSearchingPaths(const std::list<std::string>& searchingPaths);
 
    std::string name;
    lt_dlhandle handle;
@@ -115,8 +121,8 @@ namespace
 }
 
 ///////////////////////////////////////////////////////////////
-void
-LTTestListenerLoaderImpl::load(TestRunnerContext* context)
+void 
+LTTestListenerLoaderImpl::doLoad(TestRunnerContext* context)
 {
    handle = ::lt_dlopenext(getListenerSharedObjectName(name).c_str());
    if(handle == 0)
@@ -125,7 +131,7 @@ LTTestListenerLoaderImpl::load(TestRunnerContext* context)
    }
 
    typedef TestListener* (*TestListenerCreater) \
-          (TestResultReporter*, TestCaseResultReporter*);
+          (TestResultReporter*, TestSuiteResultReporter*, TestCaseResultReporter*);
 
    TestListenerCreater create = \
       (TestListenerCreater) lt_dlsym(handle
@@ -136,6 +142,7 @@ LTTestListenerLoaderImpl::load(TestRunnerContext* context)
    }
 
    listener = create( context->getTestResultReporter()
+            , context->getTestSuiteResultReporter()
             , context->getTestCaseResultReporter());
    if(listener == 0)
    {
@@ -146,13 +153,51 @@ LTTestListenerLoaderImpl::load(TestRunnerContext* context)
 }
 
 /////////////////////////////////////////////////////////////////
+const char*
+LTTestListenerLoaderImpl::
+addSearchingPaths(const std::list<std::string>& searchingPaths)
+{
+   const char* origSearchingPath = ::lt_dlgetsearchpath();
+   const char* p = origSearchingPath;
+   std::list<std::string>::const_iterator i = searchingPaths.begin();
+   for(; i != searchingPaths.end(); i++)
+   {
+      ::lt_dlinsertsearchdir(p, (*i).c_str());
+   	p = ::lt_dlgetsearchpath();
+   }
+
+   return origSearchingPath;
+}
+
+/////////////////////////////////////////////////////////////////
 void
-LTTestListenerLoader::load(TestRunnerContext* context)
+LTTestListenerLoaderImpl::
+load( TestRunnerContext* context
+    , const std::list<std::string>& searchingPaths)
+{
+   const char* origSearchingPath = addSearchingPaths(searchingPaths);
+   try
+   {
+      doLoad(context);
+   }
+   catch(...)
+   {
+      ::lt_dlsetsearchpath(origSearchingPath);
+      throw;
+   }
+
+   ::lt_dlsetsearchpath(origSearchingPath);
+}
+/////////////////////////////////////////////////////////////////
+void
+LTTestListenerLoader::
+load( TestRunnerContext* context
+    , const std::list<std::string>& searchingPaths)
 {
    std::cout << "loading " << This->name << " ... "; std::cout.flush();
    try
    {
-      This->load(context);
+      This->load(context, searchingPaths);
    }
    catch(Error& e)
    {

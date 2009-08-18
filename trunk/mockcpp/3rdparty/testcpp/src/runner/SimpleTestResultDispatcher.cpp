@@ -2,8 +2,9 @@
 #include <list>
 
 #include <testcpp/runner/SimpleTestResultDispatcher.h>
-#include <testcpp/runner/TestListener.h>
 #include <testcpp/runner/TestCaseListener.h>
+#include <testcpp/runner/TestSuiteListener.h>
+#include <testcpp/runner/TestListener.h>
 #include <testcpp/internal/TestCaseInfoReader.h>
 
 
@@ -14,9 +15,11 @@ struct SimpleTestResultDispatcherImpl
 {
    typedef std::list<TestListener*> Listeners;
    typedef std::list<TestCaseListener*> CaseListeners;
+   typedef std::list<TestSuiteListener*> SuiteListeners;
 
    Listeners listeners;
    CaseListeners caseListeners;
+   SuiteListeners suiteListeners;
 
    void addCaseCrash(TestCaseInfoReader*);
    void addCaseError(TestCaseInfoReader*, const std::string&);
@@ -32,6 +35,9 @@ struct SimpleTestResultDispatcherImpl
    void startTestSuite(TestSuiteInfoReader*);
    void endTestSuite(TestSuiteInfoReader*);
    void addSuiteError(TestSuiteInfoReader*, const std::string&);
+
+   void startTest();
+   void endTest();
    void addError(const std::string&);
    
 };
@@ -80,6 +86,27 @@ unregisterTestCaseListener(TestCaseListener* listener)
 }
 
 ///////////////////////////////////////////////////////////
+void SimpleTestResultDispatcher::
+registerTestSuiteListener(TestSuiteListener* listener)
+{
+   if(listener == 0)
+   {
+      return;
+   }
+
+   This->suiteListeners.push_back(listener);
+}
+
+///////////////////////////////////////////////////////////
+TestSuiteListener*
+SimpleTestResultDispatcher::
+unregisterTestSuiteListener(TestSuiteListener* listener)
+{
+   This->suiteListeners.remove(listener);
+   return listener;
+}
+
+///////////////////////////////////////////////////////////
 template <typename T>
 void notifyAddCaseCrash(T& listeners, TestCaseInfoReader* testcase)
 {
@@ -94,6 +121,7 @@ void SimpleTestResultDispatcherImpl::
 addCaseCrash(TestCaseInfoReader* testcase)
 {
    notifyAddCaseCrash(caseListeners, testcase);
+   notifyAddCaseCrash(suiteListeners, testcase);
    notifyAddCaseCrash(listeners, testcase);
 }
 
@@ -120,6 +148,7 @@ void SimpleTestResultDispatcherImpl::
 addCaseError(TestCaseInfoReader* testcase, const std::string& msg)
 {
    notifyAddCaseError(caseListeners, testcase, msg);
+   notifyAddCaseError(suiteListeners, testcase, msg);
    notifyAddCaseError(listeners, testcase, msg);
 }
 
@@ -146,6 +175,7 @@ void SimpleTestResultDispatcherImpl::
 addCaseFailure(TestCaseInfoReader* testcase, const AssertionFailure& failure)
 {
    notifyAddCaseFailure(caseListeners, testcase, failure);
+   notifyAddCaseFailure(suiteListeners, testcase, failure);
    notifyAddCaseFailure(listeners, testcase, failure);
 }
 
@@ -172,6 +202,7 @@ void SimpleTestResultDispatcherImpl::
 startTestCase(TestCaseInfoReader* testcase)
 {
    notifyStartCase(caseListeners, testcase);
+   notifyStartCase(suiteListeners, testcase);
    notifyStartCase(listeners, testcase);
 }
 
@@ -198,6 +229,7 @@ void SimpleTestResultDispatcherImpl::
 endTestCase(TestCaseInfoReader* testcase)
 {
    notifyEndCase(caseListeners, testcase);
+   notifyEndCase(suiteListeners, testcase);
    notifyEndCase(listeners, testcase);
 }
 
@@ -209,15 +241,24 @@ endTestCase(TestCaseInfoReader* testcase)
 }
 
 ///////////////////////////////////////////////////////////
-void SimpleTestResultDispatcherImpl::
-startTestFixture(TestFixtureInfoReader* fixture)
+template <typename T>
+void notifyStartFixture(T& listeners, TestFixtureInfoReader* fixture)
 {
-   Listeners::iterator i = listeners.begin();
+   typename T::iterator i = listeners.begin();
    for(; i != listeners.end(); i++)
    {
       (*i)->startTestFixture(fixture);
    }
 }
+
+///////////////////////////////////////////////////////////
+void SimpleTestResultDispatcherImpl::
+startTestFixture(TestFixtureInfoReader* fixture)
+{
+   notifyStartFixture(suiteListeners, fixture);
+   notifyStartFixture(listeners, fixture);
+}
+
 ///////////////////////////////////////////////////////////
 void SimpleTestResultDispatcher::
 startTestFixture(TestFixtureInfoReader* fixture)
@@ -226,14 +267,22 @@ startTestFixture(TestFixtureInfoReader* fixture)
 }
 
 ///////////////////////////////////////////////////////////
-void SimpleTestResultDispatcherImpl::
-endTestFixture(TestFixtureInfoReader* fixture)
+template <typename T>
+void notifyEndFixture(T& listeners, TestFixtureInfoReader* fixture)
 {
-   Listeners::iterator i = listeners.begin();
+   typename T::iterator i = listeners.begin();
    for(; i != listeners.end(); i++)
    {
       (*i)->endTestFixture(fixture);
    }
+}
+
+///////////////////////////////////////////////////////////
+void SimpleTestResultDispatcherImpl::
+endTestFixture(TestFixtureInfoReader* fixture)
+{
+   notifyEndFixture(suiteListeners, fixture);
+   notifyEndFixture(listeners, fixture);
 }
 
 ///////////////////////////////////////////////////////////
@@ -244,14 +293,25 @@ endTestFixture(TestFixtureInfoReader* fixture)
 }
 
 ///////////////////////////////////////////////////////////
-void SimpleTestResultDispatcherImpl::
-addFixtureError(TestFixtureInfoReader* fixture, const std::string& msg)
+template <typename T>
+void notifyAddFixtureError(T& listeners
+       , TestFixtureInfoReader* fixture
+       , const std::string& msg)
 {
-   Listeners::iterator i = listeners.begin();
+   typename T::iterator i = listeners.begin();
    for(; i != listeners.end(); i++)
    {
       (*i)->addFixtureError(fixture, msg);
    }
+}
+
+///////////////////////////////////////////////////////////
+void SimpleTestResultDispatcherImpl::
+addFixtureError( TestFixtureInfoReader* fixture
+               , const std::string& msg)
+{
+   notifyAddFixtureError(suiteListeners, fixture, msg);
+   notifyAddFixtureError(listeners, fixture, msg);
 }
 
 ///////////////////////////////////////////////////////////
@@ -262,14 +322,24 @@ addFixtureError(TestFixtureInfoReader* fixture, const std::string& msg)
 }
 
 ///////////////////////////////////////////////////////////
-void SimpleTestResultDispatcherImpl::
-addFixtureFailure(TestFixtureInfoReader* fixture, const AssertionFailure& failure)
+template <typename T>
+void notifyAddFixtureFailure(T& listeners
+       , TestFixtureInfoReader* fixture
+       , const AssertionFailure& failure)
 {
-   Listeners::iterator i = listeners.begin();
+   typename T::iterator i = listeners.begin();
    for(; i != listeners.end(); i++)
    {
       (*i)->addFixtureFailure(fixture, failure);
    }
+}
+
+///////////////////////////////////////////////////////////
+void SimpleTestResultDispatcherImpl::
+addFixtureFailure(TestFixtureInfoReader* fixture, const AssertionFailure& failure)
+{
+   notifyAddFixtureFailure(suiteListeners, fixture, failure);
+   notifyAddFixtureFailure(listeners, fixture, failure);
 }
 
 ///////////////////////////////////////////////////////////
@@ -280,14 +350,23 @@ addFixtureFailure(TestFixtureInfoReader* fixture, const AssertionFailure& failur
 }
 
 ///////////////////////////////////////////////////////////
-void SimpleTestResultDispatcherImpl::
-startTestSuite(TestSuiteInfoReader* suite)
+template <typename T>
+void notifyStartSuite(T& listeners
+       , TestSuiteInfoReader* suite)
 {
-   Listeners::iterator i = listeners.begin();
+   typename T::iterator i = listeners.begin();
    for(; i != listeners.end(); i++)
    {
       (*i)->startTestSuite(suite);
    }
+}
+
+///////////////////////////////////////////////////////////
+void SimpleTestResultDispatcherImpl::
+startTestSuite(TestSuiteInfoReader* suite)
+{
+   notifyStartSuite(suiteListeners, suite);
+   notifyStartSuite(listeners, suite);
 }
 
 ///////////////////////////////////////////////////////////
@@ -298,14 +377,23 @@ startTestSuite(TestSuiteInfoReader* suite)
 }
 
 ///////////////////////////////////////////////////////////
-void SimpleTestResultDispatcherImpl::
-endTestSuite(TestSuiteInfoReader* suite)
+template <typename T>
+void notifyEndSuite(T& listeners
+       , TestSuiteInfoReader* suite)
 {
-   Listeners::iterator i = listeners.begin();
+   typename T::iterator i = listeners.begin();
    for(; i != listeners.end(); i++)
    {
       (*i)->endTestSuite(suite);
    }
+}
+
+///////////////////////////////////////////////////////////
+void SimpleTestResultDispatcherImpl::
+endTestSuite(TestSuiteInfoReader* suite)
+{
+   notifyEndSuite(suiteListeners, suite);
+   notifyEndSuite(listeners, suite);
 }
 
 ///////////////////////////////////////////////////////////
@@ -316,10 +404,12 @@ endTestSuite(TestSuiteInfoReader* suite)
 }
 
 ///////////////////////////////////////////////////////////
-void SimpleTestResultDispatcherImpl::
-addSuiteError(TestSuiteInfoReader* suite, const std::string& msg )
+template <typename T>
+void notifySuiteError(T& listeners
+       , TestSuiteInfoReader* suite
+       , const std::string& msg)
 {
-   Listeners::iterator i = listeners.begin();
+   typename T::iterator i = listeners.begin();
    for(; i != listeners.end(); i++)
    {
       (*i)->addSuiteError(suite, msg);
@@ -327,10 +417,52 @@ addSuiteError(TestSuiteInfoReader* suite, const std::string& msg )
 }
 
 ///////////////////////////////////////////////////////////
+void SimpleTestResultDispatcherImpl::
+addSuiteError(TestSuiteInfoReader* suite, const std::string& msg )
+{
+   notifySuiteError(suiteListeners, suite, msg);
+   notifySuiteError(listeners, suite, msg);
+}
+
+///////////////////////////////////////////////////////////
 void SimpleTestResultDispatcher::
 addSuiteError(TestSuiteInfoReader* suite, const std::string& msg )
 {
    This->addSuiteError(suite, msg);
+}
+
+///////////////////////////////////////////////////////////
+void SimpleTestResultDispatcherImpl::startTest()
+{
+   Listeners::iterator i = listeners.begin();
+   for(; i != listeners.end(); i++)
+   {
+      (*i)->startTest();
+   }
+}
+
+///////////////////////////////////////////////////////////
+void
+SimpleTestResultDispatcher::startTest()
+{
+   This->startTest();
+}
+
+///////////////////////////////////////////////////////////
+void SimpleTestResultDispatcherImpl::endTest()
+{
+   Listeners::iterator i = listeners.begin();
+   for(; i != listeners.end(); i++)
+   {
+      (*i)->endTest();
+   }
+}
+
+///////////////////////////////////////////////////////////
+void
+SimpleTestResultDispatcher::endTest()
+{
+   This->endTest();
 }
 
 ///////////////////////////////////////////////////////////

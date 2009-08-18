@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include <testcpp/runner/SimpleTestResultReporter.h>
+#include <testcpp/runner/TestSuiteResultReporter.h>
 #include <testcpp/internal/TestCaseInfoReader.h>
 #include <testcpp/internal/TestSuiteInfoReader.h>
 
@@ -9,28 +10,23 @@ TESTCPP_NS_START
 
 struct SimpleTestResultReporterImpl
 {
-   enum {
-      SUCCESS = 0,
-      FAILED  = 1,
-      ERROR   = 2
-   };
-
-   int currentCaseStatus;
    unsigned int numberOfSuccessfulCases;
    unsigned int numberOfCrashedCases;
    unsigned int numberOfErrorCases;
    unsigned int numberOfFailedCases;
    unsigned int numberOfUnloadableSuites;
+   TestSuiteResultReporter* suiteResultReporter;
 
    unsigned int getNumberOfUnsuccessfulCases() const;
    unsigned int getNumberOfTestCases() const;
 
-   SimpleTestResultReporterImpl()
+   SimpleTestResultReporterImpl(TestSuiteResultReporter* suiteReporter)
       : numberOfCrashedCases(0)
       , numberOfErrorCases(0)
       , numberOfFailedCases(0)
       , numberOfSuccessfulCases(0)
       , numberOfUnloadableSuites(0)
+      , suiteResultReporter(suiteReporter)
    {}
 };
 
@@ -50,8 +46,8 @@ SimpleTestResultReporterImpl::getNumberOfTestCases() const
 }
 ///////////////////////////////////////////////////////////
 SimpleTestResultReporter::
-SimpleTestResultReporter()
-   : This(new SimpleTestResultReporterImpl())
+SimpleTestResultReporter(TestSuiteResultReporter* suiteResultReporter)
+   : This(new SimpleTestResultReporterImpl(suiteResultReporter))
 {
 }
 
@@ -65,46 +61,30 @@ SimpleTestResultReporter::~SimpleTestResultReporter()
 void SimpleTestResultReporter::
 addCaseCrash(TestCaseInfoReader* testcase)
 {
-   This->numberOfCrashedCases++;
 }
 
 ///////////////////////////////////////////////////////////
 void SimpleTestResultReporter::
 addCaseError(TestCaseInfoReader* testcase, const std::string& msg)
 {
-   This->currentCaseStatus = SimpleTestResultReporterImpl::ERROR;
 }
 
 ///////////////////////////////////////////////////////////
 void SimpleTestResultReporter::
 addCaseFailure(TestCaseInfoReader* testcase, const AssertionFailure& failure)
 {
-   This->currentCaseStatus = SimpleTestResultReporterImpl::FAILED;
 }
 
 ///////////////////////////////////////////////////////////
 void SimpleTestResultReporter::
 startTestCase(TestCaseInfoReader*)
 {
-   This->currentCaseStatus = SimpleTestResultReporterImpl::SUCCESS;
 }
 
 ///////////////////////////////////////////////////////////
 void SimpleTestResultReporter::
 endTestCase(TestCaseInfoReader*)
 {
-   switch(This->currentCaseStatus)
-   {
-   case SimpleTestResultReporterImpl::SUCCESS:
-      This->numberOfSuccessfulCases++;
-      break;
-   case SimpleTestResultReporterImpl::FAILED:
-      This->numberOfFailedCases++;
-      break;
-   case SimpleTestResultReporterImpl::ERROR:
-      This->numberOfErrorCases++;
-      break;
-   }
 }
 
 ///////////////////////////////////////////////////////////
@@ -141,11 +121,34 @@ startTestSuite(TestSuiteInfoReader* suite)
 void SimpleTestResultReporter::
 endTestSuite(TestSuiteInfoReader* suite)
 {
+   This->numberOfSuccessfulCases = \
+          This->suiteResultReporter->getNumberOfSuccessfulTestCases(suite);
+
+   This->numberOfCrashedCases = \
+          This->suiteResultReporter->getNumberOfCrashedTestCases(suite);
+
+   This->numberOfErrorCases = \
+          This->suiteResultReporter->getNumberOfErrorTestCases(suite);
+
+   This->numberOfFailedCases = \
+          This->suiteResultReporter->getNumberOfFailedTestCases(suite);
 }
 
 ///////////////////////////////////////////////////////////
 void SimpleTestResultReporter::
 addSuiteError(TestSuiteInfoReader*, const std::string& msg )
+{
+}
+
+///////////////////////////////////////////////////////////
+void SimpleTestResultReporter::
+startTest()
+{
+}
+
+///////////////////////////////////////////////////////////
+void SimpleTestResultReporter::
+endTest()
 {
 }
 

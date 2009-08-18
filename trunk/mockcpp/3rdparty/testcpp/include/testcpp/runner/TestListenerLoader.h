@@ -2,6 +2,9 @@
 #ifndef __TESTCPP_TEST_LISTENER_LOADER_H
 #define __TESTCPP_TEST_LISTENER_LOADER_H
 
+#include <list>
+#include <string>
+
 #include <testcpp/testcpp.h>
 
 TESTCPP_NS_START
@@ -11,7 +14,9 @@ struct TestRunnerContext;
 
 struct TestListenerLoader
 {
-   virtual void load(TestRunnerContext* context) = 0;
+   virtual
+   void load( TestRunnerContext* context
+            , const std::list<std::string>& searchingPaths) = 0;
 
 	virtual ~TestListenerLoader() {}
 };

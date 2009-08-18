@@ -4,7 +4,7 @@
 #include <testcpp/runner/TestSuiteRunner.h>
 #include <testcpp/runner/TestSuiteLoader.h>
 #include <testcpp/runner/TestFixtureRunner.h>
-#include <testcpp/runner/TestSuiteResultCollector.h>
+#include <testcpp/runner/TestResultCollector.h>
 #include <testcpp/runner/TestSuiteDescEntryNameGetter.h>
 
 TESTCPP_NS_START
@@ -23,14 +23,14 @@ struct TestSuiteRunnerImpl : public TestSuiteDescEntryNameGetter
    {}
 
 	TestSuiteDesc* load(const std::string& path
-         , TestSuiteResultCollector* resultCollector);
+         , TestResultCollector* resultCollector);
 
 	void runAllFixtures(TestSuiteDesc* desc
-   		, TestSuiteResultCollector* resultCollector);
+   		, TestResultCollector* resultCollector);
 
 	void runAllFixtures(TestSuiteDesc* desc);
 
-	void run(const std::string& path, TestSuiteResultCollector* resultCollector);
+	void run(const std::string& path, TestResultCollector* resultCollector);
 
    std::string getDescEntryName() const
    { return testcppTestSuiteDescGetter; }
@@ -55,7 +55,7 @@ TestSuiteRunner::~TestSuiteRunner()
 /////////////////////////////////////////////////////////////////
 TestSuiteDesc*
 TestSuiteRunnerImpl::load(const std::string& path
-   , TestSuiteResultCollector* resultCollector)
+   , TestResultCollector* resultCollector)
 {
    try {
      return suiteLoader->load(path, this);
@@ -75,7 +75,7 @@ TestSuiteRunnerImpl::load(const std::string& path
 /////////////////////////////////////////////////////////////////
 void
 TestSuiteRunnerImpl::runAllFixtures(TestSuiteDesc* desc
-   , TestSuiteResultCollector* resultCollector)
+   , TestResultCollector* resultCollector)
 {
    for(unsigned int i=0; i<desc->getNumberOfTestFixtures(); i++)
    {
@@ -87,7 +87,7 @@ TestSuiteRunnerImpl::runAllFixtures(TestSuiteDesc* desc
 /////////////////////////////////////////////////////////////////
 void
 TestSuiteRunnerImpl::run(const std::string& path
-   , TestSuiteResultCollector* resultCollector)
+   , TestResultCollector* resultCollector)
 {
    TestSuiteDesc* desc = load(path, resultCollector);
    if(desc == 0)
@@ -105,7 +105,7 @@ TestSuiteRunnerImpl::run(const std::string& path
 /////////////////////////////////////////////////////////////////
 void
 TestSuiteRunner::run(const std::string& path
-   , TestSuiteResultCollector* resultCollector)
+   , TestResultCollector* resultCollector)
 {
    This->run(path, resultCollector);
 }

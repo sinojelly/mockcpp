@@ -183,7 +183,7 @@ sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-SUBDIRS = scripts src src/runner src/listeners 
+SUBDIRS = scripts src src/runner src/listeners libs ut samples
 all: all-recursive
 
 .SUFFIXES:

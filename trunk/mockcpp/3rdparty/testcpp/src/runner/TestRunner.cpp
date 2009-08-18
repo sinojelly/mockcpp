@@ -9,6 +9,7 @@
 #include <testcpp/runner/SimpleTestResultDispatcher.h>
 #include <testcpp/runner/SimpleTestResultReporter.h>
 #include <testcpp/runner/SimpleTestCaseResultReporter.h>
+#include <testcpp/runner/SimpleTestSuiteResultReporter.h>
 #include <testcpp/runner/TestFixtureSandboxRunnerFactory.h>
 #include <testcpp/runner/InternalError.h>
 #include <testcpp/runner/TestRunner.h>
@@ -20,7 +21,9 @@ struct TestRunnerImpl
    typedef std::list<TestListenerLoader*> Listeners;
 
    Listeners listeners;
+
    SimpleTestResultReporter* reporter;
+   SimpleTestSuiteResultReporter* suiteReporter;
    SimpleTestCaseResultReporter* caseReporter;
    SimpleTestResultDispatcher* dispatcher;
    TestSuiteLoader* loader;
@@ -37,9 +40,11 @@ struct TestRunnerImpl
    void runTests(const TestRunner::StringList& suites);
 
    void loadListener(TestRunnerContext* context, \
+            const TestRunner::StringList& searchingPaths,
             const std::string& listenerName);
 
    void loadListeners(TestRunnerContext* context, \
+            const TestRunner::StringList& searchingPaths,
             const TestRunner::StringList& listenerNames);
 
    void clearListeners();
@@ -47,15 +52,17 @@ struct TestRunnerImpl
 
 ///////////////////////////////////////////////////////
 TestRunnerImpl::TestRunnerImpl()
-   : reporter(new SimpleTestResultReporter())
-   , caseReporter(new SimpleTestCaseResultReporter())
+   : caseReporter(new SimpleTestCaseResultReporter())
    , dispatcher(new SimpleTestResultDispatcher())
    , loader(new LTTestSuiteLoader())
    , fixtureRunner(0)
    , suiteRunner(0)
    , hasFailures(false)
 {
+   suiteReporter = new SimpleTestSuiteResultReporter(caseReporter);
+   reporter = new SimpleTestResultReporter(suiteReporter);
    dispatcher->registerTestCaseListener(caseReporter);
+   dispatcher->registerTestSuiteListener(suiteReporter);
    dispatcher->registerListener(reporter);
 }
 
@@ -95,12 +102,16 @@ TestRunnerImpl::~TestRunnerImpl()
 
 ///////////////////////////////////////////////////////
 void
-TestRunnerImpl::loadListener(TestRunnerContext* context, const std::string& listenerName)
+TestRunnerImpl::
+loadListener( TestRunnerContext* context
+            , const TestRunner::StringList& searchingPaths
+            , const std::string& listenerName)
 {
    try
    {
-      TestListenerLoader* loader = new LTTestListenerLoader(listenerName);
-      loader->load(context);
+      TestListenerLoader* loader = \
+         new LTTestListenerLoader(listenerName);
+      loader->load(context, searchingPaths);
       listeners.push_back(loader);
    }
    catch(Error& e)
@@ -114,13 +125,15 @@ TestRunnerImpl::loadListener(TestRunnerContext* context, const std::string& list
 
 ///////////////////////////////////////////////////////
 void
-TestRunnerImpl::loadListeners(TestRunnerContext* context, \
-      const TestRunner::StringList& listenerNames)
+TestRunnerImpl::
+loadListeners( TestRunnerContext* context \
+             , const TestRunner::StringList& searchingPaths
+             , const TestRunner::StringList& listenerNames)
 {
    TestRunner::StringList::const_iterator i = listenerNames.begin();
    for(; i != listenerNames.end(); i++)
    {
-      loadListener(context, *i);
+      loadListener(context, searchingPaths, *i);
    }
 }
 
@@ -190,6 +203,13 @@ TestRunner::getTestResultReporter() const
 }
 
 ///////////////////////////////////////////////////////
+TestSuiteResultReporter* 
+TestRunner::getTestSuiteResultReporter() const
+{
+   return This->suiteReporter;
+}
+
+///////////////////////////////////////////////////////
 TestCaseResultReporter* 
 TestRunner::getTestCaseResultReporter() const
 {
@@ -207,10 +227,11 @@ TestRunner::registerTestListener(TestListener* listener)
 int
 TestRunner::runTests( unsigned int maxConcurrent
                     , const TestRunner::StringList& suitePaths
-                    , const TestRunner::StringList& listenerNames)
+                    , const TestRunner::StringList& listenerNames
+                    , const TestRunner::StringList& searchingPathsOfListeners)
 {
    This->createSuiteRunner(maxConcurrent);
-   This->loadListeners(this, listenerNames);
+   This->loadListeners(this, searchingPathsOfListeners, listenerNames);
 
    This->runTests(suitePaths);
 

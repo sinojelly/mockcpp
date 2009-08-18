@@ -10,7 +10,7 @@ TESTCPP_NS_START
 
 struct TestSuiteLoader;
 struct TestFixtureRunner;
-struct TestSuiteResultCollector;
+struct TestResultCollector;
 struct TestSuiteRunnerImpl;
 
 struct TestSuiteRunner
@@ -18,7 +18,7 @@ struct TestSuiteRunner
 	TestSuiteRunner(TestSuiteLoader*, TestFixtureRunner* );
 	~TestSuiteRunner();
 
-	void run(const std::string& path, TestSuiteResultCollector*);
+	void run(const std::string& path, TestResultCollector*);
 
 private:
 	TestSuiteRunnerImpl* This;

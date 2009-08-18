@@ -446,6 +446,10 @@ def generateFixtures(FILE, suiteName, fixtures):
 
 ##########################################################
 def generateTarget(target, fixtureFiles, allFixtures):
+   if len(allFixtures) == 0:
+      print >> sys.stderr, "no test fixture definition"
+      sys.exit(1)
+
    try:
       FILE = open(target, "w")
    except IOError:
@@ -453,9 +457,7 @@ def generateTarget(target, fixtureFiles, allFixtures):
       sys.exit(1)
 
    generateHeaders(FILE, fixtureFiles)
-
-   if len(allFixtures) > 0:
-      generateFixtures(FILE, os.path.basename(target).split('.')[0], allFixtures)
+   generateFixtures(FILE, os.path.basename(target).split('.')[0], allFixtures)
 
    FILE.close()
 

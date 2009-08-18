@@ -9,13 +9,14 @@
 
 TESTCPP_NS_START
 
+struct TestSuiteResultReporter;
 struct SimpleTestResultReporterImpl;
 
 struct SimpleTestResultReporter
    : public TestResultReporter
    , public TestListener
 {
-	SimpleTestResultReporter();
+	SimpleTestResultReporter(TestSuiteResultReporter*);
 	~SimpleTestResultReporter();
 
    unsigned int getNumberOfTestCases() const;
@@ -40,6 +41,9 @@ struct SimpleTestResultReporter
    void startTestSuite(TestSuiteInfoReader*);
    void endTestSuite(TestSuiteInfoReader*);
    void addSuiteError(TestSuiteInfoReader*, const std::string&);
+
+   void startTest();
+   void endTest();
    void addError(const std::string&);
 
 private:
