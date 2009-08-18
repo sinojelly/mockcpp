@@ -1,0 +1,3 @@
+#!/bin/sh
+
+testcpp-runner ./libmockcpp-ut.la -ltestcppstdoutlistener

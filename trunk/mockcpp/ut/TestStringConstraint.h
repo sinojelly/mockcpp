@@ -16,7 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#include <cxxtest/TestSuite.h>
+#include <testcpp/testcpp.hpp>
 
 #include <mockcpp/StringConstraint.h>
 
@@ -24,7 +24,7 @@
 
 USING_MOCKCPP_NS
 
-class TestStringConstraint: public CxxTest::TestSuite
+class TestStringConstraint: public TESTCPP_NS::TestFixture
 {
    struct StringPredictStub : public StringPredict
    {
@@ -42,13 +42,13 @@ class TestStringConstraint: public CxxTest::TestSuite
 
 private:
 
-   MemoryCheckPoint checkpoint;
+   TESTCPP_RCP checkpoint;
    StringConstraint* constraint;
    
 public:
    void setUp()
    {
-      checkpoint = mockcppSetCheckPoint();
+      checkpoint = TESTCPP_SET_RESOURCE_CHECK_POINT();
 
       constraint = new StringConstraint("abcd", new StringPredictStub());
    }
@@ -57,7 +57,7 @@ public:
    {
       delete constraint;
 
-      MOCKCPP_CHECK_POINT_VERIFY(checkpoint);
+      TESTCPP_VERIFY_RESOURCE_CHECK_POINT(checkpoint);
    }
 
    void testShouldBeAbleToEvalAStringWithSpecifiedPredict()

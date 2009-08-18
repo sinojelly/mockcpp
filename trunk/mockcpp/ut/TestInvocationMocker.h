@@ -16,7 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#include <cxxtest/TestSuite.h>
+#include <testcpp/testcpp.hpp>
 #include <mockcpp/InvocationMocker.h>
 #include <mockcpp/Invocation.h>
 #include <mockcpp/InvocationMockBuilder.h>
@@ -26,7 +26,7 @@
 
 USING_MOCKCPP_NS
 
-class TestInvocationMocker : public CxxTest::TestSuite
+class TestInvocationMocker : public TESTCPP_NS::TestFixture
 {
 public:
 	void setUp() { }

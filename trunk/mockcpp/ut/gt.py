@@ -4,25 +4,27 @@ import sys
 import os.path
 
 template = '''
-#include <cxxtest/TestSuite.h>
+#include <testcpp/testcpp.hpp>
 
-#include <%s.h>
+#include <mockcpp/%s.h>
 
 USING_MOCKCPP_NS
 
-class Test%s: public CxxTest::TestSuite
+class Test%s: public TESTCPP_NS::TestFixture
 {
 private:
-   MemoryCheckPoint checkpoint;
+
+   TESTCPP_RCP checkpoint;
 
 public:
+
    void setUp()
    {
-      checkpoint = mockcppSetCheckPoint();
+      checkpoint = TESTCPP_SET_RESOURCE_CHECK_POINT();
    }
    void tearDown()
    {
-      MOCKCPP_CHECK_POINT_VERIFY(checkpoint);
+      TESTCPP_VERIFY_RESOURCE_CHECK_POINT(checkpoint);
    }
 
 };

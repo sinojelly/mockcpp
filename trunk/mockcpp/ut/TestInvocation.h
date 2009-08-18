@@ -16,13 +16,13 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#include <cxxtest/TestSuite.h>
+#include <testcpp/testcpp.hpp>
 #include <mockcpp/Invocation.h>
 #include <mockcpp/Any.h>
 
 USING_MOCKCPP_NS
 
-class TestInvocation: public CxxTest::TestSuite
+class TestInvocation: public TESTCPP_NS::TestFixture
 {
 public:
 

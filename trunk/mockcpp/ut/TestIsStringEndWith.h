@@ -16,28 +16,28 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#include <cxxtest/TestSuite.h>
-#include <mockcpp/MemoryCheckPoint.h>
+#include <testcpp/testcpp.hpp>
+
 #include <mockcpp/IsStringEndWith.h>
 
 USING_MOCKCPP_NS
 
-class TestIsStringEndWith: public CxxTest::TestSuite
+class TestIsStringEndWith: public TESTCPP_NS::TestFixture
 {
 private:
 
-   MemoryCheckPoint checkpoint;
+   TESTCPP_RCP checkpoint;
 
 public:
 
    void setUp()
    {
-      checkpoint = mockcppSetCheckPoint();
+      checkpoint = TESTCPP_SET_RESOURCE_CHECK_POINT();
 
    }
    void tearDown()
    {
-      MOCKCPP_CHECK_POINT_VERIFY(checkpoint);
+      TESTCPP_VERIFY_RESOURCE_CHECK_POINT(checkpoint);
    }
 
 

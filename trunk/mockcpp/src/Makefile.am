@@ -5,6 +5,7 @@ MOCKCPP_HEADERS_PATH = $(top_builddir)/include/mockcpp
 AM_CPPFLAGS = -I$(MOCKCPP_INCLUDE_PATH) -I$(top_builddir)/3rdparty -Wall
 
 lib_LTLIBRARIES = libmockcpp.la
+libmockcpp_la_LDFLAGS = -module
 
 ARG_RELATED_HEADER_FILES =  \
  $(MOCKCPP_HEADERS_PATH)/DelegatedMethodDef.h \
@@ -106,7 +107,6 @@ pkginclude_HEADERS= \
   $(MOCKCPP_HEADERS_PATH)/IsStringEndWith.h \
   $(MOCKCPP_HEADERS_PATH)/IsStringStartWith.h \
   $(MOCKCPP_HEADERS_PATH)/Matcher.h \
-  $(MOCKCPP_HEADERS_PATH)/MemoryCheckPoint.h \
   $(MOCKCPP_HEADERS_PATH)/Method.h \
   $(MOCKCPP_HEADERS_PATH)/MethodInfoReader.h \
   $(MOCKCPP_HEADERS_PATH)/MethodTypeTraits.h \
@@ -237,7 +237,6 @@ nodist_libmockcpp_la_SOURCES = \
  IsStringStartWith.cpp \
  IsStringEndWith.cpp \
  IsStringContains.cpp \
- MemoryCheckPoint.cpp \
  DelegatedMethodGetter.cpp \
  DieStub.cpp
 

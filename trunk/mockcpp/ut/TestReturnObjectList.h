@@ -16,7 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#include <cxxtest/TestSuite.h>
+#include <testcpp/testcpp.hpp>
 #include <mockcpp/Any.h>
 #include <mockcpp/ChainableMockObject.h>
 #include <mockcpp/InvocationMockBuilder.h>
@@ -37,7 +37,7 @@ public:
 	}
 };
 
-class TestReturnObjectList : public CxxTest::TestSuite
+class TestReturnObjectList : public TESTCPP_NS::TestFixture
 {
 public:
 
