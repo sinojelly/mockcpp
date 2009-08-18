@@ -1,0 +1,222 @@
+
+#include <iostream>
+
+#include <testcpp/Error.h>
+
+#include <testcpp/runner/TestSuiteRunner.h>
+#include <testcpp/runner/LTTestSuiteLoader.h>
+#include <testcpp/runner/LTTestListenerLoader.h>
+#include <testcpp/runner/SimpleTestResultDispatcher.h>
+#include <testcpp/runner/SimpleTestResultReporter.h>
+#include <testcpp/runner/SimpleTestCaseResultReporter.h>
+#include <testcpp/runner/TestFixtureSandboxRunnerFactory.h>
+#include <testcpp/runner/InternalError.h>
+#include <testcpp/runner/TestRunner.h>
+
+TESTCPP_NS_START
+
+struct TestRunnerImpl
+{
+   typedef std::list<TestListenerLoader*> Listeners;
+
+   Listeners listeners;
+   SimpleTestResultReporter* reporter;
+   SimpleTestCaseResultReporter* caseReporter;
+   SimpleTestResultDispatcher* dispatcher;
+   TestSuiteLoader* loader;
+   TestFixtureRunner * fixtureRunner;
+   TestSuiteRunner * suiteRunner;
+   bool hasFailures;
+
+   TestRunnerImpl();
+   ~TestRunnerImpl();
+
+   
+   void createSuiteRunner(unsigned int maxConcurrent);
+   void runTestSuite(const std::string& suitePath);
+   void runTests(const TestRunner::StringList& suites);
+
+   void loadListener(TestRunnerContext* context, \
+            const std::string& listenerName);
+
+   void loadListeners(TestRunnerContext* context, \
+            const TestRunner::StringList& listenerNames);
+
+   void clearListeners();
+};
+
+///////////////////////////////////////////////////////
+TestRunnerImpl::TestRunnerImpl()
+   : reporter(new SimpleTestResultReporter())
+   , caseReporter(new SimpleTestCaseResultReporter())
+   , dispatcher(new SimpleTestResultDispatcher())
+   , loader(new LTTestSuiteLoader())
+   , fixtureRunner(0)
+   , suiteRunner(0)
+   , hasFailures(false)
+{
+   dispatcher->registerTestCaseListener(caseReporter);
+   dispatcher->registerListener(reporter);
+}
+
+void TestRunnerImpl::clearListeners()
+{
+   Listeners::iterator i = listeners.begin();
+   for(; i != listeners.end(); i++)
+   {
+      delete (*i);
+   }
+
+   listeners.clear();
+}
+
+///////////////////////////////////////////////////////
+TestRunnerImpl::~TestRunnerImpl()
+{
+   if(suiteRunner != 0)
+   {
+      delete suiteRunner;
+   }
+
+   if(fixtureRunner != 0)
+   {
+      TestFixtureSandboxRunnerFactory::
+           destroyInstance(fixtureRunner);
+   }
+
+   delete loader;
+   delete dispatcher;
+   delete caseReporter;
+   delete reporter;
+   
+   clearListeners();
+}
+
+///////////////////////////////////////////////////////
+void
+TestRunnerImpl::loadListener(TestRunnerContext* context, const std::string& listenerName)
+{
+   try
+   {
+      TestListenerLoader* loader = new LTTestListenerLoader(listenerName);
+      loader->load(context);
+      listeners.push_back(loader);
+   }
+   catch(Error& e)
+   {
+      std::cerr << "error occured while loading listener " 
+                << listenerName 
+                << " : " 
+                << e.what() << std::endl;
+   }
+}
+
+///////////////////////////////////////////////////////
+void
+TestRunnerImpl::loadListeners(TestRunnerContext* context, \
+      const TestRunner::StringList& listenerNames)
+{
+   TestRunner::StringList::const_iterator i = listenerNames.begin();
+   for(; i != listenerNames.end(); i++)
+   {
+      loadListener(context, *i);
+   }
+}
+
+///////////////////////////////////////////////////////
+void
+TestRunnerImpl::createSuiteRunner(unsigned int maxConcurrent)
+{
+   fixtureRunner = \
+      TestFixtureSandboxRunnerFactory:: \
+         createInstance(maxConcurrent);
+
+   suiteRunner = new TestSuiteRunner(loader, fixtureRunner);
+}
+
+///////////////////////////////////////////////////////
+void TestRunnerImpl::runTestSuite(const std::string& suitePath)
+{
+   try
+   {
+     suiteRunner->run(suitePath, dispatcher);
+   }
+   catch(Error& e)
+   {
+      std::cerr << e.what() << std::endl;
+      hasFailures = true;
+   }
+   catch(...)
+   {
+      std::cerr << TESTCPP_INTERNAL_ERROR(5001) << std::endl;
+      hasFailures = true;
+   }
+}
+
+///////////////////////////////////////////////////////
+void
+TestRunnerImpl::runTests(const TestRunner::StringList& suites)
+{
+   TestRunner::StringList::const_iterator i = suites.begin();
+   for(; i != suites.end(); i++)
+   {
+      runTestSuite(*i);
+   }
+
+   if(reporter->getNumberOfUnsuccessfulTestCases() > 0)
+   {
+      hasFailures = true;
+   }
+}
+
+///////////////////////////////////////////////////////
+TestRunner::TestRunner()
+   : This(new TestRunnerImpl())
+{
+}
+
+///////////////////////////////////////////////////////
+TestRunner::~TestRunner()
+{
+   delete This;
+}
+
+///////////////////////////////////////////////////////
+TestResultReporter* 
+TestRunner::getTestResultReporter() const
+{
+   return This->reporter;
+}
+
+///////////////////////////////////////////////////////
+TestCaseResultReporter* 
+TestRunner::getTestCaseResultReporter() const
+{
+   return This->caseReporter;
+}
+
+///////////////////////////////////////////////////////
+void
+TestRunner::registerTestListener(TestListener* listener)
+{
+   This->dispatcher->registerListener(listener);
+}
+
+///////////////////////////////////////////////////////
+int
+TestRunner::runTests( unsigned int maxConcurrent
+                    , const TestRunner::StringList& suitePaths
+                    , const TestRunner::StringList& listenerNames)
+{
+   This->createSuiteRunner(maxConcurrent);
+   This->loadListeners(this, listenerNames);
+
+   This->runTests(suitePaths);
+
+   return This->hasFailures ? -2 : 0;
+}
+
+///////////////////////////////////////////////////////
+
+TESTCPP_NS_END
+
