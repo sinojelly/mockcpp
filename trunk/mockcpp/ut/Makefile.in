@@ -49,13 +49,34 @@ am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
 am__installdirs = "$(DESTDIR)$(libdir)"
 libLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(lib_LTLIBRARIES)
-libmockcpp_ut_la_DEPENDENCIES = $(top_srcdir)/src/libmockcpp.la
-am__objects_1 = mockcpp-ut.lo
-am_libmockcpp_ut_la_OBJECTS = $(am__objects_1)
-libmockcpp_ut_la_OBJECTS = $(am_libmockcpp_ut_la_OBJECTS)
-libmockcpp_ut_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
+libmockcpp_ut1_la_DEPENDENCIES = $(top_srcdir)/src/libmockcpp.la
+am__objects_1 = mockcpp-ut1.lo
+am_libmockcpp_ut1_la_OBJECTS = $(am__objects_1)
+libmockcpp_ut1_la_OBJECTS = $(am_libmockcpp_ut1_la_OBJECTS)
+libmockcpp_ut1_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
-	$(CXXFLAGS) $(libmockcpp_ut_la_LDFLAGS) $(LDFLAGS) -o $@
+	$(CXXFLAGS) $(libmockcpp_ut1_la_LDFLAGS) $(LDFLAGS) -o $@
+libmockcpp_ut2_la_DEPENDENCIES = $(top_srcdir)/src/libmockcpp.la
+am__objects_2 = mockcpp-ut2.lo
+am_libmockcpp_ut2_la_OBJECTS = $(am__objects_2)
+libmockcpp_ut2_la_OBJECTS = $(am_libmockcpp_ut2_la_OBJECTS)
+libmockcpp_ut2_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
+	$(CXXFLAGS) $(libmockcpp_ut2_la_LDFLAGS) $(LDFLAGS) -o $@
+libmockcpp_ut3_la_DEPENDENCIES = $(top_srcdir)/src/libmockcpp.la
+am__objects_3 = mockcpp-ut3.lo
+am_libmockcpp_ut3_la_OBJECTS = $(am__objects_3)
+libmockcpp_ut3_la_OBJECTS = $(am_libmockcpp_ut3_la_OBJECTS)
+libmockcpp_ut3_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
+	$(CXXFLAGS) $(libmockcpp_ut3_la_LDFLAGS) $(LDFLAGS) -o $@
+libmockcpp_ut4_la_DEPENDENCIES = $(top_srcdir)/src/libmockcpp.la
+am__objects_4 = mockcpp-ut4.lo
+am_libmockcpp_ut4_la_OBJECTS = $(am__objects_4)
+libmockcpp_ut4_la_OBJECTS = $(am_libmockcpp_ut4_la_OBJECTS)
+libmockcpp_ut4_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
+	$(CXXFLAGS) $(libmockcpp_ut4_la_LDFLAGS) $(LDFLAGS) -o $@
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -68,8 +89,11 @@ CXXLD = $(CXX)
 CXXLINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	--mode=link $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
-SOURCES = $(libmockcpp_ut_la_SOURCES)
-DIST_SOURCES = $(libmockcpp_ut_la_SOURCES)
+SOURCES = $(libmockcpp_ut1_la_SOURCES) $(libmockcpp_ut2_la_SOURCES) \
+	$(libmockcpp_ut3_la_SOURCES) $(libmockcpp_ut4_la_SOURCES)
+DIST_SOURCES = $(libmockcpp_ut1_la_SOURCES) \
+	$(libmockcpp_ut2_la_SOURCES) $(libmockcpp_ut3_la_SOURCES) \
+	$(libmockcpp_ut4_la_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -197,30 +221,58 @@ AM_CPPFLAGS = -I$(top_builddir)/include \
               -I$(THIRD_PARTY_ROOT) \
               -I$(TESTCPP_ROOT)/include
 
-TARGET_SRC = mockcpp-ut.cpp
-lib_LTLIBRARIES = libmockcpp-ut.la
-libmockcpp_ut_la_SOURCES = $(TARGET_SRC)
-CLEANFILES = $(TARGET_SRC)
-libmockcpp_ut_la_LIBADD = $(top_srcdir)/src/libmockcpp.la
-libmockcpp_ut_la_LDFLAGS = -module
+TARGET_SRC1 = mockcpp-ut1.cpp
+TARGET_SRC2 = mockcpp-ut2.cpp
+TARGET_SRC3 = mockcpp-ut3.cpp
+TARGET_SRC4 = mockcpp-ut4.cpp
+lib_LTLIBRARIES = \
+ libmockcpp-ut1.la \
+ libmockcpp-ut2.la \
+ libmockcpp-ut3.la \
+ libmockcpp-ut4.la
+
+libmockcpp_ut1_la_SOURCES = $(TARGET_SRC1)
+libmockcpp_ut2_la_SOURCES = $(TARGET_SRC2)
+libmockcpp_ut3_la_SOURCES = $(TARGET_SRC3)
+libmockcpp_ut4_la_SOURCES = $(TARGET_SRC4)
+CLEANFILES = \
+ $(TARGET_SRC1) \
+ $(TARGET_SRC2) \
+ $(TARGET_SRC3) \
+ $(TARGET_SRC4)
+
+libmockcpp_ut1_la_LIBADD = $(top_srcdir)/src/libmockcpp.la
+libmockcpp_ut2_la_LIBADD = $(top_srcdir)/src/libmockcpp.la
+libmockcpp_ut3_la_LIBADD = $(top_srcdir)/src/libmockcpp.la
+libmockcpp_ut4_la_LIBADD = $(top_srcdir)/src/libmockcpp.la
+libmockcpp_ut1_la_LDFLAGS = -module
+libmockcpp_ut2_la_LDFLAGS = -module
+libmockcpp_ut3_la_LDFLAGS = -module
+libmockcpp_ut4_la_LDFLAGS = -module
 UTCG = $(PYTHON) $(TESTCPP_ROOT)/scripts/testcppgen.py
-TESTSUITES = \
+TESTSUITES1 = \
  TestAny.h \
  TestHolder.h \
  TestIsEqual.h \
  TestFormatter.h \
  TestConstraintSet.h \
- TestReturnObjectList.h \
+ TestReturnObjectList.h 
+
+TESTSUITES2 = \
  TestChainableObject.h \
  TestInvocation.h \
  TestInvocationMocker.h \
  TestMethodInfoReader.h \
- TestDelegatedMethod.h \
+ TestDelegatedMethod.h 
+
+TESTSUITES3 = \
  TestVirtualTable.h \
  TestMockObject.h \
  TestStubContainter.h \
  TestIsStringStartWith.h \
- TestIsStringEndWith.h \
+ TestIsStringEndWith.h 
+
+TESTSUITES4 = \
  TestIsStringContains.h \
  TestChainableMockMethodNameKey.h \
  TestChainableMockMethodContainer.h \
@@ -287,8 +339,14 @@ clean-libLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-libmockcpp-ut.la: $(libmockcpp_ut_la_OBJECTS) $(libmockcpp_ut_la_DEPENDENCIES) 
-	$(libmockcpp_ut_la_LINK) -rpath $(libdir) $(libmockcpp_ut_la_OBJECTS) $(libmockcpp_ut_la_LIBADD) $(LIBS)
+libmockcpp-ut1.la: $(libmockcpp_ut1_la_OBJECTS) $(libmockcpp_ut1_la_DEPENDENCIES) 
+	$(libmockcpp_ut1_la_LINK) -rpath $(libdir) $(libmockcpp_ut1_la_OBJECTS) $(libmockcpp_ut1_la_LIBADD) $(LIBS)
+libmockcpp-ut2.la: $(libmockcpp_ut2_la_OBJECTS) $(libmockcpp_ut2_la_DEPENDENCIES) 
+	$(libmockcpp_ut2_la_LINK) -rpath $(libdir) $(libmockcpp_ut2_la_OBJECTS) $(libmockcpp_ut2_la_LIBADD) $(LIBS)
+libmockcpp-ut3.la: $(libmockcpp_ut3_la_OBJECTS) $(libmockcpp_ut3_la_DEPENDENCIES) 
+	$(libmockcpp_ut3_la_LINK) -rpath $(libdir) $(libmockcpp_ut3_la_OBJECTS) $(libmockcpp_ut3_la_LIBADD) $(LIBS)
+libmockcpp-ut4.la: $(libmockcpp_ut4_la_OBJECTS) $(libmockcpp_ut4_la_DEPENDENCIES) 
+	$(libmockcpp_ut4_la_LINK) -rpath $(libdir) $(libmockcpp_ut4_la_OBJECTS) $(libmockcpp_ut4_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -296,7 +354,10 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mockcpp-ut.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mockcpp-ut1.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mockcpp-ut2.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mockcpp-ut3.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mockcpp-ut4.Plo@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -507,7 +568,16 @@ uninstall-am: uninstall-libLTLIBRARIES
 	tags uninstall uninstall-am uninstall-libLTLIBRARIES
 
 
-$(TARGET_SRC) : $(TESTSUITES)
+$(TARGET_SRC1) : $(TESTSUITES1)
+	$(UTCG) -o $@ $^
+
+$(TARGET_SRC2) : $(TESTSUITES2)
+	$(UTCG) -o $@ $^
+
+$(TARGET_SRC3) : $(TESTSUITES3)
+	$(UTCG) -o $@ $^
+
+$(TARGET_SRC4) : $(TESTSUITES4)
 	$(UTCG) -o $@ $^
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

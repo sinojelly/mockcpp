@@ -22,7 +22,10 @@
 #include <mockcpp/ChainableMockMethodContainer.h>
 #include <mockcpp/ChainableMockMethodCore.h>
 #include <mockcpp/InvocationMockBuilderGetter.h>
+#include <mockcpp/Exception.h>
+#include <mockcpp/ChainingMockHelper.h>
 
+USING_MOCKCPP_NS
 
 class TestChainableMockMethodContainer : public TESTCPP_NS::TestFixture
 {
