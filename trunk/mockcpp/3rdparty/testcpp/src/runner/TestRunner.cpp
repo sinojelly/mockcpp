@@ -171,11 +171,15 @@ void TestRunnerImpl::runTestSuite(const std::string& suitePath)
 void
 TestRunnerImpl::runTests(const TestRunner::StringList& suites)
 {
+   dispatcher->startTest();
+
    TestRunner::StringList::const_iterator i = suites.begin();
    for(; i != suites.end(); i++)
    {
       runTestSuite(*i);
    }
+
+   dispatcher->endTest();
 
    if(reporter->getNumberOfUnsuccessfulTestCases() > 0)
    {
