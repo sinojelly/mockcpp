@@ -14,6 +14,7 @@ struct ResourceCheckPoint
    unsigned int fds;
 };
 
+#define TESTCPP_RCP TESTCPP_NS::ResourceCheckPoint
 ///////////////////////////////////////////////////////////
 ResourceCheckPoint testcppSetCheckPoint();
 void testcppVerifyCheckPoint(const ResourceCheckPoint& rcp

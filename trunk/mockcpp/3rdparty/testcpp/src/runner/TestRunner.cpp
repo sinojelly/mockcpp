@@ -59,6 +59,7 @@ TestRunnerImpl::TestRunnerImpl()
    dispatcher->registerListener(reporter);
 }
 
+///////////////////////////////////////////////////////
 void TestRunnerImpl::clearListeners()
 {
    Listeners::iterator i = listeners.begin();
