@@ -16,16 +16,34 @@ void usage(char * program)
 
 ////////////////////////////////////////////////////////////
 static
-void getListeners(TestRunner::StringList& listeners, OptionList& options)
+void getSpecifiedOptions( const std::string& option
+                        , TestRunner::StringList& results
+                        , OptionList& options)
 {
    OptionList::Options::const_iterator i = options.options.begin();
    for(; i != options.options.end(); i++)
    {
-      if(i->first == std::string("l") && i->second.size() > 0)
+      if(i->first == option && i->second.size() > 0)
       {
-         listeners.push_back(i->second);
+         results.push_back(i->second);
       }
    }
+}
+
+////////////////////////////////////////////////////////////
+static
+void getListeners(TestRunner::StringList& listeners
+                        , OptionList& options)
+{
+   getSpecifiedOptions("l", listeners, options);
+}
+
+////////////////////////////////////////////////////////////
+static
+void getSearchingPathsOfListeners( TestRunner::StringList& paths
+                                , OptionList& options)
+{
+   getSpecifiedOptions("L", paths, options);
 }
 
 ////////////////////////////////////////////////////////////
@@ -41,8 +59,11 @@ int main(int argc, char* argv[])
 
    TestRunner::StringList listeners;
    getListeners(listeners, options);   
+   TestRunner::StringList searchingPathsOfListeners;
+   getSearchingPathsOfListeners(searchingPathsOfListeners, options);   
 
    TestRunner runner;
 
-   return runner.runTests(5, options.args, listeners);
+   return runner.runTests(5, options.args, listeners
+                         , searchingPathsOfListeners);
 }

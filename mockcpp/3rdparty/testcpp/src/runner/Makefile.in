@@ -61,6 +61,7 @@ nodist_libtestcpprunner_la_OBJECTS = TestSuiteRunner.lo \
 	TestFixtureRunnerWrapper.lo LTTestSuiteLoader.lo \
 	SimpleTestResultDispatcher.lo SimpleTestResultReporter.lo \
 	SimpleTestCaseResultReporter.lo \
+	SimpleTestSuiteResultReporter.lo \
 	TestFixtureSandboxRunnerFactory.lo LTTestListenerLoader.lo \
 	OptionList.lo TestRunner.lo
 libtestcpprunner_la_OBJECTS = $(nodist_libtestcpprunner_la_OBJECTS)
@@ -225,6 +226,7 @@ nodist_libtestcpprunner_la_SOURCES = \
   SimpleTestResultDispatcher.cpp \
   SimpleTestResultReporter.cpp \
   SimpleTestCaseResultReporter.cpp \
+  SimpleTestSuiteResultReporter.cpp \
   TestFixtureSandboxRunnerFactory.cpp \
   LTTestListenerLoader.cpp \
   OptionList.cpp \
@@ -346,6 +348,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/SimpleTestCaseRunner.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/SimpleTestResultDispatcher.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/SimpleTestResultReporter.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/SimpleTestSuiteResultReporter.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TestCaseSandbox.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TestCaseSandboxHandler.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TestCaseSandboxResultDecoder.Plo@am__quote@

@@ -10,13 +10,16 @@ TESTCPP_NS_START
 
 struct TestSuiteInfoReader;
 struct TestResultReporter;
+struct TestSuiteResultReporter;
 struct TestCaseResultReporter;
 struct StdoutTestListenerImpl;
 
 struct StdoutTestListener
    : public TestListener
 {
-   StdoutTestListener(TestResultReporter*, TestCaseResultReporter* caseReporter);
+   StdoutTestListener( TestResultReporter*
+                     , TestSuiteResultReporter*
+                     , TestCaseResultReporter* );
    ~StdoutTestListener();
 
    void addCaseCrash(TestCaseInfoReader*);
@@ -33,6 +36,9 @@ struct StdoutTestListener
    void startTestSuite(TestSuiteInfoReader*);
    void endTestSuite(TestSuiteInfoReader*);
    void addSuiteError(TestSuiteInfoReader*, const std::string&);
+
+   void startTest();
+   void endTest();
    void addError(const std::string&);
 
 private:

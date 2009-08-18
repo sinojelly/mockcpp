@@ -7,6 +7,7 @@
 #include <testcpp/internal/TestSuiteInfoReader.h>
 
 #include <testcpp/runner/TestResultReporter.h>
+#include <testcpp/runner/TestSuiteResultReporter.h>
 #include <testcpp/runner/TestCaseResultReporter.h>
 #include <testcpp/runner/InternalError.h>
 
@@ -17,19 +18,23 @@ TESTCPP_NS_START
 struct StdoutTestListenerImpl
 {
    StdoutTestListenerImpl(TestResultReporter* reporter
+      , TestSuiteResultReporter* suiteReporter
       , TestCaseResultReporter* caseReporter)
       : resultReporter(reporter)
+      , suiteResultReporter(suiteReporter)
       , caseResultReporter(caseReporter)
    {}
 
    TestResultReporter* resultReporter;
+   TestSuiteResultReporter* suiteResultReporter;
    TestCaseResultReporter* caseResultReporter;
 };
 
 ///////////////////////////////////////////////////////////
 StdoutTestListener::StdoutTestListener(TestResultReporter* reporter
+   , TestSuiteResultReporter* suiteReporter
    , TestCaseResultReporter* caseReporter)
-   : This(new StdoutTestListenerImpl(reporter, caseReporter))
+   : This(new StdoutTestListenerImpl(reporter, suiteReporter, caseReporter))
 {
 }
 
@@ -169,14 +174,17 @@ endTestSuite(TestSuiteInfoReader* suite)
       return;
    }
 
-   unsigned int successCases = This->resultReporter->getNumberOfSuccessfulTestCases();
+   TestSuiteResultReporter* reporter = This->suiteResultReporter;
+
+   unsigned int successCases = reporter->getNumberOfSuccessfulTestCases(suite);
    std::cout << std::endl
              << " success: " << successCases
-             << " failed: " << This->resultReporter->getNumberOfFailedTestCases()
-             << " error: "  << This->resultReporter->getNumberOfErrorTestCases()
-             << " crash: "  << This->resultReporter->getNumberOfCrashedTestCases() << std::endl
-             << " success rate: " << int(successCases*100/This->resultReporter->getNumberOfTestCases()) << "%"
+             << " failed: " << reporter->getNumberOfFailedTestCases(suite)
+             << " error: "  << reporter->getNumberOfErrorTestCases(suite)
+             << " crash: "  << reporter->getNumberOfCrashedTestCases(suite) << std::endl
+             << " success rate: " << int(successCases*100/reporter->getNumberOfTestCases(suite)) << "%"
              << std::endl;
+
 }
 
 ///////////////////////////////////////////////////////////
@@ -186,6 +194,24 @@ addSuiteError(TestSuiteInfoReader*, const std::string& msg )
    std::cerr << std::endl
              << "suite error: " 
              << msg
+             << std::endl;
+}
+
+///////////////////////////////////////////////////////////
+void StdoutTestListener::startTest()
+{
+}
+
+///////////////////////////////////////////////////////////
+void StdoutTestListener::endTest()
+{
+   unsigned int successCases = This->resultReporter->getNumberOfSuccessfulTestCases();
+   std::cout << std::endl
+             << " success: " << successCases
+             << " failed: " << This->resultReporter->getNumberOfFailedTestCases()
+             << " error: "  << This->resultReporter->getNumberOfErrorTestCases()
+             << " crash: "  << This->resultReporter->getNumberOfCrashedTestCases() << std::endl
+             << " success rate: " << int(successCases*100/This->resultReporter->getNumberOfTestCases()) << "%"
              << std::endl;
 }
 
@@ -208,9 +234,10 @@ extern "C"
 TestListener*
 testcppstdoutlistener_create_instance(
    TestResultReporter* resultReporter,
+   TestSuiteResultReporter* suiteReporter,
    TestCaseResultReporter* caseResultReporter)
 {
-    return new StdoutTestListener(resultReporter, caseResultReporter);
+    return new StdoutTestListener(resultReporter, suiteReporter, caseResultReporter);
 }
 
 ///////////////////////////////////////////////////////////

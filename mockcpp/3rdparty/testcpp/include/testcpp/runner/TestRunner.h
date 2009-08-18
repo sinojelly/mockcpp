@@ -22,13 +22,15 @@ public:
    ~TestRunner();
 
    TestResultReporter* getTestResultReporter() const;
+   TestSuiteResultReporter* getTestSuiteResultReporter() const;
    TestCaseResultReporter* getTestCaseResultReporter() const;
 
    void registerTestListener(TestListener* listener);
 
    int runTests( unsigned int maxConcurrent
                , const StringList& suitePaths
-               , const StringList& listenerNames);
+               , const StringList& listenerNames
+               , const StringList& searchingPathsOfListeners);
 
 private:
    TestRunnerImpl * This;

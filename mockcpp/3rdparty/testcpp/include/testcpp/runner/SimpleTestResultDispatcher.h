@@ -4,8 +4,9 @@
 
 #include <testcpp/testcpp.h>
 
-#include <testcpp/runner/TestSuiteResultCollector.h>
+#include <testcpp/runner/TestResultCollector.h>
 #include <testcpp/runner/TestResultDispatcher.h>
+#include <testcpp/runner/TestSuiteResultDispatcher.h>
 #include <testcpp/runner/TestCaseResultDispatcher.h>
 #include <testcpp/runner/TestResultReporter.h>
 
@@ -16,13 +17,17 @@ struct SimpleTestResultDispatcherImpl;
 
 struct SimpleTestResultDispatcher
    : public TestResultDispatcher
+   , public TestSuiteResultDispatcher
    , public TestCaseResultDispatcher
-   , public TestSuiteResultCollector
+   , public TestResultCollector
 {
    SimpleTestResultDispatcher();
    ~SimpleTestResultDispatcher();
 
    void registerListener(TestListener* listner);
+
+   void registerTestSuiteListener(TestSuiteListener* listener);
+   TestSuiteListener* unregisterTestSuiteListener(TestSuiteListener* listener);
 
    void registerTestCaseListener(TestCaseListener* listener);
    TestCaseListener* unregisterTestCaseListener(TestCaseListener* listener);
@@ -41,6 +46,9 @@ struct SimpleTestResultDispatcher
    void startTestSuite(TestSuiteInfoReader*);
    void endTestSuite(TestSuiteInfoReader*);
    void addSuiteError(TestSuiteInfoReader*, const std::string&);
+
+   void startTest();
+   void endTest();
    void addError(const std::string&);
 
 private:
