@@ -18,9 +18,8 @@
 
 #include <testcpp/testcpp.hpp>
 
-
-
 #include <mockcpp/MockObject.h>
+#include <mockcpp/ChainingMockHelper.h>
 
 USING_MOCKCPP_NS
 

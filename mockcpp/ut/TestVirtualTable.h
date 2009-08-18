@@ -18,10 +18,13 @@
 
 #include <testcpp/testcpp.hpp>
 
-
 #include <mockcpp/VirtualTable.h>
 #include <mockcpp/IndexInvokableGetter.h>
 #include <mockcpp/Invokable.h>
+#include <mockcpp/Exception.h>
+#include <mockcpp/MethodInfoReader.h>
+
+USING_MOCKCPP_NS
 
 struct IndexInvokableGetterStub : public IndexInvokableGetter
 {
