@@ -19833,7 +19833,7 @@ fi
 #LT_INIT([dlopen])
 #LTDL_INIT([installable])
 
-ac_config_files="$ac_config_files Makefile scripts/Makefile src/Makefile src/runner/Makefile src/listeners/Makefile libs/Makefile ut/Makefile samples/Makefile"
+ac_config_files="$ac_config_files Makefile scripts/Makefile src/Makefile src/runner/Makefile src/listeners/Makefile"
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -20454,9 +20454,6 @@ do
     "src/Makefile") CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
     "src/runner/Makefile") CONFIG_FILES="$CONFIG_FILES src/runner/Makefile" ;;
     "src/listeners/Makefile") CONFIG_FILES="$CONFIG_FILES src/listeners/Makefile" ;;
-    "libs/Makefile") CONFIG_FILES="$CONFIG_FILES libs/Makefile" ;;
-    "ut/Makefile") CONFIG_FILES="$CONFIG_FILES ut/Makefile" ;;
-    "samples/Makefile") CONFIG_FILES="$CONFIG_FILES samples/Makefile" ;;
 
   *) { { echo "$as_me:$LINENO: error: invalid argument: $ac_config_target" >&5
 echo "$as_me: error: invalid argument: $ac_config_target" >&2;}
