@@ -85,7 +85,7 @@ fi
 MOCKCPP_MAX_PARAMS=$max_parameters
 AC_SUBST(MOCKCPP_MAX_PARAMS)
 
-
+AC_CONFIG_SUBDIRS([3rdparty/testcpp])
 AC_CONFIG_FILES([
   Makefile
   src/Makefile
