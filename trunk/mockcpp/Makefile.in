@@ -193,11 +193,12 @@ pythondir = @pythondir@
 sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 srcdir = @srcdir@
+subdirs = @subdirs@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-SUBDIRS = src ut ft
+SUBDIRS = src 3rdparty/testcpp ut ft
 dist_doc_DATA = README
 all: all-recursive
 
