@@ -183,6 +183,8 @@ endTestSuite(TestSuiteInfoReader* suite)
              << " error: "  << reporter->getNumberOfErrorTestCases(suite)
              << " crash: "  << reporter->getNumberOfCrashedTestCases(suite) << std::endl
              << " success rate: " << int(successCases*100/reporter->getNumberOfTestCases(suite)) << "%"
+             << std::endl
+             << "======================================"
              << std::endl;
 
 }
@@ -207,6 +209,9 @@ void StdoutTestListener::endTest()
 {
    unsigned int successCases = This->resultReporter->getNumberOfSuccessfulTestCases();
    std::cout << std::endl
+             << " loaded suites: " << This->resultReporter->getNumberOfLoadedSuites()
+             << " unloadable suites: " << This->resultReporter->getNumberOfUnloadableSuites()
+             << std::endl
              << " success: " << successCases
              << " failed: " << This->resultReporter->getNumberOfFailedTestCases()
              << " error: "  << This->resultReporter->getNumberOfErrorTestCases()

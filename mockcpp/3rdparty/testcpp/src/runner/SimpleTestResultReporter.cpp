@@ -14,6 +14,7 @@ struct SimpleTestResultReporterImpl
    unsigned int numberOfCrashedCases;
    unsigned int numberOfErrorCases;
    unsigned int numberOfFailedCases;
+   unsigned int numberOfLoadedSuites;
    unsigned int numberOfUnloadableSuites;
    TestSuiteResultReporter* suiteResultReporter;
 
@@ -25,6 +26,7 @@ struct SimpleTestResultReporterImpl
       , numberOfErrorCases(0)
       , numberOfFailedCases(0)
       , numberOfSuccessfulCases(0)
+      , numberOfLoadedSuites(0)
       , numberOfUnloadableSuites(0)
       , suiteResultReporter(suiteReporter)
    {}
@@ -115,22 +117,23 @@ addFixtureFailure(TestFixtureInfoReader*, const AssertionFailure& failure)
 void SimpleTestResultReporter::
 startTestSuite(TestSuiteInfoReader* suite)
 {
+   This->numberOfLoadedSuites++;
 }
 
 ///////////////////////////////////////////////////////////
 void SimpleTestResultReporter::
 endTestSuite(TestSuiteInfoReader* suite)
 {
-   This->numberOfSuccessfulCases = \
+   This->numberOfSuccessfulCases += \
           This->suiteResultReporter->getNumberOfSuccessfulTestCases(suite);
 
-   This->numberOfCrashedCases = \
+   This->numberOfCrashedCases += \
           This->suiteResultReporter->getNumberOfCrashedTestCases(suite);
 
-   This->numberOfErrorCases = \
+   This->numberOfErrorCases += \
           This->suiteResultReporter->getNumberOfErrorTestCases(suite);
 
-   This->numberOfFailedCases = \
+   This->numberOfFailedCases += \
           This->suiteResultReporter->getNumberOfFailedTestCases(suite);
 }
 
@@ -213,6 +216,13 @@ SimpleTestResultReporter::
 getNumberOfUnloadableSuites() const
 {
    return This->numberOfUnloadableSuites;
+}
+
+unsigned int
+SimpleTestResultReporter::
+getNumberOfLoadedSuites() const
+{
+   return This->numberOfLoadedSuites;
 }
 
 ///////////////////////////////////////////////////////////
