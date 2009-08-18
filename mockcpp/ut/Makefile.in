@@ -50,8 +50,12 @@ am__installdirs = "$(DESTDIR)$(libdir)"
 libLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(lib_LTLIBRARIES)
 libmockcpp_ut_la_DEPENDENCIES = $(top_srcdir)/src/libmockcpp.la
-am_libmockcpp_ut_la_OBJECTS = mockcpp-ut.lo
+am__objects_1 = mockcpp-ut.lo
+am_libmockcpp_ut_la_OBJECTS = $(am__objects_1)
 libmockcpp_ut_la_OBJECTS = $(am_libmockcpp_ut_la_OBJECTS)
+libmockcpp_ut_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
+	$(CXXFLAGS) $(libmockcpp_ut_la_LDFLAGS) $(LDFLAGS) -o $@
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -187,16 +191,19 @@ sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-CXXTEST_ROOT = $(top_builddir)/3rdparty/cxxtest
+THIRD_PARTY_ROOT = $(top_builddir)/3rdparty
+TESTCPP_ROOT = $(THIRD_PARTY_ROOT)/testcpp
 AM_CPPFLAGS = -I$(top_builddir)/include \
-              -I$(top_builddir)/3rdparty \
-              -I$(CXXTEST_ROOT)
+              -I$(THIRD_PARTY_ROOT) \
+              -I$(TESTCPP_ROOT)/include
 
+TARGET_SRC = mockcpp-ut.cpp
 lib_LTLIBRARIES = libmockcpp-ut.la
-libmockcpp_ut_la_SOURCES = mockcpp-ut.cpp
-CLEANFILES = mockcpp-ut.cpp
-libmockcpp_ut_la_LIBADD = $(top_srcdir)/src/libmockcpp.la 
-UTCG = testcppgen
+libmockcpp_ut_la_SOURCES = $(TARGET_SRC)
+CLEANFILES = $(TARGET_SRC)
+libmockcpp_ut_la_LIBADD = $(top_srcdir)/src/libmockcpp.la
+libmockcpp_ut_la_LDFLAGS = -module
+UTCG = $(PYTHON) $(TESTCPP_ROOT)/scripts/testcppgen.py
 TESTSUITES = \
  TestAny.h \
  TestHolder.h \
@@ -281,7 +288,7 @@ clean-libLTLIBRARIES:
 	  rm -f "$${dir}/so_locations"; \
 	done
 libmockcpp-ut.la: $(libmockcpp_ut_la_OBJECTS) $(libmockcpp_ut_la_DEPENDENCIES) 
-	$(CXXLINK) -rpath $(libdir) $(libmockcpp_ut_la_OBJECTS) $(libmockcpp_ut_la_LIBADD) $(LIBS)
+	$(libmockcpp_ut_la_LINK) -rpath $(libdir) $(libmockcpp_ut_la_OBJECTS) $(libmockcpp_ut_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -500,7 +507,7 @@ uninstall-am: uninstall-libLTLIBRARIES
 	tags uninstall uninstall-am uninstall-libLTLIBRARIES
 
 
-mockcpp-ut.cpp : $(TESTSUITES)
+$(TARGET_SRC) : $(TESTSUITES)
 	$(UTCG) -o $@ $^
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

@@ -834,13 +834,11 @@ uninstall-am: uninstall-libLTLIBRARIES uninstall-pkgincludeHEADERS
 	uninstall-libLTLIBRARIES uninstall-pkgincludeHEADERS
 
 
-$(ARG_RELATED_HEADER_FILES) : FORCE
+$(ARG_RELATED_HEADER_FILES) : 
 	$(PYTHON) $(top_builddir)/src/generate_vtbl_related_files.py $(EXTRA_VTBL_HEADERS_DEFS)
 
-$(VBTL_RELATED_HEADER_FILES) : FORCE
+$(VBTL_RELATED_HEADER_FILES) : 
 	$(PYTHON) $(top_builddir)/src/generate_arg_related_files.py $(EXTRA_PARAMS_HEADERS_DEFS)
-
-FORCE:
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

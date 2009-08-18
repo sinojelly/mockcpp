@@ -22,7 +22,6 @@
 #include <mockcpp/InvocationMockBuilder.h>
 #include <mockcpp/ChainingMockHelper.h>
 
-
 USING_MOCKCPP_NS
 
 class TestChainableObject : public TESTCPP_NS::TestFixture

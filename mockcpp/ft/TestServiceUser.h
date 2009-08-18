@@ -16,7 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#include <cxxtest/TestSuite.h>
+#include <testcpp/testcpp.hpp>
 #include <mockcpp/mokc.h>
 #include <ServiceUser.c>
 #include <mockcpp/ProcStub.h>
@@ -31,7 +31,7 @@ int service_f17_stub(const char* fmt, ...)
 	return 2008;
 }
 
-class TestServiceUser: public CxxTest::TestSuite 
+class TestServiceUser: public TESTCPP_NS::TestFixture
 {
 public:
 

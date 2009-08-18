@@ -1,0 +1,3 @@
+#!/bin/sh
+
+../3rdparty/testcpp/src/runner/testcpp-runner ./libmockcpp-ft -ltestcppstdoutlistener

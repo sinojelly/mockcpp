@@ -1,17 +1,21 @@
 
-CXXTEST_ROOT = $(top_builddir)/3rdparty/cxxtest
+THIRD_PARTY_ROOT = $(top_builddir)/3rdparty
+TESTCPP_ROOT = $(THIRD_PARTY_ROOT)/testcpp
 
 AM_CPPFLAGS = -I$(top_builddir)/include \
-              -I$(top_builddir)/3rdparty \
-              -I$(CXXTEST_ROOT)
+              -I$(THIRD_PARTY_ROOT) \
+              -I$(TESTCPP_ROOT)/include
+
+TARGET_SRC = mockcpp-ut.cpp
 
 lib_LTLIBRARIES = libmockcpp-ut.la
 
-libmockcpp_ut_la_SOURCES = mockcpp-ut.cpp
-CLEANFILES = mockcpp-ut.cpp
-libmockcpp_ut_la_LIBADD = $(top_srcdir)/src/libmockcpp.la 
+libmockcpp_ut_la_SOURCES = $(TARGET_SRC)
+CLEANFILES = $(TARGET_SRC)
+libmockcpp_ut_la_LIBADD = $(top_srcdir)/src/libmockcpp.la
+libmockcpp_ut_la_LDFLAGS = -module
 
-UTCG = testcppgen
+UTCG = $(PYTHON) $(TESTCPP_ROOT)/scripts/testcppgen.py
 
 TESTSUITES = \
  TestAny.h \
@@ -36,5 +40,5 @@ TESTSUITES = \
  TestStringConstraint.h \
  TestIncrementStub.h
 
-mockcpp-ut.cpp : $(TESTSUITES)
+$(TARGET_SRC) : $(TESTSUITES)
 	$(UTCG) -o $@ $^
