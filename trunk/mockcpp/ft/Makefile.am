@@ -1,22 +1,25 @@
 
-CXXTEST_ROOT = $(top_builddir)/3rdparty/cxxtest
+THIRD_PARTY_ROOT = $(top_builddir)/3rdparty
+TESTCPP_ROOT = $(THIRD_PARTY_ROOT)/testcpp
 
-AM_CPPFLAGS = \
-  -I. \
-  -I$(top_builddir)/include \
-  -I$(top_builddir)/3rdparty \
-  -I$(CXXTEST_ROOT)
+AM_CPPFLAGS = -I$(top_builddir)/include \
+              -I$(THIRD_PARTY_ROOT) \
+              -I$(TESTCPP_ROOT)/include
 
-noinst_PROGRAMS = mockcpp-ft
+TARGET_SRC = mockcpp-ft.cpp
 
-nodist_mockcpp_ft_SOURCES = mockcpp-ft.cpp
-CLEANFILES = mockcpp-ft.cpp
-mockcpp_ft_LDADD = $(top_builddir)/libs/libcxxtest.la $(top_srcdir)/src/libmockcpp.la
+lib_LTLIBRARIES = libmockcpp-ft.la
 
-UTCG = $(CXXTEST_ROOT)/cxxtestgen.pl
+libmockcpp_ft_la_SOURCES = $(TARGET_SRC)
+CLEANFILES = $(TARGET_SRC)
+libmockcpp_ft_la_LIBADD = $(top_srcdir)/src/libmockcpp.la 
+libmockcpp_ft_la_LDFLAGS = -module
+
+
+UTCG = $(PYTHON) $(TESTCPP_ROOT)/scripts/testcppgen.py 
 
 TESTSUITES = \
- TestServiceUser.h
+  TestServiceUser.h
 
-mockcpp-ft.cpp : $(TESTSUITES)
-	$(UTCG) --have-eh --have-std --part -o $@ $^
+$(TARGET_SRC) : $(TESTSUITES)
+	$(UTCG) -o $@ $^

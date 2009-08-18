@@ -89,7 +89,6 @@ AC_SUBST(MOCKCPP_MAX_PARAMS)
 AC_CONFIG_FILES([
   Makefile
   src/Makefile
-  libs/Makefile
   ut/Makefile
   ft/Makefile
   samples/cpp/Makefile
