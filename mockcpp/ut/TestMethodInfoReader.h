@@ -16,11 +16,11 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#include <cxxtest/TestSuite.h>
+#include <testcpp/testcpp.hpp>
 
 #include <mockcpp/MethodInfoReader.h>
 
-class TestMethodInfoReader : public CxxTest::TestSuite
+class TestMethodInfoReader : public TESTCPP_NS::TestFixture
 {
 	struct Base0
    {

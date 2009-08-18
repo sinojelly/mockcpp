@@ -16,14 +16,14 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#include <cxxtest/TestSuite.h>
+#include <testcpp/testcpp.hpp>
 #include <mockcpp/Any.h>
 #include <mockcpp/RefAny.h>
 #include <mockcpp/IsRef.h>
 
 USING_MOCKCPP_NS
           
-class TestAny: public CxxTest::TestSuite 
+class TestAny: public TESTCPP_NS::TestFixture 
 {
 public:
 	void setUp()

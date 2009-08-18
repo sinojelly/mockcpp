@@ -16,30 +16,30 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#include <cxxtest/TestSuite.h>
+#include <testcpp/testcpp.hpp>
 
-#include <mockcpp/MemoryCheckPoint.h>
+
 
 #include <mockcpp/IsStringStartWith.h>
 
 USING_MOCKCPP_NS
 
-class TestIsStringStartWith: public CxxTest::TestSuite
+class TestIsStringStartWith: public TESTCPP_NS::TestFixture
 {
 private:
 
-   MemoryCheckPoint checkpoint;
+   TESTCPP_RCP checkpoint;
 
 public:
 
    void setUp()
    {
-      checkpoint = mockcppSetCheckPoint();
+      checkpoint = TESTCPP_SET_RESOURCE_CHECK_POINT();
 
    }
    void tearDown()
    {
-      MOCKCPP_CHECK_POINT_VERIFY(checkpoint);
+      TESTCPP_VERIFY_RESOURCE_CHECK_POINT(checkpoint);
    }
 
 	/////////////////////////////////////////////////////////

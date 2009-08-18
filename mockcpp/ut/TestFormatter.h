@@ -16,13 +16,13 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#include <cxxtest/TestSuite.h>
+#include <testcpp/testcpp.hpp>
 #include <mockcpp/Formatter.h>
 #include <stdio.h>
 
 USING_MOCKCPP_NS
 
-class TestFormatter : public CxxTest::TestSuite
+class TestFormatter : public TESTCPP_NS::TestFixture
 {
 public:
 	void setUp() { }

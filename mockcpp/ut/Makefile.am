@@ -5,13 +5,13 @@ AM_CPPFLAGS = -I$(top_builddir)/include \
               -I$(top_builddir)/3rdparty \
               -I$(CXXTEST_ROOT)
 
-noinst_PROGRAMS = mockcpp-ut
+lib_LTLIBRARIES = libmockcpp-ut.la
 
-nodist_mockcpp_ut_SOURCES = mockcpp-ut.cpp
+libmockcpp_ut_la_SOURCES = mockcpp-ut.cpp
 CLEANFILES = mockcpp-ut.cpp
-mockcpp_ut_LDADD = $(top_builddir)/libs/libcxxtest.la $(top_srcdir)/src/libmockcpp.la
+libmockcpp_ut_la_LIBADD = $(top_srcdir)/src/libmockcpp.la 
 
-UTCG = $(CXXTEST_ROOT)/cxxtestgen.pl
+UTCG = testcppgen
 
 TESTSUITES = \
  TestAny.h \
@@ -37,4 +37,4 @@ TESTSUITES = \
  TestIncrementStub.h
 
 mockcpp-ut.cpp : $(TESTSUITES)
-	$(UTCG) --have-eh --have-std --part -o $@ $^
+	$(UTCG) -o $@ $^

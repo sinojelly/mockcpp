@@ -15,7 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
-#include <cxxtest/TestSuite.h>
+#include <testcpp/testcpp.hpp>
 #include <mockcpp/ValueHolder.h>
 #include <mockcpp/RefHolder.h>
 
@@ -38,7 +38,7 @@ struct A
    int val;
 };
 
-class TestHolder : public CxxTest::TestSuite
+class TestHolder : public TESTCPP_NS::TestFixture
 {
 	void assertHolderEquals(const ValueHolder<A>& p1, const RefHolder<A>& p2)
 	{

@@ -16,11 +16,11 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#include <cxxtest/TestSuite.h>
-#include <mockcpp/MemoryCheckPoint.h>
+#include <testcpp/testcpp.hpp>
+
 #include <mockcpp/ChainableMockMethodNameKey.h>
 
-class TestChainableMockMethodNameKey: public CxxTest::TestSuite
+class TestChainableMockMethodNameKey: public TESTCPP_NS::TestFixture
 {
    ChainableMockMethodNameKey* key;
 
@@ -45,13 +45,13 @@ class TestChainableMockMethodNameKey: public CxxTest::TestSuite
 
 private:
 
-   MemoryCheckPoint checkpoint;
+   TESTCPP_RCP checkpoint;
 
 public:
 
 	void setUp()
    {
-      checkpoint = mockcppSetCheckPoint();
+      checkpoint = TESTCPP_SET_RESOURCE_CHECK_POINT();
 
       key = new ChainableMockMethodNameKey("method"); 
    }
@@ -61,7 +61,7 @@ public:
       delete key;
       key = 0;
 
-      MOCKCPP_CHECK_POINT_VERIFY(checkpoint);
+      TESTCPP_VERIFY_RESOURCE_CHECK_POINT(checkpoint);
    }
 
 	/////////////////////////////////////////////////////////
