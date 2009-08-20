@@ -54,4 +54,10 @@ public:
    {
       TS_ASSERT_EQUALS(sizeof(Derived5)/sizeof(void*), getNumberOfVtbls<Derived5>());
    }
+
+   struct Derived6 : virtual public Derived2, virtual public Derived0 {};
+   void testShouldBeThrowExcpetion_VirtualInheritance()
+   {
+      TS_ASSERT_THROWS(getNumberOfVtbls<Derived6>(), Exception);
+   }
 };
