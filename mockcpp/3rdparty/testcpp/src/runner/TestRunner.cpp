@@ -13,6 +13,8 @@
 #include <testcpp/runner/TestFixtureSandboxRunnerFactory.h>
 #include <testcpp/runner/InternalError.h>
 #include <testcpp/runner/TestRunner.h>
+#include <testcpp/runner/TestFilter.h>
+#include <testcpp/runner/TestFilterFactory.h>
 
 TESTCPP_NS_START
 
@@ -37,7 +39,8 @@ struct TestRunnerImpl
    
    void createSuiteRunner(unsigned int maxConcurrent);
    void runTestSuite(const std::string& suitePath);
-   void runTests(const TestRunner::StringList& suites);
+   void runTests( const TestRunner::StringList& suites,
+                  const TestFilter* filter);
 
    void loadListener(TestRunnerContext* context, \
             const TestRunner::StringList& searchingPaths,
@@ -169,7 +172,8 @@ void TestRunnerImpl::runTestSuite(const std::string& suitePath)
 
 ///////////////////////////////////////////////////////
 void
-TestRunnerImpl::runTests(const TestRunner::StringList& suites)
+TestRunnerImpl::runTests(const TestRunner::StringList& suites,
+                         const TestFilter* filter)
 {
    dispatcher->startTest();
 
@@ -232,12 +236,16 @@ int
 TestRunner::runTests( unsigned int maxConcurrent
                     , const TestRunner::StringList& suitePaths
                     , const TestRunner::StringList& listenerNames
-                    , const TestRunner::StringList& searchingPathsOfListeners)
+                    , const TestRunner::StringList& searchingPathsOfListeners
+                    , const TestRunner::StringList& fixtures)
 {
    This->createSuiteRunner(maxConcurrent);
    This->loadListeners(this, searchingPathsOfListeners, listenerNames);
+   const TestFilter* filter = TestFilterFactory::getFilter(fixtures);
 
-   This->runTests(suitePaths);
+   This->runTests(suitePaths, filter);
+
+   TestFilterFactory::returnFilter(filter);
 
    return This->hasFailures ? -2 : 0;
 }

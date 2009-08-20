@@ -10,7 +10,9 @@ void usage(char * program)
 {
    std::cerr << "usage: " 
              << program 
-             << " [ -Lsearchingpath ... ] [ -llistener ... ] [ testsuite ... ]" << std::endl;
+             << " [ -Lsearchingpath ... ] [ -llistener ... ] [ testsuite ... ]" 
+             << std::endl
+             << std::endl;
    exit(1);
 }
 
@@ -47,11 +49,19 @@ void getSearchingPathsOfListeners( TestRunner::StringList& paths
 }
 
 ////////////////////////////////////////////////////////////
+static
+void getSpecifiedFixtures( TestRunner::StringList& fixtures
+                         , OptionList& options)
+{
+   getSpecifiedOptions("f", fixtures, options);
+}
+
+////////////////////////////////////////////////////////////
 int main(int argc, char* argv[])
 {
    OptionList options;
 
-   options.parse(argc, argv, "L:l:");
+   options.parse(argc, argv, "f:L:l:");
    if(options.args.size() == 0)
    {
       usage("testcpp-runner");
@@ -59,11 +69,15 @@ int main(int argc, char* argv[])
 
    TestRunner::StringList listeners;
    getListeners(listeners, options);   
+
    TestRunner::StringList searchingPathsOfListeners;
    getSearchingPathsOfListeners(searchingPathsOfListeners, options);   
+
+   TestRunner::StringList fixtures;
+	getSpecifiedFixtures(fixtures, options);
 
    TestRunner runner;
 
    return runner.runTests(5, options.args, listeners
-                         , searchingPathsOfListeners);
+                         , searchingPathsOfListeners, fixtures);
 }
