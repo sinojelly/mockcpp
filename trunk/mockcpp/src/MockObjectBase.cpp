@@ -29,7 +29,10 @@ MOCKCPP_NS_START
 
 struct MockObjectBaseImpl : public IndexInvokableGetter
 {
-   MockObjectBaseImpl(unsigned int numberOfVptr, ChainableMockMethodContainer* c);
+   MockObjectBaseImpl( unsigned int numberOfVptr
+                     , ChainableMockMethodContainer* c
+                     , const std::type_info& info);
+
    ~MockObjectBaseImpl();
 
    Invokable* getInvokable(unsigned int vptrIndex, unsigned int vtblIndex) const;
@@ -54,8 +57,10 @@ private:
 
 ////////////////////////////////////////////////////////////////////////
 MockObjectBaseImpl::
-MockObjectBaseImpl(unsigned int numberOfVptr, ChainableMockMethodContainer* c)
-    : vtbl(new VirtualTable(this, numberOfVptr)), container(c)
+MockObjectBaseImpl( unsigned int numberOfVptr
+                  , ChainableMockMethodContainer* c
+                  , const std::type_info& info)
+    : vtbl(new VirtualTable(this, numberOfVptr, info)), container(c)
 {
 }
 
@@ -117,9 +122,13 @@ MockObjectBaseImpl::getMethod(const std::string& name, void* addr, \
 }
 
 ////////////////////////////////////////////////////////////////////////
-MockObjectBase::MockObjectBase(const std::string& objName, unsigned int numberOfVptr)
+MockObjectBase::MockObjectBase( const std::string& objName
+                              , unsigned int numberOfVptr
+                              , const std::type_info& info)
    : ChainableMockObjectBase(objName)
-   , This(new MockObjectBaseImpl(numberOfVptr, this->getMethodContainer()))
+   , This( new MockObjectBaseImpl(numberOfVptr
+               , this->getMethodContainer()
+               , info))
 {
 }
 

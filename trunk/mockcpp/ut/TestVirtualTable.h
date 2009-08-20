@@ -86,7 +86,7 @@ public:
    void testShouldBeAbleToConvertToPointerToInterfaceType()
    {
       IndexInvokableGetterStub indexInvokableGetter;
-      VirtualTable vtbl(&indexInvokableGetter, sizeof(Interface)/sizeof(void*));
+      VirtualTable vtbl(&indexInvokableGetter, sizeof(Interface)/sizeof(void*), typeid(Interface));
 
       Interface* pInterface = (Interface*) vtbl.toPointerToInterface();
 
@@ -97,7 +97,7 @@ public:
    {
       IndexInvokableGetterStub indexInvokableGetter;
       try {
-         VirtualTable vtbl(&indexInvokableGetter, 8);
+         VirtualTable vtbl(&indexInvokableGetter, 8, typeid(Interface));
          TS_FAIL("Should throw an exception!");
       }
       catch(MOCKCPP_NS::Exception& e)
@@ -120,7 +120,7 @@ public:
    void testShouldBeAbleToSetMethod()
    {
       IndexInvokableGetterStub indexInvokableGetter;
-      VirtualTable vtbl(&indexInvokableGetter, sizeof(Interface)/sizeof(void*));
+      VirtualTable vtbl(&indexInvokableGetter, sizeof(Interface)/sizeof(void*), typeid(Interface));
 
       unsigned int indexOfVtbl = getIndexOfMethod(&Interface::base11);
       unsigned int indexOfVptr = getDeltaOfMethod(&Interface::base11);
@@ -140,7 +140,7 @@ public:
    void testShouldThrowExceptionIfAMethodIsNotSet()
    {
       IndexInvokableGetterStub indexInvokableGetter;
-      VirtualTable vtbl(&indexInvokableGetter, sizeof(Interface)/sizeof(void*));
+      VirtualTable vtbl(&indexInvokableGetter, sizeof(Interface)/sizeof(void*), typeid(Interface));
 
       unsigned int indexOfVtbl = getIndexOfMethod(&Interface::base11);
       unsigned int indexOfVptr = getDeltaOfMethod(&Interface::base11);
@@ -162,7 +162,7 @@ public:
    void testShouldThrowExceptionIfIndexOfVtblExceedsTheLimitationOfConfiguration()
    {
       IndexInvokableGetterStub indexInvokableGetter;
-      VirtualTable vtbl(&indexInvokableGetter, sizeof(Interface)/sizeof(void*));
+      VirtualTable vtbl(&indexInvokableGetter, sizeof(Interface)/sizeof(void*), typeid(Interface));
 
       unsigned int indexOfVtbl = MOCKCPP_MAX_VTBL_SIZE;
       unsigned int indexOfVptr = getDeltaOfMethod(&Interface::base11);
@@ -175,7 +175,7 @@ public:
    {
       IndexInvokableGetterStub indexInvokableGetter;
       unsigned int numberOfVptr = sizeof(Interface)/sizeof(void*);
-      VirtualTable vtbl(&indexInvokableGetter, numberOfVptr);
+      VirtualTable vtbl(&indexInvokableGetter, sizeof(Interface)/sizeof(void*), typeid(Interface));
 
       unsigned int indexOfVtbl = getIndexOfMethod(&Interface::base11);
       unsigned int indexOfVptr = numberOfVptr;
@@ -187,7 +187,7 @@ public:
    void testShouldBeAbleToGetPreviouslySetIndexInvokableGetterByReturnedPointerToInterface()
    {
       IndexInvokableGetterStub indexInvokableGetter;
-      VirtualTable vtbl(&indexInvokableGetter, sizeof(Interface)/sizeof(void*));
+      VirtualTable vtbl(&indexInvokableGetter, sizeof(Interface)/sizeof(void*), typeid(Interface));
 
       unsigned int indexOfVtbl = getIndexOfMethod(&Interface::base11);
       unsigned int indexOfVptr = getDeltaOfMethod(&Interface::base11);

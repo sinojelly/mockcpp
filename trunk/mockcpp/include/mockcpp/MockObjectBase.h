@@ -19,6 +19,8 @@
 #ifndef __MOCKCPP_MOCK_OBJECT_BASE_H
 #define __MOCKCPP_MOCK_OBJECT_BASE_H
 
+#include <typeinfo>
+
 #include <mockcpp/mockcpp.h>
 #include <mockcpp/ChainableMockObjectBase.h>
 #include <mockcpp/InvocationMockBuilderGetter.h>
@@ -29,7 +31,9 @@ struct MockObjectBaseImpl;
 
 struct MockObjectBase : public ChainableMockObjectBase
 {
-   MockObjectBase(const std::string& objName, unsigned int numberOfVptr = 1);
+   MockObjectBase( const std::string& objName
+                 , unsigned int numberOfVptr
+                 , const std::type_info& info);
 
    ~MockObjectBase();
 

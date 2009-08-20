@@ -17,7 +17,9 @@
 ***/
 
 #include <testcpp/testcpp.hpp>
+#include <mockcpp/Stub.h>
 #include <mockcpp/StubContainer.h>
+#include <mockcpp/Invocation.h>
 #include <mockcpp/Any.h>
 
 
