@@ -19,6 +19,8 @@
 #ifndef __MOCKCPP_VIRTUAL_TABLE_H
 #define __MOCKCPP_VIRTUAL_TABLE_H
 
+#include <typeinfo>
+
 #include <mockcpp/mockcpp.h>
 
 MOCKCPP_NS_START
@@ -28,7 +30,9 @@ class VirtualTableImpl;
 
 struct VirtualTable
 {
-   VirtualTable(IndexInvokableGetter* getter, unsigned int numberOfVptr = 1);
+   VirtualTable( IndexInvokableGetter* getter
+               , unsigned int numberOfVptr
+               , const std::type_info&);
 
    ~VirtualTable();
 

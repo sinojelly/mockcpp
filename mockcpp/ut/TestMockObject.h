@@ -18,6 +18,7 @@
 
 #include <testcpp/testcpp.hpp>
 
+#include <iostream>
 #include <mockcpp/MockObject.h>
 #include <mockcpp/ChainingMockHelper.h>
 
@@ -37,6 +38,7 @@ class TestMockObject : public TESTCPP_NS::TestFixture
    {
       virtual void base10() = 0;
       virtual long base11(const std::string&) const = 0;
+      virtual int  base12() const = 0;
 
       virtual ~Base1() {}
    };
@@ -755,6 +757,44 @@ public:
           .will(returnValue(str));
 
       TS_ASSERT_EQUALS(str, ((Interface*)mock)->a());
+   }
+
+   // typeid()
+   void testShouldBeAbleToGetTypeInfoOfAMockObject()
+   {
+      MockObject<Interface> mock;
+      Interface* pInterface = (Interface*)mock;
+
+      TS_ASSERT(typeid(pInterface) == typeid(Interface*));
+   }
+
+   // dynamic_cast
+   void testShouldSupportDownCast1()
+   {
+      MockObject<Interface> mock;
+      mock.method(&Interface::base00).stubs().will(returnValue(10));
+      Base0* pBase0 = (Base0*)mock;
+      TS_ASSERT_EQUALS(10, pBase0->base00());
+      Interface* p = dynamic_cast<Interface*>(pBase0);
+      TS_ASSERT(p != 0);
+      TS_ASSERT_EQUALS(10, p->base00());
+   }
+
+   // dynamic_cast to second
+   void testShouldSupportDownCast2()
+   {
+      MockObject<Interface> mock;
+
+      mock.method(&Interface::base12).stubs().will(returnValue(10));
+
+      Base1* pBase1 = (Base1*)mock;
+      TS_ASSERT_EQUALS(10, pBase1->base12());
+
+      Interface* p = dynamic_cast<Interface*>(pBase1);
+      TS_ASSERT(p != 0);
+      TS_ASSERT((void*)pBase1 != (void*)p);
+
+      TS_ASSERT_EQUALS(10, p->base12());
    }
 };
 

@@ -1,3 +1,6 @@
 #!/bin/sh
 
-../3rdparty/testcpp/src/runner/testcpp-runner ./libmockcpp-ut1 ./libmockcpp-ut2 ./libmockcpp-ut3 ./libmockcpp-ut4 -L../3rdparty/testcpp/src/listeners -ltestcppstdoutlistener
+../3rdparty/testcpp/src/runner/testcpp-runner \
+    ./libmockcpp-ut1 ./libmockcpp-ut2  \
+    ./libmockcpp-ut3 ./libmockcpp-ut4 \
+    ./libmockcpp-ut5 -L../3rdparty/testcpp/src/listeners -ltestcppstdoutlistener

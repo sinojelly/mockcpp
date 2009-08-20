@@ -16,6 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
+#include <typeinfo>
+
 #include <mockcpp/VirtualTable.h>
 #include <mockcpp/Asserter.h>
 #include <mockcpp/OutputStringStream.h>
@@ -26,7 +28,9 @@ MOCKCPP_NS_START
 
 struct VirtualTableImpl
 {
-	VirtualTableImpl(IndexInvokableGetter* getter, unsigned int numberOfVptr);
+	VirtualTableImpl( IndexInvokableGetter* getter
+                   , unsigned int numberOfVptr
+                   , const std::type_info& info);
    ~VirtualTableImpl();
 
    void validateNumberOfVptr();
@@ -114,15 +118,18 @@ void
 VirtualTableImpl::reset()
 {
    void * defaultMethodAddr = getAddrOfMethod(&DefaultMethodHolder::method);
-   for(unsigned int i=0; i<numberOfVptr*MOCKCPP_MAX_VTBL_SIZE; i++)
+   for(unsigned index = 0; index < numberOfVptr; index++)
    {
-      vtbl[i] = defaultMethodAddr;
+      for(unsigned int i=2; i<MOCKCPP_MAX_VTBL_SIZE+2; i++)
+      {
+         vtbl[index*(MOCKCPP_MAX_VTBL_SIZE+2)+i] = defaultMethodAddr;
+      }
    }
 }
 
 /////////////////////////////////////////////////////////////////
 VirtualTableImpl::VirtualTableImpl(IndexInvokableGetter* getter
-     , unsigned int numberOfVPTR)
+     , unsigned int numberOfVPTR, const std::type_info& refTypeInfo)
      : numberOfVptr(numberOfVPTR), indexInvokableGetter(getter)
 {
    if(numberOfVptr == 0)
@@ -132,11 +139,14 @@ VirtualTableImpl::VirtualTableImpl(IndexInvokableGetter* getter
 
    validateNumberOfVptr();
 
-   vtbl = new void*[numberOfVptr*MOCKCPP_MAX_VTBL_SIZE];
+   // 1 for pointer to typeinfo && offset
+   vtbl = new void*[numberOfVptr*(MOCKCPP_MAX_VTBL_SIZE+2)];
    
    for(unsigned int i=0; i<numberOfVptr; i++)
    {
-      vptr[i] = &vtbl[i*MOCKCPP_MAX_VTBL_SIZE];
+      vtbl[i*(MOCKCPP_MAX_VTBL_SIZE+2)+0] = (void*)(-1*(sizeof(void*)*i));
+      vtbl[i*(MOCKCPP_MAX_VTBL_SIZE+2)+1] = (void*)&refTypeInfo;
+      vptr[i] = &vtbl[i*(MOCKCPP_MAX_VTBL_SIZE+2)+2];
    }
 
    vptr[MOCKCPP_MAX_INHERITANCE] = (void*)this;
@@ -151,8 +161,9 @@ VirtualTableImpl::~VirtualTableImpl()
 }
 
 /////////////////////////////////////////////////////////////////
-VirtualTable::VirtualTable(IndexInvokableGetter* getter, unsigned int numberOfVptr)
-    : This(new VirtualTableImpl(getter, numberOfVptr))
+VirtualTable::VirtualTable(IndexInvokableGetter* getter
+    , unsigned int numberOfVptr, const std::type_info& info)
+    : This(new VirtualTableImpl(getter, numberOfVptr, info))
 {}
 
 /////////////////////////////////////////////////////////////////
@@ -173,7 +184,7 @@ VirtualTable::addMethod(void* methodAddr, unsigned int indexOfVtbl, unsigned int
     This->validateIndexOfVtbl(indexOfVtbl);
     This->validateIndexOfVptr(indexOfVptr);
 
-    This->vtbl[indexOfVptr*MOCKCPP_MAX_VTBL_SIZE + indexOfVtbl] = methodAddr;
+    This->vtbl[(indexOfVptr*(MOCKCPP_MAX_VTBL_SIZE+2)) + indexOfVtbl+2] = methodAddr;
 }
 
 /////////////////////////////////////////////////////////////////

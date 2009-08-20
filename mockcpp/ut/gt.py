@@ -9,6 +9,7 @@ template = '''
 #include <mockcpp/%s.h>
 
 USING_MOCKCPP_NS
+USING_TESTCPP_NS
 
 class Test%s: public TESTCPP_NS::TestFixture
 {

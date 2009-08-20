@@ -77,6 +77,13 @@ libmockcpp_ut4_la_OBJECTS = $(am_libmockcpp_ut4_la_OBJECTS)
 libmockcpp_ut4_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(libmockcpp_ut4_la_LDFLAGS) $(LDFLAGS) -o $@
+libmockcpp_ut5_la_DEPENDENCIES = $(top_srcdir)/src/libmockcpp.la
+am__objects_5 = mockcpp-ut5.lo
+am_libmockcpp_ut5_la_OBJECTS = $(am__objects_5)
+libmockcpp_ut5_la_OBJECTS = $(am_libmockcpp_ut5_la_OBJECTS)
+libmockcpp_ut5_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
+	$(CXXFLAGS) $(libmockcpp_ut5_la_LDFLAGS) $(LDFLAGS) -o $@
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -90,10 +97,11 @@ CXXLINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	--mode=link $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
 SOURCES = $(libmockcpp_ut1_la_SOURCES) $(libmockcpp_ut2_la_SOURCES) \
-	$(libmockcpp_ut3_la_SOURCES) $(libmockcpp_ut4_la_SOURCES)
+	$(libmockcpp_ut3_la_SOURCES) $(libmockcpp_ut4_la_SOURCES) \
+	$(libmockcpp_ut5_la_SOURCES)
 DIST_SOURCES = $(libmockcpp_ut1_la_SOURCES) \
 	$(libmockcpp_ut2_la_SOURCES) $(libmockcpp_ut3_la_SOURCES) \
-	$(libmockcpp_ut4_la_SOURCES)
+	$(libmockcpp_ut4_la_SOURCES) $(libmockcpp_ut5_la_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -226,30 +234,36 @@ TARGET_SRC1 = mockcpp-ut1.cpp
 TARGET_SRC2 = mockcpp-ut2.cpp
 TARGET_SRC3 = mockcpp-ut3.cpp
 TARGET_SRC4 = mockcpp-ut4.cpp
+TARGET_SRC5 = mockcpp-ut5.cpp
 lib_LTLIBRARIES = \
  libmockcpp-ut1.la \
  libmockcpp-ut2.la \
  libmockcpp-ut3.la \
- libmockcpp-ut4.la
+ libmockcpp-ut4.la \
+ libmockcpp-ut5.la
 
 libmockcpp_ut1_la_SOURCES = $(TARGET_SRC1)
 libmockcpp_ut2_la_SOURCES = $(TARGET_SRC2)
 libmockcpp_ut3_la_SOURCES = $(TARGET_SRC3)
 libmockcpp_ut4_la_SOURCES = $(TARGET_SRC4)
+libmockcpp_ut5_la_SOURCES = $(TARGET_SRC5)
 CLEANFILES = \
  $(TARGET_SRC1) \
  $(TARGET_SRC2) \
  $(TARGET_SRC3) \
- $(TARGET_SRC4)
+ $(TARGET_SRC4) \
+ $(TARGET_SRC5)
 
 libmockcpp_ut1_la_LIBADD = $(top_srcdir)/src/libmockcpp.la
 libmockcpp_ut2_la_LIBADD = $(top_srcdir)/src/libmockcpp.la
 libmockcpp_ut3_la_LIBADD = $(top_srcdir)/src/libmockcpp.la
 libmockcpp_ut4_la_LIBADD = $(top_srcdir)/src/libmockcpp.la
+libmockcpp_ut5_la_LIBADD = $(top_srcdir)/src/libmockcpp.la
 libmockcpp_ut1_la_LDFLAGS = -module
 libmockcpp_ut2_la_LDFLAGS = -module
 libmockcpp_ut3_la_LDFLAGS = -module
 libmockcpp_ut4_la_LDFLAGS = -module
+libmockcpp_ut5_la_LDFLAGS = -module
 UTCG = $(PYTHON) $(TESTCPP_ROOT)/scripts/testcppgen.py
 TESTSUITES1 = \
  TestAny.h \
@@ -257,7 +271,8 @@ TESTSUITES1 = \
  TestIsEqual.h \
  TestFormatter.h \
  TestConstraintSet.h \
- TestReturnObjectList.h 
+ TestReturnObjectList.h \
+ TestInterfaceInfo.h
 
 TESTSUITES2 = \
  TestChainableObject.h \
@@ -268,7 +283,6 @@ TESTSUITES2 = \
 
 TESTSUITES3 = \
  TestVirtualTable.h \
- TestMockObject.h \
  TestStubContainter.h \
  TestIsStringStartWith.h \
  TestIsStringEndWith.h 
@@ -279,6 +293,9 @@ TESTSUITES4 = \
  TestChainableMockMethodContainer.h \
  TestStringConstraint.h \
  TestIncrementStub.h
+
+TESTSUITES5 = \
+ TestMockObject.h 
 
 all: all-am
 
@@ -348,6 +365,8 @@ libmockcpp-ut3.la: $(libmockcpp_ut3_la_OBJECTS) $(libmockcpp_ut3_la_DEPENDENCIES
 	$(libmockcpp_ut3_la_LINK) -rpath $(libdir) $(libmockcpp_ut3_la_OBJECTS) $(libmockcpp_ut3_la_LIBADD) $(LIBS)
 libmockcpp-ut4.la: $(libmockcpp_ut4_la_OBJECTS) $(libmockcpp_ut4_la_DEPENDENCIES) 
 	$(libmockcpp_ut4_la_LINK) -rpath $(libdir) $(libmockcpp_ut4_la_OBJECTS) $(libmockcpp_ut4_la_LIBADD) $(LIBS)
+libmockcpp-ut5.la: $(libmockcpp_ut5_la_OBJECTS) $(libmockcpp_ut5_la_DEPENDENCIES) 
+	$(libmockcpp_ut5_la_LINK) -rpath $(libdir) $(libmockcpp_ut5_la_OBJECTS) $(libmockcpp_ut5_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -359,6 +378,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mockcpp-ut2.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mockcpp-ut3.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mockcpp-ut4.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/mockcpp-ut5.Plo@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -579,6 +599,9 @@ $(TARGET_SRC3) : $(TESTSUITES3)
 	$(UTCG) -o $@ $^
 
 $(TARGET_SRC4) : $(TESTSUITES4)
+	$(UTCG) -o $@ $^
+
+$(TARGET_SRC5) : $(TESTSUITES5)
 	$(UTCG) -o $@ $^
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

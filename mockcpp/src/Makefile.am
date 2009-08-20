@@ -238,7 +238,8 @@ nodist_libmockcpp_la_SOURCES = \
  IsStringEndWith.cpp \
  IsStringContains.cpp \
  DelegatedMethodGetter.cpp \
- DieStub.cpp
+ DieStub.cpp \
+ InterfaceInfo.cpp
 
 ALLOW_MI = @MOCKCPP_ALLOW_MI@
 MAX_INHERITANCE = @MOCKCPP_MI@

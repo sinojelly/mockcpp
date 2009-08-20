@@ -23,15 +23,9 @@
 #include <mockcpp/TypeString.h>
 #include <mockcpp/MockObjectBase.h>
 #include <mockcpp/DelegatedMethodGetter.h>
+#include <mockcpp/InterfaceInfo.h>
 
 MOCKCPP_NS_START
-
-////////////////////////////////////////////////////////////////
-template <typename Interface>
-unsigned int getNumberOfVtbls()
-{
-	return sizeof(Interface)/sizeof(void*);
-}
 
 ////////////////////////////////////////////////////////////////
 template <typename Interface>
@@ -39,7 +33,8 @@ struct MockObject : public MockObjectBase
 {
 	MockObject()
 		: MockObjectBase(TypeString<Interface>::value()
-      , getNumberOfVtbls<Interface>())
+      , getNumberOfVtbls<Interface>()
+      , typeid(Interface))
 	{}
 
    ~MockObject()

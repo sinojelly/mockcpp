@@ -77,7 +77,8 @@ nodist_libmockcpp_la_OBJECTS = AfterMatcher.lo AnyBase.lo Any.lo \
 	ChainableMockMethodContainer.lo ChainableMockMethodNameKey.lo \
 	ChainableMockMethodIndexKey.lo StubContainer.lo \
 	StringConstraint.lo IsStringStartWith.lo IsStringEndWith.lo \
-	IsStringContains.lo DelegatedMethodGetter.lo DieStub.lo
+	IsStringContains.lo DelegatedMethodGetter.lo DieStub.lo \
+	InterfaceInfo.lo
 libmockcpp_la_OBJECTS = $(nodist_libmockcpp_la_OBJECTS)
 libmockcpp_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
@@ -455,7 +456,8 @@ nodist_libmockcpp_la_SOURCES = \
  IsStringEndWith.cpp \
  IsStringContains.cpp \
  DelegatedMethodGetter.cpp \
- DieStub.cpp
+ DieStub.cpp \
+ InterfaceInfo.cpp
 
 ALLOW_MI = @MOCKCPP_ALLOW_MI@
 MAX_INHERITANCE = @MOCKCPP_MI@
@@ -563,6 +565,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/IgnoreResultHandler.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/IgnoreResultHandlerFactory.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/IgnoreReturnStub.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/InterfaceInfo.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Invocation.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/InvocationId.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/InvocationMockBuilderGetter.Plo@am__quote@
