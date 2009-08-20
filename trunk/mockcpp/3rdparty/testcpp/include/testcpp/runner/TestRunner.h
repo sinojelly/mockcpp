@@ -30,7 +30,8 @@ public:
    int runTests( unsigned int maxConcurrent
                , const StringList& suitePaths
                , const StringList& listenerNames
-               , const StringList& searchingPathsOfListeners);
+               , const StringList& searchingPathsOfListeners
+               , const StringList& fixtures);
 
 private:
    TestRunnerImpl * This;
