@@ -1,5 +1,7 @@
 ==1. Default behavior==
 
-Default behavior is specified by _*defaults()*_, instead of _*expects()/stubs()*_. Relations between _*defaults()*_ and _*expects()/stubs()*_ could be thought as relations between *default* and *case* in C/C++ *switch* sentences. If all mock specifications of a method of a mock object specified with _*expects()/stubs()*_ don't match one of your invocations to the method in question, the specification defined with _*defaults()*_ (if have any) will be used to perform the return behavior. 
+Default behavior is defined by using _*defaults()*_, instead of _*expects()/stubs()*_. Relations between _*defaults()*_ and _*expects()/stubs()*_ could be thought as relations between *default* and *case* in C/C++ *switch* sentences. If all mock specifications of a method of a mock object specified with _*expects()/stubs()*_ don't match one of your invocations to the method in question, the specification defined with _*defaults()*_ (if have any) will be used to perform the return behavior. 
+
+Furthermore, for one method, you can specify more than one default behavior, using with() selector to distinguish them. When falling in default category, mockcpp will try to select a matched default behavior. If multiple default behaviors match your invocation, the first one will be chosen. So far, the first matched one defined in a test is the one is selected, but this might change in later version, so don't write your tests on this rule.
 
 This is a very useful feature. It helps you write your tests in a neater way. 
