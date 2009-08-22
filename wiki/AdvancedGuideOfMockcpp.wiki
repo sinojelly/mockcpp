@@ -1,6 +1,5 @@
-#Advanced Guide of mockcpp
 
-=1. Default behavior=
+==1. Default behavior==
 
 Default behavior isspecified by _*defaults()*_, instead of _*expects()/stubs()*_. Relations between _*defaults()*_ and _*expects()/stubs()*_ could be thought as relations between *default* and *case* in C/C++ *switch* sentence. If all mock specifications of a method of a mock object specified with _*expects()/stubs()*_ don't match one of your invocations to this method of this object, the specification defined in _*defaults()*_ (if have any) will be used to perform the return behavior. 
 
