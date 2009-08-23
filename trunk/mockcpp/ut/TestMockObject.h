@@ -53,14 +53,17 @@ class TestMockObject : public TESTCPP_NS::TestFixture
 private:
 
 	TESTCPP_RCP checkpoint;
+   std::string str;
 
 public:
 
 	void setUp()
    {
-		checkpoint = TESTCPP_SET_RESOURCE_CHECK_POINT();
+      str = "abcdefg";
 
+		checkpoint = TESTCPP_SET_RESOURCE_CHECK_POINT();
    }
+
 	void tearDown()
    {
       TESTCPP_VERIFY_RESOURCE_CHECK_POINT(checkpoint);
@@ -750,13 +753,12 @@ public:
    {
       MockObject<Interface> mock;
 
-      const std::string str("abcdefg");
-
       mock.method(&Interface::a)
           .stubs()
           .will(returnValue(str));
 
-      TS_ASSERT_EQUALS(str, mock->a());
+      std::string s = mock->a();
+      TS_ASSERT_EQUALS(std::string("abcdefg"), s);
    }
 
 };

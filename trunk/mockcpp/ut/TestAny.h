@@ -25,6 +25,7 @@ USING_MOCKCPP_NS
           
 class TestAny: public TESTCPP_NS::TestFixture 
 {
+
 public:
 	void setUp()
 	{
@@ -69,6 +70,24 @@ public:
 		RefAny ref((char*)0);
 
 		TS_ASSERT(any_castable<char*>(ref));
+   }
+
+   void testShouldBeAbleToGetTypeAndValueString()
+   {
+      const std::string& str = std::string("abcdef");
+      RefAny ref(str);
+
+      TS_ASSERT_EQUALS(std::string("\"") + str + std::string("\""), ref.toString());
+   }
+
+   void testShouldBeAbleToAnyCastReferenceCorrectly()
+   {
+      const std::string& str = std::string("abcdef");
+      Any i(str);
+      Any& ref = i;
+
+      const std::string& result = any_cast<const std::string&>(ref);
+      TS_ASSERT_EQUALS(std::string("abcdef"), result);
    }
 };
 
