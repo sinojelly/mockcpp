@@ -83,10 +83,9 @@ class ChainableMockMethod : public ChainableMockMethodBase<ReturnType>
 {
     ReturnType getResult(const Any& result)
     {
-      if (result.empty())
-      {
-         return value;
-      }
+      MOCKCPP_ASSERT_FALSE_MESSAGE(
+         "The return value for a non-void method was not specified",
+         result.empty());
 
       return any_cast<ReturnType>(result);
     }
@@ -96,13 +95,6 @@ public:
     ChainableMockMethod(Invokable* invokable)
 		: ChainableMockMethodBase<ReturnType>(invokable)
     {}
-
-private:
-	
-    typedef typename TypeTraits<ReturnType>::Type nonref;
-
-private:
-    nonref value;
 };
 
 //////////////////////////////////////////////////////////////////

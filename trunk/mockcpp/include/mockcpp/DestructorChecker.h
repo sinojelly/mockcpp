@@ -43,15 +43,24 @@ std::pair<unsigned int, unsigned int> getIndexOfDestructor()
 
    delete checker;
 
-   // FIXME: It's wired that delete will not free the memory.
-   // so delete it explictly. don't know the reason.
-   // invoke checker->~Interface() and delete will
-   // actually invoke different destructor, wired!!!!
-   ::operator delete(original);
+   unsigned int vptrIndex = 0;
+   unsigned int vtblIndex = 0;
 
-   return std::pair<unsigned int, unsigned int>(
-      getIndexOfVptrOfDestructor(), 
-      getIndexOfVtblOfDestructor());
+   try
+   {
+      vptrIndex = getIndexOfVptrOfDestructor();
+      vtblIndex = getIndexOfVtblOfDestructor();
+
+      // FIXME:
+      ::operator delete(original);
+   }
+   catch(...)
+   {
+      throw;
+   }
+
+   return std::pair<unsigned int, unsigned int>
+       (vptrIndex, vtblIndex);
 };
 
 ///////////////////////////////////////////////

@@ -59,7 +59,8 @@ TESTSUITES2 = \
  TestDestructorChecker.h
 
 TESTSUITES3 = \
- TestVirtualTable.h 
+ TestVirtualTable.h \
+ TestChainableMockMethod.h
 
 # TestStubContainter.h \
 # TestIsStringStartWith.h \
