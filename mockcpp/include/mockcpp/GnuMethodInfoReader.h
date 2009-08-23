@@ -20,6 +20,7 @@
 
 #include <mockcpp/mockcpp.h>
 
+#include <mockcpp/OutputStringStream.h>
 #include <mockcpp/MethodTypeTraits.h>
 #include <mockcpp/Asserter.h>
 #include <mockcpp/TypeString.h>

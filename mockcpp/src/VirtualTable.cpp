@@ -17,6 +17,7 @@
 ***/
 
 #include <typeinfo>
+#include <iostream>
 
 #include <mockcpp/VirtualTable.h>
 #include <mockcpp/Asserter.h>
@@ -26,6 +27,16 @@
 
 MOCKCPP_NS_START
 
+/////////////////////////////////////////////////////////////////
+namespace
+{
+   struct FakeObject
+   {
+      void* vptr[MOCKCPP_MAX_INHERITANCE+1];
+   };
+}
+
+/////////////////////////////////////////////////////////////////
 struct VirtualTableImpl
 {
 	VirtualTableImpl( IndexInvokableGetter* getter
@@ -40,22 +51,24 @@ struct VirtualTableImpl
 
    void reset();
 
+   FakeObject* fakeObject;
    void** vtbl;
-   void* vptr[MOCKCPP_MAX_INHERITANCE+1];
    unsigned int numberOfVptr;
    IndexInvokableGetter* indexInvokableGetter;
+   bool expectsBeingDeleted;
+   bool expectsKeepAlive;
+   bool deleted;
 };
 
 /////////////////////////////////////////////////////////////////
 namespace
 {
-   struct DefaultMethodHolder
+   unsigned int getRealVtblIndex
+         ( unsigned int indexOfVptr
+         , unsigned int indexOfVtbl)
    {
-      void method()
-      {
-         MOCKCPP_FAIL("The method you are invoking is not specified by mocker."); 
-      }
-   };
+      return indexOfVptr * (MOCKCPP_MAX_VTBL_SIZE + 2) + indexOfVtbl + 2;
+   }
 }
 
 /////////////////////////////////////////////////////////////////
@@ -63,8 +76,10 @@ void
 VirtualTableImpl::validateVptr(void** pVptr)
 {
    MOCKCPP_ASSERT_TRUE_MESSAGE(
-     PACKAGE " internal error(1018). please report this bug to " PACKAGE_BUGREPORT ".",
-     pVptr == vptr);
+     PACKAGE " internal error(1018). please report this bug to "
+             PACKAGE_BUGREPORT ".",
+
+     pVptr == fakeObject->vptr);
 }
 /////////////////////////////////////////////////////////////////
 void
@@ -78,7 +93,8 @@ VirtualTableImpl::validateNumberOfVptr()
        << "), or it's not a pure virtual class. "
        << "Here are some hints for you: \n"
        << "1. " PACKAGE " only supports mocking pure virtual class; \n"
-       << "2. you can change the MOCKCPP_MAX_INHERITANCE setting to maximun 7, then rebuild " PACKAGE "; \n"
+       << "2. you can change the MOCKCPP_MAX_INHERITANCE setting to "
+          "maximun 7, then rebuild " PACKAGE "; \n"
        << "3. you can refine your design to make it simpler.";
 
    MOCKCPP_ASSERT_TRUE_MESSAGE(
@@ -104,6 +120,7 @@ VirtualTableImpl::validateIndexOfVtbl(unsigned int index)
       oss.str(), 
       index < MOCKCPP_MAX_VTBL_SIZE);
 }
+
 /////////////////////////////////////////////////////////////////
 void
 VirtualTableImpl::validateIndexOfVptr(unsigned int index)
@@ -114,23 +131,108 @@ VirtualTableImpl::validateIndexOfVptr(unsigned int index)
 }
 
 /////////////////////////////////////////////////////////////////
+namespace
+{
+   struct MethodHolderDummy {};
+
+#if 0
+   template <int VPTRIndex, int VTBLIndex, typename T>
+#endif
+   struct DefaultMethodHolder
+   {
+      void method()
+      {
+         oss_t oss;
+         oss << "The method you are invoking is not " 
+             << "specified by mocker" 
+#if 0
+             << " ("
+             << VPTRIndex << ":" 
+             << VTBLIndex << ")."
+#endif
+         ;
+
+         MOCKCPP_FAIL(oss.str());
+      }
+   };
+}
+
+/////////////////////////////////////////////////////////////////
+#define MOCKCPP_SET_DEFAULT_METHOD(I, J) do {\
+   vtbl[getRealVtblIndex(I, J)] = getAddrOfMethod(&DefaultMethodHolder<I, J, MethodHolderDummy>::method); \
+}while(0)
+
+/////////////////////////////////////////////////////////////////
 void
 VirtualTableImpl::reset()
 {
+   // FIXME: In order to used as a dummy object, default behavior might 
+   // change.
    void * defaultMethodAddr = getAddrOfMethod(&DefaultMethodHolder::method);
-   for(unsigned index = 0; index < numberOfVptr; index++)
+   for(unsigned int i=0; i<numberOfVptr; i++)
    {
-      for(unsigned int i=2; i<MOCKCPP_MAX_VTBL_SIZE+2; i++)
+      for(unsigned int j=0; j<MOCKCPP_MAX_VTBL_SIZE;j++)
       {
-         vtbl[index*(MOCKCPP_MAX_VTBL_SIZE+2)+i] = defaultMethodAddr;
+         vtbl[getRealVtblIndex(i,j)] = defaultMethodAddr;
       }
    }
+  
+#if 0
+   if(numberOfVptr > 0)
+   {
+      MOCKCPP_SET_DEFAULT_METHOD(0, 0); 
+      MOCKCPP_SET_DEFAULT_METHOD(0, 1); 
+      MOCKCPP_SET_DEFAULT_METHOD(0, 2); 
+      MOCKCPP_SET_DEFAULT_METHOD(0, 3); 
+      MOCKCPP_SET_DEFAULT_METHOD(0, 4); 
+      MOCKCPP_SET_DEFAULT_METHOD(0, 5); 
+      MOCKCPP_SET_DEFAULT_METHOD(0, 6); 
+      MOCKCPP_SET_DEFAULT_METHOD(0, 7); 
+      MOCKCPP_SET_DEFAULT_METHOD(0, 8); 
+      MOCKCPP_SET_DEFAULT_METHOD(0, 9); 
+      MOCKCPP_SET_DEFAULT_METHOD(0, 10); 
+      MOCKCPP_SET_DEFAULT_METHOD(0, 11); 
+      MOCKCPP_SET_DEFAULT_METHOD(0, 12); 
+      MOCKCPP_SET_DEFAULT_METHOD(0, 13); 
+      MOCKCPP_SET_DEFAULT_METHOD(0, 14); 
+      MOCKCPP_SET_DEFAULT_METHOD(0, 15); 
+      MOCKCPP_SET_DEFAULT_METHOD(0, 16); 
+      MOCKCPP_SET_DEFAULT_METHOD(0, 17); 
+      MOCKCPP_SET_DEFAULT_METHOD(0, 18); 
+      MOCKCPP_SET_DEFAULT_METHOD(0, 19); 
+   }
+
+   if(numberOfVptr > 1)
+   {
+      MOCKCPP_SET_DEFAULT_METHOD(1, 0); 
+      MOCKCPP_SET_DEFAULT_METHOD(1, 1); 
+      MOCKCPP_SET_DEFAULT_METHOD(1, 2); 
+      MOCKCPP_SET_DEFAULT_METHOD(1, 3); 
+      MOCKCPP_SET_DEFAULT_METHOD(1, 4); 
+      MOCKCPP_SET_DEFAULT_METHOD(1, 5); 
+      MOCKCPP_SET_DEFAULT_METHOD(1, 6); 
+      MOCKCPP_SET_DEFAULT_METHOD(1, 7); 
+      MOCKCPP_SET_DEFAULT_METHOD(1, 8); 
+      MOCKCPP_SET_DEFAULT_METHOD(1, 9); 
+      MOCKCPP_SET_DEFAULT_METHOD(1, 10); 
+      MOCKCPP_SET_DEFAULT_METHOD(1, 11); 
+      MOCKCPP_SET_DEFAULT_METHOD(1, 12); 
+      MOCKCPP_SET_DEFAULT_METHOD(1, 13); 
+      MOCKCPP_SET_DEFAULT_METHOD(1, 14); 
+      MOCKCPP_SET_DEFAULT_METHOD(1, 15); 
+      MOCKCPP_SET_DEFAULT_METHOD(1, 16); 
+      MOCKCPP_SET_DEFAULT_METHOD(1, 17); 
+      MOCKCPP_SET_DEFAULT_METHOD(1, 18); 
+      MOCKCPP_SET_DEFAULT_METHOD(1, 19); 
+    }
+#endif
 }
 
 /////////////////////////////////////////////////////////////////
 VirtualTableImpl::VirtualTableImpl(IndexInvokableGetter* getter
      , unsigned int numberOfVPTR, const std::type_info& refTypeInfo)
      : numberOfVptr(numberOfVPTR), indexInvokableGetter(getter)
+     , expectsBeingDeleted(false), expectsKeepAlive(false)
 {
    if(numberOfVptr == 0)
    {
@@ -141,15 +243,23 @@ VirtualTableImpl::VirtualTableImpl(IndexInvokableGetter* getter
 
    // 1 for pointer to typeinfo && offset
    vtbl = new void*[numberOfVptr*(MOCKCPP_MAX_VTBL_SIZE+2)];
-   
+
+   fakeObject = new FakeObject();
+
+   void** vptr = fakeObject->vptr;
+
    for(unsigned int i=0; i<numberOfVptr; i++)
    {
-      vtbl[i*(MOCKCPP_MAX_VTBL_SIZE+2)+0] = (void*)(-1*(sizeof(void*)*i));
-      vtbl[i*(MOCKCPP_MAX_VTBL_SIZE+2)+1] = (void*)&refTypeInfo;
-      vptr[i] = &vtbl[i*(MOCKCPP_MAX_VTBL_SIZE+2)+2];
+      unsigned int base = i*(MOCKCPP_MAX_VTBL_SIZE+2);
+
+      vtbl[base+0] = (void*)(-1*(sizeof(void*)*i));
+      vtbl[base+1] = (void*)&refTypeInfo;
+      vptr[i] = &vtbl[base+2];
    }
 
    vptr[MOCKCPP_MAX_INHERITANCE] = (void*)this;
+
+   deleted = false;
 
    reset();
 }
@@ -157,7 +267,15 @@ VirtualTableImpl::VirtualTableImpl(IndexInvokableGetter* getter
 /////////////////////////////////////////////////////////////////
 VirtualTableImpl::~VirtualTableImpl()
 {
-    delete [] vtbl;
+    if(fakeObject != 0)
+    {
+       delete fakeObject;
+    }
+
+    if(vtbl != 0)
+    {
+       delete [] vtbl;
+    }
 }
 
 /////////////////////////////////////////////////////////////////
@@ -174,7 +292,7 @@ VirtualTable::~VirtualTable()
 void*
 VirtualTable::toPointerToInterface() const
 {
-    return (void*)&(This->vptr[0]);
+    return (void*)This->fakeObject;
 }
  
 /////////////////////////////////////////////////////////////////
@@ -184,7 +302,67 @@ VirtualTable::addMethod(void* methodAddr, unsigned int indexOfVtbl, unsigned int
     This->validateIndexOfVtbl(indexOfVtbl);
     This->validateIndexOfVptr(indexOfVptr);
 
-    This->vtbl[(indexOfVptr*(MOCKCPP_MAX_VTBL_SIZE+2)) + indexOfVtbl+2] = methodAddr;
+    This->vtbl[getRealVtblIndex(indexOfVptr, indexOfVtbl)] = methodAddr;
+}
+
+/////////////////////////////////////////////////////////////////
+namespace
+{
+   VirtualTableImpl*
+   getVirtualTableImpl(void* caller, unsigned int vptrIndex)
+   {
+      void** vptr = &((void**)caller)[-(int)vptrIndex];
+      VirtualTableImpl* pThis = (VirtualTableImpl*)vptr[MOCKCPP_MAX_INHERITANCE];
+      pThis->validateVptr(vptr);
+      return pThis;
+   }
+
+   struct DummyClass {};
+
+   template <unsigned int VPTRIndex, typename T = DummyClass >
+   struct DestructorHolder
+   {
+      void destructor()
+      {
+         VirtualTableImpl* pThis = getVirtualTableImpl(this, VPTRIndex);
+         if(pThis->expectsKeepAlive)
+         {
+            MOCKCPP_FAIL("trying to delete an object expected keeping alive.");
+         }
+
+         // FIXME: The memory won't be freed automatically.
+         // Wired!!!!
+         // delete [] pThis->vtbl;
+         if(pThis->deleted)
+         {
+            MOCKCPP_FAIL("object has been deleted previously, you are deleting it again.");
+         }
+
+         pThis->deleted = true;
+      }
+   };
+}
+
+#define MOCKCPP_GET_DESTRUCTOR_ADDR(I) \
+   case I: \
+      destructorAddr = getAddrOfMethod(&DestructorHolder<I, DummyClass>::destructor); \
+      break;
+
+/////////////////////////////////////////////////////////////////
+void
+VirtualTable::setDestructor(unsigned int vptrIndex, unsigned int vtblIndex)
+{
+    void * destructorAddr = 0;
+
+    This->validateIndexOfVptr(vptrIndex);
+    This->validateIndexOfVtbl(vtblIndex);
+
+    switch(vptrIndex)
+    {
+    #include <mockcpp/DestructorAddrGetterDef.h>
+    }
+
+    This->vtbl[getRealVtblIndex(vptrIndex, vtblIndex)] = destructorAddr;
 }
 
 /////////////////////////////////////////////////////////////////
@@ -195,15 +373,57 @@ VirtualTable::reset()
 }
 
 /////////////////////////////////////////////////////////////////
+void
+VirtualTable::verify()
+{
+   if(This->expectsBeingDeleted && !This->deleted)
+   {
+      MOCKCPP_FAIL("Object is expected Being Deleted, but it actually didn't happen.");
+   }
+}
+
+/////////////////////////////////////////////////////////////////
+void
+VirtualTable::expectsBeingDeleted()
+{
+    if(This->expectsKeepAlive)
+    {
+       MOCKCPP_FAIL("What do you really want? You are expecting "
+                    "to delete an object alive which you expected "
+                    "it should keep alive");
+    }
+
+    This->expectsBeingDeleted = true;
+}
+
+/////////////////////////////////////////////////////////////////
+void
+VirtualTable::expectsKeepAlive()
+{
+   if(This->deleted)
+   {
+       MOCKCPP_FAIL("The object you expects keeping alive has actually been deleted.");
+   }
+
+   if(This->expectsBeingDeleted)
+   {
+       MOCKCPP_FAIL("What do you really want? You are expecting "
+                    "to keep an object alive which you expected "
+                    "it should be deleted");
+   }
+   This->expectsKeepAlive = true;
+}
+
+/////////////////////////////////////////////////////////////////
 IndexInvokableGetter*
 VirtualTable::getInvokableGetter(void* caller, unsigned int vptrIndex)
 {
-   void** vptr = &((void**)caller)[-(int)vptrIndex];
+   VirtualTableImpl* pThis = getVirtualTableImpl(caller, vptrIndex);
+   if(pThis->deleted)
+   {
+       MOCKCPP_FAIL("The object you are trying to access has been deleted.");
+   }
 
-   VirtualTableImpl* pThis = (VirtualTableImpl*)vptr[MOCKCPP_MAX_INHERITANCE];
-
-   pThis->validateVptr(vptr);
-   
    return pThis->indexInvokableGetter;
 }
 

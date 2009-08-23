@@ -45,7 +45,7 @@ public:
     // InvocationMockerNamespace -- id("id");
     InvocationMocker* getInvocationMocker(const std::string& id) const;
 
-    void verify();
+    virtual void verify();
 
 protected:
 
