@@ -1,4 +1,6 @@
 
+#include <iostream>
+
 #include <ltdl.h>
 
 #include <testcpp/Error.h>
@@ -34,15 +36,18 @@ TestSuiteDesc*
 LTTestSuiteLoader::load(const std::string& path
                  , TestSuiteDescEntryNameGetter* nameGetter)
 {
+   std::cout << "yes ltdl load ok: " << std::endl;
    int result = ::lt_dlinit();
    if(result != 0)
    {
+      std::cout << "here" << std::endl;
       throw Error(::lt_dlerror());
    }
 
    This->handle = ::lt_dlopenext(path.c_str());
    if(This->handle == 0)
    {
+      std::cout << "lt_dlopenext: " << path.c_str() << std::endl;
       throw Error(::lt_dlerror());
    }
 
@@ -52,6 +57,7 @@ LTTestSuiteLoader::load(const std::string& path
       (TestSuiteDescGetter) lt_dlsym(This->handle, nameGetter->getDescEntryName().c_str());
    if(getter == 0)
    {
+      std::cout << "lt_dlsym: " << std::endl;
       throw Error(::lt_dlerror());
    }
 
@@ -61,6 +67,7 @@ LTTestSuiteLoader::load(const std::string& path
       throw Error("Invalid test suite shared object");
    }
 
+   std::cout << "yes ltdl load ok: " << std::endl;
    return desc;
 }
 

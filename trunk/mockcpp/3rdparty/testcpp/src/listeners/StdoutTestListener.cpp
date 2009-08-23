@@ -177,12 +177,19 @@ endTestSuite(TestSuiteInfoReader* suite)
    TestSuiteResultReporter* reporter = This->suiteResultReporter;
 
    unsigned int successCases = reporter->getNumberOfSuccessfulTestCases(suite);
+
+   int successRate = 0;
+   if(reporter->getNumberOfTestCases(suite) != 0)
+   {
+      successRate = int(successCases*100/reporter->getNumberOfTestCases(suite)); 
+   }
+
    std::cout << std::endl
              << " success: " << successCases
              << " failed: " << reporter->getNumberOfFailedTestCases(suite)
              << " error: "  << reporter->getNumberOfErrorTestCases(suite)
              << " crash: "  << reporter->getNumberOfCrashedTestCases(suite) << std::endl
-             << " success rate: " << int(successCases*100/reporter->getNumberOfTestCases(suite)) << "%"
+             << " success rate: " << successRate << "%"
              << std::endl
              << "======================================"
              << std::endl;
@@ -208,6 +215,13 @@ void StdoutTestListener::startTest()
 void StdoutTestListener::endTest()
 {
    unsigned int successCases = This->resultReporter->getNumberOfSuccessfulTestCases();
+
+   int successRate = 0;
+   if(This->resultReporter->getNumberOfTestCases() != 0)
+   {
+      successRate = int(successCases*100/This->resultReporter->getNumberOfTestCases()); 
+   }
+
    std::cout << std::endl
              << " loaded suites: " << This->resultReporter->getNumberOfLoadedSuites()
              << " unloadable suites: " << This->resultReporter->getNumberOfUnloadableSuites()
@@ -216,7 +230,7 @@ void StdoutTestListener::endTest()
              << " failed: " << This->resultReporter->getNumberOfFailedTestCases()
              << " error: "  << This->resultReporter->getNumberOfErrorTestCases()
              << " crash: "  << This->resultReporter->getNumberOfCrashedTestCases() << std::endl
-             << " success rate: " << int(successCases*100/This->resultReporter->getNumberOfTestCases()) << "%"
+             << " success rate: " << successRate << "%"
              << std::endl;
 }
 

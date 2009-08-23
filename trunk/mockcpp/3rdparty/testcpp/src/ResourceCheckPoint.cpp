@@ -1,5 +1,4 @@
 
-
 // for new/delete
 #include <new>
 #include <stdlib.h>
@@ -117,7 +116,7 @@ static void* allocateMemory(size_t size) throw (std::bad_alloc)
 }
 
 //////////////////////////////////////////////////////////////////
-static void freeMemory(void* p) throw (Error)
+static void freeMemory(void* p, bool array = false, bool debug = false) 
 {
    if(p == 0)
    {
@@ -128,7 +127,8 @@ static void freeMemory(void* p) throw (Error)
 
    if(header->magic != magicNumber)
    {
-      throw Error("Memory Corruption");
+      fprintf(stderr, "testcpp:: memory corruption was encountered in your program.\n");
+      exit(-1);
    }
 
    allocatedSize -= header->size;
@@ -137,8 +137,12 @@ static void freeMemory(void* p) throw (Error)
 
    if(endBlock->magic != magicNumber)
    {
-      throw Error("Memory Corruption");
+      fprintf(stderr, "testcpp:: memory corruption was encountered in your program.\n");
+      exit(-1);
    }
+
+   if(debug && !array) fprintf(stdout, "delete : %d\n", header->size);
+   if(debug && array) fprintf(stdout, "delete [] : %d\n", header->size);
 
    ::free(header);
 }
@@ -150,15 +154,34 @@ TESTCPP_NS_END
 USING_TESTCPP_NS
 
 //////////////////////////////////////////////////////////////////
+void* operator new (size_t size, bool debug) throw (std::bad_alloc)
+{
+    if(debug) fprintf(stdout, "new : %d\n", size);
+    return allocateMemory(size);
+}
+
+//////////////////////////////////////////////////////////////////
 void* operator new (size_t size) throw (std::bad_alloc)
 {
     return allocateMemory(size);
 }
 
 //////////////////////////////////////////////////////////////////
+void* operator new [] (size_t size, bool debug) throw (std::bad_alloc)
+{
+    if(debug) fprintf(stdout, "new [] : %d\n", size);
+    return allocateMemory(size);
+}
+//////////////////////////////////////////////////////////////////
 void* operator new [] (size_t size) throw (std::bad_alloc)
 {
     return allocateMemory(size);
+}
+
+//////////////////////////////////////////////////////////////////
+void operator delete (void * p, bool debug)
+{
+    freeMemory(p, false, debug);
 }
 
 //////////////////////////////////////////////////////////////////
@@ -168,9 +191,15 @@ void operator delete (void * p)
 }
 
 //////////////////////////////////////////////////////////////////
+void operator delete [] (void * p, bool debug)
+{
+    freeMemory(p, true, debug);
+}
+
+//////////////////////////////////////////////////////////////////
 void operator delete [] (void * p)
 {
-    freeMemory(p);
+    freeMemory(p, true);
 }
 
 //////////////////////////////////////////////////////////////////
