@@ -24,13 +24,14 @@ EXTRA_HEADERS = \
  $(VBTL_RELATED_HEADER_FILES)
 
 pkginclude_HEADERS= \
+  $(ARG_RELATED_HEADER_FILES)  \
+  $(VBTL_RELATED_HEADER_FILES) \
   $(MOCKCPP_HEADERS_PATH)/AfterMatchBuilder.h \
   $(MOCKCPP_HEADERS_PATH)/AfterMatchBuilder.tcc \
   $(MOCKCPP_HEADERS_PATH)/AfterMatcher.h \
   $(MOCKCPP_HEADERS_PATH)/Any.h \
   $(MOCKCPP_HEADERS_PATH)/AnyBase.h \
   $(MOCKCPP_HEADERS_PATH)/ArgumentsList.h \
-  $(MOCKCPP_HEADERS_PATH)/ArgumentsListDef.h \
   $(MOCKCPP_HEADERS_PATH)/ArgumentsMacroHelpers.h \
   $(MOCKCPP_HEADERS_PATH)/ArgumentsMatchBuilder.h \
   $(MOCKCPP_HEADERS_PATH)/ArgumentsMatchBuilder.tcc \
@@ -58,9 +59,6 @@ pkginclude_HEADERS= \
   $(MOCKCPP_HEADERS_PATH)/DefaultMatcher.h \
   $(MOCKCPP_HEADERS_PATH)/DefaultStub.h \
   $(MOCKCPP_HEADERS_PATH)/DelegatedMethod.h \
-  $(MOCKCPP_HEADERS_PATH)/DelegatedMethodDef.h \
-  $(MOCKCPP_HEADERS_PATH)/DelegatedMethodGetByVptrDef.h \
-  $(MOCKCPP_HEADERS_PATH)/DelegatedMethodGetDef.h \
   $(MOCKCPP_HEADERS_PATH)/DelegatedMethodGetter.h \
   $(MOCKCPP_HEADERS_PATH)/DieStub.h \
   $(MOCKCPP_HEADERS_PATH)/DummyBuilder.h \
@@ -113,7 +111,6 @@ pkginclude_HEADERS= \
   $(MOCKCPP_HEADERS_PATH)/Method.h \
   $(MOCKCPP_HEADERS_PATH)/MethodInfoReader.h \
   $(MOCKCPP_HEADERS_PATH)/MethodTypeTraits.h \
-  $(MOCKCPP_HEADERS_PATH)/MethodTypeTraitsDef.h \
   $(MOCKCPP_HEADERS_PATH)/MismatchResultHandler.h \
   $(MOCKCPP_HEADERS_PATH)/MismatchResultHandlerFactory.h \
   $(MOCKCPP_HEADERS_PATH)/MockObject.h \
@@ -243,7 +240,6 @@ nodist_libmockcpp_la_SOURCES = \
  DelegatedMethodGetter.cpp \
  DieStub.cpp \
  InterfaceInfo.cpp \
- DummyObjectBase.cpp \
  DestructorChecker.cpp
 
 ALLOW_MI = @MOCKCPP_ALLOW_MI@
