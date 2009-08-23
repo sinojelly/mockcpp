@@ -75,9 +75,9 @@ public:
 
        mock.method(&Interface::base00).stubs().will(returnValue(20));
 
-       TS_ASSERT_EQUALS(20, ((Interface*)mock)->base00());
-       TS_ASSERT_EQUALS(20, ((Interface*)mock)->base00());
-       TS_ASSERT_EQUALS(20, ((Interface*)mock)->base00());
+       TS_ASSERT_EQUALS(20, mock->base00());
+       TS_ASSERT_EQUALS(20, mock->base00());
+       TS_ASSERT_EQUALS(20, mock->base00());
    }
 
    // then()
@@ -87,9 +87,9 @@ public:
 
        mock.method(&Interface::base00).stubs().will(returnValue(20)).then(returnValue(10));
 
-       TS_ASSERT_EQUALS(20, ((Interface*)mock)->base00());
-       TS_ASSERT_EQUALS(10, ((Interface*)mock)->base00());
-       TS_ASSERT_EQUALS(10, ((Interface*)mock)->base00());
+       TS_ASSERT_EQUALS(20, mock->base00());
+       TS_ASSERT_EQUALS(10, mock->base00());
+       TS_ASSERT_EQUALS(10, mock->base00());
    }
 
    // then()
@@ -104,11 +104,11 @@ public:
            .then(returnValue(1))
            .then(returnValue(5));
 
-       TS_ASSERT_EQUALS(20, ((Interface*)mock)->base00());
-       TS_ASSERT_EQUALS(10, ((Interface*)mock)->base00());
-       TS_ASSERT_EQUALS(1, ((Interface*)mock)->base00());
-       TS_ASSERT_EQUALS(5, ((Interface*)mock)->base00());
-       TS_ASSERT_EQUALS(5, ((Interface*)mock)->base00());
+       TS_ASSERT_EQUALS(20, mock->base00());
+       TS_ASSERT_EQUALS(10, mock->base00());
+       TS_ASSERT_EQUALS(1, mock->base00());
+       TS_ASSERT_EQUALS(5, mock->base00());
+       TS_ASSERT_EQUALS(5, mock->base00());
    }
 
    // repeat()
@@ -118,9 +118,9 @@ public:
 
        mock.method(&Interface::base00).stubs().will(repeat(20, 2)).then(returnValue(10));
 
-       TS_ASSERT_EQUALS(20, ((Interface*)mock)->base00());
-       TS_ASSERT_EQUALS(20, ((Interface*)mock)->base00());
-       TS_ASSERT_EQUALS(10, ((Interface*)mock)->base00());
+       TS_ASSERT_EQUALS(20, mock->base00());
+       TS_ASSERT_EQUALS(20, mock->base00());
+       TS_ASSERT_EQUALS(10, mock->base00());
    }
 
    // repeat()
@@ -130,10 +130,10 @@ public:
 
        mock.method(&Interface::base00).stubs().will(repeat(20, 2));
 
-       TS_ASSERT_EQUALS(20, ((Interface*)mock)->base00());
-       TS_ASSERT_EQUALS(20, ((Interface*)mock)->base00());
+       TS_ASSERT_EQUALS(20, mock->base00());
+       TS_ASSERT_EQUALS(20, mock->base00());
        
-       TS_ASSERT_THROWS(((Interface*)mock)->base00(), Exception);
+       TS_ASSERT_THROWS(mock->base00(), Exception);
    }
 
    // increase()
@@ -143,10 +143,10 @@ public:
 
        mock.method(&Interface::base00).stubs().will(increase(1, 3)).then(returnValue(10));
 
-       TS_ASSERT_EQUALS(1, ((Interface*)mock)->base00());
-       TS_ASSERT_EQUALS(2, ((Interface*)mock)->base00());
-       TS_ASSERT_EQUALS(3, ((Interface*)mock)->base00());
-       TS_ASSERT_EQUALS(10, ((Interface*)mock)->base00());
+       TS_ASSERT_EQUALS(1, mock->base00());
+       TS_ASSERT_EQUALS(2, mock->base00());
+       TS_ASSERT_EQUALS(3, mock->base00());
+       TS_ASSERT_EQUALS(10, mock->base00());
    }
 
    // increase()
@@ -156,17 +156,17 @@ public:
 
        mock.method(&Interface::base00).stubs().will(increase(1)).then(returnValue(10));
 
-       TS_ASSERT_EQUALS(1, ((Interface*)mock)->base00());
-       TS_ASSERT_EQUALS(2, ((Interface*)mock)->base00());
-       TS_ASSERT_EQUALS(3, ((Interface*)mock)->base00());
-       TS_ASSERT_EQUALS(4, ((Interface*)mock)->base00());
-       TS_ASSERT_EQUALS(5, ((Interface*)mock)->base00());
-       TS_ASSERT_EQUALS(6, ((Interface*)mock)->base00());
-       TS_ASSERT_EQUALS(7, ((Interface*)mock)->base00());
-       TS_ASSERT_EQUALS(8, ((Interface*)mock)->base00());
-       TS_ASSERT_EQUALS(9, ((Interface*)mock)->base00());
-       TS_ASSERT_EQUALS(10, ((Interface*)mock)->base00());
-       TS_ASSERT_EQUALS(11, ((Interface*)mock)->base00());
+       TS_ASSERT_EQUALS(1, mock->base00());
+       TS_ASSERT_EQUALS(2, mock->base00());
+       TS_ASSERT_EQUALS(3, mock->base00());
+       TS_ASSERT_EQUALS(4, mock->base00());
+       TS_ASSERT_EQUALS(5, mock->base00());
+       TS_ASSERT_EQUALS(6, mock->base00());
+       TS_ASSERT_EQUALS(7, mock->base00());
+       TS_ASSERT_EQUALS(8, mock->base00());
+       TS_ASSERT_EQUALS(9, mock->base00());
+       TS_ASSERT_EQUALS(10, mock->base00());
+       TS_ASSERT_EQUALS(11, mock->base00());
    }
 
    // throws()
@@ -176,10 +176,10 @@ public:
 
        mock.method(&Interface::base00).stubs().will(increase(1, 3)).then(throws(10));
 
-       TS_ASSERT_EQUALS(1, ((Interface*)mock)->base00());
-       TS_ASSERT_EQUALS(2, ((Interface*)mock)->base00());
-       TS_ASSERT_EQUALS(3, ((Interface*)mock)->base00());
-       TS_ASSERT_THROWS_EQUALS(((Interface*)mock)->base00(), int& e, e, 10);
+       TS_ASSERT_EQUALS(1, mock->base00());
+       TS_ASSERT_EQUALS(2, mock->base00());
+       TS_ASSERT_EQUALS(3, mock->base00());
+       TS_ASSERT_THROWS_EQUALS(mock->base00(), int& e, e, 10);
    }
 
    // once()
@@ -189,7 +189,7 @@ public:
 
        mock.method(&Interface::base00).expects(once()).will(returnValue(20));
 
-       TS_ASSERT_EQUALS(20, ((Interface*)mock)->base00());
+       TS_ASSERT_EQUALS(20, mock->base00());
    }
 
    // once()
@@ -199,9 +199,9 @@ public:
 
        mock.method(&Interface::base00).expects(once()).will(returnValue(20));
 
-       TS_ASSERT_EQUALS(20, ((Interface*)mock)->base00());
+       TS_ASSERT_EQUALS(20, mock->base00());
 
-       TS_ASSERT_THROWS(((Interface*)mock)->base00(), Exception);
+       TS_ASSERT_THROWS(mock->base00(), Exception);
    }
 
    // once()
@@ -221,8 +221,8 @@ public:
 
        mock.method(&Interface::base00).expects(exactly(2)).will(returnValue(20));
 
-       TS_ASSERT_EQUALS(20, ((Interface*)mock)->base00());
-       TS_ASSERT_EQUALS(20, ((Interface*)mock)->base00());
+       TS_ASSERT_EQUALS(20, mock->base00());
+       TS_ASSERT_EQUALS(20, mock->base00());
    }
 
    // exactly()
@@ -232,9 +232,9 @@ public:
 
        mock.method(&Interface::base00).expects(exactly(2)).will(returnValue(20));
 
-       TS_ASSERT_EQUALS(20, ((Interface*)mock)->base00());
-       TS_ASSERT_EQUALS(20, ((Interface*)mock)->base00());
-       TS_ASSERT_EQUALS(20, ((Interface*)mock)->base00());
+       TS_ASSERT_EQUALS(20, mock->base00());
+       TS_ASSERT_EQUALS(20, mock->base00());
+       TS_ASSERT_EQUALS(20, mock->base00());
 
        TS_ASSERT_THROWS(mock.verify(), Exception);
    }
@@ -246,7 +246,7 @@ public:
 
        mock.method(&Interface::base00).expects(exactly(2)).will(returnValue(20));
 
-       TS_ASSERT_EQUALS(20, ((Interface*)mock)->base00());
+       TS_ASSERT_EQUALS(20, mock->base00());
 
        TS_ASSERT_THROWS(mock.verify(), Exception);
    }
@@ -258,10 +258,10 @@ public:
 
        mock.method(&Interface::base00).expects(atLeast(2)).will(returnValue(20));
 
-       TS_ASSERT_EQUALS(20, ((Interface*)mock)->base00());
-       TS_ASSERT_EQUALS(20, ((Interface*)mock)->base00());
-       TS_ASSERT_EQUALS(20, ((Interface*)mock)->base00());
-       TS_ASSERT_EQUALS(20, ((Interface*)mock)->base00());
+       TS_ASSERT_EQUALS(20, mock->base00());
+       TS_ASSERT_EQUALS(20, mock->base00());
+       TS_ASSERT_EQUALS(20, mock->base00());
+       TS_ASSERT_EQUALS(20, mock->base00());
    }
 
    // atLeast()
@@ -271,7 +271,7 @@ public:
 
        mock.method(&Interface::base00).expects(atLeast(2)).will(returnValue(20));
 
-       TS_ASSERT_EQUALS(20, ((Interface*)mock)->base00());
+       TS_ASSERT_EQUALS(20, mock->base00());
 
        TS_ASSERT_THROWS(mock.verify(), Exception);
    }
@@ -283,8 +283,8 @@ public:
 
        mock.method(&Interface::base00).expects(atMost(2)).will(returnValue(20));
 
-       TS_ASSERT_EQUALS(20, ((Interface*)mock)->base00());
-       TS_ASSERT_EQUALS(20, ((Interface*)mock)->base00());
+       TS_ASSERT_EQUALS(20, mock->base00());
+       TS_ASSERT_EQUALS(20, mock->base00());
    }
 
    // atMost()
@@ -294,7 +294,7 @@ public:
 
        mock.method(&Interface::base00).expects(atMost(2)).will(returnValue(20));
 
-       TS_ASSERT_EQUALS(20, ((Interface*)mock)->base00());
+       TS_ASSERT_EQUALS(20, mock->base00());
    }
 
    // atMost()
@@ -304,8 +304,8 @@ public:
 
        mock.method(&Interface::base00).expects(atMost(2)).will(returnValue(20));
 
-       TS_ASSERT_EQUALS(20, ((Interface*)mock)->base00());
-       TS_ASSERT_EQUALS(20, ((Interface*)mock)->base00());
+       TS_ASSERT_EQUALS(20, mock->base00());
+       TS_ASSERT_EQUALS(20, mock->base00());
        TS_ASSERT_THROWS(((Interface*)mock)->base00(), Exception);
    }
 
@@ -324,7 +324,7 @@ public:
 
        mock.method(&Interface::base00).expects(never()).will(returnValue(20));
 
-       TS_ASSERT_THROWS(((Interface*)mock)->base00(), Exception);
+       TS_ASSERT_THROWS(mock->base00(), Exception);
    }
 
    // with()
@@ -342,11 +342,11 @@ public:
            .with(eq(21))
            .will(returnValue(false));
 
-       TS_ASSERT(((Interface*)mock)->base01(12));
-       TS_ASSERT(((Interface*)mock)->base01(12));
+       TS_ASSERT(mock->base01(12));
+       TS_ASSERT(mock->base01(12));
 
-       TS_ASSERT(!((Interface*)mock)->base01(21));
-       TS_ASSERT(!((Interface*)mock)->base01(21));
+       TS_ASSERT(!mock->base01(21));
+       TS_ASSERT(!mock->base01(21));
    }
 
    // with()
@@ -364,7 +364,7 @@ public:
            .with(eq(21))
            .will(returnValue(false));
 
-       TS_ASSERT_THROWS(((Interface*)mock)->base01(16), Exception);
+       TS_ASSERT_THROWS(mock->base01(16), Exception);
    }
 
    // startWith()
@@ -382,8 +382,8 @@ public:
            .with(startWith("1234"))
            .will(returnValue((long)2));
 
-       TS_ASSERT_EQUALS(1, ((Interface*)mock)->base11("abcdefg"));
-       TS_ASSERT_EQUALS(2, ((Interface*)mock)->base11("1234567"));
+       TS_ASSERT_EQUALS(1, mock->base11("abcdefg"));
+       TS_ASSERT_EQUALS(2, mock->base11("1234567"));
    }
 
    // before()
@@ -403,11 +403,11 @@ public:
            .will(returnValue(false))
            .id("1");
 
-       TS_ASSERT(((Interface*)mock)->base01(12));
-       TS_ASSERT(((Interface*)mock)->base01(12));
+       TS_ASSERT(mock->base01(12));
+       TS_ASSERT(mock->base01(12));
 
-       TS_ASSERT(!((Interface*)mock)->base01(21));
-       TS_ASSERT(!((Interface*)mock)->base01(21));
+       TS_ASSERT(!mock->base01(21));
+       TS_ASSERT(!mock->base01(21));
    }
 
    // before()
@@ -427,9 +427,9 @@ public:
            .will(returnValue(false))
            .id("1");
 
-       TS_ASSERT(!((Interface*)mock)->base01(21));
+       TS_ASSERT(!mock->base01(21));
 
-       TS_ASSERT_THROWS(((Interface*)mock)->base01(12), Exception);
+       TS_ASSERT_THROWS(mock->base01(12), Exception);
    }
 
    // before()
@@ -450,8 +450,8 @@ public:
            .will(returnValue(false))
            .id("1");
 
-       TS_ASSERT(((Interface*)mock0)->base01(12));
-       TS_ASSERT(!((Interface*)mock1)->base01(12));
+       TS_ASSERT(mock0->base01(12));
+       TS_ASSERT(!mock1->base01(12));
    }
 
    // before()
@@ -472,8 +472,8 @@ public:
            .will(returnValue(false))
            .id("1");
 
-       TS_ASSERT(!((Interface*)mock1)->base01(12));
-       TS_ASSERT_THROWS(((Interface*)mock0)->base01(12), Exception);
+       TS_ASSERT(!mock1->base01(12));
+       TS_ASSERT_THROWS(mock0->base01(12), Exception);
    }
 
    // before()
@@ -502,9 +502,9 @@ public:
            .will(returnValue(false))
            .id("1");
 
-       TS_ASSERT(((Interface*)mock0)->base01(12));
-       TS_ASSERT(!((Interface*)mock1)->base01(12));
-       TS_ASSERT(!((Interface*)mock2)->base01(12));
+       TS_ASSERT(mock0->base01(12));
+       TS_ASSERT(!mock1->base01(12));
+       TS_ASSERT(!mock2->base01(12));
    }
 
    // before()
@@ -533,8 +533,8 @@ public:
            .will(returnValue(false))
            .id("1");
 
-       TS_ASSERT(!((Interface*)mock1)->base01(12));
-       TS_ASSERT_THROWS(((Interface*)mock0)->base01(12), Exception);
+       TS_ASSERT(!mock1->base01(12));
+       TS_ASSERT_THROWS(mock0->base01(12), Exception);
    }
 
    // before()
@@ -563,8 +563,8 @@ public:
            .will(returnValue(false))
            .id("1");
 
-       TS_ASSERT(!((Interface*)mock2)->base01(12));
-       TS_ASSERT_THROWS(((Interface*)mock0)->base01(12), Exception);
+       TS_ASSERT(!mock2->base01(12));
+       TS_ASSERT_THROWS(mock0->base01(12), Exception);
    }
 
    // after()
@@ -584,11 +584,11 @@ public:
            .will(returnValue(false))
            .id("1");
 
-       TS_ASSERT(!((Interface*)mock)->base01(21));
-       TS_ASSERT(!((Interface*)mock)->base01(21));
+       TS_ASSERT(!mock->base01(21));
+       TS_ASSERT(!mock->base01(21));
 
-       TS_ASSERT(((Interface*)mock)->base01(12));
-       TS_ASSERT(((Interface*)mock)->base01(12));
+       TS_ASSERT(mock->base01(12));
+       TS_ASSERT(mock->base01(12));
    }
 
    // after()
@@ -608,7 +608,7 @@ public:
            .will(returnValue(false))
            .id("1");
 
-       TS_ASSERT_THROWS(((Interface*)mock)->base01(12), Exception);
+       TS_ASSERT_THROWS(mock->base01(12), Exception);
    }
 
    // after()
@@ -629,8 +629,8 @@ public:
            .will(returnValue(false))
            .id("1");
 
-       TS_ASSERT(!((Interface*)mock1)->base01(12));
-       TS_ASSERT(((Interface*)mock0)->base01(12));
+       TS_ASSERT(!mock1->base01(12));
+       TS_ASSERT(mock0->base01(12));
    }
 
    // after()
@@ -651,7 +651,7 @@ public:
            .will(returnValue(false))
            .id("1");
 
-       TS_ASSERT_THROWS(((Interface*)mock0)->base01(12), Exception);
+       TS_ASSERT_THROWS(mock0->base01(12), Exception);
    }
 
    // after()
@@ -680,9 +680,9 @@ public:
            .will(returnValue(false))
            .id("1");
 
-       TS_ASSERT(!((Interface*)mock1)->base01(12));
-       TS_ASSERT(!((Interface*)mock2)->base01(12));
-       TS_ASSERT(((Interface*)mock0)->base01(12));
+       TS_ASSERT(!mock1->base01(12));
+       TS_ASSERT(!mock2->base01(12));
+       TS_ASSERT(mock0->base01(12));
    }
 
    // after()
@@ -711,8 +711,8 @@ public:
            .will(returnValue(false))
            .id("1");
 
-       TS_ASSERT(!((Interface*)mock1)->base01(12));
-       TS_ASSERT_THROWS(((Interface*)mock0)->base01(12), Exception);
+       TS_ASSERT(!mock1->base01(12));
+       TS_ASSERT_THROWS(mock0->base01(12), Exception);
    }
 
    // after()
@@ -741,8 +741,8 @@ public:
            .will(returnValue(false))
            .id("1");
 
-       TS_ASSERT(!((Interface*)mock2)->base01(12));
-       TS_ASSERT_THROWS(((Interface*)mock0)->base01(12), Exception);
+       TS_ASSERT(!mock2->base01(12));
+       TS_ASSERT_THROWS(mock0->base01(12), Exception);
    }
 
    // returnValue(ref)
@@ -756,45 +756,8 @@ public:
           .stubs()
           .will(returnValue(str));
 
-      TS_ASSERT_EQUALS(str, ((Interface*)mock)->a());
+      TS_ASSERT_EQUALS(str, mock->a());
    }
 
-   // typeid()
-   void testShouldBeAbleToGetTypeInfoOfAMockObject()
-   {
-      MockObject<Interface> mock;
-      Interface* pInterface = (Interface*)mock;
-
-      TS_ASSERT(typeid(pInterface) == typeid(Interface*));
-   }
-
-   // dynamic_cast
-   void testShouldSupportDownCast1()
-   {
-      MockObject<Interface> mock;
-      mock.method(&Interface::base00).stubs().will(returnValue(10));
-      Base0* pBase0 = (Base0*)mock;
-      TS_ASSERT_EQUALS(10, pBase0->base00());
-      Interface* p = dynamic_cast<Interface*>(pBase0);
-      TS_ASSERT(p != 0);
-      TS_ASSERT_EQUALS(10, p->base00());
-   }
-
-   // dynamic_cast to second
-   void testShouldSupportDownCast2()
-   {
-      MockObject<Interface> mock;
-
-      mock.method(&Interface::base12).stubs().will(returnValue(10));
-
-      Base1* pBase1 = (Base1*)mock;
-      TS_ASSERT_EQUALS(10, pBase1->base12());
-
-      Interface* p = dynamic_cast<Interface*>(pBase1);
-      TS_ASSERT(p != 0);
-      TS_ASSERT((void*)pBase1 != (void*)p);
-
-      TS_ASSERT_EQUALS(10, p->base12());
-   }
 };
 

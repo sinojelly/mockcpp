@@ -39,7 +39,12 @@ struct VirtualTable
    void* toPointerToInterface() const;
 
    void addMethod(void* methodAddr, unsigned int indexOfVtbl, unsigned int indexofVptr = 0);
+   void setDestructor(unsigned int vptrIndex, unsigned int vtblIndex);
 
+   void expectsBeingDeleted();
+   void expectsKeepAlive();
+
+   void verify();
    void reset();
 
    static IndexInvokableGetter* getInvokableGetter(void* Caller, unsigned int indexOfVptr);

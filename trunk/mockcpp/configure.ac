@@ -7,6 +7,17 @@ AC_PROG_CXX
 AM_PATH_PYTHON([2.4],, [:])
 AM_CONDITIONAL([HAVE_PYTHON], [test "$PYTHON" != :])
 
+AC_SUBST(MOCKCPP_LDFLAG)
+
+case "${host_os}" in
+   *darwin*)
+      MOCKCPP_LDFLAG=-module
+      ;;
+   *)
+      MOCKCPP_LDFLAG=-export-dynamic
+      ;;
+esac
+
 # mockcpp Namespace
 mockcpp_no_namespace=0
 AC_CACHE_CHECK([for enble mockcpp namespace], mockcpp_cv_use_namespace,

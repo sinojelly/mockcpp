@@ -1,11 +1,12 @@
 
+MOCKCPP_SRC_PATH=$(top_builddir)/src
 MOCKCPP_INCLUDE_PATH = $(top_builddir)/include
 MOCKCPP_HEADERS_PATH = $(top_builddir)/include/mockcpp
 
 AM_CPPFLAGS = -I$(MOCKCPP_INCLUDE_PATH) -I$(top_builddir)/3rdparty -Wall
 
 lib_LTLIBRARIES = libmockcpp.la
-libmockcpp_la_LDFLAGS = -module
+libmockcpp_la_LDFLAGS = @MOCKCPP_LDFLAG@
 
 ARG_RELATED_HEADER_FILES =  \
  $(MOCKCPP_HEADERS_PATH)/DelegatedMethodDef.h \
@@ -14,7 +15,9 @@ ARG_RELATED_HEADER_FILES =  \
 
 VBTL_RELATED_HEADER_FILES = \
  $(MOCKCPP_HEADERS_PATH)/DelegatedMethodGetDef.h \
- $(MOCKCPP_HEADERS_PATH)/DelegatedMethodGetByVptrDef.h 
+ $(MOCKCPP_HEADERS_PATH)/DelegatedMethodGetByVptrDef.h \
+ $(MOCKCPP_HEADERS_PATH)/DestructorAddrGetterDef.h \
+ $(MOCKCPP_HEADERS_PATH)/DestructorCheckerDef.h
 
 EXTRA_HEADERS = \
  $(ARG_RELATED_HEADER_FILES) \
@@ -239,22 +242,31 @@ nodist_libmockcpp_la_SOURCES = \
  IsStringContains.cpp \
  DelegatedMethodGetter.cpp \
  DieStub.cpp \
- InterfaceInfo.cpp
+ InterfaceInfo.cpp \
+ DummyObjectBase.cpp \
+ DestructorChecker.cpp
 
 ALLOW_MI = @MOCKCPP_ALLOW_MI@
 MAX_INHERITANCE = @MOCKCPP_MI@
 MAX_VTBL_SIZE = @MOCKCPP_MVS@
 MAX_PARAMETERS = @MOCKCPP_MAX_PARAMS@
 
+DIFF = diff
+COPY = cp
+RM = rm -f
+
 EXTRA_VTBL_HEADERS_DEFS = --allow-mi=$(ALLOW_MI) --max-inheritance=$(MAX_INHERITANCE) \
-                        --max-vtbl-size=$(MAX_VTBL_SIZE) --include-path=$(MOCKCPP_HEADERS_PATH)
+                        --max-vtbl-size=$(MAX_VTBL_SIZE) --include-path=$(MOCKCPP_SRC_PATH)
 
-EXTRA_PARAMS_HEADERS_DEFS = --max-parameters=$(MAX_PARAMETERS) --include-path=$(MOCKCPP_HEADERS_PATH)
-
-
-$(ARG_RELATED_HEADER_FILES) : 
-	$(PYTHON) $(top_builddir)/src/generate_vtbl_related_files.py $(EXTRA_VTBL_HEADERS_DEFS)
+EXTRA_PARAMS_HEADERS_DEFS = --max-parameters=$(MAX_PARAMETERS) --include-path=$(MOCKCPP_SRC_PATH)
 
 $(VBTL_RELATED_HEADER_FILES) : 
-	$(PYTHON) $(top_builddir)/src/generate_arg_related_files.py $(EXTRA_PARAMS_HEADERS_DEFS)
+	$(PYTHON) $(top_builddir)/src/generate_vtbl_related_files.py $(EXTRA_VTBL_HEADERS_DEFS) $(@F)
+	@$(DIFF) $@ $(@F) >/dev/null 2>&1 || $(COPY) $(MOCKCPP_SRC_PATH)/$(@F) $@
+	@$(RM) $(MOCKCPP_SRC_PATH)/$(@F)
+
+$(ARG_RELATED_HEADER_FILES) : 
+	$(PYTHON) $(top_builddir)/src/generate_arg_related_files.py $(EXTRA_PARAMS_HEADERS_DEFS) $(@F)
+	@$(DIFF) $@ $(@F) >/dev/null 2>&1 || $(COPY) $(MOCKCPP_SRC_PATH)/$(@F) $@
+	@$(RM) $(MOCKCPP_SRC_PATH)/$(@F)
 

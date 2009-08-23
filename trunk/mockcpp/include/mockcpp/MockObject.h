@@ -19,11 +19,16 @@
 #ifndef __MOCKCPP_MOCK_OBJECT_H
 #define __MOCKCPP_MOCK_OBJECT_H
 
+#include <algorithm>
+
 #include <mockcpp/mockcpp.h>
 #include <mockcpp/TypeString.h>
 #include <mockcpp/MockObjectBase.h>
 #include <mockcpp/DelegatedMethodGetter.h>
 #include <mockcpp/InterfaceInfo.h>
+#include <mockcpp/DestructorChecker.h>
+#include <mockcpp/OutputStringStream.h>
+#include <mockcpp/Asserter.h>
 
 MOCKCPP_NS_START
 
@@ -31,37 +36,93 @@ MOCKCPP_NS_START
 template <typename Interface>
 struct MockObject : public MockObjectBase
 {
+   /////////////////////////////////////////////////////////////
 	MockObject()
 		: MockObjectBase(TypeString<Interface>::value()
       , getNumberOfVtbls<Interface>()
       , typeid(Interface))
-	{}
+	{
+      identifyDestructor<Interface, Interface>();
+   }
 
+   /////////////////////////////////////////////////////////////
    ~MockObject()
    {
    }
 
+   /////////////////////////////////////////////////////////////
    operator Interface* ()
    {
       return (Interface*)toPointerToInterface();
    }
 
+   /////////////////////////////////////////////////////////////
+   Interface* operator->()
+   {
+      return (Interface*)toPointerToInterface();
+   }
+
+   /////////////////////////////////////////////////////////////
+   template <typename TargetInterface>
+   void mightBeUsedAs()
+   {
+      TargetInterface* target = \
+         dynamic_cast<TargetInterface*>
+             ((Interface*)toPointerToInterface());
+      if(target == 0)
+      {
+         oss_t oss;
+         oss << TypeString<Interface>::value()
+             << " can not be used as "
+             << TypeString<TargetInterface>::value()
+             << ".";
+
+         MOCKCPP_FAIL(oss.str());
+      }
+
+      identifyDestructor<TargetInterface, Interface>();
+   }
+
+   /////////////////////////////////////////////////////////////
+   void willBeDeleted()
+   {
+      expectsBeingDeleted();
+   }
+
+   /////////////////////////////////////////////////////////////
+   void willKeepAlive()
+   {
+      expectsKeepAlive();
+   }
+   /////////////////////////////////////////////////////////////
 	template <typename Method>
    InvocationMockBuilderGetter method(Method m, const char* name = 0)
    {
-     std::string methodName(name == 0? TypeString<Method>::value():name);
+     std::string methodName(name == 0 ? \
+         TypeString<Method>::value():name);
 
      unsigned int vptrIndex = getVptrIndex(m);
      unsigned int vtblIndex = getVtblIndex(m);
-     void * addr = getDelegatedFunction<Interface, Method>(vptrIndex, vtblIndex, m);
+
+     void * addr = getDelegatedFunction<Interface, Method>( \
+         vptrIndex, vtblIndex, m);
 
      return createInvocationMockerBuilderGetter(
                methodName, addr, vptrIndex, vtblIndex);
 	}
 
-//////////////////////////////////////////////////////////////
-// Template method we have to make it visible
+////////////////////////////////////////////////////////////////
+// Template methods: it's ugly, but we have to make them visible.
 private:
+
+   template <typename T, typename Original>
+   void identifyDestructor()
+   {
+      std::pair<unsigned int, unsigned int> indices = \
+         getIndexOfDestructor<T, Original>();
+
+      setDestructor(indices.first, indices.second);
+   }
 
    template <typename Method>
    void* getAddrOfDelegatedMethod(Method m)

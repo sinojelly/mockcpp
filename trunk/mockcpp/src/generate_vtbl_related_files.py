@@ -6,6 +6,9 @@ from get_long_opt import *
 
 delegatedMethodGetDefFileName = "DelegatedMethodGetDef.h"
 delegatedMethodGetByVptrDefFileName = "DelegatedMethodGetByVptrDef.h"
+DestructorCheckerDefFileName = "DestructorCheckerDef.h"
+DestructorGetterDefFileName = "DestructorAddrGetterDef.h"
+
 allowMIOpt          = LongOptString("allow-mi", "yes")
 maxInheritanceOpt   = LongOptString("max-inheritance", "2")
 maxVtblSizeOpt      = LongOptString("max-vtbl-size", "10")
@@ -15,6 +18,31 @@ longOpts = [ allowMIOpt
            , maxInheritanceOpt
            , maxVtblSizeOpt
            , includePathOpt]
+
+def getDestructorAddrGetterDefContent(maxInheritance):
+   lineStr = '''MOCKCPP_GET_DESTRUCTOR_ADDR(%d)'''
+   lines = []
+   for i in range(0, maxInheritance):
+      lines.append(lineStr % i)
+
+   return getContent(lines)
+
+def generateDestructorAddrGetterDef(includePath, maxInheritance):
+   content = getDestructorAddrGetterDefContent(maxInheritance)
+   writeFile(includePath + "/" + DestructorGetterDefFileName, content)
+
+def getDestructorCheckerDefContent(maxInheritance, maxVtblSize):
+   lineStr = '''MOCKCPP_SET_DESTRUCTOR_CHECKER_VTBL(%d, %d);'''
+   lines = []
+   for i in range(0, maxInheritance):
+      for j in range(0, maxVtblSize):
+         lines.append(lineStr % (i,j))
+
+   return getContent(lines)
+
+def generateDestructorCheckerDef(includePath, maxInheritance, maxVtblSize):
+   content = getDestructorCheckerDefContent(maxInheritance, maxVtblSize)
+   writeFile(includePath + "/" + DestructorCheckerDefFileName, content)
 
 def getDelegatedMethodGetDefContent(maxVtblSize):
    lineStr = '''DELEGATED_METHOD_GET(VPTRIndex, %d)'''
@@ -64,12 +92,21 @@ def main():
       if o == includePathOpt.toLongOptString():
          includePath = a
 
-   generateDelegatedMethodGetDef(includePath, maxVtblSize)
+   if delegatedMethodGetDefFileName in args:
+      generateDelegatedMethodGetDef(includePath, maxVtblSize)
 
    if not allowMI:
      maxInheritance = 1
 
-   generateDelegatedMethodGetByIndexDef(includePath, maxInheritance)
+
+   if delegatedMethodGetByVptrDefFileName in args:
+      generateDelegatedMethodGetByIndexDef(includePath, maxInheritance)
+
+   if DestructorCheckerDefFileName in args:
+      generateDestructorCheckerDef(includePath, maxInheritance, maxVtblSize)
+
+   if DestructorGetterDefFileName in args:
+      generateDestructorAddrGetterDef(includePath, maxInheritance)
      
 
 if __name__ == "__main__":

@@ -15,6 +15,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
+#include <iostream>
 
 #include <testcpp/testcpp.hpp>
 
@@ -23,6 +24,7 @@
 #include <mockcpp/Invokable.h>
 #include <mockcpp/Exception.h>
 #include <mockcpp/MethodInfoReader.h>
+#include <mockcpp/DestructorChecker.h>
 
 USING_MOCKCPP_NS
 
@@ -69,40 +71,35 @@ private:
 
    TESTCPP_RCP checkpoint;
 
+   IndexInvokableGetterStub indexInvokableGetter;
+
+   VirtualTable* vtbl;
+
+   Interface* pI;
+
 public:
 
    void setUp()
    {
       checkpoint = TESTCPP_SET_RESOURCE_CHECK_POINT();
 
+      vtbl = new VirtualTable(&indexInvokableGetter
+                     , sizeof(Interface)/sizeof(void*)
+                     , typeid(Interface));
+      TS_ASSERT(vtbl != 0);
+
+      // FIXME: pI will automatically become to 0!!!! wired!!!!
+      Interface* pI = (Interface*) vtbl->toPointerToInterface();
+
    }
+
    void tearDown()
    {
+      pI = 0;
+
+      delete vtbl;
+
       TESTCPP_VERIFY_RESOURCE_CHECK_POINT(checkpoint);
-   }
-
-	/////////////////////////////////////////////////////////
-
-   void testShouldBeAbleToConvertToPointerToInterfaceType()
-   {
-      IndexInvokableGetterStub indexInvokableGetter;
-      VirtualTable vtbl(&indexInvokableGetter, sizeof(Interface)/sizeof(void*), typeid(Interface));
-
-      Interface* pInterface = (Interface*) vtbl.toPointerToInterface();
-
-      TS_ASSERT_THROWS(pInterface->a(), MOCKCPP_NS::Exception);
-   }
-
-   void testShouldThrowExceptionIfTheNumberOfVptrExceedsTheMaxSettingOfConfiguration()
-   {
-      IndexInvokableGetterStub indexInvokableGetter;
-      try {
-         VirtualTable vtbl(&indexInvokableGetter, 8, typeid(Interface));
-         TS_FAIL("Should throw an exception!");
-      }
-      catch(MOCKCPP_NS::Exception& e)
-      {
-      }
    }
 
    template <typename Method>
@@ -117,89 +114,184 @@ public:
       return MOCKCPP_NS::getDeltaOfMethod<Interface, Method>(m);
    }
 
+	/////////////////////////////////////////////////////////
+
+   void testShouldBeAbleToConvertToPointerToInterfaceType()
+   {
+      Interface* p = (Interface*) vtbl->toPointerToInterface();
+
+      TS_ASSERT_THROWS(p->a(), MOCKCPP_NS::Exception);
+   }
+
+   void testShouldThrowExceptionIfTheNumberOfVptrExceedsTheMaxSettingOfConfiguration()
+   {
+      TS_ASSERT_THROWS( new VirtualTable(&indexInvokableGetter
+                      , MOCKCPP_MAX_INHERITANCE + 1
+                      , typeid(Interface)), MOCKCPP_NS::Exception);
+   }
+
+
+
    void testShouldBeAbleToSetMethod()
    {
-      IndexInvokableGetterStub indexInvokableGetter;
-      VirtualTable vtbl(&indexInvokableGetter, sizeof(Interface)/sizeof(void*), typeid(Interface));
-
       unsigned int indexOfVtbl = getIndexOfMethod(&Interface::base11);
       unsigned int indexOfVptr = getDeltaOfMethod(&Interface::base11);
+
       void* methodAddr = MOCKCPP_NS::getAddrOfMethod(&TestMethodHolder::base11);
  
-      vtbl.addMethod(methodAddr, indexOfVtbl, indexOfVptr);
+      vtbl->addMethod(methodAddr, indexOfVtbl, indexOfVptr);
 
-      Interface* pInterface = (Interface*) vtbl.toPointerToInterface();
+      Interface* p = (Interface*) vtbl->toPointerToInterface();
 
       TestMethodHolder holder;
 
-      TS_ASSERT_EQUALS(pInterface->base11(true), holder.base11(true));
-      TS_ASSERT_EQUALS(pInterface->base11(false), holder.base11(false));
-      TS_ASSERT(pInterface->base11(true) != pInterface->base11(false));
+      TS_ASSERT_EQUALS(p->base11(true), holder.base11(true));
+      TS_ASSERT_EQUALS(p->base11(false), holder.base11(false));
+      TS_ASSERT(p->base11(true) != p->base11(false));
    }
 
    void testShouldThrowExceptionIfAMethodIsNotSet()
    {
-      IndexInvokableGetterStub indexInvokableGetter;
-      VirtualTable vtbl(&indexInvokableGetter, sizeof(Interface)/sizeof(void*), typeid(Interface));
-
       unsigned int indexOfVtbl = getIndexOfMethod(&Interface::base11);
       unsigned int indexOfVptr = getDeltaOfMethod(&Interface::base11);
       void* methodAddr = MOCKCPP_NS::getAddrOfMethod(&TestMethodHolder::base11);
- 
-      vtbl.addMethod(methodAddr, indexOfVtbl, indexOfVptr);
+      vtbl->addMethod(methodAddr, indexOfVtbl, indexOfVptr);
 
-      Interface* pInterface = (Interface*) vtbl.toPointerToInterface();
+      Interface* p = (Interface*) vtbl->toPointerToInterface();
 
-      pInterface->base11(true);
+      p->base11(true);
 
-      TS_ASSERT_THROWS(pInterface->base00(), MOCKCPP_NS::Exception);
-      TS_ASSERT_THROWS(pInterface->base01(0), MOCKCPP_NS::Exception);
-      TS_ASSERT_THROWS(pInterface->base10(), MOCKCPP_NS::Exception);
-      TS_ASSERT_THROWS(pInterface->a(), MOCKCPP_NS::Exception);
-      TS_ASSERT_THROWS(pInterface->b(true), MOCKCPP_NS::Exception);
+      TS_ASSERT_THROWS(p->base00(), MOCKCPP_NS::Exception);
+      TS_ASSERT_THROWS(p->base01(0), MOCKCPP_NS::Exception);
+      TS_ASSERT_THROWS(p->base10(), MOCKCPP_NS::Exception);
+      TS_ASSERT_THROWS(p->a(), MOCKCPP_NS::Exception);
+      TS_ASSERT_THROWS(p->b(true), MOCKCPP_NS::Exception);
    }
 
    void testShouldThrowExceptionIfIndexOfVtblExceedsTheLimitationOfConfiguration()
    {
-      IndexInvokableGetterStub indexInvokableGetter;
-      VirtualTable vtbl(&indexInvokableGetter, sizeof(Interface)/sizeof(void*), typeid(Interface));
-
       unsigned int indexOfVtbl = MOCKCPP_MAX_VTBL_SIZE;
       unsigned int indexOfVptr = getDeltaOfMethod(&Interface::base11);
       void* methodAddr = MOCKCPP_NS::getAddrOfMethod(&TestMethodHolder::base11);
  
-      TS_ASSERT_THROWS(vtbl.addMethod(methodAddr, indexOfVtbl, indexOfVptr), MOCKCPP_NS::Exception);
+      TS_ASSERT_THROWS(vtbl->addMethod(methodAddr, indexOfVtbl, indexOfVptr), MOCKCPP_NS::Exception);
    }
 
    void testShouldThrowExceptionIfIndexOfVtblExceedsTheNumberOfVptr()
    {
-      IndexInvokableGetterStub indexInvokableGetter;
-      unsigned int numberOfVptr = sizeof(Interface)/sizeof(void*);
-      VirtualTable vtbl(&indexInvokableGetter, sizeof(Interface)/sizeof(void*), typeid(Interface));
-
       unsigned int indexOfVtbl = getIndexOfMethod(&Interface::base11);
-      unsigned int indexOfVptr = numberOfVptr;
+      unsigned int indexOfVptr = MOCKCPP_MAX_INHERITANCE;
       void* methodAddr = MOCKCPP_NS::getAddrOfMethod(&TestMethodHolder::base11);
  
-      TS_ASSERT_THROWS(vtbl.addMethod(methodAddr, indexOfVtbl, indexOfVptr), MOCKCPP_NS::Exception);
+      TS_ASSERT_THROWS(vtbl->addMethod(methodAddr, indexOfVtbl, indexOfVptr), MOCKCPP_NS::Exception);
    }
 
    void testShouldBeAbleToGetPreviouslySetIndexInvokableGetterByReturnedPointerToInterface()
    {
-      IndexInvokableGetterStub indexInvokableGetter;
-      VirtualTable vtbl(&indexInvokableGetter, sizeof(Interface)/sizeof(void*), typeid(Interface));
-
       unsigned int indexOfVtbl = getIndexOfMethod(&Interface::base11);
       unsigned int indexOfVptr = getDeltaOfMethod(&Interface::base11);
       void* methodAddr = MOCKCPP_NS::getAddrOfMethod(&TestMethodHolder::base11);
  
-      vtbl.addMethod(methodAddr, indexOfVtbl, indexOfVptr);
+      vtbl->addMethod(methodAddr, indexOfVtbl, indexOfVptr);
 
-      Interface* pInterface = (Interface*) vtbl.toPointerToInterface();
-
-      IndexInvokableGetter* getter = VirtualTable::getInvokableGetter(vtbl.toPointerToInterface(), 0);
+      IndexInvokableGetter* getter = VirtualTable::getInvokableGetter(vtbl->toPointerToInterface(), 0);
 
       TS_ASSERT_EQUALS(getter, &indexInvokableGetter);
    }
+
+   void testShouldThrowExceptionIfItExpectedToBeDeletedButActuallyNotWhenItIsVerified()
+   {
+      std::pair<unsigned int, unsigned int> indices = \
+         getIndexOfDestructor<Interface, Interface>();
+
+      vtbl->setDestructor(indices.first, indices.second);
+      vtbl->expectsBeingDeleted();
+
+      TS_ASSERT_THROWS(vtbl->verify(), Exception);
+    }
+
+    void testShouldPassVerifyIfThePointerIsDeletedAsExpected()
+    {
+      std::pair<unsigned int, unsigned int> indices = \
+         getIndexOfDestructor<Interface, Interface>();
+
+      vtbl->setDestructor(indices.first, indices.second);
+      vtbl->expectsBeingDeleted();
+
+      Interface* p = (Interface*) vtbl->toPointerToInterface();
+      delete p;
+
+      TS_ASSERT_THROWS_NOTHING(vtbl->verify());
+    }
+
+    void testShouldPassVerifyIfThePointerIsNotDeletedAsExpected()
+    {
+      std::pair<unsigned int, unsigned int> indices = \
+         getIndexOfDestructor<Interface, Interface>();
+
+      vtbl->setDestructor(indices.first, indices.second);
+
+      TS_ASSERT_THROWS_NOTHING(vtbl->verify());
+    }
+
+    void testShouldFailThrowExceptionWhileTryingToDeleteThePointerWhichWasExpectedNotTo()
+    {
+      std::pair<unsigned int, unsigned int> indices = \
+         getIndexOfDestructor<Interface, Interface>();
+
+      vtbl->setDestructor(indices.first, indices.second);
+      vtbl->expectsKeepAlive();
+
+      Interface* p = (Interface*) vtbl->toPointerToInterface();
+      TS_ASSERT_THROWS(delete p, Exception);
+    }
+
+    void testShouldThrowExceptionIfAnObjectIsExpectedBothKeepAliveAndBeingDelete()
+    {
+      std::pair<unsigned int, unsigned int> indices = \
+         getIndexOfDestructor<Interface, Interface>();
+
+      vtbl->setDestructor(indices.first, indices.second);
+      vtbl->expectsKeepAlive();
+      TS_ASSERT_THROWS(vtbl->expectsBeingDeleted(), Exception);
+    }
+
+    void testShouldThrowExceptionIfAnObjectIsExpectedBothKeepAliveAndBeingDelete2()
+    {
+      std::pair<unsigned int, unsigned int> indices = \
+         getIndexOfDestructor<Interface, Interface>();
+
+      vtbl->setDestructor(indices.first, indices.second);
+      vtbl->expectsBeingDeleted();
+      TS_ASSERT_THROWS(vtbl->expectsKeepAlive(), Exception);
+    }
+
+    void testShouldThrowExceptionWhenTryingToExpectsADeletedObjectKeepAlive()
+    {
+      std::pair<unsigned int, unsigned int> indices = \
+         getIndexOfDestructor<Interface, Interface>();
+      vtbl->setDestructor(indices.first, indices.second);
+
+      delete (Interface*) vtbl->toPointerToInterface();
+
+      TS_ASSERT_THROWS(vtbl->expectsKeepAlive(), Exception);
+    }
+
+    void testShouldThrowAnExceptionWhenTryingToAccessMethodsOfADeleteObject()
+    {
+      std::pair<unsigned int, unsigned int> indices = \
+         getIndexOfDestructor<Interface, Interface>();
+      vtbl->setDestructor(indices.first, indices.second);
+
+      unsigned int indexOfVtbl = getIndexOfMethod(&Interface::base11);
+      unsigned int indexOfVptr = getDeltaOfMethod(&Interface::base11);
+      void* methodAddr = MOCKCPP_NS::getAddrOfMethod(&TestMethodHolder::base11);
+      vtbl->addMethod(methodAddr, indexOfVtbl, indexOfVptr);
+
+      Interface* p = (Interface*) vtbl->toPointerToInterface();
+      delete p;
+
+      TS_ASSERT_THROWS(VirtualTable::getInvokableGetter(vtbl->toPointerToInterface(), 0), Exception);
+    }
 };
 

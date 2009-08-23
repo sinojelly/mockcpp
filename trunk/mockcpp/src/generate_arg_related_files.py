@@ -70,9 +70,14 @@ def main():
       if o == includePathOpt.toLongOptString():
          includePath = a
 
-   generateDelegatedMethodDef(includePath, maxParameters)
-   generateArgumentListDef(includePath, maxParameters)
-   generateMethodTypeTraitsDef(includePath, maxParameters)
+   if delegatedMethodDefFileName in args:
+      generateDelegatedMethodDef(includePath, maxParameters)
+
+   if argumentListDefFileName in args:
+      generateArgumentListDef(includePath, maxParameters)
+
+   if methodTypeTraitsDefFileName in args:
+      generateMethodTypeTraitsDef(includePath, maxParameters)
 
 
 if __name__ == "__main__":

@@ -38,6 +38,7 @@ struct MockObjectBase : public ChainableMockObjectBase
    ~MockObjectBase();
 
    void reset();
+   void verify();
 
 protected:
 
@@ -46,6 +47,11 @@ protected:
           void* addr, unsigned int vptrIndex, unsigned int vtblIndex);
    
    void* toPointerToInterface() const;
+
+   void setDestructor(unsigned int vptrIndex, unsigned int vtblIndex);
+
+   void expectsBeingDeleted();
+   void expectsKeepAlive();
 
 private:
 
