@@ -64,6 +64,15 @@ public:
 		Invocation inv(__FUNCTION__, 1,2,3,4,5,6);
 		TS_ASSERT(inv.getParameter(7).empty());
 	}
+
+   void testShouldBeAbleToStringinizeCorrectly()
+   {
+      const std::string& ref = std::string("abcdef");
+		Invocation inv(__FUNCTION__, ref);
+
+      const std::string expected = "((std::string)\"" + ref  + "\")";
+      TS_ASSERT_EQUALS(expected, inv.toString());
+   }
 };
 
 
