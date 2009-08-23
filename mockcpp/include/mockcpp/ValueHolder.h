@@ -23,7 +23,6 @@
 
 #include <mockcpp/Holder.h>
 
-//#include <TypeTraits.h>
 #include <mockcpp/EqualityUtil.h>
 #include <mockcpp/Formatter.h>
 

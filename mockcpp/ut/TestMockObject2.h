@@ -181,5 +181,12 @@ public:
 
       TS_ASSERT_THROWS_NOTHING(mock.verify());
    }
+
+   struct WrongInterface { virtual void foo() = 0; };
+
+   void testShouldThrowExceptionIfTryingToMockAnInterfaceWithoutVirtualDestructor()
+   {
+      TS_ASSERT_THROWS(MockObject<WrongInterface> mock, Exception);
+   }
 };
 
