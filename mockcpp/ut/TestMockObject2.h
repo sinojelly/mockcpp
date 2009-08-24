@@ -182,6 +182,14 @@ public:
       TS_ASSERT_THROWS_NOTHING(mock.verify());
    }
 
+   void testShouldStillBeDeletableAfterAMockObjectIsReset()
+   {
+      MockObject<Interface> mock;
+      delete (Interface*) mock;
+      mock.reset();
+      TS_ASSERT_THROWS_NOTHING(delete (Interface*)mock);
+   }
+
    struct WrongInterface { virtual void foo() = 0; };
 
    void testShouldThrowExceptionIfTryingToMockAnInterfaceWithoutVirtualDestructor()

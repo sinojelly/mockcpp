@@ -177,6 +177,9 @@ VirtualTableImpl::reset()
       }
    }
   
+   expectsBeingDeleted = false;
+   expectsKeepAlive = false;
+   deleted = false;
 #if 0
    if(numberOfVptr > 0)
    {

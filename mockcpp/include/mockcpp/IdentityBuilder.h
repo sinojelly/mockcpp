@@ -32,7 +32,7 @@ public:
 
     void id(const std::string& id);
 
-    virtual ~IdentifyBuilder() {}
+    virtual ~IdentityBuilder() {}
 
 private:
     virtual InvocationMocker* getMocker() const = 0;

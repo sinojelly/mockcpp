@@ -94,6 +94,12 @@ struct MockObject : public MockObjectBase
    {
       expectsKeepAlive();
    }
+
+   void reset()
+   {
+      MockObjectBase::reset();
+      identifyDestructor<Interface, Interface>();
+   }
    /////////////////////////////////////////////////////////////
 	template <typename Method>
    InvocationMockBuilderGetter method(Method m, const char* name = 0)
