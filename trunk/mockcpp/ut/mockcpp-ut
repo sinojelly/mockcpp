@@ -1,0 +1,16 @@
+#!/bin/bash
+
+all_tests=`ls libmockcpp-ut*.la`
+
+if [ $# -gt 0 ]; then
+  all_tests=`echo ${PWD}/libmockcpp-ut$1`
+fi
+
+
+
+../3rdparty/testcpp/src/runner/testcpp-runner ${all_tests} \
+    -L../3rdparty/testcpp/src/listeners -ltestcppstdoutlistener
+
+#    ./libmockcpp-ut3 ./libmockcpp-ut4 
+#    ./libmockcpp-ut1.la 
+
