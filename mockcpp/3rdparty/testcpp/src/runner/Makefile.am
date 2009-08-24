@@ -34,8 +34,8 @@ nodist_libtestcpprunner_la_SOURCES = \
 bin_PROGRAMS = testcpp-runner
 
 testcpp_runner_LDADD = \
-  -L$(top_builddir)/src -ltestcpp \
-  -L$(top_builddir)/src/runner -ltestcpprunner $(LIBLTDL)
+  -L$(top_builddir)/src/runner -ltestcpprunner \
+  -L$(top_builddir)/src -ltestcpp $(LIBLTDL)
 
 testcpp_runner_LDFLAGS = -static -export-dynamic
 

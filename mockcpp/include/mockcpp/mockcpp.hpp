@@ -19,9 +19,9 @@
 #ifndef __MOCKCPP_HPP_
 #define __MOCKCPP_HPP_
 
-#include <mockcpp.h>
-#include <MockObject.h>
-#include <ChainingMockHelper.h>
+#include <mockcpp/mockcpp.h>
+#include <mockcpp/MockObject.h>
+#include <mockcpp/ChainingMockHelper.h>
 
 #define METHOD(m) method(&m, #m)
 
