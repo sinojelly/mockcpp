@@ -309,6 +309,7 @@ pkginclude_HEADERS = \
   $(MOCKCPP_HEADERS_PATH)/DelegatedMethod.h \
   $(MOCKCPP_HEADERS_PATH)/DelegatedMethodGetter.h \
   $(MOCKCPP_HEADERS_PATH)/DieStub.h \
+  $(MOCKCPP_HEADERS_PATH)/DestructorChecker.h \
   $(MOCKCPP_HEADERS_PATH)/DummyBuilder.h \
   $(MOCKCPP_HEADERS_PATH)/EqualityUtil.h \
   $(MOCKCPP_HEADERS_PATH)/Exception.h \
@@ -326,6 +327,7 @@ pkginclude_HEADERS = \
   $(MOCKCPP_HEADERS_PATH)/IgnoreReturnStub.h \
   $(MOCKCPP_HEADERS_PATH)/IncrementStub.h \
   $(MOCKCPP_HEADERS_PATH)/IndexInvokableGetter.h \
+  $(MOCKCPP_HEADERS_PATH)/InterfaceInfo.h \
   $(MOCKCPP_HEADERS_PATH)/Invocation.h \
   $(MOCKCPP_HEADERS_PATH)/InvocationId.h \
   $(MOCKCPP_HEADERS_PATH)/InvocationMockBuilder.h \

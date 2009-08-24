@@ -380,6 +380,9 @@ VirtualTable::verify()
    {
       MOCKCPP_FAIL("Object is expected Being Deleted, but it actually didn't happen.");
    }
+
+   This->expectsBeingDeleted = false;
+   This->expectsKeepAlive = false;
 }
 
 /////////////////////////////////////////////////////////////////
