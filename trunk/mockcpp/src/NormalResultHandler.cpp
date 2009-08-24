@@ -34,9 +34,9 @@ bool NormalResultHandler::matches(const Any& result) const
 }
 
 ///////////////////////////////////////////////////////////////////////////
-Any& NormalResultHandler::getResult(const Any& result) const
+const Any& NormalResultHandler::getResult(const Any& result) const
 {
-    return const_cast<Any&>(result);
+    return result;
 }
 
 ///////////////////////////////////////////////////////////////////////////

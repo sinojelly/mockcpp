@@ -36,7 +36,7 @@ struct Result
 
     ~Result();
 
-    Any& getResult(const Any& result) const;
+    const Any& getResult(const Any& result) const;
 
 private:
 

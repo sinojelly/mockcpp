@@ -41,7 +41,7 @@ public:
 
     bool matches(const Any& val) const;
 
-    Any& getResult(const Any& val) const;
+    const Any& getResult(const Any& val) const;
 
 private:
 

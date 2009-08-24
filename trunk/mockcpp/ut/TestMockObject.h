@@ -757,8 +757,7 @@ public:
           .stubs()
           .will(returnValue(str));
 
-      std::string s = mock->a();
-      TS_ASSERT_EQUALS(std::string("abcdefg"), s);
+      TS_ASSERT_EQUALS(std::string("abcdefg"), mock->a());
    }
 
 };

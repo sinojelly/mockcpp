@@ -42,15 +42,13 @@ bool VoidResultHandler::matches(const Any& result) const
 }
 
 /////////////////////////////////////////////////////////
-Any& VoidResultHandler::getResult(const Any& result) const
+const Any& VoidResultHandler::getResult(const Any& result) const
 {
     oss_t oss;
 
     oss << "You need to specify a return value by using will(...) in \n"
         << resultProvider->toString() << "\n"
-        << "Expected Return Type: " << expectedTypeString << "\n\n"
-        << "If the return value is not concerned, will(ignoreReturnValue()) \n"
-	     << "should be used.\n";
+        << "Expected Return Type: " << expectedTypeString << "\n";
 
     MOCKCPP_FAIL(oss.str());
 

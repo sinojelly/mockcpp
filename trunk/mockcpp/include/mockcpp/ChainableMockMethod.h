@@ -55,7 +55,7 @@ public:
     {
        SelfDescribe* resultProvider = 0;
 
-       Any anyResult = invokable->invoke( nameOfCaller
+       const Any& anyResult = invokable->invoke( nameOfCaller
                                         , p01, p02, p03, p04, p05, p06
                                         , p07, p08, p09, p10, p11, p12
                                         , resultProvider);

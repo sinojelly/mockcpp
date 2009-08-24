@@ -32,7 +32,7 @@ public:
     virtual ~ResultHandler() {}
 
     virtual bool matches(const Any& val) const = 0;
-    virtual Any& getResult(const Any& val) const = 0;
+    virtual const Any& getResult(const Any& val) const = 0;
 };
 
 MOCKCPP_NS_END
