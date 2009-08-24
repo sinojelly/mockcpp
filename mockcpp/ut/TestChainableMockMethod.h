@@ -70,4 +70,9 @@ public:
       TS_ASSERT_EQUALS(std::string("abcdefg"), str);
    }
 
+   void testShouldBeAbleToReturnAReferenceTypeDirectly()
+   {
+      ChainableMockMethod<const std::string&> method(invokable);
+      TS_ASSERT_EQUALS(std::string("abcdefg"), method(__FUNCTION__));
+   }
 };

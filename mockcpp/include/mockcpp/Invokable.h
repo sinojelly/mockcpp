@@ -50,6 +50,7 @@ struct Invokable
               , const RefAny& p12
               , SelfDescribe* &resultProvider) = 0;
 
+    
     virtual ~Invokable() {}
 };
 

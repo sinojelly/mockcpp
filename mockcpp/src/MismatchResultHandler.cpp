@@ -41,7 +41,7 @@ bool MismatchResultHandler::matches(const Any& result) const
 }
 
 ////////////////////////////////////////////////////////////////
-Any& MismatchResultHandler::getResult(const Any& result) const
+const Any& MismatchResultHandler::getResult(const Any& result) const
 {
     oss_t oss;
 

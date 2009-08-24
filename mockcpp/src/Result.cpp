@@ -56,7 +56,7 @@ class ResultImpl
 public:
     std::list<ResultHandler*> handlers;
 
-    Any& getResult(const Any& result) const;
+    const Any& getResult(const Any& result) const;
 
     ResultImpl( const std::type_info& typeInfo
           , const std::string& typeString
@@ -109,7 +109,7 @@ Result::~Result()
 }
 
 //////////////////////////////////////////////////////////
-Any& ResultImpl::getResult(const Any& result) const
+const Any& ResultImpl::getResult(const Any& result) const
 {
     std::list<ResultHandler*>::const_iterator i = handlers.begin();
     for(; i != handlers.end(); i++)
@@ -124,7 +124,7 @@ Any& ResultImpl::getResult(const Any& result) const
 }
 
 //////////////////////////////////////////////////////////
-Any& Result::getResult(const Any& result) const
+const Any& Result::getResult(const Any& result) const
 {
     return This->getResult(result);
 }

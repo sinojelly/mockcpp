@@ -27,7 +27,7 @@ bool IgnoreResultHandler::matches(const Any& val) const
    return any_castable<Ignore>(val);
 }
 
-Any& IgnoreResultHandler::getResult(const Any& val) const
+const Any& IgnoreResultHandler::getResult(const Any& val) const
 {
 	return getEmptyAny();
 }

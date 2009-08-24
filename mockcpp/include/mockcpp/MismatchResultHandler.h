@@ -37,7 +37,7 @@ public:
 
     bool matches(const Any& result) const;
 
-    Any& getResult(const Any& result) const;
+    const Any& getResult(const Any& result) const;
 
 private:
     const std::type_info& expectedTypeInfo;
