@@ -37,8 +37,8 @@ struct MockObjectBase : public ChainableMockObjectBase
 
    ~MockObjectBase();
 
-   void reset();
-   void verify();
+   virtual void reset();
+   virtual void verify();
 
 protected:
 
