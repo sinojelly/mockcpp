@@ -203,7 +203,7 @@ public:
       MOCKER(service_f2)
         .expects(once())
         .with(outBoundP(&st1))
-        .will(ignoreReturnValue());
+        .will(returnValue(0));
 
       st_struct_1* p = func3();
 
