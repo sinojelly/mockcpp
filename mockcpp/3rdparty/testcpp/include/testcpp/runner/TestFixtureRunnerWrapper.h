@@ -16,7 +16,9 @@ struct TestFixtureRunnerWrapper
    TestFixtureRunnerWrapper(TestFixtureRunner* runner);
    ~TestFixtureRunnerWrapper();
 
-	void run (TestFixtureDesc*, TestFixtureResultCollector*);
+	void run ( TestFixtureDesc*
+            , TestFixtureResultCollector*
+            , const TestCaseFilter*);
 
 private:
    TestFixtureRunner* fixtureRunner;

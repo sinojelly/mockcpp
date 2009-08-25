@@ -8,10 +8,14 @@ TESTCPP_NS_START
 
 struct TestFixtureDesc;
 struct TestFixtureResultCollector;
+struct TestCaseFilter;
 
 struct TestFixtureRunner
 {
-	virtual void run (TestFixtureDesc*, TestFixtureResultCollector*) = 0;
+	virtual void run ( TestFixtureDesc*
+                    , TestFixtureResultCollector*
+                    , const TestCaseFilter* ) = 0;
+   virtual ~TestFixtureRunner() {}
 };
 
 TESTCPP_NS_END

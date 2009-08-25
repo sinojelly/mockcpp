@@ -15,10 +15,15 @@ struct TestFixtureSandboxRunnerImpl;
 struct TestFixtureSandboxRunner
    : public TestFixtureRunner
 {
-   TestFixtureSandboxRunner(unsigned int maxCurrentProcess, TestCaseRunner*);
+   TestFixtureSandboxRunner(
+       unsigned int maxCurrentProcess
+       , TestCaseRunner*);
+
    ~TestFixtureSandboxRunner();
 
-	void run (TestFixtureDesc*, TestFixtureResultCollector*); 
+	void run ( TestFixtureDesc*
+            , TestFixtureResultCollector*
+            , const TestCaseFilter*); 
 
 private:
    TestFixtureSandboxRunnerImpl* This;
