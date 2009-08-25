@@ -30,39 +30,53 @@ public:
 
 	/////////////////////////////////////////////////////////
 
-	class A { };
+   struct ST { int a, b, c; };
+
+   void testShouldShowMaximum4BytesOfMemory()
+   {
+		ST st;
+      st.a = 0xabcdef00;
+      st.b = 0x12345678;
+      st.c = 0x09876543;
+
+		std::string expected = std::string("(") + getDemangledName(typeid(st)) + ")[00 ef cd ab ...]";
+		TS_ASSERT_EQUALS(expected, toTypeAndValueString(st));
+   }
+
+	struct A { A(char v):c(v){} char c; };
 
 	void testShouldBeAbleToStringnizeConstReference()
 	{
-		A a;	
+		A a(5);
 		const A& ref = a;
 
-		std::string expected = std::string("(") + getDemangledName(typeid(a)) + ")unknown";
+		std::string expected = std::string("(") + getDemangledName(typeid(a)) + ")[05]";
 		TS_ASSERT_EQUALS(expected, toTypeAndValueString(ref));
 	}
 
 	void testShouldBeAbleToStringnizeReference()
 	{
-		A a;	
+		A a(0xab);
+	
 		A& ref = a;
 
-		std::string expected = std::string("(") + getDemangledName(typeid(a)) + ")unknown";
+		std::string expected = std::string("(") + getDemangledName(typeid(a)) + ")[ab]";
 		TS_ASSERT_EQUALS(expected, toTypeAndValueString(ref));
 	}
 
 	void testShouldBeAbleToStringnizeConstObject()
 	{
-		const A p = A();	
+		const A p = A(0x3f);	
 
-		std::string expected = std::string("(") + getDemangledName(typeid(p)) + ")unknown";
+		std::string expected = std::string("(") + getDemangledName(typeid(p)) + ")[3f]";
 		TS_ASSERT_EQUALS(expected, toTypeAndValueString(p));
 	}
 
 	void testShouldBeAbleToStringnizeObject()
 	{
-		A p;	
+		A p(8);
 
-		std::string expected = std::string("(") + getDemangledName(typeid(p)) + ")unknown";
+		std::string expected = std::string("(") + getDemangledName(typeid(p)) + ")[08]";
 		TS_ASSERT_EQUALS(expected, toTypeAndValueString(p));
 	}
 
