@@ -3,7 +3,10 @@ MOCKCPP_SRC_PATH=$(top_builddir)/src
 MOCKCPP_INCLUDE_PATH = $(top_builddir)/include
 MOCKCPP_HEADERS_PATH = $(top_builddir)/include/mockcpp
 
-AM_CPPFLAGS = -I$(MOCKCPP_INCLUDE_PATH) -I$(top_builddir)/3rdparty -Wall
+AM_CPPFLAGS = \
+ -I$(MOCKCPP_INCLUDE_PATH) \
+ -I$(top_builddir)/3rdparty \
+ -Wall
 
 lib_LTLIBRARIES = libmockcpp.la
 libmockcpp_la_LDFLAGS = @MOCKCPP_LDFLAG@

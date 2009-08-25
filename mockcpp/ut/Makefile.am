@@ -2,12 +2,15 @@
 THIRD_PARTY_ROOT = $(top_builddir)/3rdparty
 TESTCPP_ROOT = $(THIRD_PARTY_ROOT)/testcpp
 
-AM_CPPFLAGS = -I$(top_builddir)/include \
-              -I$(THIRD_PARTY_ROOT) \
-              -I$(TESTCPP_ROOT)/include \
-              -shared
+AM_CPPFLAGS = \
+  -I$(top_builddir)/include \
+  -I$(THIRD_PARTY_ROOT) \
+  -I$(TESTCPP_ROOT)/include 
 
-AM_LDFLAGS = -module -L$(top_srcdir)/src/.libs -lmockcpp
+AM_LDFLAGS = \
+  -module \
+  -rpath /dev/null \
+  $(top_srcdir)/src/libmockcpp.la
 
 TARGET_SRC1 = mockcpp-ut1.cpp
 TARGET_SRC2 = mockcpp-ut2.cpp
@@ -16,7 +19,7 @@ TARGET_SRC4 = mockcpp-ut4.cpp
 TARGET_SRC5 = mockcpp-ut5.cpp
 TARGET_SRC6 = mockcpp-ut6.cpp
 
-lib_LTLIBRARIES = \
+noinst_LTLIBRARIES = \
  libmockcpp-ut1.la \
  libmockcpp-ut2.la \
  libmockcpp-ut3.la \
