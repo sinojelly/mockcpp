@@ -11,5 +11,7 @@ libtestcpp_la_LDFLAGS = \
 libtestcpp_la_SOURCES = \
   AssertionFailure.cpp \
   TestSuiteDesc.cpp \
-  ResourceCheckPoint.cpp
+  ResourceCheckPoint.cpp \
+  Formatter.cpp \
+  TypeString.cpp
 

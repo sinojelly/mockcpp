@@ -58,9 +58,9 @@ nodist_libtestcpprunner_la_OBJECTS = TestSuiteRunner.lo \
 	SimpleTestCaseResultReporter.lo \
 	SimpleTestSuiteResultReporter.lo \
 	TestFixtureSandboxRunnerFactory.lo LTTestListenerLoader.lo \
-	FixtureNameOnlyTestFilter.lo CaseNameOnlyTestFilter.lo \
-	SpecifiedTestFilter.lo WildcardTestFilter.lo \
-	TestFilterFactory.lo OptionList.lo TestRunner.lo
+	WildcardTestFilter.lo PosixFNMatcher.lo GeneralTestFilter.lo \
+	OrCompositeTestFilter.lo TestFilterFactory.lo OptionList.lo \
+	TestRunner.lo
 libtestcpprunner_la_OBJECTS = $(nodist_libtestcpprunner_la_OBJECTS)
 PROGRAMS = $(noinst_PROGRAMS)
 am_testcpp_runner_OBJECTS = TestRunnerMain.$(OBJEXT)
@@ -253,10 +253,10 @@ nodist_libtestcpprunner_la_SOURCES = \
   SimpleTestSuiteResultReporter.cpp \
   TestFixtureSandboxRunnerFactory.cpp \
   LTTestListenerLoader.cpp \
-  FixtureNameOnlyTestFilter.cpp \
-  CaseNameOnlyTestFilter.cpp \
-  SpecifiedTestFilter.cpp \
   WildcardTestFilter.cpp \
+  PosixFNMatcher.cpp \
+  GeneralTestFilter.cpp \
+  OrCompositeTestFilter.cpp \
   TestFilterFactory.cpp \
   OptionList.cpp \
   TestRunner.cpp
@@ -336,13 +336,14 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/CaseNameOnlyTestFilter.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/FixtureNameOnlyTestFilter.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/GeneralTestFilter.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/LTTestListenerLoader.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/LTTestSuiteLoader.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/OptionList.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/OrCompositeTestFilter.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/PipeReadableChannel.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/PipeWrittableChannel.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/PosixFNMatcher.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Sandbox.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/SandboxProcessor.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/SimpleTestCaseResultReporter.Plo@am__quote@
@@ -350,7 +351,6 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/SimpleTestResultDispatcher.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/SimpleTestResultReporter.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/SimpleTestSuiteResultReporter.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/SpecifiedTestFilter.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TestCaseSandbox.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TestCaseSandboxHandler.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TestCaseSandboxResultDecoder.Plo@am__quote@

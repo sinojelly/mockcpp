@@ -46,7 +46,7 @@ CONFIG_CLEAN_VPATH_FILES =
 LTLIBRARIES = $(noinst_LTLIBRARIES)
 libtestcpp_la_LIBADD =
 am_libtestcpp_la_OBJECTS = AssertionFailure.lo TestSuiteDesc.lo \
-	ResourceCheckPoint.lo
+	ResourceCheckPoint.lo Formatter.lo TypeString.lo
 libtestcpp_la_OBJECTS = $(am_libtestcpp_la_OBJECTS)
 libtestcpp_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
@@ -220,7 +220,9 @@ libtestcpp_la_LDFLAGS = \
 libtestcpp_la_SOURCES = \
   AssertionFailure.cpp \
   TestSuiteDesc.cpp \
-  ResourceCheckPoint.cpp
+  ResourceCheckPoint.cpp \
+  Formatter.cpp \
+  TypeString.cpp
 
 all: all-am
 
@@ -275,8 +277,10 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/AssertionFailure.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Formatter.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ResourceCheckPoint.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TestSuiteDesc.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TypeString.Plo@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
