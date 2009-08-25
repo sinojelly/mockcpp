@@ -16,11 +16,28 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
+#include <iostream>
+#include <algorithm>
+
 #include <mockcpp/OutputStringStream.h>
 #include <mockcpp/Formatter.h>
 
 MOCKCPP_NS_START
 
+//////////////////////////////////////////
+std::string toPointerString(void* p)
+{
+   if(p == 0) return "NULL";
+
+   oss_t oss;
+
+   oss << "0x";
+   oss.flags (std::ios::hex);
+   oss.fill('0'); oss.width(8);
+   oss << reinterpret_cast<unsigned long>(p);
+
+   return oss.str();
+}
 //////////////////////////////////////////
 std::string toString(std::string s)
 {
@@ -74,6 +91,21 @@ std::string toHexStr(T val)
 }
 
 //////////////////////////////////////////
+std::string toFixedSizedHexStr(unsigned int i)
+{
+   oss_t oss;
+   oss.flags (std::ios::hex);
+   oss.fill('0'); oss.width(2);
+   oss << i;
+
+   return oss.str();
+}
+
+//////////////////////////////////////////
+std::string toFixedSizedHexStr(unsigned char val)
+{ return toFixedSizedHexStr((unsigned int)val&0xFF); }
+
+//////////////////////////////////////////
 std::string toHexStr(char val)
 { return toHexStr((int)val&0xFF); }
 
@@ -89,6 +121,35 @@ std::string toHexStr(short val)
 std::string toHexStr(int val)
 { return toHexStr((unsigned int)val&0xFFFFFFFF); }
 
+//////////////////////////////////////////
+std::string toBufferString(void* buf, size_t size)
+{
+   oss_t oss;
+
+   size_t sz = std::min(size, size_t(4));
+
+   unsigned char* p = (unsigned char*)buf;
+
+   oss << "[";
+
+   for(size_t i=0; i < sz; i++)
+   {
+      oss << toFixedSizedHexStr(p[i]);
+      if(i != sz - 1)
+      {
+         oss << " ";
+      }
+   }
+
+   if(size > size_t(4))
+   {
+      oss << " ...";
+   }
+
+   oss << "]";
+
+   return oss.str();
+}
 //////////////////////////////////////////
 template <typename T>
 std::string toValStr(T val)

@@ -22,42 +22,40 @@
 #include <mockcpp/mockcpp.h>
 
 #include <string>
-#include <sstream>
 
 #include <mockcpp/OutputStringStream.h>
 #include <mockcpp/TypeString.h>
 
 MOCKCPP_NS_START
 
+///////////////////////////////////////////////////////
+std::string toBufferString(void* buf, size_t size);
+
+///////////////////////////////////////////////////////
 template <typename T>
 std::string toString(T val)
 {
-	oss_t oss;
-	oss << "unknown";
-	return oss.str();
+   return toBufferString((void*)&val, sizeof(val));
 }
 
+///////////////////////////////////////////////////////
+std::string toPointerString(void*);
+
+///////////////////////////////////////////////////////
 template <typename T>
-std::string toString(T* s)
+std::string toString(T* p)
 {
-	if(s == 0) return "NULL";
-
-	oss_t oss;
-
-	oss << "0x";
-	oss.flags (std::ios::hex);
-	oss.fill('0'); oss.width(8);
-	oss << reinterpret_cast<unsigned long>(s);
-
-	return oss.str();
+   return toPointerString((void*)p);
 }
 
+///////////////////////////////////////////////////////
 template <typename T>
 std::string toString(const T* s)
 {
 	return toString(const_cast<T*>(s));
 }
 
+///////////////////////////////////////////////////////
 std::string toString(std::string s);
 std::string toString(char* s);
 std::string toString(const char* s);
