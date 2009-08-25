@@ -1,9 +1,9 @@
 
 TESTCPPGEN = testcppgen
 
-pkgpython_PYTHON=$(top_builddir)/scripts/testcppgen.py
+noinst_PYTHON=$(top_builddir)/scripts/testcppgen.py
 
-bin_SCRIPTS = $(TESTCPPGEN)
+noinst_SCRIPTS = $(TESTCPPGEN)
 CLEANFILES = $(TESTCPPGEN)
 
 $(TESTCPPGEN) : 
