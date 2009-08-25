@@ -35,7 +35,7 @@ std::string toBufferString(void* buf, size_t size);
 template <typename T>
 std::string toString(T val)
 {
-   return toBufferString((void*)&val, sizeof(val));
+   return MOCKCPP_NS::toBufferString((void*)&val, sizeof(val));
 }
 
 ///////////////////////////////////////////////////////
@@ -45,14 +45,14 @@ std::string toPointerString(void*);
 template <typename T>
 std::string toString(T* p)
 {
-   return toPointerString((void*)p);
+   return MOCKCPP_NS::toPointerString((void*)p);
 }
 
 ///////////////////////////////////////////////////////
 template <typename T>
 std::string toString(const T* s)
 {
-	return toString(const_cast<T*>(s));
+	return MOCKCPP_NS::toString(const_cast<T*>(s));
 }
 
 ///////////////////////////////////////////////////////
@@ -81,7 +81,8 @@ template <typename T>
 std::string toTypeAndValueString(const T& val)
 {
 	oss_t oss;
-	oss << "(" << TypeString<T>::value() << ")" << toString(val);
+	oss << "(" << MOCKCPP_NS::TypeString<T>::value() << ")" 
+       << MOCKCPP_NS::toString(val);
 	return oss.str();
 }
 

@@ -48,7 +48,7 @@ public:
 
     std::string getTypeAndValueString() const
     {
-      return toTypeAndValueString(ref);
+      return MOCKCPP_NS::toTypeAndValueString(ref);
     }
 
 private:

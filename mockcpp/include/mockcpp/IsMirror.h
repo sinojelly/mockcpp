@@ -79,7 +79,7 @@ public:
       oss_t oss;
 
       oss << "mirror("
-          << toTypeAndValueString(pointer)
+          << MOCKCPP_NS::toTypeAndValueString(pointer)
           << ", " << sizeOfBuffer
           << ")";
 
@@ -122,7 +122,7 @@ public:
       oss_t oss;
 
       oss << "mirror("
-          << toTypeAndValueString(object)
+          << MOCKCPP_NS::toTypeAndValueString(object)
           << ")";
 
       return oss.str();

@@ -80,7 +80,7 @@ public:
 
     std::string getTypeAndValueString() const
     {
-      return toTypeAndValueString(pointer);
+      return MOCKCPP_NS::toTypeAndValueString(pointer);
     }
 
 private:
