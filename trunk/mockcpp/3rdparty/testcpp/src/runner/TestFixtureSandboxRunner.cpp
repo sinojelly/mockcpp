@@ -16,6 +16,7 @@
 #include <testcpp/runner/TestFixtureResultCollector.h>
 #include <testcpp/runner/TestCaseSandbox.h>
 #include <testcpp/runner/EnvironmentCleaner.h>
+#include <testcpp/runner/TestCaseFilter.h>
 
 TESTCPP_NS_START
 
@@ -34,14 +35,17 @@ struct TestFixtureSandboxRunnerImpl : public EnvironmentCleaner
    }
 
 	void run(TestFixtureDesc* fixture
-      , TestFixtureResultCollector* resultCollector);
+      , TestFixtureResultCollector* resultCollector
+      , const TestCaseFilter* filter);
 
    void setupListeners();
    void createSandbox( TestFixtureDesc* fixture, unsigned int i
              , TestFixtureResultCollector* resultCollector);
 
+
    void createSandboxes(TestFixtureDesc* fixture
-             , TestFixtureResultCollector* resultCollector);
+             , TestFixtureResultCollector* resultCollector
+             , const TestCaseFilter* filter);
 
    void cleanUpDeadSandboxes();
 
@@ -114,13 +118,17 @@ createSandbox( TestFixtureDesc* fixture, unsigned int i
 ////////////////////////////////////////////////////
 void TestFixtureSandboxRunnerImpl::
 createSandboxes( TestFixtureDesc* fixture
-               , TestFixtureResultCollector* resultCollector)
+               , TestFixtureResultCollector* resultCollector
+               , const TestCaseFilter* filter)
 {
    unsigned int numberOfTestCases = fixture->getNumberOfTestCases();
    unsigned int i = index;
    for(; i < numberOfTestCases && sandboxes.size() < maxProcess; i++)
    {
-      createSandbox(fixture, i, resultCollector);
+      if(filter->isCaseMatch((const TestCaseInfoReader*)fixture->getTestCase(i)))
+      {
+         createSandbox(fixture, i, resultCollector);
+      }
    }
 
    index = i;
@@ -195,13 +203,14 @@ void TestFixtureSandboxRunnerImpl::process(TestFixtureDesc* fixture)
 ///////////////////////////////////////////////////////
 void
 TestFixtureSandboxRunnerImpl::run(TestFixtureDesc* fixture
-        , TestFixtureResultCollector* resultCollector)
+        , TestFixtureResultCollector* resultCollector
+        , const TestCaseFilter* filter)
 {
    index = 0;
 
    while(1)
    {
-      createSandboxes(fixture, resultCollector);
+      createSandboxes(fixture, resultCollector, filter);
       if(sandboxes.size() == 0)
       {
          break;
@@ -228,9 +237,10 @@ TestFixtureSandboxRunner::~TestFixtureSandboxRunner()
 ///////////////////////////////////////////////////////
 void
 TestFixtureSandboxRunner::run(TestFixtureDesc* fixture
-      , TestFixtureResultCollector* resultCollector)
+      , TestFixtureResultCollector* resultCollector
+      , const TestCaseFilter* filter)
 {
-   This->run(fixture, resultCollector);
+   This->run(fixture, resultCollector, filter);
 }
 
 ///////////////////////////////////////////////////////

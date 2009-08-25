@@ -157,18 +157,16 @@ addFixtureFailure(TestFixtureInfoReader*, const AssertionFailure& failure)
 void StdoutTestListener::
 startTestSuite(TestSuiteInfoReader* suite)
 {
-   std::cout << suite->getName() 
-             << ":"
-             << " running "
-             << suite->getNumberOfTestCases()
-             << " test cases"
-             << std::endl;
+#if 0
+   std::cout << suite->getName() << std::endl;
+#endif
 }
 
 ///////////////////////////////////////////////////////////
 void StdoutTestListener::
 endTestSuite(TestSuiteInfoReader* suite)
 {
+#if 0
    if(suite == 0)
    {
       return;
@@ -193,6 +191,7 @@ endTestSuite(TestSuiteInfoReader* suite)
              << std::endl
              << "======================================"
              << std::endl;
+#endif
 
 }
 
@@ -229,7 +228,7 @@ void StdoutTestListener::endTest()
              << " success: " << successCases
              << " failed: " << This->resultReporter->getNumberOfFailedTestCases()
              << " error: "  << This->resultReporter->getNumberOfErrorTestCases()
-             << " crash: "  << This->resultReporter->getNumberOfCrashedTestCases() << std::endl
+             << " crashed: "  << This->resultReporter->getNumberOfCrashedTestCases() << std::endl
              << " success rate: " << successRate << "%"
              << std::endl;
 }

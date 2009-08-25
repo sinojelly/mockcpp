@@ -2,6 +2,7 @@
 #include <testcpp/internal/TestSuiteDesc.h>
 
 #include <testcpp/runner/TestSuiteRunner.h>
+#include <testcpp/runner/TestFilter.h>
 #include <testcpp/runner/TestSuiteLoader.h>
 #include <testcpp/runner/TestFixtureRunner.h>
 #include <testcpp/runner/TestResultCollector.h>
@@ -26,11 +27,14 @@ struct TestSuiteRunnerImpl : public TestSuiteDescEntryNameGetter
          , TestResultCollector* resultCollector);
 
 	void runAllFixtures(TestSuiteDesc* desc
-   		, TestResultCollector* resultCollector);
+   		, TestResultCollector* resultCollector
+         , const TestFilter* filter);
 
-	void runAllFixtures(TestSuiteDesc* desc);
+	void runAllFixtures(TestSuiteDesc* desc, const TestFilter* filter);
 
-	void run(const std::string& path, TestResultCollector* resultCollector);
+	void run( const std::string& path
+           , TestResultCollector* resultCollector
+   		  , const TestFilter* filter);
 
    std::string getDescEntryName() const
    { return testcppTestSuiteDescGetter; }
@@ -75,19 +79,24 @@ TestSuiteRunnerImpl::load(const std::string& path
 /////////////////////////////////////////////////////////////////
 void
 TestSuiteRunnerImpl::runAllFixtures(TestSuiteDesc* desc
-   , TestResultCollector* resultCollector)
+   , TestResultCollector* resultCollector
+   , const TestFilter* filter)
 {
    for(unsigned int i=0; i<desc->getNumberOfTestFixtures(); i++)
    {
       TestFixtureDesc* fixture = desc->getTestFixture(i);
-      fixtureRunner->run(fixture, resultCollector);
+      if(filter->isFixtureMatch((const TestFixtureInfoReader*)fixture))
+      {
+         fixtureRunner->run(fixture, resultCollector, filter);
+      }
    }
 }
 
 /////////////////////////////////////////////////////////////////
 void
 TestSuiteRunnerImpl::run(const std::string& path
-   , TestResultCollector* resultCollector)
+   , TestResultCollector* resultCollector
+   , const TestFilter* filter)
 {
    TestSuiteDesc* desc = load(path, resultCollector);
    if(desc == 0)
@@ -96,7 +105,7 @@ TestSuiteRunnerImpl::run(const std::string& path
    }
 
    resultCollector->startTestSuite(desc);
-	runAllFixtures(desc, resultCollector);
+	runAllFixtures(desc, resultCollector, filter);
    resultCollector->endTestSuite(desc);
 
    suiteLoader->unload();
@@ -105,9 +114,10 @@ TestSuiteRunnerImpl::run(const std::string& path
 /////////////////////////////////////////////////////////////////
 void
 TestSuiteRunner::run(const std::string& path
-   , TestResultCollector* resultCollector)
+   , TestResultCollector* resultCollector
+   , const TestFilter* filter)
 {
-   This->run(path, resultCollector);
+   This->run(path, resultCollector, filter);
 }
 
 /////////////////////////////////////////////////////////////////

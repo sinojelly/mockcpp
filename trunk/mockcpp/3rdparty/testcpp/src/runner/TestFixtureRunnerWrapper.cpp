@@ -25,12 +25,13 @@ TestFixtureRunnerWrapper::~TestFixtureRunnerWrapper()
 
 /////////////////////////////////////////////////////////////////
 void TestFixtureRunnerWrapper::run(TestFixtureDesc* desc
-     , TestFixtureResultCollector* collector)
+     , TestFixtureResultCollector* collector
+     , const TestCaseFilter* filter)
 {
    collector->startTestFixture(desc);
 
    try{
-      fixtureRunner->run(desc, collector);
+      fixtureRunner->run(desc, collector, filter);
    }
    catch(Error& e)
    {

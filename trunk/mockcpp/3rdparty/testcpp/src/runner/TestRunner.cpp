@@ -38,7 +38,8 @@ struct TestRunnerImpl
 
    
    void createSuiteRunner(unsigned int maxConcurrent);
-   void runTestSuite(const std::string& suitePath);
+   void runTestSuite( const std::string& suitePath
+                    , const TestFilter* filter);
    void runTests( const TestRunner::StringList& suites,
                   const TestFilter* filter);
 
@@ -152,11 +153,13 @@ TestRunnerImpl::createSuiteRunner(unsigned int maxConcurrent)
 }
 
 ///////////////////////////////////////////////////////
-void TestRunnerImpl::runTestSuite(const std::string& suitePath)
+void TestRunnerImpl::runTestSuite
+          ( const std::string& suitePath
+          , const TestFilter* filter)
 {
    try
    {
-     suiteRunner->run(suitePath, dispatcher);
+     suiteRunner->run(suitePath, dispatcher, filter);
    }
    catch(Error& e)
    {
@@ -180,7 +183,7 @@ TestRunnerImpl::runTests(const TestRunner::StringList& suites,
    TestRunner::StringList::const_iterator i = suites.begin();
    for(; i != suites.end(); i++)
    {
-      runTestSuite(*i);
+      runTestSuite(*i, filter);
    }
 
    dispatcher->endTest();

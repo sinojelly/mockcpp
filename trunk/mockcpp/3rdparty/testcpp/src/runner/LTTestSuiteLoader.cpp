@@ -1,6 +1,4 @@
 
-#include <iostream>
-
 #include <ltdl.h>
 
 #include <testcpp/Error.h>

@@ -2,17 +2,16 @@
 #define __TESTCPP_TEST_FILTER_H
 
 #include <testcpp/testcpp.h>
+#include <testcpp/runner/TestCaseFilter.h>
 
 TESTCPP_NS_START
 
 struct TestFixtureInfoReader;
-struct TestCaseInfoReader;
 
 ////////////////////////////////////////////////////
-struct TestFilter
+struct TestFilter : public TestCaseFilter
 {
    virtual bool isFixtureMatch(const TestFixtureInfoReader* fixture) const = 0;
-   virtual bool isCaseMatch(const TestCaseInfoReader* testcase) const = 0;
 
    virtual ~TestFilter() {}
 };
