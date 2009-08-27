@@ -103,7 +103,7 @@ public:
 
 		ref.val = 20;
 
-		TS_ASSERT(10 == a0.val);
+		TS_ASSERT_EQUALS(10, a0.val);
 	}
 
 };
