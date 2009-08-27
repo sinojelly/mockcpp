@@ -66,7 +66,7 @@ TestSuiteRunnerImpl::load(const std::string& path
    }
    catch(std::exception& e)
    {
-      resultCollector->addError(e.what());
+      resultCollector->addError("test suite \"" + path + "\" can't be loaded : " + e.what());
    }
    catch(...)
    {
