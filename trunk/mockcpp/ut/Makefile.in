@@ -232,7 +232,8 @@ AM_CPPFLAGS = \
 AM_LDFLAGS = \
   -module \
   -rpath /dev/null \
-  $(top_srcdir)/src/libmockcpp.la
+  $(top_srcdir)/src/libmockcpp.la \
+  $(THIRD_PARTY_ROOT)/testcpp/src/libtestcpp.la
 
 TARGET_SRC1 = mockcpp-ut1.cpp
 TARGET_SRC2 = mockcpp-ut2.cpp
