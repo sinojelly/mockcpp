@@ -188,7 +188,8 @@ TestRunnerImpl::runTests(const TestRunner::StringList& suites,
 
    dispatcher->endTest();
 
-   if(reporter->getNumberOfUnsuccessfulTestCases() > 0)
+   if(reporter->getNumberOfUnsuccessfulTestCases() > 0 || 
+      reporter->getNumberOfUnloadableSuites() > 0)
    {
       hasFailures = true;
    }

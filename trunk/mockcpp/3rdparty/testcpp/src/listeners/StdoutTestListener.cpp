@@ -15,6 +15,16 @@
 
 TESTCPP_NS_START
 
+namespace
+{
+  const char vt100_red[]    = "\033[31;1m";       //red
+  const char vt100_green[]  = "\033[32;1m";       //green
+  const char vt100_yellow[] = "\033[33;1m";       //yellow
+  const char vt100_reset[]  = "\033[0m";          //reset
+  const char vt100_clear[]  = "\033[2J";          //clear
+  const char vt100_home[]   = "\033[0;0H";        //back to left corner
+}
+
 struct StdoutTestListenerImpl
 {
    StdoutTestListenerImpl(TestResultReporter* reporter
@@ -213,24 +223,64 @@ void StdoutTestListener::startTest()
 ///////////////////////////////////////////////////////////
 void StdoutTestListener::endTest()
 {
-   unsigned int successCases = This->resultReporter->getNumberOfSuccessfulTestCases();
 
-   int successRate = 0;
-   if(This->resultReporter->getNumberOfTestCases() != 0)
+
+   if(This->resultReporter->getNumberOfTestCases() == 0)
    {
-      successRate = int(successCases*100/This->resultReporter->getNumberOfTestCases()); 
+      std::cerr << "No test to run!" << std::endl;
    }
 
-   std::cout << std::endl
-             << " loaded suites: " << This->resultReporter->getNumberOfLoadedSuites()
-             << " unloadable suites: " << This->resultReporter->getNumberOfUnloadableSuites()
-             << std::endl
-             << " success: " << successCases
-             << " failed: " << This->resultReporter->getNumberOfFailedTestCases()
-             << " error: "  << This->resultReporter->getNumberOfErrorTestCases()
-             << " crashed: "  << This->resultReporter->getNumberOfCrashedTestCases() << std::endl
-             << " success rate: " << successRate << "%"
-             << std::endl;
+
+   if(This->resultReporter->getNumberOfUnloadableSuites() == 0 &&
+         This->resultReporter->getNumberOfUnsuccessfulTestCases() == 0)
+   {
+      std::cout << "(" << This->resultReporter->getNumberOfTestCases()
+                << " cases) OK!" << std::endl;
+      return ;
+   }
+
+
+
+   std::cout << std::endl;
+
+   if(This->resultReporter->getNumberOfUnloadableSuites() > 0)
+   {
+      unsigned int totalSuites = This->resultReporter->getNumberOfLoadedSuites() 
+                               + This->resultReporter->getNumberOfUnloadableSuites();
+
+      unsigned int rate = (unsigned int)(100*This->resultReporter->getNumberOfLoadedSuites()/totalSuites);
+
+      std::cout << " loaded suites: " << This->resultReporter->getNumberOfLoadedSuites()
+                << " unloadable suites: " << This->resultReporter->getNumberOfUnloadableSuites()
+                << std::endl
+                << " load success rate: " << rate << "%"
+                << std::endl;
+   }
+
+   if(This->resultReporter->getNumberOfUnsuccessfulTestCases() > 0)
+   {
+      unsigned int successCases = This->resultReporter->getNumberOfSuccessfulTestCases();
+      unsigned int rate = int(successCases*100/This->resultReporter->getNumberOfTestCases()); 
+
+      std::cout << " success: " << successCases;
+
+      if(This->resultReporter->getNumberOfFailedTestCases() > 0)
+      {
+         std::cout << " failed: " << This->resultReporter->getNumberOfFailedTestCases();
+      }
+
+      if(This->resultReporter->getNumberOfErrorTestCases() > 0)
+      {
+         std::cout << " error: "  << This->resultReporter->getNumberOfErrorTestCases();
+      }
+
+      if(This->resultReporter->getNumberOfCrashedTestCases() > 0)
+      {
+         std::cout << " crashed: "  << This->resultReporter->getNumberOfCrashedTestCases();
+      }
+      std::cout << std::endl 
+                << " success rate: " << rate << '%' << std::endl;
+   }
 }
 
 ///////////////////////////////////////////////////////////

@@ -39,7 +39,7 @@ std::string toString(const T* s)
 }
 
 ///////////////////////////////////////////////////////
-std::string toString(std::string s);
+std::string toString(const std::string& s);
 std::string toString(char* s);
 std::string toString(const char* s);
 std::string toString(float f);

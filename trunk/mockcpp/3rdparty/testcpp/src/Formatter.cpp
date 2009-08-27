@@ -21,7 +21,7 @@ std::string toPointerString(void* p)
    return ss.str();
 }
 //////////////////////////////////////////
-std::string toString(std::string s)
+std::string toString(const std::string& s)
 {
 	std::stringstream ss;
 	ss << "\"" << s << "\"";
