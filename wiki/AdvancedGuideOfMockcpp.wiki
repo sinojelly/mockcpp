@@ -173,7 +173,61 @@ Non-public and virtual inheritance is not supported, because they are pretty tri
 
 A big difference between C++ and other moderner language is that C++ developers have to manage the lifecycle of objects by themselves. Since mock objects are transparent for CUTs (Class Under Test), once a mock object is injected into a CUT, it might be performed deleting operation by the CUT in various design reasons.
 
-Therefore, a useful mock framework should support that a mock object is able to be deleted safely. 
+Therefore, a useful mock framework should support that a mock object is able to be deleted safely, and more: afterwards, the deleted mock object should still be able to verify whether the deletion acutally happened, since this operation is part of design, otherwise a memory leakage occurs.
+
+mockcpp support this in a easy way. If an injected mock object should be deleted by CUT, *willBeDeleted()* method of *MockObject* should be called before it's deleted by CUT. If it should not be deleted by CUT, *willKeepAlive()* should be invoked. And if the deletion is not concerned, you don't need to do anything. 
+
+*willBeDeleted()* and *willKeepAlive()* are used for the purpose of verfication. No matter they are called or not, the mock object could be deleted safely anyway.
+
+Here is an example:
+
+{{{
+
+class TestGeneralTestFilter: public CxxTest::TestSuite
+{
+      MockObject<NameMatcher> fixtureMatcher;
+      MockObject<NameMatcher> testcaseMatcher;
+
+public:
+
+     void test_should_delete_matchers_if_they_are_injected_as_composites_when_it_is_deleted()
+     {
+            GeneralTestFilter* filter = 
+                  new GeneralTestFilter(testcaseMatcher, true);
+
+            testcaseMatcher.willBeDeleted();
+
+            delete filter;
+
+            testcaseMatcher.verify();
+     }
+
+};
+
+class GeneralTestFilter
+{
+public:
+     
+     GeneralTestFilter(NameMatcher* matcher, bool isComposite)
+           : m_isComposite(isComposite), m_testcaseMatcher(matcher)
+     {}
+     
+     ~GeneralTestFilter()
+     {
+           if(isComposite)
+           {
+                 delete matcher;
+           }
+     }
+
+     // other code
+
+private:
+     bool m_isComposite;
+     NameMatcher* m_testcaseMatcher;
+};
+
+}}}
 
 ==4. Resource Check Point==
 
