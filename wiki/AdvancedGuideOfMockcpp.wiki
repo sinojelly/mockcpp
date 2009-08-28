@@ -190,7 +190,7 @@ class TestGeneralTestFilter: public CxxTest::TestSuite
 
 public:
 
-     void test_should_delete_matchers_if_they_are_injected_as_composites_when_it_is_deleted()
+     void test_should_delete_the_matcher_if_it_is_injected_as_composite_when_object_is_deleted()
      {
             GeneralTestFilter* filter = 
                   new GeneralTestFilter(testcaseMatcher, true);
@@ -202,6 +202,17 @@ public:
             testcaseMatcher.verify();
      }
 
+     void test_should_not_delete_the_matcher_if_it_is_not_injected_as_composite_when_object_is_deleted()
+     {
+            GeneralTestFilter* filter = 
+                  new GeneralTestFilter(testcaseMatcher, false);
+
+            testcaseMatcher.willKeepAlive();
+
+            delete filter;
+
+            testcaseMatcher.verify();
+     }
 };
 
 class GeneralTestFilter
