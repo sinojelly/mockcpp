@@ -46,7 +46,8 @@ struct MockObject : public MockObjectBase
    }
 
    /////////////////////////////////////////////////////////////
-   ~MockObject()
+   MockObject(const MockObject& obj)
+     : MockObjectBase(obj)
    {
    }
 
@@ -116,6 +117,11 @@ struct MockObject : public MockObjectBase
      return createInvocationMockerBuilderGetter(
                methodName, addr, vptrIndex, vtblIndex);
 	}
+
+////////////////////////////////////////////////////////////////
+private:
+
+   MockObject& operator=(const MockObject&);
 
 ////////////////////////////////////////////////////////////////
 // Template methods: it's ugly, but we have to make them visible.

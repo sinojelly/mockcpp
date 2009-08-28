@@ -37,7 +37,6 @@ class ChainableMockObjectBase
 {
 public:
 
-    ChainableMockObjectBase(const std::string& name);
     ~ChainableMockObjectBase();
 
     std::string& getName(void) const;
@@ -50,6 +49,20 @@ public:
 protected:
 
     ChainableMockMethodContainer* getMethodContainer() const;
+
+protected:
+
+    explicit ChainableMockObjectBase(const std::string& name);
+
+    ChainableMockObjectBase(const ChainableMockObjectBase&);
+
+private:
+
+    ChainableMockObjectBase& operator=(const ChainableMockObjectBase&);
+
+protected:
+
+    bool shared;
 
 private:
 
