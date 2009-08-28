@@ -5,18 +5,26 @@ Default behavior is defined by using _*defaults()*_, instead of _*expects()/stub
 This is a very useful feature. It helps you write your tests in a neater way.  
 
 {{{
-class TestTestFilter: public CxxTest::TestSuite
-{
-private:
 
+struct TestCaseInfoReadder
+{
+      virtual const std::string& getCaseName() const = 0;
+      virtual const std::string& getFixtureName() const = 0;
+
+      virtual ~TestCaseInfoReadder() {}
+};
+
+class TestGeneralTestFilter: public CxxTest::TestSuite
+{
       MockObject<TestCaseInfoReader> testcase;
 
-      TestFilter* filter;
+      GeneralTestFilter* filter;
 
 public:
+
       void setUp()
       {
-            filter = new TestFilter("*TestFixture", "testcase?");
+            filter = new GeneralTestFilter("*TestFixture", "testcase?");
 
             testcase.METHOD(TestCaseInfoReader::getCaseName)
                             .defaults().will(returnValue("testcase1"));
@@ -61,4 +69,88 @@ In this example, the default behaviors of method getFixtureName() and getCaseNam
 Furthermore, for one method, you can specify more than one default behavior, distinguished by _*with()*_ selectors. When falling in default category, mockcpp will try to select a matched default behavior. If multiple default behaviors match your invocation, the first one will be selected. In current implementation, the first matched one defined in a test is the one is chosen by mockcpp, but this might change in later version, so don't make your tests rely on this, instead, you should make your default specification distinguiable.
 
 {{{
+
+struct TestFilter
+{
+      virtual bool matches(TestCaseInfoReader* ) const = 0;
+
+      virtual ~TestFilter() {}
+};
+
+struct TestCase : public TestCaseInfoReader
+{
+      virtual void run() throw (AssertionFailure) = 0;
+
+      virtual ~TestCase() {}
+};
+
+class TestTestCaseRunner: public CxxTest::TestSuite
+{
+      MockObject<TestFilter> filter;
+      MockObject<TestCase> testcase;
+
+      TestRunner* runner;
+
+public:
+      void setUp()
+      {
+            runner = new SandboxTestRunner();
+
+            filter.METHOD(TestFilter::matches)
+                    .defaults()
+                    .with(eq((TestCase*)testcase)
+                    .will(returnValue(true));
+
+            filter.METHOD(TestFilter::matches)
+                    .defaults()
+                    .with(neq((TestCase*)testcase)
+                    .will(returnValue(false));
+      }
+
+     void tearDown()
+     {
+           filter.reset();
+           testcase.reset();
+
+           delete runner;
+     }
+
+     void test_should_run_matched_test_case()
+     {
+           testcase.METHOD(TestCase::run).expects(once());
+
+           runner->run(testcase, filter);
+
+           testcase.verify();
+     }
+
+     void test_should_not_run_unmatched_test_case()
+     {
+          MockObject<TestCase> unmatchedTestCase;
+         
+          unmatchedTestCase.METHOD(TestCase::run)
+                  .expects(never());
+
+           runner->run(unmatchedTestCase, filter);
+
+           unmatchedTestCase.verify();
+     }
+
+     void test_should_throw_an_AsstionFailure_exception_if_the_test_case_did_that()
+     {
+           testcase.METHOD(TestCase::run)
+                 .stubs().will(throws(AssertionFailure("AssertionFailure"));
+
+           TS_ASSERT_THROWS(runner->run(testcase, filter), AssertionFailure);
+     }
+
+     void test_should_throw_a_CrashException_if_the_test_case_crashed()
+     {
+           testcase.METHOD(TestCase::run)
+                 .stubs().will(die());
+
+           TS_ASSERT_THROWS(runner->run(testcase, filter), CrashException);
+     }
+};
+
 }}}
