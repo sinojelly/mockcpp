@@ -171,7 +171,7 @@ Yes, I lied. It has technical reasons of having these constraints. Due to the us
 
 ==5. Dynamic Cast ==
 
-mockcpp supports *dynamic_cast* quite well. The behavior of *dynamic_cast*ing a mock object is exactly same as *dynamic cast*ing a normal C++ object. 
+mockcpp supports *dynamic_cast* quite well. The behavior of *dynamic_cast*-ing a mock object is exactly same as *dynamic cast*-ing a normal C++ object. 
 
 Take an example:
 
