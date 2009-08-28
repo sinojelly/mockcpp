@@ -5,41 +5,52 @@ Default behavior is defined by using _*defaults()*_, instead of _*expects()/stub
 This is a very useful feature. It helps you write your tests in a neater way.  
 
 {{{
-class TestGeneralTestFilter: public CxxTest::TestSuite
+class TestTestFilter: public CxxTest::TestSuite
 {
 private:
 
-      MockObject<TestFixtureInfoReader> fixture;
+      MockObject<TestCaseInfoReader> testcase;
 
-      GeneralTestFilter* filter;
+      TestFilter* filter;
 
 public:
       void setUp()
       {
-            filter = new GeneralTestFilter("*TestFixture");
+            filter = new TestFilter("*TestFixture", "testcase?");
 
-            fixture.METHOD(TestFixtureInfoReader::getName)
-             .defaults().will(returnValue("FooTestFixture"));
+            testcase.METHOD(TestCaseInfoReader::getName)
+                            .defaults().will(returnValue("testcase1"));
+
+            testcase.METHOD(TestCaseInfoReader::getFixtureName)
+                            .defaults().will(returnValue("FooTestFixture"));
       }
 
      void tearDown()
      {
-           fixture.reset();
+           testcase.reset();
 
            delete filter;
      }
 
      void test_should_be_able_to_recoginize_matched_fixture()
      {
-          TS_ASSERT_TRUE(filter->matches(fixture));
+          TS_ASSERT_TRUE(filter->matches(testcase));
      }
 
-     void test_should_be_able_to_recoginize_unmatched_fixture()
+     void test_should_tell_unmatched_if_test_fixture_name_does_not_match()
      {
-          fixture.METHOD(TestFixtureInfoReader::getName)
+          fixture.METHOD(TestFixtureInfoReader::getFixtureName)
              .stubs().will(returnValue("FooFixture"));
 
-          TS_ASSERT_FALSE(filter->matches(fixture));
+          TS_ASSERT_FALSE(filter->matches(testcase));
+     }
+
+     void test_should_tell_unmatched_if_testcase_name_does_not_match()
+     {
+          fixture.METHOD(TestFixtureInfoReader::getName)
+             .stubs().will(returnValue("testcase10"));
+
+          TS_ASSERT_FALSE(filter->matches(testcase));
      }
 };
 
