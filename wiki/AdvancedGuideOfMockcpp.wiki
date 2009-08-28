@@ -304,4 +304,6 @@ void BillingManager::billing(const BillingObject* billingObject, Bill& bill)
 
 }}}
 
+Because the interface you mocked was *Call*, the parameter "pointer to billObject" of *billing()* could be successfully downcast to pointer to *Call". If you specify the mocked interface as any other type, the downcast operation will return 0.
+
 ==6. Object Assignment==
