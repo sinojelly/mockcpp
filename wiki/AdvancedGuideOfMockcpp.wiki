@@ -163,7 +163,7 @@ In order to make mockcpp support multi-inheritance, you need to make sure the co
 
 The similar constraint exists in the setting of allowed maximum number of methods in one interface, which is specified with the configure option *max_vtbl_size=N* (N cannot be specfied as the number more than 50, and its default value is 20). Note that the method number includes all methods defined in an interface and all its parents, normal methods and destructors. If an interface contains more than 50 ( still too many, in our opinion), probablly it's too fat -- taking too many responsibilities.
 
-Yes, I lied. It has technical reasons of having these constraints. Due to the usage of C++ template (we have tried our best to reduce it) in our implementation, the compiling time and generated binary size will increase with the growth of values of these settings. If you choose *max_inheritance=5* and *max_vtbl_size=50*, the compiling time would be far slower than specifying them as 2 and 20.
+Yes, I lied. It has technical reasons of having these constraints. Due to the usage of C++ template (we have tried desperately to reduce it) in our implementation, the compiling time and generated binary size will increase with the growth of values of these settings. If you choose *max_inheritance=5* and *max_vtbl_size=50*, the compiling time would be far slower than specifying them as 2 and 20.
 
 ==3. Lifecycle Management==
 
