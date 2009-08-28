@@ -185,10 +185,14 @@ Here is an example:
 
 class TestGeneralTestFilter: public CxxTest::TestSuite
 {
-      MockObject<NameMatcher> fixtureMatcher;
       MockObject<NameMatcher> testcaseMatcher;
 
 public:
+
+     void tearDown()
+     {
+            testcaseMatcher.reset();    
+     }
 
      void test_should_delete_the_matcher_if_it_is_injected_as_composite_when_object_is_deleted()
      {
