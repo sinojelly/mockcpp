@@ -171,11 +171,14 @@ Non-public and virtual inheritance is not supported, because they are pretty tri
 
 ==3. Lifecycle Management==
 
-A big difference between C++ and other moderner language is that C++ developers have to manage the lifecycle of objects by themselves. Since mock objects are transparent for CUTs (Class Under Test), once a mock object is injected into a CUT, it might be performed deleting operation by the CUT in various design reasons.
+A big difference between C++ and other moderner language is that C++ developers have to manage the lifecycle of objects by themselves. Since an injected object is a mock object or a real object is transparent for CUTs (Class Under Test), a mock object might be performed deletion operation by the CUT in various design reasons.
 
 Therefore, a useful mock framework should support that a mock object is able to be deleted safely, and more: afterwards, the deleted mock object should still be able to verify whether the deletion acutally happened, since this operation is part of design, otherwise a memory leakage occurs.
 
-mockcpp support this in a easy way. If an injected mock object should be deleted by CUT, *willBeDeleted()* method of *MockObject* should be called before it's deleted by CUT. If it should not be deleted by CUT, *willKeepAlive()* should be invoked. And if the deletion is not concerned, you don't need to do anything. 
+mockcpp supports this in a easy way:
+  * If an injected mock object should be deleted by CUT, *willBeDeleted()* method of *MockObject* should be called before it's deleted by CUT;
+  * If it should not be deleted by CUT, *willKeepAlive()* should be invoked; and
+  * If the deletion is not concerned, you don't need to do anything. 
 
 *willBeDeleted()* and *willKeepAlive()* are used for the purpose of verfication. No matter they are called or not, the mock object could be deleted safely anyway.
 
@@ -189,6 +192,7 @@ class TestGeneralTestFilter: public CxxTest::TestSuite
 
 public:
 
+     
      void tearDown()
      {
             testcaseMatcher.reset();    
@@ -217,6 +221,29 @@ public:
 
             testcaseMatcher.verify();
      }
+
+     void test_should_be_able_to_tell_whether_a_test_case_matches_the pattern_hold_by_matcher()
+     {
+            GeneralTestFilter* filter = 
+                  new GeneralTestFilter(testcaseMatcher, false);
+
+            MockObject<TestCase> testcase0;
+            MockObject<TestCase> testcase1;
+
+            testcaseMatcher.METHOD(NameMatcher::matches)
+                   .stubs().with(eq((TestCaseInfoReader*)testcase0))
+                   .will(returnValue(false));
+
+            testcaseMatcher.METHOD(NameMatcher::matches)
+                   .stubs().with(eq((TestCaseInfoReader*)testcase1))
+                   .will(returnValue(true));
+
+            TS_ASSERT_FALSE(filter->matches(testcase0));
+            TS_ASSERT_TRUE(filter->matches(testcase1));
+
+            delete filter;
+     }
+
 };
 
 class GeneralTestFilter
