@@ -159,6 +159,12 @@ In this example, we used *defaults()* to specify the matched test case and unmat
 
 ==2. Multiple Inheritance ==
 
+In order to make mockcpp support multi-inheritance, you need to make sure the configure option *--disable-multi-inheritance* was not specified when you built mockcpp. Beside, you also need to be sure the interface you are trying to mock does not inherit from more than the N other interfaces, and the N was specified with the configure option *max_inheritance=N* at the building time. Currently, the default value is 2, and maximum allowed value is 5. If your interface inherits from more than 5, you should probablly reconsider your design, or you cannot mock it. The reason we chose this number was not technically,  but we think an interface inherits from many other interfaces implies *bad smell*. 
+
+
+
+Beside, if you want to mock a interface, you the interface you are able to mock cannot inherit from mo
+
 ==3. Lifecycle Management==
 
 ==4. Resource Check Point==
