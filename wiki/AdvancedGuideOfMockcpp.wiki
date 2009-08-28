@@ -18,7 +18,7 @@ public:
       {
             filter = new TestFilter("*TestFixture", "testcase?");
 
-            testcase.METHOD(TestCaseInfoReader::getName)
+            testcase.METHOD(TestCaseInfoReader::getCaseName)
                             .defaults().will(returnValue("testcase1"));
 
             testcase.METHOD(TestCaseInfoReader::getFixtureName)
@@ -47,7 +47,7 @@ public:
 
      void test_should_tell_unmatched_if_testcase_name_does_not_match()
      {
-          fixture.METHOD(TestFixtureInfoReader::getName)
+          fixture.METHOD(TestFixtureInfoReader::getCaseName)
              .stubs().will(returnValue("testcase10"));
 
           TS_ASSERT_FALSE(filter->matches(testcase));
@@ -56,5 +56,6 @@ public:
 
 }}}
 
+In this example, the default behaviors of method getFixtureName() and getCaseName() are return matched names. So the first test case is to test the happy path. Pretty simple, you only need to write one assertion to test the class *TestFilter*. The latter 2 test cases test the unmatched cases, so  stubs() is used in each test case to "hide" the default behavior to do the exceptional test.
 
 Furthermore, for one method, you can specify more than one default behavior, distinguished by _*with()*_ selectors. When falling in default category, mockcpp will try to select a matched default behavior. If multiple default behaviors match your invocation, the first one will be selected. In current implementation, the first matched one defined in a test is the one is chosen by mockcpp, but this might change in later version, so don't make your tests rely on this, instead, you should make your default specification distinguiable.
