@@ -165,6 +165,43 @@ In this example, we used *defaults()* to specify the matched test case and unmat
 
 ==5. Dynamic Cast ==
 
+mockcpp supports *dynamic_cast* quite well. The behavior of dynamic cast a mock object is exactly same as normal C++ object. 
+
+{{{
+
+struct BillingObject
+{
+      virtual Type getType() const = 0; 
+
+      virtual ~BillingObject() {}
+};
+
+struct Call : public BillingObject
+{
+      virtual const std::string& getPhoneNumberOfOriginator() const = 0;
+      virtual const std::string& getPhoneNumberOfTerminator() const = 0;
+
+      virtual ~ShortMessage() {}
+};
+
+struct InternetAccess : public BillingObject
+{
+      virtual const std::string& getPhoneNumber() const = 0;
+      virtual unsigned int getDurationInSeconds() const = 0;
+      virtual unsigned int getTransferSize() const = 0;
+
+      virtual ~InternetAccess() {}
+};
+
+class BillingManager
+{
+public:
+
+      void billing(const BillingObject* billingObject);
+
+// Other methods and attributes
+};
+
+}}} 
+
 ==6. Object Assignment==
-
-
