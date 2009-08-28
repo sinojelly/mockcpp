@@ -271,13 +271,10 @@ private:
 
 }}}
 
-There are 3 test cases in this example, the first one tests the case that the injected matcher should be deleted because it was injected as a composite; the second one tests the contrary; and the last one is used to test other aspect of the CUT, it doesn't care about the lifecycle of injected matcher.
+There are 3 test cases in this example, the first one tests the case that the injected matcher should be deleted with the destruction of CUT object, because it was injected as composite; the second one tests the contrary; and the last one is used to test other aspect of the CUT, it doesn't care about the lifecycle of injected matcher.
 
 
-
-==4. Resource Check Point==
-
-==5. Dynamic Cast ==
+==4. Dynamic Cast ==
 
 mockcpp supports *dynamic_cast* quite well. The behavior of *dynamic_cast*-ing a mock object is exactly same as *dynamic cast*-ing a normal C++ object. 
 
@@ -446,4 +443,5 @@ In previous example, according the implmentation of the method _*billing()*_, th
      }
 }}}
 
+==5. Resource Check Point==
 ==6. Object Assignment==
