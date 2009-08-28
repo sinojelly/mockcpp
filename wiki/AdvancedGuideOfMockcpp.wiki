@@ -115,7 +115,7 @@ public:
            delete runner;
      }
 
-     void test_should_run_matched_test_case()
+     void test_should_run_matched_test_cases()
      {
            testcase.METHOD(TestCase::run).expects(once());
 
@@ -124,7 +124,7 @@ public:
            testcase.verify();
      }
 
-     void test_should_not_run_unmatched_test_case()
+     void test_should_not_run_unmatched_test_cases()
      {
           MockObject<TestCase> unmatchedTestCase;
          
@@ -157,5 +157,14 @@ public:
 
 In this example, we used *defaults()* to specify the matched test case and unmatched test cases. It helps us to focus on the aspects which we intent to test in later test cases.
 
+==2. Multiple Inheritance ==
 
-==2. Lifecycle Management==
+==3. Lifecycle Management==
+
+==4. Resource Check Point==
+
+==5. Dynamic Cast ==
+
+==6. Object Assignment==
+
+
