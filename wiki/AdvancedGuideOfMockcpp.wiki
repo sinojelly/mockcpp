@@ -155,7 +155,7 @@ public:
 
 }}}
 
-In this example, we used *defaults()* to specify the matched test case and unmatched test cases. It helps us to focus on the aspects which we intent to test in later test cases.
+In this example, we used _*defaults()*_ to specify the matched test case and unmatched test cases. It helps us to focus on the aspects which we intent to test in later test cases.
 
 ==2. Multiple Inheritance ==
 
@@ -171,7 +171,7 @@ Yes, I lied. It has technical reasons of having these constraints. Due to the us
 
 ==5. Dynamic Cast ==
 
-mockcpp supports *dynamic_cast* quite well. The behavior of dynamic cast a mock object is exactly same as normal C++ object. 
+mockcpp supports *dynamic_cast* quite well. The behavior of *dynamic_cast*ing a mock object is exactly same as *dynamic cast*ing a normal C++ object. 
 
 Take an example:
 
@@ -246,7 +246,7 @@ public:
 
 }}} 
 
-In this design, *billing()* always accepts an object of type BillingObject, but in its implementation, in order to generate bill correctly, it will be downcast to a concrete type according to the return value of method *getType()* .
+In this design, _*billing()*_ always accepts an object of type *`BillingObject`*, but in its implementation, in order to generate bill correctly, it will be downcast to a concrete type according to the return value of method _*getType()*_.
 
 Here is the test fixture for testing BillManager:
 
@@ -319,9 +319,9 @@ void BillingManager::billing(const BillingObject* billingObject, Bill& bill)
 
 }}}
 
-Because the interface you mocked was *Call*, the parameter "pointer to billObject" of *billing()* could be successfully downcast to pointer to *Call*. If you specify the mocked interface as any other type, the downcast operation will return 0. 
+Because the interface you mocked was *Call*, the parameter "pointer to billingObject" of _*billing()*_ could be successfully downcast to pointer to *Call*. If you specify the mocked interface as any other type, the downcast operation will return 0. 
 
-In previous example, according the implmentation of the method *billing()*, the following test case will pass.
+In previous example, according the implmentation of the method _*billing()*_, the following test case will pass.
 
 {{{
      void test_should_throw_an_Error_exception_if_the_object_type_mismatch()
