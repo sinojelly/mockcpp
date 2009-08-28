@@ -311,7 +311,7 @@ void BillingManager::billing(const BillingObject* billingObject, Bill& bill)
 
 Because the interface you mocked was *Call*, the parameter "pointer to billObject" of *billing()* could be successfully downcast to pointer to *Call*. If you specify the mocked interface as any other type, the downcast operation will return 0. 
 
-In previous example, according the implmentation of "billing()", this test case will pass.
+In previous example, according the implmentation of the method *billing()*, the following test case will pass.
 
 {{{
      void test_should_throw_an_Error_exception_if_the_object_type_mismatch()
