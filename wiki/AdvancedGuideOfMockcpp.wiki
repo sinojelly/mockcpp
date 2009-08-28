@@ -244,14 +244,7 @@ Here is the test fixture for testing BillManager:
 class TestBillingManager : public CxxTest::TestSuite
 {
 public:
-      void setUp()
-      {
-      }
-
-     void tearDown()
-     {
-     }
-
+ 
      void test_should_be_able_to_generate_bill_of_a_CALL_type_billing_object()
      {
            BillingManager manager;
@@ -284,4 +277,31 @@ public:
 };
 
 }}}
+
+The CUT code:
+
+{{{
+
+void BillingManager::billing(const BillingObject* billingObject, Bill& bill)
+{
+      if(billingObject->getType() == BillingObject::CALL)
+      {
+            Call* call = dynamic_cast<Call*>(billingObject);
+            // "call" should not be 0
+
+            bill.type = call->getType();
+            bill.originator = call->getPhoneNumberOfOriginator();
+            bill.terminator = call->getPhoneNumberOfTerminator();
+            bill.duration = call->getDurationInSeconds();
+            bill.size = 0;
+            unsigned int minutes = (bill.duration/60 + (bill.duration%60>0?1:0));
+            bill.originatorFee  = minutes* 40;
+            bill.terminatorFee  = minutes* 10;
+            return;
+      }
+      // Other code
+};
+
+}}}
+
 ==6. Object Assignment==
