@@ -155,4 +155,7 @@ public:
 
 }}}
 
+In this example, we used *defaults()* to specify the matched test case and unmatched test cases. It helps us to focus on the aspects we intent to test in later test cases.
+
+
 ==2. Lifecycle Management==
