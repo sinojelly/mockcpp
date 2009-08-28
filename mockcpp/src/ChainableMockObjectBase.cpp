@@ -45,14 +45,24 @@ ChainableMockObjectBaseImpl(const std::string& name)
 //////////////////////////////////////////////////////////////
 ChainableMockObjectBase::
 ChainableMockObjectBase(const std::string& name)
-	: This(new ChainableMockObjectBaseImpl(name))
+	: shared(false), This(new ChainableMockObjectBaseImpl(name))
+{
+}
+
+//////////////////////////////////////////////////////////////
+ChainableMockObjectBase::
+ChainableMockObjectBase(const ChainableMockObjectBase& obj)
+   : shared(true), This(obj.This)
 {
 }
 
 //////////////////////////////////////////////////////////////
 ChainableMockObjectBase::~ChainableMockObjectBase()
 {
-	delete This;
+    if(!shared)
+    {
+	    delete This;
+    }
 }
 
 //////////////////////////////////////////////////////////////

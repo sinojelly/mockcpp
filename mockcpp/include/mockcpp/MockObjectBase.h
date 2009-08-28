@@ -31,14 +31,18 @@ struct MockObjectBaseImpl;
 
 struct MockObjectBase : public ChainableMockObjectBase
 {
-   MockObjectBase( const std::string& objName
-                 , unsigned int numberOfVptr
-                 , const std::type_info& info);
-
    ~MockObjectBase();
 
    virtual void reset();
    virtual void verify();
+
+protected:
+
+   MockObjectBase( const std::string& objName
+                 , unsigned int numberOfVptr
+                 , const std::type_info& info);
+
+   MockObjectBase(const MockObjectBase&);
 
 protected:
 
@@ -52,6 +56,10 @@ protected:
 
    void expectsBeingDeleted();
    void expectsKeepAlive();
+
+private:
+
+   MockObjectBase& operator=(const MockObjectBase&);
 
 private:
 
