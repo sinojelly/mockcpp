@@ -167,10 +167,19 @@ In this example, we used *defaults()* to specify the matched test case and unmat
 
 mockcpp supports *dynamic_cast* quite well. The behavior of dynamic cast a mock object is exactly same as normal C++ object. 
 
+Take an example:
+
 {{{
 
 struct BillingObject
 {
+      enum Type
+      {
+          UNKNOWN = 0;
+          CALL,
+          SMS
+      };
+
       virtual Type getType() const = 0; 
 
       virtual ~BillingObject() {}
@@ -180,6 +189,7 @@ struct Call : public BillingObject
 {
       virtual const std::string& getPhoneNumberOfOriginator() const = 0;
       virtual const std::string& getPhoneNumberOfTerminator() const = 0;
+      virtual unsigned int getDurationInSeconds() const = 0;
 
       virtual ~ShortMessage() {}
 };
@@ -193,15 +203,85 @@ struct InternetAccess : public BillingObject
       virtual ~InternetAccess() {}
 };
 
+struct Bill
+{
+     unsigned char type;
+     std::string originator;
+     unsigned int originatorFee;
+     std::string terminator;
+     unsigned int terminatorFee;
+     unsigned int duration;
+     unsigned int size;
+
+     Bill() 
+           : type(BillingObject::UNKOWN)
+           , originator("")
+           , originatorFee(0)
+           , teminator("")
+           , terminatorFee(0)
+           , duration(0)
+           , size(0)
+     {}
+};
+
 class BillingManager
 {
 public:
 
-      void billing(const BillingObject* billingObject);
+      void billing(const BillingObject* billingObject, Bill& bill);
 
 // Other methods and attributes
 };
 
 }}} 
 
+In this design, *billing()* always accepts an object of type BillingObject, but in its implementation, in order to generate bill correctly, it will be downcast to a concrete type according to the return value of method *getType()* .
+
+Here is the test fixture for testing BillManager:
+
+{{{
+
+class TestBillingManager : public CxxTest::TestSuite
+{
+public:
+      void setUp()
+      {
+      }
+
+     void tearDown()
+     {
+     }
+
+     void test_should_be_able_to_generate_bill_of_a_CALL_type_billing_object()
+     {
+           BillingManager manager;
+           Bill bill;
+
+           MockObject<Call> billingObject;
+
+           billingObject.METHOD(Call::getType)
+                     .stubs().will(returnValue(BillingObject::CALL));
+
+           billingObject.METHOD(Call::getPhoneNumberOfOriginator)
+                     .stubs().will(returnValue(std::string("123456789")));
+
+           billingObject.METHOD(Call::getPhoneNumberOfTerminator)
+                     .stubs().will(returnValue(std::string("987654321")));
+
+           billingObject.METHOD(Call::getDurationInSeconds)
+                     .stubs().will(returnValue((unsigned int)78));
+           
+           manager.billing(billingObject, bill);
+
+           TS_ASSERT_EQUALS(BillingObject::CALL, bill.type);
+           TS_ASSERT_EQUALS("123456789", bill.originator);      
+           TS_ASSERT_EQUALS("987654321", bill.terminator);      
+           TS_ASSERT_EQUALS(78, bill.duration); 
+           TS_ASSERT_EQUALS(0, bill.size); 
+           TS_ASSERT_EQUALS(80, bill.originatorFee); 
+           TS_ASSERT_EQUALS(20, bill.terminatorFee); 
+     }
+};
+
+}}}
 ==6. Object Assignment==
