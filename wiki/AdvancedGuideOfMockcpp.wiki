@@ -169,8 +169,11 @@ Yes, I lied. It has technical reasons of having these constraints. Due to the us
 Non-public and virtual inheritance is not supported, because they are pretty tricky and we havn't seen any opportunities of using them in our limited expierence. So we simply choose not to support them until they are proved usefully someday.
 
 
-
 ==3. Lifecycle Management==
+
+A big difference between C++ and other moderner language is that C++ developers have to manage the lifecycle of objects by themselves. Since mock objects are transparent for CUTs (Class Under Test), once a mock object is injected into a CUT, it might be performed deleting operation by the CUT in various design reasons.
+
+Therefore, a useful mock framework should support that a mock object is able to be deleted safely. 
 
 ==4. Resource Check Point==
 
