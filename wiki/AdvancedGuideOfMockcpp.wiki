@@ -2,6 +2,8 @@
 
 Default behavior is defined by using _*defaults()*_, instead of _*expects()/stubs()*_. Relations between _*defaults()*_ and _*expects()/stubs()*_ could be thought as relations between *default* and *case* in C/C++ *switch* sentences. If all mock specifications of a method of a mock object specified with _*expects()/stubs()*_ don't match one of your invocations to the method in question, the specification defined with _*defaults()*_ (if have any) will be used to perform the return behavior. 
 
+This is a very useful feature. It helps you write your tests in a neater way.  
+
 {{{
 class TestGeneralTestFilter: public CxxTest::TestSuite
 {
@@ -9,9 +11,13 @@ private:
 
       MockObject<TestFixtureInfoReader> fixture;
 
+      GeneralTestFilter* filter;
+
 public:
       void setUp()
       {
+            filter = new GeneralTestFilter("*TestFixture");
+
             fixture.METHOD(TestFixtureInfoReader::getName)
              .defaults().will(returnValue("FooTestFixture"));
       }
@@ -19,17 +25,25 @@ public:
      void tearDown()
      {
            fixture.reset();
+
+           delete filter;
      }
 
-     void test_should_be_able_to_tell_whether_a_given_fixture_mathes_the_specified_pattern()
+     void test_should_be_able_to_recoginize_matched_fixture()
      {
-          GeneralTestFilter filter("*Fixture");
-          TS_ASSERT_TRUE(filter.matches(fixture));
+          TS_ASSERT_TRUE(filter->matches(fixture));
+     }
+
+     void test_should_be_able_to_recoginize_unmatched_fixture()
+     {
+          fixture.METHOD(TestFixtureInfoReader::getName)
+             .stubs().will(returnValue("FooFixture"));
+
+          TS_ASSERT_FALSE(filter->matches(fixture));
      }
 };
 
 }}}
 
-This is a very useful feature. It helps you write your tests in a neater way. 
 
 Furthermore, for one method, you can specify more than one default behavior, distinguished by _*with()*_ selectors. When falling in default category, mockcpp will try to select a matched default behavior. If multiple default behaviors match your invocation, the first one will be selected. In current implementation, the first matched one defined in a test is the one is chosen by mockcpp, but this might change in later version, so don't make your tests rely on this, instead, you should make your default specification distinguiable.
