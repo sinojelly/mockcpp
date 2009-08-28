@@ -273,6 +273,54 @@ private:
 
 There are 3 test cases in this example, the first one tests the case that the injected matcher should be deleted with the destruction of CUT object, because it was injected as composite; the second one tests the contrary; and the last one is used to test other aspect of the CUT, it doesn't care about the lifecycle of injected matcher.
 
+If an interface inherits from more than one other interfaces, and it's expected to be deleted by the injecting CUT, you should explicitly points out that the injected mock object might be used as other interfaces. Because the CUT might delete it as a pointer of any interfaces it inherits, and it's better to keep the implementation of CUT black. mockcpp has no way to deduce its inherited interface type unless you tell them to mockcpp, due to the lack of reflection of C++ language.
+
+Once again, this feature should only be used in the occassion of multi-inheritance, even if it does not harm at all in single-inheritance case.
+
+Here is an example:
+
+{{{
+
+struct Base0
+{
+    virtual void base00() = 0;
+    virtual ~Base0() {}
+};
+
+struct Base1
+{
+    virtual void base01() = 0;
+    virtual ~Base1() {}
+};
+
+struct Interface : public Base0, public Base1
+{
+   virtual void foo() = 0;
+   virtual ~Interface() {}
+};
+
+class TestBar : public CxxTest::TestSuite
+{
+public:
+
+    void test_should_do_something()
+    {
+          MockObject<Interface> iface;
+
+          Bar * bar = new Bar(iface);
+
+          iface.mightBeUsedAs<Base1>();
+
+          iface.shouldBeDeleted();
+
+          delete bar;
+
+          iface.verify();
+    }
+};
+
+}}}
+
 
 ==4. Dynamic Cast ==
 
