@@ -64,7 +64,7 @@ public:
 
 }}}
 
-In this example, the default behaviors of method getFixtureName() and getCaseName() are return matched names. So the first test case is to test the happy path. Pretty simple, you only need to write one assertion to test the class *`TestFilter`*. The latter 2 test cases test the unmatched cases, so in each test case the *stubs()* is used to "HIDE" the default behavior in order to do exceptional tests.
+In this example, the default behaviors of method *_getFixtureName()_* and *_getCaseName()_* are return matched names. So the first test case is to test the happy path. Pretty simple, you only need to write one assertion to test the class *`TestFilter`*. The latter 2 test cases test the unmatched cases, so in each test case the _*stubs()*_ is used to "HIDE" the default behavior in order to do exceptional tests.
 
 Furthermore, for one method, you can specify more than one default behavior, distinguished by _*with()*_ selectors. When falling in default category, mockcpp will try to select a matched default behavior. If multiple default behaviors match your invocation, the first one will be selected. In current implementation, the first matched one defined in a test is the one is chosen by mockcpp, but this might change in later version, so don't make your tests rely on this, instead, you should make your default specification distinguiable.
 
