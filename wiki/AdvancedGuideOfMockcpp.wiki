@@ -492,3 +492,71 @@ In previous example, according the implmentation of the method _*billing()*_, th
 }}}
 
 ==5. Object Assignment==
+
+The assignment operation of a mock object is not allowed in mockcpp (MockOject& operator=(const MockObject&) is private). It is basically valueless to allow this operation, and it will bring in some tricky issues and the complexity of implementation.
+
+However, copy constructor is allowed, which means this operation is valid:
+
+{{{
+
+MockObject<Foo> foo1;
+MockObject<Foo> foo2 = foo1;
+
+}}}
+
+But this is not:
+
+{{{
+
+MockObject<Foo> foo1, foo2;
+foo2 = foo1;
+
+}}}
+
+Before we explain the reason, I'd like to take a few minutes to introduce the difference between the assignment operation and the copy constructor, in case you are not familiar with it.
+
+For basic data types of C++, these two kinds of operations are basically identical, which means the effect of the following two ways are pretty much the same:
+
+{{{
+   int a = 10;
+}}}
+
+and 
+
+{{{
+int a;
+a = 10;
+}}}
+
+However, for the abstract types of C++, the difference is bigger. In the example:
+
+{{{
+Foo foo1;
+Foo foo2 = foo1;
+}}}
+
+The object _*foo1*_ is constructed with the default constructor _*Foo()*_. The object _*foo2*_ is constructed with the copy constructor _Foo(const Foo&)_.
+
+However, in this example:
+{{{
+Foo foo1, foo2;
+foo2 = foo1;
+}}}
+
+The object _*foo2*_ is constructed with the default constructor and then it is performed assignment operation (Foo& operator=(const Foo&) is invoked).
+
+Actually the implications of these two ways are utterly difference, the first way means object _*foo2*_ is initialized according to the value of the object _*foo1*_. The latter, however, means the object _*foo2*_ is changed to the value of _*foo1*_.
+
+Back to the issue of mockcpp, the disability of the assignment operation of a mock object implies a fact: You can construct it both with default constructor and copy constructor. However, once a mock object is constructed, it's not allowed to be changed to another one any longer.  
+
+Besides, you must be aware of that, a mock object constructed with the default constructor is a freshly new object, but ones constructed with the copy constructor are merely references to the original mock object. For example:
+
+{{{
+MockObject<Foo> foo1;
+MockObject<Foo> foo2 = foo1;
+foo2.METHOD(Foo::foo).stubs().will(returnValue(10));
+}}}
+
+When you set a specification of the method _*foo()*_ of object _*foo2*_, you are actually setting the specification to the method _*foo()*_ of object _*foo1*_.
+
+Note that, the usage of constructing a mock object with copy constructor is not encouraged, mockcpp does not promise the safety of copy-constructed mock objects (no reference count is implemented), which means, once the referenced mock object is deleted, accessing the referencing mock object might cause crash.  
