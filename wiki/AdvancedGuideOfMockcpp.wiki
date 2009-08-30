@@ -543,7 +543,7 @@ Foo foo1, foo2;
 foo2 = foo1;
 }}}
 
-The object _*foo2*_ is constructed with the default constructor and then it is performed assignment operation (Foo& operator=(const Foo&) is invoked).
+The object _*foo2*_ is firstly constructed with the default constructor and then it's performed assignment operation (Foo& operator=(const Foo&) is invoked) in the second sentence.
 
 Actually the implications of these two ways are utterly difference, the first way means object _*foo2*_ is initialized according to the value of the object _*foo1*_. The latter, however, means the object _*foo2*_ is changed to the value of _*foo1*_.
 
