@@ -67,9 +67,9 @@ public:
 
 }}}
 
-In this example, the default behaviors of method *_getFixtureName()_* and *_getCaseName()_* are return matched names. So the first test case is to test the happy path. Pretty simple, you only need to write one assertion to test the class *`TestFilter`*. The latter 2 test cases test the unmatched cases, so in each test case the _*stubs()*_ is used to "HIDE" the default behavior in order to do exceptional tests.
+In this example, the default behaviors of methods *_getFixtureName()_* and *_getCaseName()_* are return matched names. So the first test case is to test the happy path, which is pretty simple, you only need to write one assertion to test the class *`TestFilter`*. The latter 2 test cases test the unmatched cases, so in each test case the _*stubs()*_ is used to "HIDE" the default behavior in order to do exceptional tests.
 
-Furthermore, for one method, you can specify more than one default behavior, distinguished by _*with()*_ selectors. When falling in default category, mockcpp will try to select a matched default behavior. If multiple default behaviors match your invocation, the first one will be selected. In current implementation, the first matched one defined in a test is the one is chosen by mockcpp, but this might change in later version, so don't make your tests rely on this, instead, you should make your default specification distinguiable.
+Furthermore, for one method, you can specify more than one default behavior, distinguished by the _*with()*_ selectors. When falling in default category, mockcpp will try to select a matched default behavior. If multiple default behaviors match your invocation, the first one will be selected. In current implementation, the first matched one defined in a test would be the one is chosen by mockcpp, but this might change in later version, so don't make your tests rely on this, instead, you should make your default specification distinguiable.
 
 {{{
 
@@ -158,7 +158,7 @@ public:
 
 }}}
 
-In this example, we used _*defaults()*_ to specify the matched test case and unmatched test cases. It helps us to focus on the aspects which we intent to test in later test cases.
+In this example, we used the _*defaults()*_ to specify the matched test case and unmatched test cases, which helps us to focus on the aspects which we intent to test in later test cases.
 
 =Multiple Inheritance=
 
@@ -173,7 +173,7 @@ Non-public and virtual inheritance is not supported, because they are pretty tri
 
 =Lifecycle Management=
 
-A big difference between C++ and other moderner language is that C++ developers have to manage the lifecycle of objects by themselves. Since an injected object is a mock object or a real object is transparent for CUTs (Class Under Test), a mock object might be performed deletion operation by the CUT in various design reasons.
+A big difference between C++ and other moderner language is that C++ developers have to manage the lifecycle of objects on their own. The fact of an injected object being a real object or just a mocked one is totally transparent for CUTs (Class Under Test), so a mock object might be performed deletion operation by the CUT in various design reasons.
 
 Therefore, a useful mock framework should support that a mock object is able to be deleted safely, and more: afterwards, the deleted mock object should still be able to verify whether the deletion acutally happened, since this operation is part of design, otherwise a memory leakage occurs.
 
