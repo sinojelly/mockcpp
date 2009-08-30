@@ -277,7 +277,7 @@ There are 3 test cases in this example, the first one tests the case that the in
 
 If an interface inherits from more than one other interfaces, and it's expected to be deleted by the injecting CUT, you should explicitly points out that the injected mock object might be used as other interfaces. Because the CUT might delete it as a pointer of any interfaces it inherits, and it's better to keep the implementation of CUT black. mockcpp has no way to deduce its inherited interface type unless you tell them to mockcpp, due to the lack of reflection of C++ language.
 
-Once again, this feature should only be used in the occassion of multi-inheritance, even if it does not harm at all in single-inheritance case.
+Once again, this feature should only be used in the occassion of multi-inheritance, although it does not harm at all in single-inheritance case.
 
 Here is an example:
 
