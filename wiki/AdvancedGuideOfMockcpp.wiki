@@ -495,7 +495,7 @@ In previous example, according the implmentation of the method _*billing()*_, th
 
 =Object Assignment=
 
-The assignment operation of a mock object is not allowed in mockcpp (MockOject& operator=(const MockObject&) is private). It is basically valueless to allow this operation, and it will bring in some tricky issues and the complexity of implementation.
+The assignment operation of a mock object is not allowed in mockcpp (the method *`MockOject& operator=(const MockObject&)`* is private). It is basically valueless to allow this operation, and it will bring in some tricky issues and the complexity of implementation.
 
 However, copy constructor is allowed, which means this operation is valid:
 
@@ -537,7 +537,7 @@ Foo foo1;
 Foo foo2 = foo1;
 }}}
 
-The object _*foo1*_ is constructed with the default constructor _*Foo()*_. The object _*foo2*_ is constructed with the copy constructor _Foo(const Foo&)_.
+The object _*foo1*_ is constructed with the default constructor _*Foo()*_. The object _*foo2*_ is constructed with the copy constructor _*Foo(const Foo&)*_.
 
 However, in this example:
 {{{
@@ -545,7 +545,7 @@ Foo foo1, foo2;
 foo2 = foo1;
 }}}
 
-The object _*foo2*_ is firstly constructed with the default constructor and then it's performed assignment operation (Foo& operator=(const Foo&) is invoked) in the second sentence.
+The object _*foo2*_ is firstly constructed with the default constructor and then it's performed assignment operation (the method `Foo& operator=(const Foo&)` is invoked) in the second sentence.
 
 Actually the implications of these two ways are utterly difference, the first way means object _*foo2*_ is initialized according to the value of the object _*foo1*_. The latter, however, means the object _*foo2*_ is changed to the value of _*foo1*_.
 
