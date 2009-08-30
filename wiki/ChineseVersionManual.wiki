@@ -1,5 +1,5 @@
-#summary User Manual In Chinese
 #labels Phase-Design,Manual,Chinese
+<wiki:toc max_depth="2" />
 
 =1. 背景=
 
