@@ -518,7 +518,7 @@ Before we explain the reason, I'd like to take a few minutes to introduce the di
 For basic data types of C++, these two kinds of operations are basically identical, which means the effect of the following two ways are pretty much the same:
 
 {{{
-   int a = 10;
+int a = 10;
 }}}
 
 and 
