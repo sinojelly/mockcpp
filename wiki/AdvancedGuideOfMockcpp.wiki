@@ -403,7 +403,7 @@ public:
 
 In this design, _*billing()*_ always accepts an object of type *`BillingObject`*. However, in its implementation, in order to generate bills correctly, *billingObject* will be downcast to a concrete type according to the return value of method _*getType()*_.
 
-Here is the test fixture for testing BillManager:
+Here is the test fixture for testing *BillManager*:
 
 {{{
 
