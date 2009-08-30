@@ -1,4 +1,6 @@
 #labels Phase-Design
+<wiki:toc max_depth="1" />
+
 ==1. Default behavior==
 
 Default behavior is defined by using _*defaults()*_, instead of _*expects()/stubs()*_. Relations between _*defaults()*_ and _*expects()/stubs()*_ could be thought as relations between *default* and *case* in C/C++ *switch* sentences. If all mock specifications of a method of a mock object specified with _*expects()/stubs()*_ don't match one of your invocations to the method in question, the specification defined with _*defaults()*_ (if have any) will be used to perform the return behavior. 
@@ -513,7 +515,7 @@ foo2 = foo1;
 
 }}}
 
-Before we explain the reason, I'd like to take a few minutes to introduce the difference between the assignment operation and the copy constructor, in case you are not familiar with it.
+Before we explain the reason why one is allowed but another is not, I'd like to take a few minutes to introduce the difference between the assignment operation and the copy constructor, in case you are not familiar with it.
 
 For basic data types of C++, these two kinds of operations are basically identical, which means the effect of the following two ways are pretty much the same:
 
