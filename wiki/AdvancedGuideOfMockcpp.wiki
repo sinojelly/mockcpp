@@ -547,7 +547,7 @@ foo2 = foo1;
 
 The object _*foo2*_ is firstly constructed with the default constructor and then it's performed assignment operation (the method `Foo& operator=(const Foo&)` is invoked) in the second sentence.
 
-Actually the implications of these two ways are utterly difference, the first way means object _*foo2*_ is initialized according to the value of the object _*foo1*_. The latter, however, means the object _*foo2*_ is changed to the value of _*foo1*_.
+The implications of these two ways are utterly difference, the first way means object _*foo2*_ is initialized according to the value of the object _*foo1*_. The latter, however, means the object _*foo2*_ is changed to the value of _*foo1*_.
 
 Back to the issue of mockcpp, the disability of the assignment operation of a mock object implies a fact: You can construct it both with default constructor and copy constructor. However, once a mock object is constructed, it's not allowed to be changed to another one any longer.  
 
