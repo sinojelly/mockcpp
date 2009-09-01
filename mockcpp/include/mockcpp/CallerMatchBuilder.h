@@ -27,7 +27,7 @@
 
 MOCKCPP_NS_START
 
-class InvocationMocker;
+struct InvocationMocker;
 
 template <class Builder = DummyBuilder >
 class CallerMatchBuilder : public Builder

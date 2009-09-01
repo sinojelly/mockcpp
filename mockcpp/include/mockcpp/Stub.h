@@ -27,9 +27,8 @@ MOCKCPP_NS_START
 class Any;
 class Invocation;
 
-class Stub : public SelfDescribe
+struct Stub : public SelfDescribe
 {
-public:
     virtual ~Stub() {}
     virtual bool isCompleted() const = 0;
     virtual Any& invoke(const Invocation& inv) = 0;

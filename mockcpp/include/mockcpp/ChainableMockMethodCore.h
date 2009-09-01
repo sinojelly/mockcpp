@@ -28,13 +28,13 @@
 
 MOCKCPP_NS_START
 
-class Stub;
+struct Stub;
 class ChainableMockMethodCoreImpl;
 class SelfDescribe;
 class InvokedRecorder;
-class InvocationMockerNamespace;
+struct InvocationMockerNamespace;
 
-class ChainableMockMethodCore
+struct ChainableMockMethodCore
       : public Method,
 		  public InvocationMockerContainer
 {

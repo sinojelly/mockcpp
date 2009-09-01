@@ -26,7 +26,7 @@
 MOCKCPP_NS_START
 
 struct IndexInvokableGetter;
-class VirtualTableImpl;
+struct VirtualTableImpl;
 
 struct VirtualTable
 {

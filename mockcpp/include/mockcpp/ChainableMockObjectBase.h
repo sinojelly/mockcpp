@@ -29,7 +29,7 @@
 MOCKCPP_NS_START
 
 class ChainableMockObjectBaseImpl;
-class InvocationMocker;
+struct InvocationMocker;
 
 
 class ChainableMockObjectBase 

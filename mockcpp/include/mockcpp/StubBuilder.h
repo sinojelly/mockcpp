@@ -24,8 +24,8 @@
 
 MOCKCPP_NS_START
 
-class InvocationMocker;
-class Stub;
+struct InvocationMocker;
+struct Stub;
 
 template <class Builder = DummyBuilder >
 class StubBuilder : public Builder

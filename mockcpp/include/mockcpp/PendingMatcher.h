@@ -28,8 +28,8 @@ MOCKCPP_NS_START
 
 class Invocation;
 class OrderingMatcher;
-class InvocationMockerNamespace;
-class InvocationMocker;
+struct InvocationMockerNamespace;
+struct InvocationMocker;
 
 class PendingMatcher : public Matcher
 {

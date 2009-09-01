@@ -29,8 +29,8 @@
 
 MOCKCPP_NS_START
 
-class ChainableMockObjectImpl;
-class Invokable;
+struct ChainableMockObjectImpl;
+struct Invokable;
 
 
 class ChainableMockObject 

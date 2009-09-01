@@ -24,7 +24,7 @@
 
 MOCKCPP_NS_START
 
-class InvocationMocker;
+struct InvocationMocker;
 
 class OrderingMatcher : public Matcher
 {
