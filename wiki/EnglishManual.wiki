@@ -27,9 +27,7 @@ Actions play important roles in mocking framework and are the most fundamental v
 *Types of Actions*
 
 Returning a value: {{{returnValue(value)}}}
-
 Returning more than one values: {{{returnObjectList(o1, o2, ...)}}}
-
 Throwing an exception: {{{throws(exception)}}}
 
 Ignoring return value: {{{ignoreReturnValue()}}}
