@@ -26,7 +26,7 @@
 
 MOCKCPP_NS_START
 
-class InvocationMocker;
+struct InvocationMocker;
 class Invocation;
 
 class BeforeMatcher : public OrderingMatcher

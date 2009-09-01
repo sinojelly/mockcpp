@@ -25,8 +25,8 @@
 
 MOCKCPP_NS_START
 
-class InvocationMockerNamespace;
-class InvocationMocker;
+struct InvocationMockerNamespace;
+struct InvocationMocker;
 
 template <class Builder = DummyBuilder>
 class AfterMatchBuilder : public Builder

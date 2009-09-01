@@ -26,7 +26,7 @@
 
 MOCKCPP_NS_START
 
-class Stub;
+struct Stub;
 class InvocationImpl;
 
 class Invocation

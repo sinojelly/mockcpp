@@ -25,7 +25,7 @@
 
 MOCKCPP_NS_START
 
-class InvocationMocker;
+struct InvocationMocker;
 
 struct InvocationMockerContainer
 {

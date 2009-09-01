@@ -75,31 +75,32 @@ namespace
 void
 VirtualTableImpl::validateVptr(void** pVptr)
 {
-   MOCKCPP_ASSERT_TRUE_MESSAGE(
-     PACKAGE " internal error(1018). please report this bug to "
-             PACKAGE_BUGREPORT ".",
-
-     pVptr == fakeObject->vptr);
+   if(pVptr != fakeObject->vptr)
+   {
+      //MOCKCPP_FAIL( PACKAGE " internal error(1018). please report this bug to "
+      //       PACKAGE_BUGREPORT ".");
+   }
 }
 /////////////////////////////////////////////////////////////////
 void
 VirtualTableImpl::validateNumberOfVptr()
 {
-   oss_t oss;
+   if(numberOfVptr > MOCKCPP_MAX_INHERITANCE)
+   {
+      oss_t oss;
 
-   oss << "Seems that the interface you are trying to mock "
-       << "inherites from too many base classes (" 
-       << numberOfVptr 
-       << "), or it's not a pure virtual class. "
-       << "Here are some hints for you: \n"
-       << "1. " PACKAGE " only supports mocking pure virtual class; \n"
-       << "2. you can change the MOCKCPP_MAX_INHERITANCE setting to "
-          "maximun 7, then rebuild " PACKAGE "; \n"
-       << "3. you can refine your design to make it simpler.";
+      oss << "Seems that the interface you are trying to mock "
+          << "inherites from too many base classes (" 
+          << numberOfVptr 
+          << "), or it's not a pure virtual class. "
+          << "Here are some hints for you: \n"
+          << "1. " PACKAGE " only supports mocking pure virtual class; \n"
+          << "2. you can change the MOCKCPP_MAX_INHERITANCE setting to "
+             "maximun 7, then rebuild " PACKAGE "; \n"
+          << "3. you can refine your design to make it simpler.";
 
-   MOCKCPP_ASSERT_TRUE_MESSAGE(
-      oss.str(), 
-      numberOfVptr <= MOCKCPP_MAX_INHERITANCE);
+      MOCKCPP_FAIL(oss.str());
+   }
 }
 /////////////////////////////////////////////////////////////////
 void
@@ -125,9 +126,12 @@ VirtualTableImpl::validateIndexOfVtbl(unsigned int index)
 void
 VirtualTableImpl::validateIndexOfVptr(unsigned int index)
 {
-   MOCKCPP_ASSERT_TRUE_MESSAGE(
+   if(index >= numberOfVptr)
+   {
+      MOCKCPP_FAIL(
       PACKAGE " internal error. please report it to " PACKAGE_BUGREPORT ".",
-      index < numberOfVptr);
+      );
+   }
 }
 
 /////////////////////////////////////////////////////////////////

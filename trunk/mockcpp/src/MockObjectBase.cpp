@@ -60,8 +60,9 @@ MockObjectBaseImpl::
 MockObjectBaseImpl( unsigned int numberOfVptr
                   , ChainableMockMethodContainer* c
                   , const std::type_info& info)
-    : vtbl(new VirtualTable(this, numberOfVptr, info)), container(c)
+    : container(c)
 {
+	vtbl = new VirtualTable(this, numberOfVptr, info);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -126,10 +127,10 @@ MockObjectBase::MockObjectBase( const std::string& objName
                               , unsigned int numberOfVptr
                               , const std::type_info& info)
    : ChainableMockObjectBase(objName)
-   , This( new MockObjectBaseImpl(numberOfVptr
-               , this->getMethodContainer()
-               , info))
 {
+	This = new MockObjectBaseImpl(numberOfVptr
+               , this->getMethodContainer()
+               , info);
 }
 
 ////////////////////////////////////////////////////////////////////////

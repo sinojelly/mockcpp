@@ -28,8 +28,8 @@ MOCKCPP_NS_START
 
 ///////////////////////////////////////////////
 class Matcher;
-class InvocationMockerContainer;
-class Method;
+struct InvocationMockerContainer;
+struct Method;
 
 ///////////////////////////////////////////////
 struct InvocationMockBuilderGetter
