@@ -1,14 +1,36 @@
-#summary One-sentence summary of this page.
 #labels Manual,English,Featured
+= Background =
 
-= Introduction =
+mockcpp is a C/C++ mocking framework. It's neither a reinvention of the wheel nor Yet Another C++ Mocking Framework.
 
-Add your content here.
+Before we started developing mockcpp, the only framework we could find on the Internet was mockpp. And it's the only option when we were
+practicing Agile practices. Though mockpp is an excellent framework, the long compilation time and obscure compilation error messages
+resulted from the use of over sophisticated template was playing a negative role in our TDD practice. In addition, some features we needed
+were missing in mockpp. Then we decided to develop a new framework after our failed attempt to extend it due to its complexity.
+
+mockcpp tries to meet these goals:
+
+    * Using template as less as possible to boost compilation speed, reduce obscurity of error message.
+    * The error messages emitted from the framework should be easy to understand, complete to help developers identify the problems quickly.
+    * Mock objects are easy to create.
+    * Extensibility to meet unique needs.
+    * Ability to mock static method.
 
 
-= Details =
+== Introcution ==
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+=== Using Actions ===
+*Purpose*
+Actions play important roles in mocking framework and are the most fundermental value. Through actions, mocks act as stubs, yet in a better way.
+
+*Types of Actions*
+Returning a value: {{{returnValue(value)}}}
+Returning more than one values: {{{returnObjectList(o1, o2, ...)}}}
+Throwing an exception: {{{throws(exception)}}}
+Ignoring return value: {{{ignoreReturnValue()}}}
+Delegating to a stub method: {{{invoke(stubFucntion)}}}
+Returning a value repeatly: {{{repeat(value, times)}}}
+Increment a value: {{{increase(from, to) / increase(from)}}}
+
+*Usage*
+Use {{{will(behavior) / then(behavior)}}}
