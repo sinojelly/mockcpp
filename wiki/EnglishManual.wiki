@@ -21,9 +21,11 @@ mockcpp tries to meet these goals:
 
 === Using Actions ===
 *Purpose*
-Actions play important roles in mocking framework and are the most fundermental value. Through actions, mocks act as stubs, yet in a better way.
+
+Actions play important roles in mocking framework and are the most fundamental value provided by mocking frameworks. Through actions, mocks act as stubs, yet in a better way.
 
 *Types of Actions*
+
 Returning a value: {{{returnValue(value)}}}
 Returning more than one values: {{{returnObjectList(o1, o2, ...)}}}
 Throwing an exception: {{{throws(exception)}}}
@@ -33,4 +35,5 @@ Returning a value repeatly: {{{repeat(value, times)}}}
 Increment a value: {{{increase(from, to) / increase(from)}}}
 
 *Usage*
+
 Use {{{will(behavior) / then(behavior)}}}
