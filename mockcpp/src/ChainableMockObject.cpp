@@ -85,8 +85,8 @@ getMethod(const std::string& name, InvocationMockerNamespace* ns)
 //////////////////////////////////////////////////////////////
 ChainableMockObject::ChainableMockObject(const std::string& name)
     : ChainableMockObjectBase(name)
-    , This(new ChainableMockObjectImpl(this->getMethodContainer()))
 {
+	This = new ChainableMockObjectImpl(this->getMethodContainer());
 }
 
 //////////////////////////////////////////////////////////////

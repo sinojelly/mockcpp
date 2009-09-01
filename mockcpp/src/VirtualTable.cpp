@@ -77,8 +77,8 @@ VirtualTableImpl::validateVptr(void** pVptr)
 {
    if(pVptr != fakeObject->vptr)
    {
-      //MOCKCPP_FAIL( PACKAGE " internal error(1018). please report this bug to "
-      //       PACKAGE_BUGREPORT ".");
+      MOCKCPP_FAIL( PACKAGE " internal error(1018). please report this bug to "
+             PACKAGE_BUGREPORT ".");
    }
 }
 /////////////////////////////////////////////////////////////////
@@ -128,9 +128,7 @@ VirtualTableImpl::validateIndexOfVptr(unsigned int index)
 {
    if(index >= numberOfVptr)
    {
-      MOCKCPP_FAIL(
-      PACKAGE " internal error. please report it to " PACKAGE_BUGREPORT ".",
-      );
+      MOCKCPP_FAIL(PACKAGE " internal error. please report it to " PACKAGE_BUGREPORT ".");
    }
 }
 

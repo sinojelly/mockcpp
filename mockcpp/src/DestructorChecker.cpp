@@ -19,6 +19,7 @@
 #include <iostream>
 #include <mockcpp/DestructorChecker.h>
 #include <mockcpp/MethodInfoReader.h>
+#include <mockcpp/Asserter.h>
 
 MOCKCPP_NS_START
 

@@ -22,5 +22,9 @@
 #include <mockcpp/GnuMethodInfoReader.h>
 #endif
 
+#if defined(_MSC_VER)
+#include <mockcpp/MsvcMethodInfoReader.h>
+#endif
+
 #endif
 
