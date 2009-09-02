@@ -3,6 +3,7 @@
 #include <mockcpp/Asserter.h>
 #include <mockcpp/MsvcMethodInfoReader.h>
 #include <mockcpp/OutputStringStream.h>
+#include <iostream>
 
 MOCKCPP_NS_START
 
@@ -120,6 +121,7 @@ namespace
 	   virtual void m98() = 0;
 	   virtual void m99() = 0;
 
+	   virtual ~StupidInterface() {}
    };
 };
 
@@ -253,6 +255,7 @@ unsigned int msvcGetIndexOfVirtualMethod(void* p)
 {
 	for(unsigned int i=0; i<100; i++)
 	{
+		std::cout << MsvnGetAddressOfVirtualFunction(i) << ":" << p << std::endl;
 		if(MsvnGetAddressOfVirtualFunction(i) == p)
 			return i;
 	}

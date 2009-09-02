@@ -51,7 +51,7 @@ void* msvcGetAddrOfMethodOnly(Method input)
 }
 
 ///////////////////////////////////////////////////////////
-unsigned int msvnGetIndexOfVirtualMethod(void* p);
+unsigned int msvcGetIndexOfVirtualMethod(void* p);
 
 void msvcVerifyNonVirtualMethod(void* p);
 
@@ -68,7 +68,7 @@ void* getAddrOfMethod(Method input)
 template <class C, typename Method>
 unsigned int getIndexOfMethod(Method method)
 {
-	return msvnGetIndexOfVirtualMethod(msvcGetAddrOfMethodOnly(method));
+	return msvcGetIndexOfVirtualMethod(msvcGetAddrOfMethodOnly(method));
 }
 
 ///////////////////////////////////////////////////////////
@@ -76,7 +76,7 @@ template <class C, typename Method>
 MsvcVmgMFP getMsvnVmgMFPOfVirtualMethod(Method input)
 {
    typedef typename MethodTypeTraits<C, Method>::MethodType ExpectedMethodType; 
-   MethodDescriptionUnion<ExpectedMethodType> m;
+   MsvcMethodUnion<ExpectedMethodType> m;
    m.method = input;
 
    return m.mfp;
