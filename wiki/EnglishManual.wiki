@@ -29,14 +29,14 @@ Actions play important roles in mocking framework and are the most fundamental v
 
 ===Types of Actions===
 
-  * Returning a value: {{{returnValue(value)}}}
-  * Returning more than one values: {{{returnObjectList(o1, o2, ...)}}}
-  * Throwing an exception: {{{throws(exception)}}}
-  * Ignoring return value: {{{ignoreReturnValue()}}}
-  * Delegating to a stub method: {{{invoke(stubFucntion)}}}
-  * Returning a value repeatly: {{{repeat(value, times)}}}
-  * Increment a value: {{{increase(from, to) / increase(from)}}}
+  * Returning a value:  _*returnValue(value)*_
+  * Returning more than one values: _*returnObjectList(o1, o2, ...)*_
+  * Throwing an exception: _*throws(exception)*_
+  * Ignoring return value: _*ignoreReturnValue()*_
+  * Delegating to a stub method: _*invoke(stubFucntion)*_
+  * Returning a value repeatly: _*repeat(value, times)*_
+  * Increment a value: _*increase(from, to) / increase(from)*_
 
-*Usage*
+===Usage===
 
-Use {{{will(behavior) / then(behavior)}}}
+Use _*will(behavior)*_ /_*then(behavior)*_
