@@ -90,7 +90,7 @@ nodist_libmockcpp_la_OBJECTS = AfterMatcher.lo AnyBase.lo Any.lo \
 	StubsMatcher.lo TestFailureMatcher.lo \
 	TypelessConstraintAdapter.lo TypelessStubAdapter.lo \
 	TypeString.lo VoidResultHandler.lo VoidResultHandlerFactory.lo \
-	WillStub.lo ThenStub.lo VirtualTable.lo \
+	WillStub.lo ThenStub.lo VirtualTableUtils.lo VirtualTable.lo \
 	ChainableMockMethodContainer.lo ChainableMockMethodNameKey.lo \
 	ChainableMockMethodIndexKey.lo StubContainer.lo \
 	StringConstraint.lo IsStringStartWith.lo IsStringEndWith.lo \
@@ -410,6 +410,7 @@ pkginclude_HEADERS = \
   $(MOCKCPP_HEADERS_PATH)/TypelessStubAdapter.h \
   $(MOCKCPP_HEADERS_PATH)/ValueHolder.h \
   $(MOCKCPP_HEADERS_PATH)/VirtualTable.h \
+  $(MOCKCPP_HEADERS_PATH)/VirtualTableUtils.h \
   $(MOCKCPP_HEADERS_PATH)/Void.h \
   $(MOCKCPP_HEADERS_PATH)/VoidResultHandler.h \
   $(MOCKCPP_HEADERS_PATH)/VoidResultHandlerFactory.h \
@@ -481,6 +482,7 @@ nodist_libmockcpp_la_SOURCES = \
  VoidResultHandlerFactory.cpp \
  WillStub.cpp \
  ThenStub.cpp \
+ VirtualTableUtils.cpp \
  VirtualTable.cpp \
  ChainableMockMethodContainer.cpp \
  ChainableMockMethodNameKey.cpp \
@@ -649,6 +651,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TypelessConstraintAdapter.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TypelessStubAdapter.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/VirtualTable.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/VirtualTableUtils.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/VoidResultHandler.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/VoidResultHandlerFactory.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/WillStub.Plo@am__quote@

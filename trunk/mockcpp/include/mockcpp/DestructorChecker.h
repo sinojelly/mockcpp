@@ -51,7 +51,6 @@ std::pair<unsigned int, unsigned int> getIndexOfDestructor()
       vptrIndex = getIndexOfVptrOfDestructor();
       vtblIndex = getIndexOfVtblOfDestructor();
 
-	  std::cout << vptrIndex << ":" << vtblIndex << std::endl;
       // FIXME:
       ::operator delete(original);
    }
