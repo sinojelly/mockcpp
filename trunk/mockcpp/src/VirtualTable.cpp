@@ -309,7 +309,7 @@ namespace
    template <unsigned int VPTRIndex, typename T = DummyClass >
    struct DestructorHolder
    {
-      void destructor()
+      void destructor(void*)
       {
          VirtualTableImpl* pThis = getVirtualTableImpl(this, VPTRIndex);
          if(pThis->expectsKeepAlive)
@@ -318,7 +318,7 @@ namespace
          }
 
          // FIXME: The memory won't be freed automatically.
-         // Wired!!!!
+         // Weird!!!!
          // delete [] pThis->vtbl;
          if(pThis->deleted)
          {
