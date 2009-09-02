@@ -25,8 +25,9 @@
 MOCKCPP_NS_START
 
 void** createVtbls(unsigned int numberOfVptr);
+void freeVtbls(void** vtbl, unsigned int numberOfVtpr);
 unsigned int getRealVtblIndex(unsigned int indexOfVptr, unsigned int indexOfVtbl);
-void initializeVtbls(void** vptr, void**vtbl, unsigned int numberOfVtpr, const std::type_info& info);
+void initializeVtbls(void** vptr, void**vtbl, unsigned int numberOfVtpr, const std::type_info& info, bool hasRtti);
 
 MOCKCPP_NS_END
 

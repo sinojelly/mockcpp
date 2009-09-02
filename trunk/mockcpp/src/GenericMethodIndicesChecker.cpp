@@ -83,7 +83,7 @@ void* createMethodInfoChecker(const std::type_info& info)
 {
    initialize();
    
-   initializeVtbls(object->vptr, vtbl, MOCKCPP_MAX_INHERITANCE,info);
+   initializeVtbls(object->vptr, vtbl, MOCKCPP_MAX_INHERITANCE,info, false);
 
    return (void*)object;
 }
