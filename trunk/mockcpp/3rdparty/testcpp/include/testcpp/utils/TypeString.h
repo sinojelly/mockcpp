@@ -16,7 +16,7 @@ template <typename T> struct TypeString
 {
 	static std::string value()
 	{
-       return getDemangledName(typeid(T));
+       return TESTCPP_NS::getDemangledName(typeid(T));
    }
 };
 

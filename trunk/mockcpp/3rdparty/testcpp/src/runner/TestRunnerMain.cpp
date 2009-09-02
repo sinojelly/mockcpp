@@ -4,10 +4,11 @@
 #include <errno.h>
 
 #include <testcpp/runner/TestRunner.h>
-#include <OptionList.h>
+#include <testcpp/utils/OptionList.h>
 
 USING_TESTCPP_NS
 
+////////////////////////////////////////////////////////////
 void usage(char * program)
 {
    std::cerr << "usage: " 
@@ -27,6 +28,18 @@ void usage(char * program)
    exit(1);
 }
 
+////////////////////////////////////////////////////////////
+static 
+void showOptions(const OptionList& options)
+{
+   OptionList::Options::const_iterator i = options.options.begin();
+   for(; i != options.options.end(); i++)
+   {
+      std::cout << "(" << i->first 
+                << "," << i->second 
+                << ")" << std::endl;
+   }
+}
 ////////////////////////////////////////////////////////////
 static
 void getSpecifiedOptions( const std::string& option
@@ -108,11 +121,14 @@ int main(int argc, char* argv[])
    OptionList options;
 
    options.parse(argc, argv, "f:L:l:c:");
+
    if(options.args.size() == 0)
    {
       usage("testcpp-runner");
    }
 
+   //showOptions(options);
+   
    TestRunner::StringList listeners;
    getListeners(listeners, options);   
 

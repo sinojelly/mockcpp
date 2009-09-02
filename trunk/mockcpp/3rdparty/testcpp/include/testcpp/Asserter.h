@@ -4,7 +4,7 @@
 
 #include <testcpp/testcpp.h>
 #include <testcpp/AssertionFailure.h>
-#include <testcpp/Formatter.h>
+#include <testcpp/utils/Formatter.h>
 #include <sstream>
 
 TESTCPP_NS_START
@@ -25,12 +25,14 @@ TESTCPP_NS_START
 
 //////////////////////////////////////////////////////////////////
 #define TS_ASSERT_EQUALS(expected, value) do { \
-   if(expected != value) { \
+   typeof(expected) __expected = (expected); \
+   typeof(value) __value = (value); \
+   if(__expected != __value) { \
       std::stringstream ss; \
       ss << "expected (" #expected " == " #value "), but actually got (" \
-         << TESTCPP_NS::toTypeAndValueString(expected) \
+         << TESTCPP_NS::toTypeAndValueString(__expected) \
          << " != " \
-         << TESTCPP_NS::toTypeAndValueString(value) \
+         << TESTCPP_NS::toTypeAndValueString(__value) \
          << ")"; \
       throw TESTCPP_NS::AssertionFailure(__FILE__, __LINE__, ss.str()); \
    } \
@@ -38,12 +40,14 @@ TESTCPP_NS_START
 
 //////////////////////////////////////////////////////////////////
 #define TS_ASSERT_NOT_EQUALS(expected, value) do { \
-   if(expected == value) {\
+   typeof(expected) __expected = (expected); \
+   typeof(value) __value = (value); \
+   if(__expected == __value) {\
       std::stringstream ss; \
       ss << "expected (" #expected " != " #value "), but actually got (" \
-         << TESTCPP_NS::toTypeAndValueString(expected) \
+         << TESTCPP_NS::toTypeAndValueString(__expected) \
          << " == " \
-         << TESTCPP_NS::toTypeAndValueString(value) \
+         << TESTCPP_NS::toTypeAndValueString(__value) \
          << ")"; \
       throw TESTCPP_NS::AssertionFailure(__FILE__, __LINE__, ss.str()); \
    } \

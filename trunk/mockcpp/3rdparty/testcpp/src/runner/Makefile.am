@@ -1,7 +1,9 @@
 
-AM_CPPFLAGS = -I$(top_builddir)/include $(INCLTDL)
+AM_CPPFLAGS = \
+  -I$(top_builddir)/include \
+  $(LTDLINCL)
 
-noinst_LTLIBRARIES = libtestcpprunner.la 
+lib_LTLIBRARIES = libtestcpprunner.la 
 
 nodist_libtestcpprunner_la_SOURCES = \
   TestSuiteRunner.cpp \
@@ -24,22 +26,20 @@ nodist_libtestcpprunner_la_SOURCES = \
   TestFixtureSandboxRunnerFactory.cpp \
   LTTestListenerLoader.cpp \
   WildcardTestFilter.cpp \
-  PosixFNMatcher.cpp \
-  GeneralTestFilter.cpp \
   OrCompositeTestFilter.cpp \
+  GeneralTestFilter.cpp \
   TestFilterFactory.cpp \
-  OptionList.cpp \
+  PosixFNMatcher.cpp \
   TestRunner.cpp
 
-noinst_PROGRAMS = testcpp-runner
+bin_PROGRAMS = testcpp-runner
 
 testcpp_runner_LDADD = \
-  -L$(top_builddir)/src/runner -ltestcpprunner \
-  -L$(top_builddir)/src -ltestcpp $(LIBLTDL)
+  $(top_builddir)/src/runner/libtestcpprunner.la \
+  $(top_builddir)/src/libtestcpp.la \
+  $(LIBLTDL)
 
-testcpp_runner_LDFLAGS = \
-  -static \
-  -export-dynamic
+testcpp_runner_LDFLAGS = -export-dynamic
 
 testcpp_runner_SOURCES = \
   TestRunnerMain.cpp
