@@ -43,7 +43,7 @@ union MsvcMethodUnion
 
 ///////////////////////////////////////////////
 template <typename Method>
-void* msvcGetAddrOfMethodOnly(Method input)
+void* getAddrOfMethod(Method input)
 {
 	MsvcMethodUnion<Method> m;
 	m.method = input;
@@ -51,42 +51,6 @@ void* msvcGetAddrOfMethodOnly(Method input)
 }
 
 ///////////////////////////////////////////////////////////
-unsigned int msvcGetIndexOfVirtualMethod(void* p);
-
-void msvcVerifyNonVirtualMethod(void* p);
-
-///////////////////////////////////////////////////////////
-template <typename Method>
-void* getAddrOfMethod(Method input)
-{
-   void * p = msvcGetAddrOfMethodOnly(input);
-   msvcVerifyNonVirtualMethod(p);
-   return p;
-}
-
-///////////////////////////////////////////////////////////
-template <class C, typename Method>
-unsigned int getIndexOfMethod(Method method)
-{
-	return msvcGetIndexOfVirtualMethod(msvcGetAddrOfMethodOnly(method));
-}
-
-///////////////////////////////////////////////////////////
-template <class C, typename Method>
-MsvcVmgMFP getMsvnVmgMFPOfVirtualMethod(Method input)
-{
-   typedef typename MethodTypeTraits<C, Method>::MethodType ExpectedMethodType; 
-   MsvcMethodUnion<ExpectedMethodType> m;
-   m.method = input;
-
-   return m.mfp;
-}
-///////////////////////////////////////////////////////////
-template <class C, typename Method>
-unsigned int getDeltaOfMethod(Method method)
-{
-	return getMsvnVmgMFPOfVirtualMethod<C, Method>(method).m_delta/sizeof(void*);
-}
 
 #else
 
