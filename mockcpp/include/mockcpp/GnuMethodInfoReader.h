@@ -18,6 +18,7 @@
 #ifndef __MOCKCPP_GNU_METHOD_INFO_READER_H
 #define __MOCKCPP_GNU_METHOD_INFO_READER_H
 
+#include <algorithm>
 #include <mockcpp/mockcpp.h>
 
 #include <mockcpp/OutputStringStream.h>
@@ -97,7 +98,6 @@ unsigned int getDeltaOfMethod(Method method)
 {
    return getGnuDescOfVirtualMethod<C, Method>(method).delta/sizeof(void*);
 }
-///////////////////////////////////////////////////////////
 
 MOCKCPP_NS_END
 

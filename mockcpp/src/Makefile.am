@@ -19,6 +19,7 @@ ARG_RELATED_HEADER_FILES =  \
 VBTL_RELATED_HEADER_FILES = \
  $(MOCKCPP_HEADERS_PATH)/DelegatedMethodGetDef.h \
  $(MOCKCPP_HEADERS_PATH)/DelegatedMethodGetByVptrDef.h \
+ $(MOCKCPP_HEADERS_PATH)/GenericMethodCheckerDef.h \
  $(MOCKCPP_HEADERS_PATH)/DestructorAddrGetterDef.h \
  $(MOCKCPP_HEADERS_PATH)/DestructorCheckerDef.h
 
@@ -247,6 +248,7 @@ nodist_libmockcpp_la_SOURCES = \
  DelegatedMethodGetter.cpp \
  DieStub.cpp \
  InterfaceInfo.cpp \
+ GenericMethodIndicesChecker.cpp \
  DestructorChecker.cpp
 
 ALLOW_MI = @MOCKCPP_ALLOW_MI@
