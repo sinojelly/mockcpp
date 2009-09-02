@@ -241,7 +241,7 @@ VirtualTableImpl::VirtualTableImpl(IndexInvokableGetter* getter
 
    vtbl = createVtbls(numberOfVptr);
 
-   initializeVtbls(vptr, vtbl, numberOfVptr,refTypeInfo);
+   initializeVtbls(vptr, vtbl, numberOfVptr,refTypeInfo, true);
 
    vptr[MOCKCPP_MAX_INHERITANCE] = (void*)this;
 
@@ -260,7 +260,8 @@ VirtualTableImpl::~VirtualTableImpl()
 
     if(vtbl != 0)
     {
-       delete [] vtbl;
+	   freeVtbls(vtbl, numberOfVptr);
+       vtbl = 0;
     }
 }
 
