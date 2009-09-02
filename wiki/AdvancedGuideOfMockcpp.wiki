@@ -493,6 +493,8 @@ In previous example, according to the implementation of the method _*billing()*_
      }
 }}}
 
+Please note that mock++ does not provide this capabities for MSVC, due to the evil ABI definition of type info.  ( it proves again that -- M$crosoft sucks, in terms of techniques. It should develop products only for non-developers).
+
 =Object Assignment=
 
 The assignment operation of a mock object is not allowed in mockcpp (the method *`MockOject& operator=(const MockObject&)`* is private). It has basically no value to provide this operation, and it will bring tricky issues and the complexity of implementation.
