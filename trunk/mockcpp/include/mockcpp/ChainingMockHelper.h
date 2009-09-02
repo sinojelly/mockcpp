@@ -33,7 +33,7 @@
 MOCKCPP_NS_START
 
 class Matcher;
-class Stub;
+struct Stub;
 
 Matcher* once();
 Matcher* never();
