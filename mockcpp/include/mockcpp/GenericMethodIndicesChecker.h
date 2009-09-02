@@ -17,6 +17,7 @@
 ***/
 
 #include <algorithm>
+#include <typeinfo>
 
 #include <mockcpp/mockcpp.h>
 #include <mockcpp/MethodTypeTraits.h>
