@@ -16,7 +16,7 @@ mockcpp tries to meet these goals:
     * The error messages emitted from the framework should be easy to understand, complete to help developers identify the problems quickly.
     * Mock objects are easy to create.
     * Extensibility to meet unique needs.
-    * Ability to mock static method.
+    * Ability to mock free function.
 
 
 == Introcution ==
