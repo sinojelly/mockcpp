@@ -39,4 +39,4 @@ Actions play important roles in mocking framework and are the most fundamental v
 
 ===Usage===
 
-Use _*will(behavior)*_ /_*then(behavior)*_
+Use _*will*_(behavior) /_*then*_(behavior)
