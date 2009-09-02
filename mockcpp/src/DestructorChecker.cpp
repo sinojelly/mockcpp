@@ -36,7 +36,7 @@ namespace
 
    bool initialized = false;
 
-   void** vtbl;
+   void** vtbl = createVtbls(MOCKCPP_MAX_INHERITANCE);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -65,7 +65,7 @@ static void initialize()
       return;
    } 
 
-   vtbl = createVtbls(MOCKCPP_MAX_INHERITANCE);
+
 
    #include <mockcpp/DestructorCheckerDef.h>
 

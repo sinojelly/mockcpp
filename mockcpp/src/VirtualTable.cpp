@@ -236,12 +236,10 @@ VirtualTableImpl::VirtualTableImpl(IndexInvokableGetter* getter
 
    validateNumberOfVptr();
 
-   // 1 for pointer to typeinfo && offset
-   vtbl = createVtbls(numberOfVptr);
-
    fakeObject = new FakeObject();
-
    void** vptr = fakeObject->vptr;
+
+   vtbl = createVtbls(numberOfVptr);
 
    initializeVtbls(vptr, vtbl, numberOfVptr,refTypeInfo);
 

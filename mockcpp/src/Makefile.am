@@ -161,6 +161,7 @@ pkginclude_HEADERS= \
   $(MOCKCPP_HEADERS_PATH)/TypelessStubAdapter.h \
   $(MOCKCPP_HEADERS_PATH)/ValueHolder.h \
   $(MOCKCPP_HEADERS_PATH)/VirtualTable.h \
+  $(MOCKCPP_HEADERS_PATH)/VirtualTableUtils.h \
   $(MOCKCPP_HEADERS_PATH)/Void.h \
   $(MOCKCPP_HEADERS_PATH)/VoidResultHandler.h \
   $(MOCKCPP_HEADERS_PATH)/VoidResultHandlerFactory.h \
@@ -233,6 +234,7 @@ nodist_libmockcpp_la_SOURCES = \
  VoidResultHandlerFactory.cpp \
  WillStub.cpp \
  ThenStub.cpp \
+ VirtualTableUtils.cpp \
  VirtualTable.cpp \
  ChainableMockMethodContainer.cpp \
  ChainableMockMethodNameKey.cpp \
