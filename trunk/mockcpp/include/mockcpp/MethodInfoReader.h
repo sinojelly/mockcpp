@@ -18,14 +18,17 @@
 #ifndef __MOCKCPP_METHOD_INFO_READER_H
 #define __MOCKCPP_METHOD_INFO_READER_H
 
-#if (__GNUC__)
+#if defined(__GNUC__)
 #include <mockcpp/GnuMethodInfoReader.h>
+#include <mockcpp/GnuMethodIndicesChecker.h>
 #endif
-
-#include <mockcpp/GenericMethodIndicesChecker.h>
 
 #if defined(_MSC_VER)
 #include <mockcpp/MsvcMethodInfoReader.h>
+#endif
+
+#if !defined(__GNUC__)
+#include <mockcpp/GenericMethodIndicesChecker.h>
 #endif
 
 #endif
