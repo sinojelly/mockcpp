@@ -36,6 +36,8 @@ MOCKCPP_NS_START
 template <typename Interface>
 struct MockObject : public MockObjectBase
 {
+   typedef Interface MockedInterface;
+
    /////////////////////////////////////////////////////////////
 	MockObject()
 		: MockObjectBase(TypeString<Interface>::value()

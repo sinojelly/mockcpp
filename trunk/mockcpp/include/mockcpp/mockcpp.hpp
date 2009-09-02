@@ -24,6 +24,11 @@
 #include <mockcpp/ChainingMockHelper.h>
 
 #define METHOD(m) method(&m, #m)
+#define MOCK_METHOD(obj, m) \
+   typedef typeof(obj) mockcpp_ ##obj## _MockObjectType; \
+   typedef mockcpp_ ##obj## _MockObjectType::MockedInterface mockcpp_ ##obj## _MockedInterface; \
+   obj.method(&mockcpp_ ##obj## _MockedInterface::m, \
+        (MOCKCPP_NS::TypeString<mockcpp_ ##obj## _MockedInterface>::value() + "::"#m).c_str())
 
 #endif
 
