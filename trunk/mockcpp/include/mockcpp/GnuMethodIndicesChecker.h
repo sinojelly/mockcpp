@@ -15,18 +15,26 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
-#ifndef __MOCKCPP_METHOD_INFO_READER_H
-#define __MOCKCPP_METHOD_INFO_READER_H
+#ifndef __MOCKCPP_GNU_METHOD_INDICES_CHECKER_H
+#define __MOCKCPP_GNU_METHOD_INDICES_CHECKER_H
 
-#if (__GNUC__)
+#include <algorithm>
+#include <mockcpp/mockcpp.h>
 #include <mockcpp/GnuMethodInfoReader.h>
-#endif
 
-#include <mockcpp/GenericMethodIndicesChecker.h>
+MOCKCPP_NS_START
 
-#if defined(_MSC_VER)
-#include <mockcpp/MsvcMethodInfoReader.h>
-#endif
+template <class Interface, typename Method>
+std::pair<unsigned int, unsigned int>
+getIndicesOfMethod(Method m)
+{
+   unsigned int vptrIndex = getDeltaOfMethod<Interface, Method>(m);
+   unsigned int vtblIndex = getIndexOfMethod<Interface, Method>(m);
+   return std::pair<unsigned int, unsigned int>
+       (vptrIndex, vtblIndex);
+}
+
+MOCKCPP_NS_END
 
 #endif
 

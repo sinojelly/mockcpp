@@ -110,14 +110,14 @@ struct MockObject : public MockObjectBase
      std::string methodName(name == 0 ? \
          TypeString<Method>::value():name);
 
-     unsigned int vptrIndex = getVptrIndex(m);
-     unsigned int vtblIndex = getVtblIndex(m);
+     std::pair<unsigned int, unsigned int> indices = \
+         getIndicesOfMethod<Interface, Method>(m);
 
      void * addr = getDelegatedFunction<Interface, Method>( \
-         vptrIndex, vtblIndex, m);
+         indices.first, indices.second, m);
 
-     return createInvocationMockerBuilderGetter(
-               methodName, addr, vptrIndex, vtblIndex);
+     return createInvocationMockerBuilderGetter( \
+               methodName, addr, indices.first, indices.second);
 	}
 
 ////////////////////////////////////////////////////////////////
@@ -141,14 +141,6 @@ private:
    template <typename Method>
    void* getAddrOfDelegatedMethod(Method m)
    { return getAddrOfMethod(m); }
-
-   template <typename Method>
-   unsigned int getVptrIndex(Method m)
-   { return getDeltaOfMethod<Interface, Method>(m); }
-
-   template <typename Method>
-   unsigned int getVtblIndex(Method m)
-   { return getIndexOfMethod<Interface, Method>(m); }
 
 };
 
