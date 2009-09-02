@@ -52,6 +52,14 @@ libtestcppstdoutlistener_la_LINK = $(LIBTOOL) --tag=CXX \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
 	$(AM_CXXFLAGS) $(CXXFLAGS) \
 	$(libtestcppstdoutlistener_la_LDFLAGS) $(LDFLAGS) -o $@
+libtestcppxmllistener_la_LIBADD =
+am_libtestcppxmllistener_la_OBJECTS = XMLTestListener.lo
+libtestcppxmllistener_la_OBJECTS =  \
+	$(am_libtestcppxmllistener_la_OBJECTS)
+libtestcppxmllistener_la_LINK = $(LIBTOOL) --tag=CXX \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
+	$(AM_CXXFLAGS) $(CXXFLAGS) $(libtestcppxmllistener_la_LDFLAGS) \
+	$(LDFLAGS) -o $@
 DEFAULT_INCLUDES = -I.
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -65,8 +73,10 @@ CXXLD = $(CXX)
 CXXLINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	--mode=link $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
-SOURCES = $(libtestcppstdoutlistener_la_SOURCES)
-DIST_SOURCES = $(libtestcppstdoutlistener_la_SOURCES)
+SOURCES = $(libtestcppstdoutlistener_la_SOURCES) \
+	$(libtestcppxmllistener_la_SOURCES)
+DIST_SOURCES = $(libtestcppstdoutlistener_la_SOURCES) \
+	$(libtestcppxmllistener_la_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -213,13 +223,18 @@ top_build_prefix = ../../
 top_builddir = ../..
 top_srcdir = ../..
 TESTCPP_INCLUDE_PATH = $(top_builddir)/include/testcpp
-AM_CPPFLAGS = -I$(top_builddir)/include 
-noinst_LTLIBRARIES = libtestcppstdoutlistener.la
+AM_CPPFLAGS = -I$(top_builddir)/include
+noinst_LTLIBRARIES = libtestcppstdoutlistener.la libtestcppxmllistener.la
 libtestcppstdoutlistener_la_LDFLAGS = \
   -module \
   -rpath /dev/null
 
 libtestcppstdoutlistener_la_SOURCES = StdoutTestListener.cpp
+libtestcppxmllistener_la_LDFLAGS = \
+  -module \
+  -rpath /dev/null
+
+libtestcppxmllistener_la_SOURCES = XMLTestListener.cpp
 all: all-am
 
 .SUFFIXES:
@@ -265,6 +280,8 @@ clean-noinstLTLIBRARIES:
 	done
 libtestcppstdoutlistener.la: $(libtestcppstdoutlistener_la_OBJECTS) $(libtestcppstdoutlistener_la_DEPENDENCIES) 
 	$(libtestcppstdoutlistener_la_LINK)  $(libtestcppstdoutlistener_la_OBJECTS) $(libtestcppstdoutlistener_la_LIBADD) $(LIBS)
+libtestcppxmllistener.la: $(libtestcppxmllistener_la_OBJECTS) $(libtestcppxmllistener_la_DEPENDENCIES) 
+	$(libtestcppxmllistener_la_LINK)  $(libtestcppxmllistener_la_OBJECTS) $(libtestcppxmllistener_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -273,6 +290,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 include ./$(DEPDIR)/StdoutTestListener.Plo
+include ./$(DEPDIR)/XMLTestListener.Plo
 
 .cpp.o:
 	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
