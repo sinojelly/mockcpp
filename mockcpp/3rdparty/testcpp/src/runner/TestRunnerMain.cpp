@@ -24,6 +24,8 @@ void usage(char * program)
              << std::endl
              << "   -c number        maximum # of concurrent sandboxes"
              << std::endl
+             << "   -s               using sandbox runner"
+             << std::endl
              << std::endl;
    exit(1);
 }
@@ -73,6 +75,18 @@ std::string getSingleOption(const std::string& option
    return defaultValue;
 }
 
+static
+bool getFlagOption(const std::string& flag, OptionList& options)
+{
+   OptionList::Options::const_iterator i = options.options.begin();
+   for(; i != options.options.end(); i++)
+   {
+      if(i->first == flag)
+         return true;
+   }
+
+   return false;
+}
 ////////////////////////////////////////////////////////////
 static 
 unsigned int getMaxConcurrent(OptionList& options)
@@ -116,11 +130,18 @@ void getSpecifiedFixtures( TestRunner::StringList& fixtures
 }
 
 ////////////////////////////////////////////////////////////
+static
+bool useSandbox(OptionList& options)
+{
+   return getFlagOption("s", options);
+}
+
+////////////////////////////////////////////////////////////
 int main(int argc, char* argv[])
 {
    OptionList options;
 
-   options.parse(argc, argv, "f:L:l:c:");
+   options.parse(argc, argv, "f:L:l:c:s");
 
    if(options.args.size() == 0)
    {
@@ -138,10 +159,16 @@ int main(int argc, char* argv[])
    TestRunner::StringList fixtures;
 	getSpecifiedFixtures(fixtures, options);
 
-   unsigned int maxConcurrent = getMaxConcurrent(options);
+   bool usesSandbox = useSandbox(options);
+   
+   unsigned int maxConcurrent = 0;
+   if(usesSandbox)
+   {
+      maxConcurrent = getMaxConcurrent(options);
+   }
 
    TestRunner runner;
 
-   return runner.runTests(maxConcurrent, options.args, listeners
+   return runner.runTests(useSandbox(options), maxConcurrent, options.args, listeners
                          , searchingPathsOfListeners, fixtures);
 }

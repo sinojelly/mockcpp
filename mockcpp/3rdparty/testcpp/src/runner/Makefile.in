@@ -78,8 +78,8 @@ nodist_libtestcpprunner_la_OBJECTS = TestSuiteRunner.lo \
 	TestFixtureRunnerWrapper.lo LTTestSuiteLoader.lo \
 	SimpleTestResultDispatcher.lo SimpleTestResultReporter.lo \
 	SimpleTestCaseResultReporter.lo \
-	SimpleTestSuiteResultReporter.lo \
-	TestFixtureSandboxRunnerFactory.lo LTTestListenerLoader.lo \
+	SimpleTestSuiteResultReporter.lo TestFixtureRunnerFactory.lo \
+	SimpleTestFixtureRunner.lo LTTestListenerLoader.lo \
 	WildcardTestFilter.lo OrCompositeTestFilter.lo \
 	GeneralTestFilter.lo TestFilterFactory.lo PosixFNMatcher.lo \
 	TestRunner.lo
@@ -278,7 +278,8 @@ nodist_libtestcpprunner_la_SOURCES = \
   SimpleTestResultReporter.cpp \
   SimpleTestCaseResultReporter.cpp \
   SimpleTestSuiteResultReporter.cpp \
-  TestFixtureSandboxRunnerFactory.cpp \
+  TestFixtureRunnerFactory.cpp \
+  SimpleTestFixtureRunner.cpp \
   LTTestListenerLoader.cpp \
   WildcardTestFilter.cpp \
   OrCompositeTestFilter.cpp \
@@ -427,6 +428,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/SandboxProcessor.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/SimpleTestCaseResultReporter.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/SimpleTestCaseRunner.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/SimpleTestFixtureRunner.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/SimpleTestResultDispatcher.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/SimpleTestResultReporter.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/SimpleTestSuiteResultReporter.Plo@am__quote@
@@ -435,9 +437,9 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TestCaseSandboxResultDecoder.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TestCaseSandboxResultReporter.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TestFilterFactory.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TestFixtureRunnerFactory.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TestFixtureRunnerWrapper.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TestFixtureSandboxRunner.Plo@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TestFixtureSandboxRunnerFactory.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TestRunner.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TestRunnerMain.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/TestSuiteRunner.Plo@am__quote@

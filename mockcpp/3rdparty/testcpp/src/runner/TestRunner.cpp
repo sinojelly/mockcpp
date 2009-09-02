@@ -10,7 +10,7 @@
 #include <testcpp/runner/SimpleTestResultReporter.h>
 #include <testcpp/runner/SimpleTestCaseResultReporter.h>
 #include <testcpp/runner/SimpleTestSuiteResultReporter.h>
-#include <testcpp/runner/TestFixtureSandboxRunnerFactory.h>
+#include <testcpp/runner/TestFixtureRunnerFactory.h>
 #include <testcpp/runner/InternalError.h>
 #include <testcpp/runner/TestRunner.h>
 #include <testcpp/runner/TestFilter.h>
@@ -37,7 +37,7 @@ struct TestRunnerImpl
    ~TestRunnerImpl();
 
    
-   void createSuiteRunner(unsigned int maxConcurrent);
+   void createSuiteRunner(bool useSandbox, unsigned int maxConcurrent);
    void runTestSuite( const std::string& suitePath
                     , const TestFilter* filter);
    void runTests( const TestRunner::StringList& suites,
@@ -92,7 +92,7 @@ TestRunnerImpl::~TestRunnerImpl()
 
    if(fixtureRunner != 0)
    {
-      TestFixtureSandboxRunnerFactory::
+      TestFixtureRunnerFactory::
            destroyInstance(fixtureRunner);
    }
 
@@ -143,11 +143,11 @@ loadListeners( TestRunnerContext* context \
 
 ///////////////////////////////////////////////////////
 void
-TestRunnerImpl::createSuiteRunner(unsigned int maxConcurrent)
+TestRunnerImpl::createSuiteRunner(bool useSandbox, unsigned int maxConcurrent)
 {
    fixtureRunner = \
-      TestFixtureSandboxRunnerFactory:: \
-         createInstance(maxConcurrent);
+      TestFixtureRunnerFactory:: \
+         createInstance(useSandbox, maxConcurrent);
 
    suiteRunner = new TestSuiteRunner(loader, fixtureRunner);
 }
@@ -237,13 +237,14 @@ TestRunner::registerTestListener(TestListener* listener)
 
 ///////////////////////////////////////////////////////
 int
-TestRunner::runTests( unsigned int maxConcurrent
+TestRunner::runTests( bool useSandbox
+                    , unsigned int maxConcurrent
                     , const TestRunner::StringList& suitePaths
                     , const TestRunner::StringList& listenerNames
                     , const TestRunner::StringList& searchingPathsOfListeners
                     , const TestRunner::StringList& fixtures)
 {
-   This->createSuiteRunner(maxConcurrent);
+   This->createSuiteRunner(useSandbox, maxConcurrent);
    This->loadListeners(this, searchingPathsOfListeners, listenerNames);
    const TestFilter* filter = TestFilterFactory::getFilter(fixtures);
 

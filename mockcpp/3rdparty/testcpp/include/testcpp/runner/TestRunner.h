@@ -27,7 +27,8 @@ public:
 
    void registerTestListener(TestListener* listener);
 
-   int runTests( unsigned int maxConcurrent
+   int runTests( bool useSandboxRunner
+               , unsigned int maxConcurrent
                , const StringList& suitePaths
                , const StringList& listenerNames
                , const StringList& searchingPathsOfListeners
