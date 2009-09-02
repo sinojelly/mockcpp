@@ -2,7 +2,7 @@
 #include <sstream>
 #include <algorithm>
 
-#include <testcpp/Formatter.h>
+#include <testcpp/utils/Formatter.h>
 
 TESTCPP_NS_START
 
@@ -21,7 +21,7 @@ std::string toPointerString(void* p)
    return ss.str();
 }
 //////////////////////////////////////////
-std::string toString(const std::string& s)
+std::string toString(std::string s)
 {
 	std::stringstream ss;
 	ss << "\"" << s << "\"";
