@@ -23,7 +23,7 @@
 #include <mockcpp/Asserter.h>
 #include <mockcpp/OutputStringStream.h>
 #include <mockcpp/MethodInfoReader.h>
-
+#include <mockcpp/VirtualTableUtils.h>
 
 MOCKCPP_NS_START
 
@@ -60,16 +60,6 @@ struct VirtualTableImpl
    bool deleted;
 };
 
-/////////////////////////////////////////////////////////////////
-namespace
-{
-   unsigned int getRealVtblIndex
-         ( unsigned int indexOfVptr
-         , unsigned int indexOfVtbl)
-   {
-      return indexOfVptr * (MOCKCPP_MAX_VTBL_SIZE + 2) + indexOfVtbl + 2;
-   }
-}
 
 /////////////////////////////////////////////////////////////////
 void
@@ -247,20 +237,13 @@ VirtualTableImpl::VirtualTableImpl(IndexInvokableGetter* getter
    validateNumberOfVptr();
 
    // 1 for pointer to typeinfo && offset
-   vtbl = new void*[numberOfVptr*(MOCKCPP_MAX_VTBL_SIZE+2)];
+   vtbl = createVtbls(numberOfVptr);
 
    fakeObject = new FakeObject();
 
    void** vptr = fakeObject->vptr;
 
-   for(unsigned int i=0; i<numberOfVptr; i++)
-   {
-      unsigned int base = i*(MOCKCPP_MAX_VTBL_SIZE+2);
-
-      vtbl[base+0] = (void*)(-1*(sizeof(void*)*i));
-      vtbl[base+1] = (void*)&refTypeInfo;
-      vptr[i] = &vtbl[base+2];
-   }
+   initializeVtbls(vptr, vtbl, numberOfVptr,refTypeInfo);
 
    vptr[MOCKCPP_MAX_INHERITANCE] = (void*)this;
 
