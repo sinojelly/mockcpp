@@ -23,7 +23,8 @@ nodist_libtestcpprunner_la_SOURCES = \
   SimpleTestResultReporter.cpp \
   SimpleTestCaseResultReporter.cpp \
   SimpleTestSuiteResultReporter.cpp \
-  TestFixtureSandboxRunnerFactory.cpp \
+  TestFixtureRunnerFactory.cpp \
+  SimpleTestFixtureRunner.cpp \
   LTTestListenerLoader.cpp \
   WildcardTestFilter.cpp \
   OrCompositeTestFilter.cpp \

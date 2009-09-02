@@ -1,8 +1,9 @@
 
 #include <testcpp/runner/TestFixtureRunnerWrapper.h>
 #include <testcpp/runner/TestFixtureSandboxRunner.h>
+#include <testcpp/runner/SimpleTestFixtureRunner.h>
 #include <testcpp/runner/SimpleTestCaseRunner.h>
-#include <testcpp/runner/TestFixtureSandboxRunnerFactory.h>
+#include <testcpp/runner/TestFixtureRunnerFactory.h>
 
 TESTCPP_NS_START
 
@@ -39,27 +40,42 @@ namespace
          delete caseRunner;
       }
    }
+   
+   TestFixtureRunner*
+   createSandboxInstance(unsigned int maxConcurrent)
+   {
+      if(maxConcurrent == 0)
+      {
+         maxConcurrent = 1;
+      }
+
+      return new TestFixtureRunnerWrapper( \
+                  new TestFixtureSandboxRunner( \
+                     maxConcurrent, createTestCaseRunner()));
+   }
+
+   TestFixtureRunner*
+   createSimpleInstance()
+   {
+      return new TestFixtureRunnerWrapper( \
+                  new SimpleTestFixtureRunner( \
+                       createTestCaseRunner()));
+   }
 }
 
 
 ////////////////////////////////////////////////////////
 TestFixtureRunner*
-TestFixtureSandboxRunnerFactory::
-createInstance(unsigned int maxConcurrent)
+TestFixtureRunnerFactory::
+createInstance(bool useSandbox, unsigned int maxConcurrent)
 {
-   if(maxConcurrent == 0)
-   {
-      maxConcurrent = 1;
-   }
-
-   return new TestFixtureRunnerWrapper( \
-                  new TestFixtureSandboxRunner( \
-                     maxConcurrent, createTestCaseRunner()));
+   return useSandbox? createSandboxInstance(maxConcurrent) :
+      createSimpleInstance();
 }
 
 ////////////////////////////////////////////////////////
 void 
-TestFixtureSandboxRunnerFactory::
+TestFixtureRunnerFactory::
 destroyInstance(TestFixtureRunner* instance)
 {
    if(instance == 0)
