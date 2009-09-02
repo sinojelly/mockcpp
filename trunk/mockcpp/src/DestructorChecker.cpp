@@ -20,6 +20,7 @@
 #include <mockcpp/DestructorChecker.h>
 #include <mockcpp/MethodInfoReader.h>
 #include <mockcpp/Asserter.h>
+#include <mockcpp/VirtualTableUtils.h>
 
 MOCKCPP_NS_START
 
@@ -35,27 +36,19 @@ namespace
 
    bool initialized = false;
 
-   void* vtbl[MOCKCPP_MAX_INHERITANCE*(MOCKCPP_MAX_VTBL_SIZE+2)];
+   void** vtbl;
 }
 
 ////////////////////////////////////////////////////////////////////////
 template <int IndexOfVptr, int IndexOfVtbl, typename T>
 struct DestructorChecker
 {
-   void check(void) const
+   void check(void*)
    {
       indexOfVPTR = IndexOfVptr;
       indexOfVTBL = IndexOfVtbl;
    }
 };
-
-namespace 
-{
-   unsigned int getRealVtblIndex(unsigned int indexOfVptr, unsigned int indexOfVtbl)
-   {
-      return indexOfVptr * (MOCKCPP_MAX_VTBL_SIZE + 2) + 2 + indexOfVtbl ;
-   }
-}
 
 ///////////////////////////////////////////////////////////////////////
 #define MOCKCPP_SET_DESTRUCTOR_CHECKER_VTBL(I, J) do{ \
@@ -71,6 +64,8 @@ static void initialize()
    {
       return;
    } 
+
+   vtbl = createVtbls(MOCKCPP_MAX_INHERITANCE);
 
    #include <mockcpp/DestructorCheckerDef.h>
 
@@ -93,15 +88,7 @@ void* createDestructorChecker(const std::type_info& info)
    
    FakeObject* object = new FakeObject();
 
-   for(int i=0; i<MOCKCPP_MAX_INHERITANCE; i++)
-   {
-      int base = i*(MOCKCPP_MAX_VTBL_SIZE+2);
-
-      vtbl[base + 0] = (void*)(-1*(sizeof(void*)*i));
-      vtbl[base + 1] = (void*)&info;
-
-      object->vptr[i] = &vtbl[base + 2];
-   }
+   initializeVtbls(object->vptr, vtbl, MOCKCPP_MAX_INHERITANCE,info);
 
    return (void*)object;
 }
