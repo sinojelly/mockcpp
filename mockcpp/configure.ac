@@ -1,5 +1,5 @@
 
-AC_INIT([mockcpp], [2.1], [darwin.yuan@gmail.com])
+AC_INIT([mockcpp], [2.2], [dev.mockcpp@gmail.com])
 AC_CONFIG_SRCDIR([src/Any.cpp])
 AM_INIT_AUTOMAKE([-Wall -Werror foreign])
 AC_PROG_LIBTOOL
