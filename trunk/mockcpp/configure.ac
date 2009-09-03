@@ -13,6 +13,9 @@ case "${host_os}" in
    *darwin*)
       MOCKCPP_LDFLAG=-module
       ;;
+   *cygwin*)
+      MOCKCPP_LDFLAG='-export-dynamic -no-undefined' 
+      ;;
    *)
       MOCKCPP_LDFLAG=-export-dynamic
       ;;

@@ -9,7 +9,7 @@ AM_CPPFLAGS = \
  -Wall
 
 lib_LTLIBRARIES = libmockcpp.la
-libmockcpp_la_LDFLAGS = @MOCKCPP_LDFLAG@
+libmockcpp_la_LDFLAGS = @MOCKCPP_LDFLAG@ 
 
 ARG_RELATED_HEADER_FILES =  \
  $(MOCKCPP_HEADERS_PATH)/DelegatedMethodDef.h \

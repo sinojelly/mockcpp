@@ -6,6 +6,10 @@
 
 #include <testcpp/comm/PipeWrittableChannel.h>
 
+#ifdef __CYGWIN__
+typedef _sig_func_ptr sig_t;
+#endif
+
 TESTCPP_NS_START
 
 //////////////////////////////////////////////////////////

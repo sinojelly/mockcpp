@@ -18,7 +18,7 @@
 
 #include <testcpp/testcpp.hpp>
 #include <mockcpp/Invocation.h>
-#include <mockcpp/Any.h>
+#include <mockcpp/types/Any.h>
 
 USING_MOCKCPP_NS
 
