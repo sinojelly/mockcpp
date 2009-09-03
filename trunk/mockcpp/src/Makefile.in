@@ -67,37 +67,76 @@ am__base_list = \
   sed '$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;s/\n/ /g' | \
   sed '$$!N;$$!N;$$!N;$$!N;s/\n/ /g'
 am__installdirs = "$(DESTDIR)$(libdir)" "$(DESTDIR)$(pkgincludedir)"
-LTLIBRARIES = $(lib_LTLIBRARIES)
-libmockcpp_la_LIBADD =
-nodist_libmockcpp_la_OBJECTS = AfterMatcher.lo AnyBase.lo Any.lo \
-	Asserter.lo AssertionFailedError.lo BeforeMatcher.lo \
-	CallerMatcher.lo ChainableMockMethodCore.lo \
-	ChainableMockObjectBase.lo ChainableMockObject.lo \
-	MockObjectBase.lo ChainingMockHelper.lo ConstraintSet.lo \
-	DecoratedConstraint.lo DefaultMatcher.lo DefaultStub.lo \
-	RepeatStub.lo Exception.lo ExpectsMatcher.lo Formatter.lo \
-	GlobalMockObject.lo IdentityBuilder.lo IgnoreResultHandler.lo \
-	IgnoreResultHandlerFactory.lo IgnoreReturnStub.lo \
-	Invocation.lo InvocationId.lo InvocationMocker.lo \
-	InvocationMockerSet.lo InvocationTimesMatcher.lo \
-	InvokedAtLeast.lo InvokedAtMost.lo InvokedExactly.lo \
-	InvokedOnce.lo InvokedTimesMatcher.lo IsAnythingHelper.lo \
-	MismatchResultHandler.lo MismatchResultHandlerFactory.lo \
-	NormalResultHandler.lo NormalResultHandlerFactory.lo \
-	InvocationMockBuilderGetter.lo OutBoundPointer.lo \
-	PendingMatcher.lo ProcStub.lo RefAny.lo Result.lo \
-	ReturnObjectList.lo ReturnStub.lo SimpleInvocationRecorder.lo \
-	StubsMatcher.lo TestFailureMatcher.lo \
-	TypelessConstraintAdapter.lo TypelessStubAdapter.lo \
-	TypeString.lo VoidResultHandler.lo VoidResultHandlerFactory.lo \
-	WillStub.lo ThenStub.lo VirtualTableUtils.lo VirtualTable.lo \
+LTLIBRARIES = $(lib_LTLIBRARIES) $(noinst_LTLIBRARIES)
+libmockcpp_for_test_la_LIBADD =
+am__libmockcpp_for_test_la_SOURCES_DIST = AfterMatcher.cpp AnyBase.cpp \
+	Any.cpp Asserter.cpp AssertionFailedError.cpp \
+	BeforeMatcher.cpp CallerMatcher.cpp \
+	ChainableMockMethodCore.cpp ChainableMockObjectBase.cpp \
+	ChainableMockObject.cpp MockObjectBase.cpp \
+	ChainingMockHelper.cpp ConstraintSet.cpp \
+	DecoratedConstraint.cpp DefaultMatcher.cpp DefaultStub.cpp \
+	RepeatStub.cpp Exception.cpp ExpectsMatcher.cpp Formatter.cpp \
+	GlobalMockObject.cpp IdentityBuilder.cpp \
+	IgnoreResultHandler.cpp IgnoreResultHandlerFactory.cpp \
+	IgnoreReturnStub.cpp Invocation.cpp InvocationId.cpp \
+	InvocationMocker.cpp InvocationMockerSet.cpp \
+	InvocationTimesMatcher.cpp InvokedAtLeast.cpp \
+	InvokedAtMost.cpp InvokedExactly.cpp InvokedOnce.cpp \
+	InvokedTimesMatcher.cpp IsAnythingHelper.cpp \
+	MismatchResultHandler.cpp MismatchResultHandlerFactory.cpp \
+	NormalResultHandler.cpp NormalResultHandlerFactory.cpp \
+	InvocationMockBuilderGetter.cpp OutBoundPointer.cpp \
+	PendingMatcher.cpp ProcStub.cpp RefAny.cpp Result.cpp \
+	ReturnObjectList.cpp ReturnStub.cpp \
+	SimpleInvocationRecorder.cpp StubsMatcher.cpp \
+	TestFailureMatcher.cpp TypelessConstraintAdapter.cpp \
+	TypelessStubAdapter.cpp TypeString.cpp VoidResultHandler.cpp \
+	VoidResultHandlerFactory.cpp WillStub.cpp ThenStub.cpp \
+	VirtualTableUtils.cpp VirtualTable.cpp \
+	ChainableMockMethodContainer.cpp \
+	ChainableMockMethodNameKey.cpp ChainableMockMethodIndexKey.cpp \
+	StubContainer.cpp StringConstraint.cpp IsStringStartWith.cpp \
+	IsStringEndWith.cpp IsStringContains.cpp \
+	DelegatedMethodGetter.cpp DieStub.cpp InterfaceInfo.cpp \
+	GenericMethodIndicesChecker.cpp DestructorChecker.cpp
+am__objects_1 = AfterMatcher.lo AnyBase.lo Any.lo Asserter.lo \
+	AssertionFailedError.lo BeforeMatcher.lo CallerMatcher.lo \
+	ChainableMockMethodCore.lo ChainableMockObjectBase.lo \
+	ChainableMockObject.lo MockObjectBase.lo ChainingMockHelper.lo \
+	ConstraintSet.lo DecoratedConstraint.lo DefaultMatcher.lo \
+	DefaultStub.lo RepeatStub.lo Exception.lo ExpectsMatcher.lo \
+	Formatter.lo GlobalMockObject.lo IdentityBuilder.lo \
+	IgnoreResultHandler.lo IgnoreResultHandlerFactory.lo \
+	IgnoreReturnStub.lo Invocation.lo InvocationId.lo \
+	InvocationMocker.lo InvocationMockerSet.lo \
+	InvocationTimesMatcher.lo InvokedAtLeast.lo InvokedAtMost.lo \
+	InvokedExactly.lo InvokedOnce.lo InvokedTimesMatcher.lo \
+	IsAnythingHelper.lo MismatchResultHandler.lo \
+	MismatchResultHandlerFactory.lo NormalResultHandler.lo \
+	NormalResultHandlerFactory.lo InvocationMockBuilderGetter.lo \
+	OutBoundPointer.lo PendingMatcher.lo ProcStub.lo RefAny.lo \
+	Result.lo ReturnObjectList.lo ReturnStub.lo \
+	SimpleInvocationRecorder.lo StubsMatcher.lo \
+	TestFailureMatcher.lo TypelessConstraintAdapter.lo \
+	TypelessStubAdapter.lo TypeString.lo VoidResultHandler.lo \
+	VoidResultHandlerFactory.lo WillStub.lo ThenStub.lo \
+	VirtualTableUtils.lo VirtualTable.lo \
 	ChainableMockMethodContainer.lo ChainableMockMethodNameKey.lo \
 	ChainableMockMethodIndexKey.lo StubContainer.lo \
 	StringConstraint.lo IsStringStartWith.lo IsStringEndWith.lo \
 	IsStringContains.lo DelegatedMethodGetter.lo DieStub.lo \
 	InterfaceInfo.lo GenericMethodIndicesChecker.lo \
 	DestructorChecker.lo
-libmockcpp_la_OBJECTS = $(nodist_libmockcpp_la_OBJECTS)
+@CYGWIN_TRUE@am_libmockcpp_for_test_la_OBJECTS = $(am__objects_1)
+libmockcpp_for_test_la_OBJECTS = $(am_libmockcpp_for_test_la_OBJECTS)
+libmockcpp_for_test_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
+	$(CXXFLAGS) $(libmockcpp_for_test_la_LDFLAGS) $(LDFLAGS) -o $@
+@CYGWIN_TRUE@am_libmockcpp_for_test_la_rpath =
+libmockcpp_la_LIBADD =
+am_libmockcpp_la_OBJECTS = $(am__objects_1)
+libmockcpp_la_OBJECTS = $(am_libmockcpp_la_OBJECTS)
 libmockcpp_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(libmockcpp_la_LDFLAGS) $(LDFLAGS) -o $@
@@ -114,8 +153,9 @@ CXXLD = $(CXX)
 CXXLINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	--mode=link $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
-SOURCES = $(nodist_libmockcpp_la_SOURCES)
-DIST_SOURCES =
+SOURCES = $(libmockcpp_for_test_la_SOURCES) $(libmockcpp_la_SOURCES)
+DIST_SOURCES = $(am__libmockcpp_for_test_la_SOURCES_DIST) \
+	$(libmockcpp_la_SOURCES)
 HEADERS = $(pkginclude_HEADERS)
 ETAGS = etags
 CTAGS = ctags
@@ -164,7 +204,8 @@ LTLIBOBJS = @LTLIBOBJS@
 MAKEINFO = @MAKEINFO@
 MKDIR_P = @MKDIR_P@
 MOCKCPP_ALLOW_MI = @MOCKCPP_ALLOW_MI@
-MOCKCPP_LDFLAG = @MOCKCPP_LDFLAG@
+MOCKCPP_LDFLAGS_FOR_DIST = @MOCKCPP_LDFLAGS_FOR_DIST@
+MOCKCPP_LIB_FOR_TEST = @MOCKCPP_LIB_FOR_TEST@
 MOCKCPP_MAX_PARAMS = @MOCKCPP_MAX_PARAMS@
 MOCKCPP_MI = @MOCKCPP_MI@
 MOCKCPP_MVS = @MOCKCPP_MVS@
@@ -259,8 +300,14 @@ AM_CPPFLAGS = \
  -I$(top_builddir)/3rdparty \
  -Wall
 
+@CYGWIN_TRUE@noinst_LTLIBRARIES = libmockcpp-for-test.la
+@CYGWIN_TRUE@libmockcpp_for_test_la_LDFLAGS = \
+@CYGWIN_TRUE@   @MOCKCPP_LDFLAGS_FOR_DIST@ \
+@CYGWIN_TRUE@   ../3rdparty/testcpp/src/libtestcpp.la \
+@CYGWIN_TRUE@   -rpath /dev/null
+
 lib_LTLIBRARIES = libmockcpp.la
-libmockcpp_la_LDFLAGS = @MOCKCPP_LDFLAG@ 
+libmockcpp_la_LDFLAGS = @MOCKCPP_LDFLAGS_FOR_DIST@ 
 ARG_RELATED_HEADER_FILES = \
  $(MOCKCPP_HEADERS_PATH)/DelegatedMethodDef.h \
  $(MOCKCPP_HEADERS_PATH)/ArgumentsListDef.h  \
@@ -425,7 +472,7 @@ pkginclude_HEADERS = \
 
 BUILT_SOURCES = $(EXTRA_HEADERS)
 CLEANFILES = $(EXTRA_HEADERS)
-nodist_libmockcpp_la_SOURCES = \
+MOCKCPP_SRCS = \
  AfterMatcher.cpp \
  AnyBase.cpp \
  Any.cpp \
@@ -500,6 +547,8 @@ nodist_libmockcpp_la_SOURCES = \
  GenericMethodIndicesChecker.cpp \
  DestructorChecker.cpp
 
+libmockcpp_la_SOURCES = $(MOCKCPP_SRCS)
+@CYGWIN_TRUE@libmockcpp_for_test_la_SOURCES = $(MOCKCPP_SRCS)
 ALLOW_MI = @MOCKCPP_ALLOW_MI@
 MAX_INHERITANCE = @MOCKCPP_MI@
 MAX_VTBL_SIZE = @MOCKCPP_MVS@
@@ -577,6 +626,17 @@ clean-libLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
+
+clean-noinstLTLIBRARIES:
+	-test -z "$(noinst_LTLIBRARIES)" || rm -f $(noinst_LTLIBRARIES)
+	@list='$(noinst_LTLIBRARIES)'; for p in $$list; do \
+	  dir="`echo $$p | sed -e 's|/[^/]*$$||'`"; \
+	  test "$$dir" != "$$p" || dir=.; \
+	  echo "rm -f \"$${dir}/so_locations\""; \
+	  rm -f "$${dir}/so_locations"; \
+	done
+libmockcpp-for-test.la: $(libmockcpp_for_test_la_OBJECTS) $(libmockcpp_for_test_la_DEPENDENCIES) 
+	$(libmockcpp_for_test_la_LINK) $(am_libmockcpp_for_test_la_rpath) $(libmockcpp_for_test_la_OBJECTS) $(libmockcpp_for_test_la_LIBADD) $(LIBS)
 libmockcpp.la: $(libmockcpp_la_OBJECTS) $(libmockcpp_la_DEPENDENCIES) 
 	$(libmockcpp_la_LINK) -rpath $(libdir) $(libmockcpp_la_OBJECTS) $(libmockcpp_la_LIBADD) $(LIBS)
 
@@ -828,7 +888,7 @@ maintainer-clean-generic:
 clean: clean-am
 
 clean-am: clean-generic clean-libLTLIBRARIES clean-libtool \
-	mostlyclean-am
+	clean-noinstLTLIBRARIES mostlyclean-am
 
 distclean: distclean-am
 	-rm -rf ./$(DEPDIR)
@@ -899,19 +959,20 @@ uninstall-am: uninstall-libLTLIBRARIES uninstall-pkgincludeHEADERS
 .MAKE: all check install install-am install-strip
 
 .PHONY: CTAGS GTAGS all all-am check check-am clean clean-generic \
-	clean-libLTLIBRARIES clean-libtool ctags distclean \
-	distclean-compile distclean-generic distclean-libtool \
-	distclean-tags distdir dvi dvi-am html html-am info info-am \
-	install install-am install-data install-data-am install-dvi \
-	install-dvi-am install-exec install-exec-am install-html \
-	install-html-am install-info install-info-am \
-	install-libLTLIBRARIES install-man install-pdf install-pdf-am \
-	install-pkgincludeHEADERS install-ps install-ps-am \
-	install-strip installcheck installcheck-am installdirs \
-	maintainer-clean maintainer-clean-generic mostlyclean \
-	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
-	pdf pdf-am ps ps-am tags uninstall uninstall-am \
-	uninstall-libLTLIBRARIES uninstall-pkgincludeHEADERS
+	clean-libLTLIBRARIES clean-libtool clean-noinstLTLIBRARIES \
+	ctags distclean distclean-compile distclean-generic \
+	distclean-libtool distclean-tags distdir dvi dvi-am html \
+	html-am info info-am install install-am install-data \
+	install-data-am install-dvi install-dvi-am install-exec \
+	install-exec-am install-html install-html-am install-info \
+	install-info-am install-libLTLIBRARIES install-man install-pdf \
+	install-pdf-am install-pkgincludeHEADERS install-ps \
+	install-ps-am install-strip installcheck installcheck-am \
+	installdirs maintainer-clean maintainer-clean-generic \
+	mostlyclean mostlyclean-compile mostlyclean-generic \
+	mostlyclean-libtool pdf pdf-am ps ps-am tags uninstall \
+	uninstall-am uninstall-libLTLIBRARIES \
+	uninstall-pkgincludeHEADERS
 
 
 $(VBTL_RELATED_HEADER_FILES) : 

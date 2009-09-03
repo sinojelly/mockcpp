@@ -10,7 +10,6 @@ libtestcpprunner_la_LDFLAGS = \
   -rpath /dev/null \
   -no-undefined \
   $(top_builddir)/src/libtestcpp.la \
-  $(top_builddir)/src/libtestcpprcp.la \
   $(LIBLTDL)
 
 nodist_libtestcpprunner_la_SOURCES = \

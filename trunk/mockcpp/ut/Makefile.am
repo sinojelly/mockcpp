@@ -11,7 +11,7 @@ AM_LDFLAGS = \
   -module \
   -no-undefined \
   -rpath /dev/null \
-  $(top_srcdir)/src/libmockcpp.la \
+  @MOCKCPP_LIB_FOR_TEST@ \
   $(THIRD_PARTY_ROOT)/testcpp/src/libtestcpp.la
 
 TARGET_SRC1 = mockcpp-ut1.cpp

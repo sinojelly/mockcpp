@@ -46,11 +46,8 @@ CONFIG_CLEAN_VPATH_FILES =
 LTLIBRARIES = $(noinst_LTLIBRARIES)
 libtestcpp_la_LIBADD =
 am_libtestcpp_la_OBJECTS = AssertionFailure.lo TestSuiteDesc.lo \
-	TypeString.lo Formatter.lo OptionList.lo
+	TypeString.lo Formatter.lo ResourceCheckPoint.lo OptionList.lo
 libtestcpp_la_OBJECTS = $(am_libtestcpp_la_OBJECTS)
-libtestcpprcp_la_LIBADD =
-am_libtestcpprcp_la_OBJECTS = ResourceCheckPoint.lo
-libtestcpprcp_la_OBJECTS = $(am_libtestcpprcp_la_OBJECTS)
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -64,8 +61,8 @@ CXXLD = $(CXX)
 CXXLINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	--mode=link $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
-SOURCES = $(libtestcpp_la_SOURCES) $(libtestcpprcp_la_SOURCES)
-DIST_SOURCES = $(libtestcpp_la_SOURCES) $(libtestcpprcp_la_SOURCES)
+SOURCES = $(libtestcpp_la_SOURCES)
+DIST_SOURCES = $(libtestcpp_la_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -214,16 +211,14 @@ top_srcdir = @top_srcdir@
 TESTCPP_INCLUDE_PATH = $(top_builddir)/include/testcpp
 AM_CPPFLAGS = -I$(top_builddir)/include 
 AM_LDFLAGS = -export-dynamic -no-undefined
-noinst_LTLIBRARIES = libtestcpp.la libtestcpprcp.la
+noinst_LTLIBRARIES = libtestcpp.la 
 libtestcpp_la_SOURCES = \
   AssertionFailure.cpp \
   TestSuiteDesc.cpp \
   TypeString.cpp \
   Formatter.cpp \
+  ResourceCheckPoint.cpp \
   OptionList.cpp
-
-libtestcpprcp_la_SOURCES = \
-  ResourceCheckPoint.cpp 
 
 all: all-am
 
@@ -270,8 +265,6 @@ clean-noinstLTLIBRARIES:
 	done
 libtestcpp.la: $(libtestcpp_la_OBJECTS) $(libtestcpp_la_DEPENDENCIES) 
 	$(CXXLINK)  $(libtestcpp_la_OBJECTS) $(libtestcpp_la_LIBADD) $(LIBS)
-libtestcpprcp.la: $(libtestcpprcp_la_OBJECTS) $(libtestcpprcp_la_DEPENDENCIES) 
-	$(CXXLINK)  $(libtestcpprcp_la_OBJECTS) $(libtestcpprcp_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)

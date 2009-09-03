@@ -220,8 +220,7 @@ AM_LDFLAGS = \
  -module \
  -rpath /dev/null \
  -no-undefined \
- $(top_builddir)/src/libtestcpp.la \
- $(top_builddir)/src/libtestcpprcp.la 
+ $(top_builddir)/src/libtestcpp.la 
 
 noinst_LTLIBRARIES = libtestcppstdoutlistener.la libtestcppxmllistener.la
 libtestcppstdoutlistener_la_SOURCES = StdoutTestListener.cpp

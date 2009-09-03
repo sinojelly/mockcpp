@@ -44,7 +44,7 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 LTLIBRARIES = $(noinst_LTLIBRARIES)
-libmockcpp_ft_la_DEPENDENCIES = $(top_srcdir)/src/libmockcpp.la
+libmockcpp_ft_la_DEPENDENCIES =
 am__objects_1 = mockcpp-ft.lo
 am_libmockcpp_ft_la_OBJECTS = $(am__objects_1)
 libmockcpp_ft_la_OBJECTS = $(am_libmockcpp_ft_la_OBJECTS)
@@ -113,7 +113,8 @@ LTLIBOBJS = @LTLIBOBJS@
 MAKEINFO = @MAKEINFO@
 MKDIR_P = @MKDIR_P@
 MOCKCPP_ALLOW_MI = @MOCKCPP_ALLOW_MI@
-MOCKCPP_LDFLAG = @MOCKCPP_LDFLAG@
+MOCKCPP_LDFLAGS_FOR_DIST = @MOCKCPP_LDFLAGS_FOR_DIST@
+MOCKCPP_LIB_FOR_TEST = @MOCKCPP_LIB_FOR_TEST@
 MOCKCPP_MAX_PARAMS = @MOCKCPP_MAX_PARAMS@
 MOCKCPP_MI = @MOCKCPP_MI@
 MOCKCPP_MVS = @MOCKCPP_MVS@
@@ -210,7 +211,9 @@ TARGET_SRC = mockcpp-ft.cpp
 noinst_LTLIBRARIES = libmockcpp-ft.la
 libmockcpp_ft_la_SOURCES = $(TARGET_SRC)
 CLEANFILES = $(TARGET_SRC)
-libmockcpp_ft_la_LIBADD = $(top_srcdir)/src/libmockcpp.la 
+libmockcpp_ft_la_LIBADD = \
+ @MOCKCPP_LIB_FOR_TEST@
+
 libmockcpp_ft_la_LDFLAGS = \
   -module \
   -rpath /dev/null
