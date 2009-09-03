@@ -21,7 +21,7 @@
 #include <mockcpp/Invocation.h>
 #include <mockcpp/InvocationMockBuilder.h>
 #include <mockcpp/ChainingMockHelper.h>
-#include <mockcpp/Any.h>
+#include <mockcpp/types/Any.h>
 #include <mockcpp/InvokedTimesRecorder.h>
 
 USING_MOCKCPP_NS

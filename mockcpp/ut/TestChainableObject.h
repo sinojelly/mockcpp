@@ -17,7 +17,7 @@
 ***/
 
 #include <testcpp/testcpp.hpp>
-#include <mockcpp/Any.h>
+#include <mockcpp/types/Any.h>
 #include <mockcpp/ChainableMockObject.h>
 #include <mockcpp/InvocationMockBuilder.h>
 #include <mockcpp/ChainingMockHelper.h>

@@ -17,7 +17,7 @@
 ***/
 
 #include <testcpp/testcpp.hpp>
-#include <mockcpp/Any.h>
+#include <mockcpp/types/Any.h>
 #include <mockcpp/IsEqual.h>
 
 USING_MOCKCPP_NS

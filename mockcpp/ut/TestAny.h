@@ -17,8 +17,8 @@
 ***/
 
 #include <testcpp/testcpp.hpp>
-#include <mockcpp/Any.h>
-#include <mockcpp/RefAny.h>
+#include <mockcpp/types/Any.h>
+#include <mockcpp/types/RefAny.h>
 #include <mockcpp/IsRef.h>
 
 USING_MOCKCPP_NS

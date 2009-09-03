@@ -18,7 +18,7 @@
 
 #include <testcpp/testcpp.hpp>
 
-#include <mockcpp/Any.h>
+#include <mockcpp/types/Any.h>
 #include <mockcpp/IsEqual.h>
 #include <mockcpp/ConstraintSet.h>
 #include <mockcpp/ChainingMockHelper.h>

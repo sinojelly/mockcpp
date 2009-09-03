@@ -16,8 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 #include <testcpp/testcpp.hpp>
-#include <mockcpp/ValueHolder.h>
-#include <mockcpp/RefHolder.h>
+#include <mockcpp/types/ValueHolder.h>
+#include <mockcpp/types/RefHolder.h>
 
 USING_MOCKCPP_NS
 
