@@ -14,7 +14,7 @@ case "${host_os}" in
       MOCKCPP_LDFLAG=-module
       ;;
    *cygwin*)
-      MOCKCPP_LDFLAG='-export-dynamic -no-undefined' 
+      MOCKCPP_LDFLAG='-export-dynamic -no-undefined ../3rdparty/testcpp/src/libtestcpprcp.la' 
       ;;
    *)
       MOCKCPP_LDFLAG=-export-dynamic
