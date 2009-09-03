@@ -1,6 +1,6 @@
 #!/bin/bash
 
-all_tests=`ls libmockcpp-ut*.la`
+all_tests=`ls libmockcpp-ut?.la`
 
 ../3rdparty/testcpp/src/runner/testcpp-runner ${all_tests} \
     -L../3rdparty/testcpp/src/listeners -ltestcppstdoutlistener -c10 $* 

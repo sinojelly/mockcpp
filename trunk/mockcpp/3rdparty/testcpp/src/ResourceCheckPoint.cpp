@@ -113,6 +113,8 @@ static void* allocateMemory(size_t size) throw (std::bad_alloc)
    EndBlock* endBlock = (EndBlock*)((char*)p + size);
    endBlock->magic = magicNumber;
 
+   printf("allocated %d bytes at %x\n", size, p);
+
    return p;
 }
 
@@ -124,11 +126,15 @@ static void freeMemory(void* p) throw (Error)
       return;
    }
 
+   printf("free memory at %x\n", p);
+
    BlockHeader* header = (BlockHeader*)((char*)p - sizeof(BlockHeader));
 
    if(header->magic != magicNumber)
    {
-      throw Error("Memory Corruption");
+      char buf[100];
+      snprintf(buf, sizeof(buf), "memory corruption occurred at %x", p);
+      throw Error(buf);
    }
 
    allocatedSize -= header->size;
@@ -149,6 +155,7 @@ TESTCPP_NS_END
 //////////////////////////////////////////////////////////////////
 USING_TESTCPP_NS
 
+#if 0
 //////////////////////////////////////////////////////////////////
 void* operator new (size_t size) throw (std::bad_alloc)
 {
@@ -174,3 +181,4 @@ void operator delete [] (void * p)
 }
 
 //////////////////////////////////////////////////////////////////
+#endif
