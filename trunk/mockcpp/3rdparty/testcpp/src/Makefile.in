@@ -240,7 +240,7 @@ top_srcdir = @top_srcdir@
 TESTCPP_INCLUDE_PATH = $(top_builddir)/include/testcpp
 AM_CPPFLAGS = -I$(top_builddir)/include 
 lib_LTLIBRARIES = libtestcpp.la
-libtestcpp_la_LDFLAGS = -export-dynamic
+libtestcpp_la_LDFLAGS = -export-dynamic -no-undefined
 libtestcpp_la_SOURCES = \
   AssertionFailure.cpp \
   TestSuiteDesc.cpp \
