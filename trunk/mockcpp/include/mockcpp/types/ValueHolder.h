@@ -21,7 +21,7 @@
 
 #include <mockcpp/mockcpp.h>
 
-#include <mockcpp/Holder.h>
+#include <mockcpp/types/Holder.h>
 
 #include <mockcpp/EqualityUtil.h>
 #include <mockcpp/Formatter.h>

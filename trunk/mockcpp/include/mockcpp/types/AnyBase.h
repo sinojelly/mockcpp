@@ -21,7 +21,7 @@
 
 #include <mockcpp/mockcpp.h>
 
-#include <mockcpp/Holder.h>
+#include <mockcpp/types/Holder.h>
 #include <mockcpp/TypeTraits.h>
 
 #include <assert.h>

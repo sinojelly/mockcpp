@@ -21,7 +21,7 @@
 
 #include <mockcpp/types/AnyBase.h>
 
-#include <mockcpp/ValueHolder.h>
+#include <mockcpp/types/ValueHolder.h>
 #include <mockcpp/Void.h>
 
 MOCKCPP_NS_START
