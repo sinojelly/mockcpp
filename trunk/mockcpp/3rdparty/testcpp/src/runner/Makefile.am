@@ -3,7 +3,14 @@ AM_CPPFLAGS = \
   -I$(top_builddir)/include \
   $(LTDLINCL)
 
-lib_LTLIBRARIES = libtestcpprunner.la 
+noinst_LTLIBRARIES = libtestcpprunner.la 
+
+libtestcpprunner_la_LDFLAGS = \
+  -export-dynamic \
+  -rpath /dev/null \
+  -no-undefined \
+  $(top_builddir)/src/libtestcpp.la \
+  $(LIBLTDL)
 
 nodist_libtestcpprunner_la_SOURCES = \
   TestSuiteRunner.cpp \
@@ -33,12 +40,10 @@ nodist_libtestcpprunner_la_SOURCES = \
   PosixFNMatcher.cpp \
   TestRunner.cpp
 
-bin_PROGRAMS = testcpp-runner
+noinst_PROGRAMS = testcpp-runner
 
 testcpp_runner_LDADD = \
-  $(top_builddir)/src/runner/libtestcpprunner.la \
-  $(top_builddir)/src/libtestcpp.la \
-  $(LIBLTDL)
+  $(top_builddir)/src/runner/libtestcpprunner.la 
 
 testcpp_runner_LDFLAGS = -export-dynamic
 
