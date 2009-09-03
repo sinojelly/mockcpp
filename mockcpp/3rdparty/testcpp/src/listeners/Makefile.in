@@ -48,18 +48,10 @@ libtestcppstdoutlistener_la_LIBADD =
 am_libtestcppstdoutlistener_la_OBJECTS = StdoutTestListener.lo
 libtestcppstdoutlistener_la_OBJECTS =  \
 	$(am_libtestcppstdoutlistener_la_OBJECTS)
-libtestcppstdoutlistener_la_LINK = $(LIBTOOL) --tag=CXX \
-	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
-	$(AM_CXXFLAGS) $(CXXFLAGS) \
-	$(libtestcppstdoutlistener_la_LDFLAGS) $(LDFLAGS) -o $@
 libtestcppxmllistener_la_LIBADD =
 am_libtestcppxmllistener_la_OBJECTS = XMLTestListener.lo
 libtestcppxmllistener_la_OBJECTS =  \
 	$(am_libtestcppxmllistener_la_OBJECTS)
-libtestcppxmllistener_la_LINK = $(LIBTOOL) --tag=CXX \
-	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CXXLD) \
-	$(AM_CXXFLAGS) $(CXXFLAGS) $(libtestcppxmllistener_la_LDFLAGS) \
-	$(LDFLAGS) -o $@
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -224,16 +216,9 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 TESTCPP_INCLUDE_PATH = $(top_builddir)/include/testcpp
 AM_CPPFLAGS = -I$(top_builddir)/include
+AM_LDFLAGS = -module -rpath /dev/null -no-undefined $(top_builddir)/src/libtestcpp.la
 noinst_LTLIBRARIES = libtestcppstdoutlistener.la libtestcppxmllistener.la
-libtestcppstdoutlistener_la_LDFLAGS = \
-  -module \
-  -rpath /dev/null
-
 libtestcppstdoutlistener_la_SOURCES = StdoutTestListener.cpp
-libtestcppxmllistener_la_LDFLAGS = \
-  -module \
-  -rpath /dev/null
-
 libtestcppxmllistener_la_SOURCES = XMLTestListener.cpp
 all: all-am
 
@@ -279,9 +264,9 @@ clean-noinstLTLIBRARIES:
 	  rm -f "$${dir}/so_locations"; \
 	done
 libtestcppstdoutlistener.la: $(libtestcppstdoutlistener_la_OBJECTS) $(libtestcppstdoutlistener_la_DEPENDENCIES) 
-	$(libtestcppstdoutlistener_la_LINK)  $(libtestcppstdoutlistener_la_OBJECTS) $(libtestcppstdoutlistener_la_LIBADD) $(LIBS)
+	$(CXXLINK)  $(libtestcppstdoutlistener_la_OBJECTS) $(libtestcppstdoutlistener_la_LIBADD) $(LIBS)
 libtestcppxmllistener.la: $(libtestcppxmllistener_la_OBJECTS) $(libtestcppxmllistener_la_DEPENDENCIES) 
-	$(libtestcppxmllistener_la_LINK)  $(libtestcppxmllistener_la_OBJECTS) $(libtestcppxmllistener_la_LIBADD) $(LIBS)
+	$(CXXLINK)  $(libtestcppxmllistener_la_OBJECTS) $(libtestcppxmllistener_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
