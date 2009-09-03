@@ -14,4 +14,6 @@ libtestcpp_la_SOURCES = \
   OptionList.cpp
 
 libtestcpprcp_la_SOURCES = \
+  AssertionFailure.cpp \
   ResourceCheckPoint.cpp 
+
