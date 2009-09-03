@@ -21,7 +21,7 @@
 
 #include <mockcpp/OutputStringStream.h>
 #include <mockcpp/Invocation.h>
-#include <mockcpp/RefAny.h>
+#include <mockcpp/types/RefAny.h>
 
 MOCKCPP_NS_START
 
