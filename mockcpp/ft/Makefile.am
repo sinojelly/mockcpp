@@ -12,7 +12,9 @@ noinst_LTLIBRARIES = libmockcpp-ft.la
 
 libmockcpp_ft_la_SOURCES = $(TARGET_SRC)
 CLEANFILES = $(TARGET_SRC)
-libmockcpp_ft_la_LIBADD = $(top_srcdir)/src/libmockcpp.la 
+libmockcpp_ft_la_LIBADD = \
+ @MOCKCPP_LIB_FOR_TEST@
+
 libmockcpp_ft_la_LDFLAGS = \
   -module \
   -rpath /dev/null

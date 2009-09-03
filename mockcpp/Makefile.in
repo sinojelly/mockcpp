@@ -143,7 +143,8 @@ LTLIBOBJS = @LTLIBOBJS@
 MAKEINFO = @MAKEINFO@
 MKDIR_P = @MKDIR_P@
 MOCKCPP_ALLOW_MI = @MOCKCPP_ALLOW_MI@
-MOCKCPP_LDFLAG = @MOCKCPP_LDFLAG@
+MOCKCPP_LDFLAGS_FOR_DIST = @MOCKCPP_LDFLAGS_FOR_DIST@
+MOCKCPP_LIB_FOR_TEST = @MOCKCPP_LIB_FOR_TEST@
 MOCKCPP_MAX_PARAMS = @MOCKCPP_MAX_PARAMS@
 MOCKCPP_MI = @MOCKCPP_MI@
 MOCKCPP_MVS = @MOCKCPP_MVS@
@@ -230,7 +231,7 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-SUBDIRS = src 3rdparty/testcpp ut ft
+SUBDIRS = 3rdparty/testcpp src ut ft
 all: all-recursive
 
 .SUFFIXES:

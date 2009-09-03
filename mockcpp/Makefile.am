@@ -1,2 +1,2 @@
 
-SUBDIRS = src 3rdparty/testcpp ut ft
+SUBDIRS = 3rdparty/testcpp src ut ft

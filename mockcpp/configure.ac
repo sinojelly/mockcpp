@@ -7,19 +7,26 @@ AC_PROG_CXX
 AM_PATH_PYTHON([2.4],, [:])
 AM_CONDITIONAL([HAVE_PYTHON], [test "$PYTHON" != :])
 
-AC_SUBST(MOCKCPP_LDFLAG)
+AC_SUBST(MOCKCPP_LDFLAGS_FOR_DIST)
+AC_SUBST(MOCKCPP_LIB_FOR_TEST)
 
+MOCKCPP_LIB_FOR_TEST=../src/libmockcpp.la
+is_cygwin=no
 case "${host_os}" in
    *darwin*)
-      MOCKCPP_LDFLAG=-module
+      MOCKCPP_LDFLAGS_FOR_DIST=-module
       ;;
    *cygwin*)
-      MOCKCPP_LDFLAG='-export-dynamic -no-undefined ../3rdparty/testcpp/src/libtestcpprcp.la' 
+      MOCKCPP_LDFLAGS_FOR_DIST='-export-dynamic -no-undefined' 
+      MOCKCPP_LIB_FOR_TEST='../src/libmockcpp-for-test.la'
+      is_cygwin=yes
       ;;
    *)
-      MOCKCPP_LDFLAG=-export-dynamic
+      MOCKCPP_LDFLAGS_FOR_DIST=-export-dynamic
       ;;
 esac
+
+AM_CONDITIONAL([CYGWIN], [test "$is_cygwin" = yes])
 
 # mockcpp Namespace
 mockcpp_no_namespace=0

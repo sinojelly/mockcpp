@@ -8,8 +8,16 @@ AM_CPPFLAGS = \
  -I$(top_builddir)/3rdparty \
  -Wall
 
+if CYGWIN
+noinst_LTLIBRARIES = libmockcpp-for-test.la
+libmockcpp_for_test_la_LDFLAGS = \
+   @MOCKCPP_LDFLAGS_FOR_DIST@ \
+   ../3rdparty/testcpp/src/libtestcpp.la \
+   -rpath /dev/null
+endif
+
 lib_LTLIBRARIES = libmockcpp.la
-libmockcpp_la_LDFLAGS = @MOCKCPP_LDFLAG@ 
+libmockcpp_la_LDFLAGS = @MOCKCPP_LDFLAGS_FOR_DIST@ 
 
 ARG_RELATED_HEADER_FILES =  \
  $(MOCKCPP_HEADERS_PATH)/DelegatedMethodDef.h \
@@ -176,7 +184,8 @@ pkginclude_HEADERS= \
 BUILT_SOURCES = $(EXTRA_HEADERS)
 CLEANFILES = $(EXTRA_HEADERS)
 
-nodist_libmockcpp_la_SOURCES = \
+
+MOCKCPP_SRCS = \
  AfterMatcher.cpp \
  AnyBase.cpp \
  Any.cpp \
@@ -250,6 +259,12 @@ nodist_libmockcpp_la_SOURCES = \
  InterfaceInfo.cpp \
  GenericMethodIndicesChecker.cpp \
  DestructorChecker.cpp
+
+libmockcpp_la_SOURCES = $(MOCKCPP_SRCS)
+
+if CYGWIN
+libmockcpp_for_test_la_SOURCES = $(MOCKCPP_SRCS)
+endif
 
 ALLOW_MI = @MOCKCPP_ALLOW_MI@
 MAX_INHERITANCE = @MOCKCPP_MI@
