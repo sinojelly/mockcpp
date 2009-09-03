@@ -32,8 +32,8 @@ std::string getDemangledName(const std::type_info& typeInfo);
 
 template <typename T> struct TypeString
 {
-	static std::string value()
-	{
+   static std::string value()
+   {
        return getDemangledName(typeid(T));
    }
 };
@@ -41,8 +41,8 @@ template <typename T> struct TypeString
 template <>
 struct TypeString<std::string>
 {
-	static std::string value()
-	{
+   static std::string value()
+   {
       return "std::string";
    }
 };
