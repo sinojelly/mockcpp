@@ -11,6 +11,7 @@ AM_LDFLAGS = \
   -module \
   -no-undefined \
   -rpath /dev/null \
+  -enable-auto-import \
   $(top_srcdir)/src/libmockcpp.la \
   $(THIRD_PARTY_ROOT)/testcpp/src/libtestcpp.la
 
