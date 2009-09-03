@@ -136,7 +136,6 @@ MAKEINFO = @MAKEINFO@
 MKDIR_P = @MKDIR_P@
 MOCKCPP_ALLOW_MI = @MOCKCPP_ALLOW_MI@
 MOCKCPP_LDFLAGS_FOR_DIST = @MOCKCPP_LDFLAGS_FOR_DIST@
-MOCKCPP_LIB_FOR_TEST = @MOCKCPP_LIB_FOR_TEST@
 MOCKCPP_MAX_PARAMS = @MOCKCPP_MAX_PARAMS@
 MOCKCPP_MI = @MOCKCPP_MI@
 MOCKCPP_MVS = @MOCKCPP_MVS@
@@ -230,12 +229,19 @@ AM_CPPFLAGS = \
   -I$(THIRD_PARTY_ROOT) \
   -I$(TESTCPP_ROOT)/include 
 
+@USE_TEST_TARGET_FALSE@MOCKCPP_LIB_FOR_TEST = \
+@USE_TEST_TARGET_FALSE@     $(top_builddir)/src/libmockcpp.la \
+@USE_TEST_TARGET_FALSE@     $(top_builddir)/3rdparty/testcpp/src/libtestcpp.la
+
+@USE_TEST_TARGET_TRUE@MOCKCPP_LIB_FOR_TEST = \
+@USE_TEST_TARGET_TRUE@     $(top_builddir)/src/libmockcpp-for-test.la
+
 AM_LDFLAGS = \
   -module \
   -dynamic \
   -no-undefined \
   -rpath /dev/null \
-  @MOCKCPP_LIB_FOR_TEST@ 
+  $(MOCKCPP_LIB_FOR_TEST)
 
 
 #  $(THIRD_PARTY_ROOT)/testcpp/src/libtestcpp.la

@@ -44,7 +44,7 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 LTLIBRARIES = $(noinst_LTLIBRARIES)
-libmockcpp_ft_la_DEPENDENCIES =
+libmockcpp_ft_la_DEPENDENCIES = $(MOCKCPP_LIB_FOR_TEST)
 am__objects_1 = mockcpp-ft.lo
 am_libmockcpp_ft_la_OBJECTS = $(am__objects_1)
 libmockcpp_ft_la_OBJECTS = $(am_libmockcpp_ft_la_OBJECTS)
@@ -114,7 +114,6 @@ MAKEINFO = @MAKEINFO@
 MKDIR_P = @MKDIR_P@
 MOCKCPP_ALLOW_MI = @MOCKCPP_ALLOW_MI@
 MOCKCPP_LDFLAGS_FOR_DIST = @MOCKCPP_LDFLAGS_FOR_DIST@
-MOCKCPP_LIB_FOR_TEST = @MOCKCPP_LIB_FOR_TEST@
 MOCKCPP_MAX_PARAMS = @MOCKCPP_MAX_PARAMS@
 MOCKCPP_MI = @MOCKCPP_MI@
 MOCKCPP_MVS = @MOCKCPP_MVS@
@@ -211,13 +210,20 @@ TARGET_SRC = mockcpp-ft.cpp
 noinst_LTLIBRARIES = libmockcpp-ft.la
 libmockcpp_ft_la_SOURCES = $(TARGET_SRC)
 CLEANFILES = $(TARGET_SRC)
-libmockcpp_ft_la_LIBADD = \
- @MOCKCPP_LIB_FOR_TEST@
-
 libmockcpp_ft_la_LDFLAGS = \
   -module \
   -no-undefined \
   -rpath /dev/null
+
+@USE_TEST_TARGET_FALSE@MOCKCPP_LIB_FOR_TEST = \
+@USE_TEST_TARGET_FALSE@     $(top_builddir)/src/libmockcpp.la \
+@USE_TEST_TARGET_FALSE@     $(top_builddir)/3rdparty/testcpp/src/libtestcpp.la
+
+@USE_TEST_TARGET_TRUE@MOCKCPP_LIB_FOR_TEST = \
+@USE_TEST_TARGET_TRUE@     $(top_builddir)/src/libmockcpp-for-test.la
+
+libmockcpp_ft_la_LIBADD = \
+ $(MOCKCPP_LIB_FOR_TEST)
 
 UTCG = $(PYTHON) $(TESTCPP_ROOT)/scripts/testcppgen.py 
 TESTSUITES = \

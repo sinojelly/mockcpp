@@ -12,14 +12,23 @@ noinst_LTLIBRARIES = libmockcpp-ft.la
 
 libmockcpp_ft_la_SOURCES = $(TARGET_SRC)
 CLEANFILES = $(TARGET_SRC)
-libmockcpp_ft_la_LIBADD = \
- @MOCKCPP_LIB_FOR_TEST@
 
 libmockcpp_ft_la_LDFLAGS = \
   -module \
   -no-undefined \
   -rpath /dev/null
 
+if USE_TEST_TARGET
+   MOCKCPP_LIB_FOR_TEST = \
+     $(top_builddir)/src/libmockcpp-for-test.la
+else
+   MOCKCPP_LIB_FOR_TEST = \
+     $(top_builddir)/src/libmockcpp.la \
+     $(top_builddir)/3rdparty/testcpp/src/libtestcpp.la
+endif
+
+libmockcpp_ft_la_LIBADD = \
+ $(MOCKCPP_LIB_FOR_TEST)
 
 UTCG = $(PYTHON) $(TESTCPP_ROOT)/scripts/testcppgen.py 
 
