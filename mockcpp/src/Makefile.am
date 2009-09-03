@@ -130,7 +130,7 @@ pkginclude_HEADERS= \
   $(MOCKCPP_HEADERS_PATH)/OutBoundPointer.h \
   $(MOCKCPP_HEADERS_PATH)/OutputStringStream.h \
   $(MOCKCPP_HEADERS_PATH)/PendingMatcher.h \
-  $(MOCKCPP_HEADERS_PATH)/PlaceHolder.h \
+  $(MOCKCPP_HEADERS_PATH)/types/PlaceHolder.h \
   $(MOCKCPP_HEADERS_PATH)/ProcStub.h \
   $(MOCKCPP_HEADERS_PATH)/types/RefAny.h \
   $(MOCKCPP_HEADERS_PATH)/types/RefHolder.h \
@@ -160,7 +160,7 @@ pkginclude_HEADERS= \
   $(MOCKCPP_HEADERS_PATH)/TypelessConstraintAdapter.h \
   $(MOCKCPP_HEADERS_PATH)/TypelessStub.h \
   $(MOCKCPP_HEADERS_PATH)/TypelessStubAdapter.h \
-  $(MOCKCPP_HEADERS_PATH)/ValueHolder.h \
+  $(MOCKCPP_HEADERS_PATH)/types/ValueHolder.h \
   $(MOCKCPP_HEADERS_PATH)/VirtualTable.h \
   $(MOCKCPP_HEADERS_PATH)/VirtualTableUtils.h \
   $(MOCKCPP_HEADERS_PATH)/Void.h \
