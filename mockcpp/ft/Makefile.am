@@ -17,6 +17,7 @@ libmockcpp_ft_la_LIBADD = \
 
 libmockcpp_ft_la_LDFLAGS = \
   -module \
+  -no-undefined \
   -rpath /dev/null
 
 

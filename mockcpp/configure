@@ -750,8 +750,8 @@ MOCKCPP_MAX_PARAMS
 MOCKCPP_MVS
 MOCKCPP_MI
 MOCKCPP_ALLOW_MI
-CYGWIN_FALSE
-CYGWIN_TRUE
+USE_TEST_TARGET_FALSE
+USE_TEST_TARGET_TRUE
 MOCKCPP_LIB_FOR_TEST
 MOCKCPP_LDFLAGS_FOR_DIST
 HAVE_PYTHON_FALSE
@@ -14394,28 +14394,27 @@ fi
 
 
 
-MOCKCPP_LIB_FOR_TEST=../src/libmockcpp.la
-is_cygwin=no
+use_test_target=no
 case "${host_os}" in
    *darwin*)
-      MOCKCPP_LDFLAGS_FOR_DIST=-module
+      MOCKCPP_LDFLAGS_FOR_DIST=
+      use_test_target=yes
       ;;
    *cygwin*)
       MOCKCPP_LDFLAGS_FOR_DIST='-export-dynamic -no-undefined'
-      MOCKCPP_LIB_FOR_TEST='../src/libmockcpp-for-test.la'
-      is_cygwin=yes
+      use_test_target=yes
       ;;
    *)
       MOCKCPP_LDFLAGS_FOR_DIST=-export-dynamic
       ;;
 esac
 
- if test "$is_cygwin" = yes; then
-  CYGWIN_TRUE=
-  CYGWIN_FALSE='#'
+ if test "$use_test_target" = yes; then
+  USE_TEST_TARGET_TRUE=
+  USE_TEST_TARGET_FALSE='#'
 else
-  CYGWIN_TRUE='#'
-  CYGWIN_FALSE=
+  USE_TEST_TARGET_TRUE='#'
+  USE_TEST_TARGET_FALSE=
 fi
 
 
@@ -14444,6 +14443,12 @@ cat >>confdefs.h <<_ACEOF
 #define MOCKCPP_NO_NAMESPACE $mockcpp_no_namespace
 _ACEOF
 
+
+if test "$use_test_target" = yes; then
+   MOCKCPP_LIB_FOR_TEST='$(top_builddir)/src/libmockcpp-for-test.la'
+else
+   MOCKCPP_LIB_FOR_TEST='$(top_builddir)/src/libmockcpp.la $(top_builddir)/3rdparty/testcpp/src/libtestcpp.la'
+fi
 
 # Allow Multiple Inheritance
 mockcpp_allow_mi=1
@@ -14699,8 +14704,8 @@ if test -z "${HAVE_PYTHON_TRUE}" && test -z "${HAVE_PYTHON_FALSE}"; then
   as_fn_error "conditional \"HAVE_PYTHON\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
-if test -z "${CYGWIN_TRUE}" && test -z "${CYGWIN_FALSE}"; then
-  as_fn_error "conditional \"CYGWIN\" was never defined.
+if test -z "${USE_TEST_TARGET_TRUE}" && test -z "${USE_TEST_TARGET_FALSE}"; then
+  as_fn_error "conditional \"USE_TEST_TARGET\" was never defined.
 Usually this means the macro was only invoked conditionally." "$LINENO" 5
 fi
 

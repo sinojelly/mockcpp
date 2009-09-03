@@ -1,5 +1,10 @@
 #!/bin/bash
 
+OS_NAME=`uname`
+if test "x$OS_NAME" = xDarwin; then
+   export DYLD_LIBRARY_PATH=`cd ../src/.libs && pwd`:$DYLD_LIBRARY_PATH
+fi
+
 all_tests=`ls libmockcpp-ut?.la`
 
 ../3rdparty/testcpp/src/runner/testcpp-runner ${all_tests} \
