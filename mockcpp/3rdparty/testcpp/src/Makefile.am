@@ -13,5 +13,5 @@ libtestcpp_la_SOURCES = \
   Formatter.cpp \
   OptionList.cpp
 
-libtestcpprcp.la = \
+libtestcpprcp_la_SOURCES = \
   ResourceCheckPoint.cpp 
