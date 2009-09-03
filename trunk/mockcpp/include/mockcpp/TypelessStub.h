@@ -19,8 +19,9 @@
 #ifndef __MOCKCPP_TYPELESS_STUB_H
 #define __MOCKCPP_TYPELESS_STUB_H
 
-#include <mockcpp/mockcpp.h>
 #include <string>
+#include <mockcpp/mockcpp.h>
+#include <mockcpp/types/Any.h>
 
 MOCKCPP_NS_START
 

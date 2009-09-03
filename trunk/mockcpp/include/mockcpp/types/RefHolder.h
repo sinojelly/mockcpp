@@ -19,9 +19,7 @@
 #ifndef __MOCKPP_REFHOLDER_H
 #define __MOCKPP_REFHOLDER_H
 
-#include <mockcpp/mockcpp.h>
-
-#include <mockcpp/Holder.h>
+#include <mockcpp/types/Holder.h>
 
 MOCKCPP_NS_START
 

@@ -19,10 +19,8 @@
 #ifndef __MOCKPP_REF_ANY_H
 #define __MOCKPP_REF_ANY_H
 
-#include <mockcpp/mockcpp.h>
-
-#include <mockcpp/AnyBase.h>
-#include <mockcpp/RefHolder.h>
+#include <mockcpp/types/AnyBase.h>
+#include <mockcpp/types/RefHolder.h>
 
 MOCKCPP_NS_START
 

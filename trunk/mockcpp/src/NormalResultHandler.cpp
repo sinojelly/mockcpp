@@ -16,8 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
+#include <mockcpp/types/Any.h>
 #include <mockcpp/NormalResultHandler.h>
-#include <mockcpp/Any.h>
 
 MOCKCPP_NS_START
 

@@ -16,9 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#include <mockcpp/mockcpp.h>
-#include <mockcpp/AnyBase.h>
-#include <mockcpp/Holder.h>
+#include <mockcpp/types/AnyBase.h>
+#include <mockcpp/types/Holder.h>
 
 MOCKCPP_NS_START
 

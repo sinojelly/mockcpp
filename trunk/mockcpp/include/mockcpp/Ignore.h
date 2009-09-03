@@ -20,7 +20,7 @@
 #define __MOCKCPP_IGNORE_H
 
 #include <mockcpp/mockcpp.h>
-#include <mockcpp/Any.h>
+#include <mockcpp/types/Any.h>
 
 MOCKCPP_NS_START
 

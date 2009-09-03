@@ -19,10 +19,11 @@
 #ifndef __MOCKCPP_INVOCATION_H
 #define __MOCKCPP_INVOCATION_H
 
+#include <string>
+
 #include <mockcpp/mockcpp.h>
 
-#include <mockcpp/RefAny.h>
-#include <string>
+#include <mockcpp/types/RefAny.h>
 
 MOCKCPP_NS_START
 

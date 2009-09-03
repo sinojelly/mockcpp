@@ -21,7 +21,7 @@
 
 #include <mockcpp/mockcpp.h>
 
-#include <mockcpp/PlaceHolder.h>
+#include <mockcpp/types/PlaceHolder.h>
 
 #include <mockcpp/EqualityUtil.h>
 #include <mockcpp/Formatter.h>

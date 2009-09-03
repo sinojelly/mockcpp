@@ -19,9 +19,7 @@
 #ifndef __MOCKCPP_IS_MIRROR_H
 #define __MOCKCPP_IS_MIRROR_H
 
-#include <mockcpp/mockcpp.h>
 #include <mockcpp/Constraint.h>
-#include <mockcpp/RefAny.h>
 #include <mockcpp/Formatter.h>
 #include <mockcpp/Asserter.h>
 

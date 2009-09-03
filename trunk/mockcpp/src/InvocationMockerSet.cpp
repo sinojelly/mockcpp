@@ -16,14 +16,15 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
+#include <list>
+#include <algorithm>
+
+#include <mockcpp/types/Any.h>
 #include <mockcpp/InvocationMockerSet.h>
 #include <mockcpp/InvocationMocker.h>
-#include <mockcpp/Any.h>
 #include <mockcpp/Invocation.h>
 #include <mockcpp/InvocationId.h>
 
-#include <list>
-#include <algorithm>
 
 MOCKCPP_NS_START
 

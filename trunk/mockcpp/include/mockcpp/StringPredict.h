@@ -19,9 +19,8 @@
 #ifndef __MOCKCPP_STRING_PREDICT_H
 #define __MOCKCPP_STRING_PREDICT_H
 
-#include <mockcpp/mockcpp.h>
+#include <string>
 #include <mockcpp/Constraint.h>
-#include <mockcpp/RefAny.h>
 
 MOCKCPP_NS_START
 

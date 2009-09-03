@@ -19,10 +19,9 @@
 #ifndef __MOCKPP_ANY_H
 #define __MOCKPP_ANY_H
 
-#include <mockcpp/mockcpp.h>
+#include <mockcpp/types/AnyBase.h>
 
 #include <mockcpp/ValueHolder.h>
-#include <mockcpp/AnyBase.h>
 #include <mockcpp/Void.h>
 
 MOCKCPP_NS_START

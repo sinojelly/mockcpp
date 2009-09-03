@@ -28,7 +28,7 @@
 #include <mockcpp/IncrementStub.h>
 #include <mockcpp/ThrowExceptionStub.h>
 #include <mockcpp/TypelessStubAdapter.h>
-#include <mockcpp/Any.h>
+#include <mockcpp/types/Any.h>
 
 MOCKCPP_NS_START
 

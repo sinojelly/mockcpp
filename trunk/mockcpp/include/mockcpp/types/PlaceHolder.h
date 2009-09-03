@@ -19,10 +19,10 @@
 #ifndef __MOCKPP_PLACEHOLDER_H
 #define __MOCKPP_PLACEHOLDER_H
 
-#include <mockcpp/mockcpp.h>
-
 #include <typeinfo>
 #include <string>
+
+#include <mockcpp/mockcpp.h>
 
 MOCKCPP_NS_START
 

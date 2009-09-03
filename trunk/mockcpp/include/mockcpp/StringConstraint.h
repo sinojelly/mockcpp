@@ -19,12 +19,8 @@
 #ifndef __MOCKCPP_STRING_CONSTRAINT_H
 #define __MOCKCPP_STRING_CONSTRAINT_H
 
-#include <mockcpp/mockcpp.h>
-
 #include <string>
-
 #include <mockcpp/Constraint.h>
-#include <mockcpp/RefAny.h>
 
 MOCKCPP_NS_START
 
