@@ -7,12 +7,21 @@ AM_CPPFLAGS = \
   -I$(THIRD_PARTY_ROOT) \
   -I$(TESTCPP_ROOT)/include 
 
+if USE_TEST_TARGET
+   MOCKCPP_LIB_FOR_TEST = \
+     $(top_builddir)/src/libmockcpp-for-test.la
+else
+   MOCKCPP_LIB_FOR_TEST = \
+     $(top_builddir)/src/libmockcpp.la \
+     $(top_builddir)/3rdparty/testcpp/src/libtestcpp.la
+endif
+
 AM_LDFLAGS = \
   -module \
   -dynamic \
   -no-undefined \
   -rpath /dev/null \
-  @MOCKCPP_LIB_FOR_TEST@ 
+  $(MOCKCPP_LIB_FOR_TEST)
 
 #  $(THIRD_PARTY_ROOT)/testcpp/src/libtestcpp.la
 

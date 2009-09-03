@@ -8,7 +8,6 @@ AM_PATH_PYTHON([2.4],, [:])
 AM_CONDITIONAL([HAVE_PYTHON], [test "$PYTHON" != :])
 
 AC_SUBST(MOCKCPP_LDFLAGS_FOR_DIST)
-AC_SUBST(MOCKCPP_LIB_FOR_TEST)
 
 use_test_target=no
 case "${host_os}" in
@@ -39,12 +38,6 @@ if test "$mockcpp_cv_use_namespace" = no; then
 fi
 AC_DEFINE_UNQUOTED([MOCKCPP_NO_NAMESPACE],$mockcpp_no_namespace,
      [define to 0 if you intend to use mockcpp namespace])
-
-if test "$use_test_target" = yes; then
-   MOCKCPP_LIB_FOR_TEST='$(top_builddir)/src/libmockcpp-for-test.la'
-else
-   MOCKCPP_LIB_FOR_TEST='$(top_builddir)/src/libmockcpp.la $(top_builddir)/3rdparty/testcpp/src/libtestcpp.la'
-fi
 
 # Allow Multiple Inheritance
 mockcpp_allow_mi=1
