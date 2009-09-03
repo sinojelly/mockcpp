@@ -16,7 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#include <mockcpp/Any.h>
+#include <mockcpp/types/Any.h>
 #include <mockcpp/Stub.h>
 #include <mockcpp/Asserter.h>
 #include <mockcpp/Invocation.h>

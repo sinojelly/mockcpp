@@ -16,9 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#include <mockcpp/mockcpp.h>
-
-#include <mockcpp/RefAny.h>
+#include <mockcpp/types/RefAny.h>
 
 MOCKCPP_NS_START
 

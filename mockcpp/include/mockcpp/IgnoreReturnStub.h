@@ -21,7 +21,6 @@
 
 #include <mockcpp/mockcpp.h>
 #include <mockcpp/TypelessStub.h>
-#include <mockcpp/Any.h>
 
 MOCKCPP_NS_START
 

@@ -16,8 +16,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
+#include <mockcpp/types/Any.h>
+
 #include <mockcpp/MismatchResultHandler.h>
-#include <mockcpp/Any.h>
 #include <mockcpp/SelfDescribe.h>
 #include <mockcpp/Asserter.h>
 

@@ -20,7 +20,6 @@
 #include <mockcpp/ChainableMockMethodCore.h>
 #include <mockcpp/Matcher.h>
 #include <mockcpp/Stub.h>
-#include <mockcpp/Any.h>
 #include <mockcpp/Asserter.h>
 #include <mockcpp/InvocationId.h>
 #include <mockcpp/Method.h>

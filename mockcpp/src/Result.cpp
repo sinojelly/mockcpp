@@ -16,10 +16,11 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
+#include <mockcpp/types/Any.h>
+
 #include <mockcpp/Result.h>
 #include <mockcpp/SelfDescribe.h>
 #include <mockcpp/ResultHandler.h>
-#include <mockcpp/Any.h>
 
 #include <mockcpp/IgnoreResultHandlerFactory.h>
 #include <mockcpp/VoidResultHandlerFactory.h>

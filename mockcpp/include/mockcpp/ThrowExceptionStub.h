@@ -21,7 +21,6 @@
 
 #include <mockcpp/mockcpp.h>
 #include <mockcpp/TypelessStub.h>
-#include <mockcpp/Any.h>
 #include <mockcpp/Formatter.h>
 #include <mockcpp/OutputStringStream.h>
 

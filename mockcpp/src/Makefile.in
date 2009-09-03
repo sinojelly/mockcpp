@@ -283,8 +283,8 @@ pkginclude_HEADERS = \
   $(MOCKCPP_HEADERS_PATH)/AfterMatchBuilder.h \
   $(MOCKCPP_HEADERS_PATH)/AfterMatchBuilder.tcc \
   $(MOCKCPP_HEADERS_PATH)/AfterMatcher.h \
-  $(MOCKCPP_HEADERS_PATH)/Any.h \
-  $(MOCKCPP_HEADERS_PATH)/AnyBase.h \
+  $(MOCKCPP_HEADERS_PATH)/types/Any.h \
+  $(MOCKCPP_HEADERS_PATH)/types/AnyBase.h \
   $(MOCKCPP_HEADERS_PATH)/ArgumentsList.h \
   $(MOCKCPP_HEADERS_PATH)/ArgumentsMacroHelpers.h \
   $(MOCKCPP_HEADERS_PATH)/ArgumentsMatchBuilder.h \
@@ -324,7 +324,7 @@ pkginclude_HEADERS = \
   $(MOCKCPP_HEADERS_PATH)/Functor.h \
   $(MOCKCPP_HEADERS_PATH)/GlobalMockObject.h \
   $(MOCKCPP_HEADERS_PATH)/GnuMethodInfoReader.h \
-  $(MOCKCPP_HEADERS_PATH)/Holder.h \
+  $(MOCKCPP_HEADERS_PATH)/types/Holder.h \
   $(MOCKCPP_HEADERS_PATH)/IdentityBuilder.h \
   $(MOCKCPP_HEADERS_PATH)/Ignore.h \
   $(MOCKCPP_HEADERS_PATH)/IgnoreHandler.h \
@@ -382,8 +382,8 @@ pkginclude_HEADERS = \
   $(MOCKCPP_HEADERS_PATH)/PendingMatcher.h \
   $(MOCKCPP_HEADERS_PATH)/PlaceHolder.h \
   $(MOCKCPP_HEADERS_PATH)/ProcStub.h \
-  $(MOCKCPP_HEADERS_PATH)/RefAny.h \
-  $(MOCKCPP_HEADERS_PATH)/RefHolder.h \
+  $(MOCKCPP_HEADERS_PATH)/types/RefAny.h \
+  $(MOCKCPP_HEADERS_PATH)/types/RefHolder.h \
   $(MOCKCPP_HEADERS_PATH)/RepeatMacros.h \
   $(MOCKCPP_HEADERS_PATH)/RepeatStub.h \
   $(MOCKCPP_HEADERS_PATH)/Result.h \

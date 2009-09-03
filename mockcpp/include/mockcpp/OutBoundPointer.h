@@ -21,7 +21,6 @@
 
 #include <mockcpp/mockcpp.h>
 #include <mockcpp/DecoratedConstraint.h>
-#include <mockcpp/RefAny.h>
 #include <mockcpp/IsConst.h>
 
 MOCKCPP_NS_START

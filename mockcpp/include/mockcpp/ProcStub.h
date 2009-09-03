@@ -19,10 +19,10 @@
 #ifndef __MOCKCPP_PROC_STUB_H
 #define __MOCKCPP_PROC_STUB_H
 
+#include <mockcpp/types/RefAny.h>
+
 #include <mockcpp/Stub.h>
 #include <mockcpp/Asserter.h>
-#include <mockcpp/RefAny.h>
-#include <mockcpp/Any.h>
 #include <mockcpp/Invocation.h>
 #include <mockcpp/ArgumentsMacroHelpers.h>
 

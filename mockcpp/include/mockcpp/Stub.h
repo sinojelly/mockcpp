@@ -19,7 +19,8 @@
 #ifndef __MOCKCPP_STUB_H
 #define __MOCKCPP_STUB_H
 
-#include <mockcpp/mockcpp.h>
+#include <mockcpp/types/Any.h>
+
 #include <mockcpp/SelfDescribe.h>
 
 MOCKCPP_NS_START

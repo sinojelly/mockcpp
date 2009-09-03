@@ -21,7 +21,6 @@
 
 #include <mockcpp/mockcpp.h>
 #include <mockcpp/DecoratedConstraint.h>
-#include <mockcpp/RefAny.h>
 #include <mockcpp/Formatter.h>
 #include <mockcpp/Asserter.h>
 #include <mockcpp/IsRef.h>
