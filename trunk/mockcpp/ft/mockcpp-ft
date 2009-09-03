@@ -1,3 +1,8 @@
 #!/bin/sh
 
-../3rdparty/testcpp/src/runner/testcpp-runner ./libmockcpp-ft -L../3rdparty/testcpp/src/listeners -ltestcppstdoutlistener
+OS_NAME=`uname`
+if test "x$OS_NAME" = xDarwin; then
+   export DYLD_LIBRARY_PATH=`cd ../src/.libs && pwd`:$DYLD_LIBRARY_PATH
+fi
+
+../3rdparty/testcpp/src/runner/testcpp-runner ./libmockcpp-ft -L../3rdparty/testcpp/src/listeners -ltestcppstdoutlistener $*

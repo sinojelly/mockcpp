@@ -232,11 +232,13 @@ AM_CPPFLAGS = \
 
 AM_LDFLAGS = \
   -module \
+  -dynamic \
   -no-undefined \
   -rpath /dev/null \
-  @MOCKCPP_LIB_FOR_TEST@ \
-  $(THIRD_PARTY_ROOT)/testcpp/src/libtestcpp.la
+  @MOCKCPP_LIB_FOR_TEST@ 
 
+
+#  $(THIRD_PARTY_ROOT)/testcpp/src/libtestcpp.la
 TARGET_SRC1 = mockcpp-ut1.cpp
 TARGET_SRC2 = mockcpp-ut2.cpp
 TARGET_SRC3 = mockcpp-ut3.cpp

@@ -128,12 +128,13 @@ am__objects_1 = AfterMatcher.lo AnyBase.lo Any.lo Asserter.lo \
 	IsStringContains.lo DelegatedMethodGetter.lo DieStub.lo \
 	InterfaceInfo.lo GenericMethodIndicesChecker.lo \
 	DestructorChecker.lo
-@CYGWIN_TRUE@am_libmockcpp_for_test_la_OBJECTS = $(am__objects_1)
+@USE_TEST_TARGET_TRUE@am_libmockcpp_for_test_la_OBJECTS =  \
+@USE_TEST_TARGET_TRUE@	$(am__objects_1)
 libmockcpp_for_test_la_OBJECTS = $(am_libmockcpp_for_test_la_OBJECTS)
 libmockcpp_for_test_la_LINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 	$(CXXFLAGS) $(libmockcpp_for_test_la_LDFLAGS) $(LDFLAGS) -o $@
-@CYGWIN_TRUE@am_libmockcpp_for_test_la_rpath =
+@USE_TEST_TARGET_TRUE@am_libmockcpp_for_test_la_rpath =
 libmockcpp_la_LIBADD =
 am_libmockcpp_la_OBJECTS = $(am__objects_1)
 libmockcpp_la_OBJECTS = $(am_libmockcpp_la_OBJECTS)
@@ -300,11 +301,11 @@ AM_CPPFLAGS = \
  -I$(top_builddir)/3rdparty \
  -Wall
 
-@CYGWIN_TRUE@noinst_LTLIBRARIES = libmockcpp-for-test.la
-@CYGWIN_TRUE@libmockcpp_for_test_la_LDFLAGS = \
-@CYGWIN_TRUE@   @MOCKCPP_LDFLAGS_FOR_DIST@ \
-@CYGWIN_TRUE@   ../3rdparty/testcpp/src/libtestcpp.la \
-@CYGWIN_TRUE@   -rpath /dev/null
+@USE_TEST_TARGET_TRUE@noinst_LTLIBRARIES = libmockcpp-for-test.la
+@USE_TEST_TARGET_TRUE@libmockcpp_for_test_la_LDFLAGS = \
+@USE_TEST_TARGET_TRUE@   @MOCKCPP_LDFLAGS_FOR_DIST@ \
+@USE_TEST_TARGET_TRUE@   ../3rdparty/testcpp/src/libtestcpp.la \
+@USE_TEST_TARGET_TRUE@   -rpath /dev/null 
 
 lib_LTLIBRARIES = libmockcpp.la
 libmockcpp_la_LDFLAGS = @MOCKCPP_LDFLAGS_FOR_DIST@ 
@@ -548,7 +549,7 @@ MOCKCPP_SRCS = \
  DestructorChecker.cpp
 
 libmockcpp_la_SOURCES = $(MOCKCPP_SRCS)
-@CYGWIN_TRUE@libmockcpp_for_test_la_SOURCES = $(MOCKCPP_SRCS)
+@USE_TEST_TARGET_TRUE@libmockcpp_for_test_la_SOURCES = $(MOCKCPP_SRCS)
 ALLOW_MI = @MOCKCPP_ALLOW_MI@
 MAX_INHERITANCE = @MOCKCPP_MI@
 MAX_VTBL_SIZE = @MOCKCPP_MVS@

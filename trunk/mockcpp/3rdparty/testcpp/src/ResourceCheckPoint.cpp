@@ -113,8 +113,6 @@ static void* allocateMemory(size_t size) throw (std::bad_alloc)
    EndBlock* endBlock = (EndBlock*)((char*)p + size);
    endBlock->magic = magicNumber;
 
-   printf("allocated %d bytes at %x\n", size, p);
-
    return p;
 }
 
@@ -125,8 +123,6 @@ static void freeMemory(void* p) throw (Error)
    {
       return;
    }
-
-   printf("free memory at %x\n", p);
 
    BlockHeader* header = (BlockHeader*)((char*)p - sizeof(BlockHeader));
 

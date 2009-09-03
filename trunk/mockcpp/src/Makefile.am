@@ -8,12 +8,12 @@ AM_CPPFLAGS = \
  -I$(top_builddir)/3rdparty \
  -Wall
 
-if CYGWIN
+if USE_TEST_TARGET
 noinst_LTLIBRARIES = libmockcpp-for-test.la
 libmockcpp_for_test_la_LDFLAGS = \
    @MOCKCPP_LDFLAGS_FOR_DIST@ \
    ../3rdparty/testcpp/src/libtestcpp.la \
-   -rpath /dev/null
+   -rpath /dev/null 
 endif
 
 lib_LTLIBRARIES = libmockcpp.la
@@ -262,7 +262,7 @@ MOCKCPP_SRCS = \
 
 libmockcpp_la_SOURCES = $(MOCKCPP_SRCS)
 
-if CYGWIN
+if USE_TEST_TARGET
 libmockcpp_for_test_la_SOURCES = $(MOCKCPP_SRCS)
 endif
 

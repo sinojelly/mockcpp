@@ -10,23 +10,22 @@ AM_CONDITIONAL([HAVE_PYTHON], [test "$PYTHON" != :])
 AC_SUBST(MOCKCPP_LDFLAGS_FOR_DIST)
 AC_SUBST(MOCKCPP_LIB_FOR_TEST)
 
-MOCKCPP_LIB_FOR_TEST=../src/libmockcpp.la
-is_cygwin=no
+use_test_target=no
 case "${host_os}" in
    *darwin*)
-      MOCKCPP_LDFLAGS_FOR_DIST=-module
+      MOCKCPP_LDFLAGS_FOR_DIST=
+      use_test_target=yes
       ;;
    *cygwin*)
       MOCKCPP_LDFLAGS_FOR_DIST='-export-dynamic -no-undefined' 
-      MOCKCPP_LIB_FOR_TEST='../src/libmockcpp-for-test.la'
-      is_cygwin=yes
+      use_test_target=yes
       ;;
    *)
       MOCKCPP_LDFLAGS_FOR_DIST=-export-dynamic
       ;;
 esac
 
-AM_CONDITIONAL([CYGWIN], [test "$is_cygwin" = yes])
+AM_CONDITIONAL([USE_TEST_TARGET], [test "$use_test_target" = yes])
 
 # mockcpp Namespace
 mockcpp_no_namespace=0
@@ -40,6 +39,12 @@ if test "$mockcpp_cv_use_namespace" = no; then
 fi
 AC_DEFINE_UNQUOTED([MOCKCPP_NO_NAMESPACE],$mockcpp_no_namespace,
      [define to 0 if you intend to use mockcpp namespace])
+
+if test "$use_test_target" = yes; then
+   MOCKCPP_LIB_FOR_TEST='$(top_builddir)/src/libmockcpp-for-test.la'
+else
+   MOCKCPP_LIB_FOR_TEST='$(top_builddir)/src/libmockcpp.la $(top_builddir)/3rdparty/testcpp/src/libtestcpp.la'
+fi
 
 # Allow Multiple Inheritance
 mockcpp_allow_mi=1
