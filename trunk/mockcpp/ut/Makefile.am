@@ -11,7 +11,6 @@ AM_LDFLAGS = \
   -module \
   -no-undefined \
   -rpath /dev/null \
-  -enable-auto-import \
   $(top_srcdir)/src/libmockcpp.la \
   $(THIRD_PARTY_ROOT)/testcpp/src/libtestcpp.la
 
@@ -66,11 +65,10 @@ TESTSUITES2 = \
 
 TESTSUITES3 = \
  TestVirtualTable.h \
- TestChainableMockMethod.h
-
-# TestStubContainter.h \
-# TestIsStringStartWith.h \
-# TestIsStringEndWith.h 
+ TestChainableMockMethod.h \
+ TestStubContainter.h \
+ TestIsStringStartWith.h \
+ TestIsStringEndWith.h 
 
 TESTSUITES4 = \
  TestIsStringContains.h \
