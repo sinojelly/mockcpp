@@ -117,11 +117,14 @@ ValueType any_cast(AnyBase& operand)
 }
 
 /////////////////////////////////////////////////////////////////
-template <typename T>
+template <typename ValueType>
 bool any_castable(const AnyBase& val)
 {
-    return (!val.empty()) && (any_cast<T>(&val) != 0);
+   typedef typename TypeTraits<ValueType>::Type nonref;
+
+    return (!val.empty()) && (any_cast<nonref>(&val) != 0);
 }
+
 
 /////////////////////////////////////////////////////////////////
 

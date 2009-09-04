@@ -70,7 +70,7 @@ public:
 		foo.method("foo")
 		   .expects(exactly(3))
 		   .with(eq(1), eq((unsigned long)4))
-		   .will(returnObjectList(3, (long)4, 5));
+		   .will(returnObjectList(3, true, 5));
 
 		int i = 1;
 

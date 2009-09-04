@@ -56,21 +56,20 @@ public:
     {
        SelfDescribe* resultProvider = 0;
 
-       const Any& anyResult = invokable->invoke( nameOfCaller
-                                        , p01, p02, p03, p04, p05, p06
-                                        , p07, p08, p09, p10, p11, p12
-                                        , resultProvider);
+       const Any& result = \
+           invokable->invoke( nameOfCaller
+                            , p01, p02, p03, p04, p05, p06
+                            , p07, p08, p09, p10, p11, p12
+                            , resultProvider);
 
-       Result result(typeid(RT), TypeString<RT>::value(), resultProvider);
-
-       return getResult(result.getResult(anyResult));
+       return getResult(result, resultProvider);
     }
 
     virtual ~ChainableMockMethodBase() {}
 
 protected:
 
-    virtual RT getResult(const Any& result) = 0;
+    virtual RT getResult(const Any& result, SelfDescribe*) = 0;
 
 private:
 
@@ -79,22 +78,29 @@ private:
 
 
 //////////////////////////////////////////////////////////////////
-template <typename ReturnType>
-class ChainableMockMethod : public ChainableMockMethodBase<ReturnType>
+template <typename RT>
+class ChainableMockMethod : public ChainableMockMethodBase<RT>
 {
-    ReturnType getResult(const Any& result)
+    RT getResult(const Any& anyResult, SelfDescribe* resultProvider)
     {
+      const Any& result = \
+              Result( any_castable<RT>(anyResult) 
+                    , typeid(RT)
+                    , TypeString<RT>::value()
+                    , resultProvider)
+                    . getResult(anyResult);
+
       MOCKCPP_ASSERT_FALSE_MESSAGE(
          "The return value for a non-void method was not specified",
          result.empty());
 
-      return any_cast<ReturnType>(result);
+      return any_cast<RT>(result);
     }
 
 public:
 
     ChainableMockMethod(Invokable* invokable)
-		: ChainableMockMethodBase<ReturnType>(invokable)
+		: ChainableMockMethodBase<RT>(invokable)
     {}
 };
 
@@ -102,7 +108,7 @@ public:
 template <>
 class ChainableMockMethod<void> : public ChainableMockMethodBase<void>
 {
-    void getResult(const Any& result)
+    void getResult(const Any& result, SelfDescribe*)
     {
     }
 

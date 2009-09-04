@@ -30,7 +30,7 @@ class NormalResultHandler : public ResultHandler
 {
 public:
 
-    NormalResultHandler(const std::type_info& type);
+    NormalResultHandler(bool castable);
 
     bool matches(const Any& result) const;
 
@@ -38,7 +38,7 @@ public:
 
 private:
 
-    const std::type_info& expectedTypeInfo;
+    const bool isCastable;
 
 };
 

@@ -30,7 +30,8 @@ class ResultImpl;
 
 struct Result
 {
-    Result( const std::type_info& expectedTypeInfo
+    Result( bool isCastable
+          , const std::type_info& expectedTypeInfo
           , const std::string& expectedTypeString
           , const SelfDescribe* selfDescriber);
 

@@ -59,7 +59,8 @@ public:
 
     const Any& getResult(const Any& result) const;
 
-    ResultImpl( const std::type_info& typeInfo
+    ResultImpl( bool isCastable
+          , const std::type_info& typeInfo
           , const std::string& typeString
           , const SelfDescribe* selfDescriber);
 
@@ -68,14 +69,16 @@ public:
 
 /////////////////////////////////////////////////////////
 ResultImpl::ResultImpl(
-      const std::type_info& typeInfo
+      bool isCastable
+    , const std::type_info& typeInfo
 	 , const std::string& typeString
 	 , const SelfDescribe* selfDescriber)
 {
    for(unsigned int i=0; i < numberOfResultHandlerFactorys; i++)
    {
       handlers.push_back(
-                  resultHandlerFactorys[i]->create( typeInfo
+                  resultHandlerFactorys[i]->create( isCastable
+                                                  , typeInfo
                                                   , typeString
                                                   , selfDescriber));
    }
@@ -94,10 +97,12 @@ ResultImpl::~ResultImpl()
 }
 //////////////////////////////////////////////////////////
 Result::Result(
-            const std::type_info& expectedTypeInfo
+            bool isCastable
+          , const std::type_info& expectedTypeInfo
           , const std::string& expectedTypeString
           , const SelfDescribe* selfDescriber)
-   : This(new ResultImpl( expectedTypeInfo
+   : This(new ResultImpl( isCastable
+                        , expectedTypeInfo
                         , expectedTypeString
                         , selfDescriber))
 {

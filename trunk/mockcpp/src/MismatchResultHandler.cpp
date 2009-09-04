@@ -26,10 +26,12 @@ MOCKCPP_NS_START
 
 ////////////////////////////////////////////////////////////////
 MismatchResultHandler::MismatchResultHandler(
-                           const std::type_info& info
+                           bool castable
+                         , const std::type_info& info
                          , const std::string& typeString
                          , const SelfDescribe* selfDescriber)
-			  : expectedTypeInfo(info)
+           : isCastable(castable)
+			  , expectedTypeInfo(info)
 			  , expectedTypeString(typeString)
 			  , resultProvider(selfDescriber)
 {
@@ -38,7 +40,7 @@ MismatchResultHandler::MismatchResultHandler(
 ////////////////////////////////////////////////////////////////
 bool MismatchResultHandler::matches(const Any& result) const
 {
-      return result.type() != expectedTypeInfo;
+      return !isCastable;
 }
 
 ////////////////////////////////////////////////////////////////
