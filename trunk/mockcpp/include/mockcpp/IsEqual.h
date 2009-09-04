@@ -19,6 +19,7 @@
 #ifndef __MOCKCPP_IS_EQUAL_H
 #define __MOCKCPP_IS_EQUAL_H
 
+#include <mockcpp/types/AnyCast.h>
 #include <mockcpp/Constraint.h>
 #include <mockcpp/Formatter.h>
 

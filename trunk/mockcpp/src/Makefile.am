@@ -188,6 +188,7 @@ CLEANFILES = $(EXTRA_HEADERS)
 MOCKCPP_SRCS = \
  AfterMatcher.cpp \
  AnyBase.cpp \
+ AnyCast.cpp \
  Any.cpp \
  Asserter.cpp \
  AssertionFailedError.cpp \
