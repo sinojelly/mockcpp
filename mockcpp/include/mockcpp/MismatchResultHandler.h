@@ -31,7 +31,8 @@ class MismatchResultHandler: public ResultHandler
 {
 public:
 
-    MismatchResultHandler( const std::type_info& expectedTypeInfo
+    MismatchResultHandler( bool castable
+                         , const std::type_info& expectedTypeInfo
                          , const std::string& expectedTypeString
                          , const SelfDescribe* resultProvider);
 
@@ -40,6 +41,7 @@ public:
     const Any& getResult(const Any& result) const;
 
 private:
+    const bool isCastable;
     const std::type_info& expectedTypeInfo;
     const std::string expectedTypeString;
     const SelfDescribe* resultProvider;

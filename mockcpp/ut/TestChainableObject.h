@@ -159,7 +159,7 @@ public:
 
 		foo.method("foo")
 		   .defaults()
-	  	   .will(returnValue((long)10));
+	  	   .will(returnValue(true));
 
 		int i = 2;
 
@@ -175,7 +175,7 @@ public:
 		foo.method("foo")
 		   .expects(once())
 		   .with(eq(1), eq((unsigned long)2))
-		   .will(returnValue((long)10));
+		   .will(returnValue(false));
 
 		int i = 1;
 

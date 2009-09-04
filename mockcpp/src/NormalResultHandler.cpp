@@ -22,15 +22,15 @@
 MOCKCPP_NS_START
 
 ///////////////////////////////////////////////////////////////////////////
-NormalResultHandler::NormalResultHandler(const std::type_info& typeInfo)
-   : expectedTypeInfo(typeInfo)
+NormalResultHandler::NormalResultHandler(bool castable)
+   : isCastable(castable)
 {
 }
 
 ///////////////////////////////////////////////////////////////////////////
 bool NormalResultHandler::matches(const Any& result) const
 {
-    return result.type() == expectedTypeInfo;
+    return isCastable;
 }
 
 ///////////////////////////////////////////////////////////////////////////

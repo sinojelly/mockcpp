@@ -32,7 +32,8 @@ class VoidResultHandlerFactory
 {
 public:
     ResultHandler* create(
-            const std::type_info& expectedTypeInfo
+            bool isCastable
+          , const std::type_info& expectedTypeInfo
           , const std::string& expectedTypeString
           , const SelfDescribe* selfDescriber);
 };

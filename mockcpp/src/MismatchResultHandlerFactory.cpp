@@ -23,11 +23,13 @@ MOCKCPP_NS_START
 
 ///////////////////////////////////////////////////////////
 ResultHandler* MismatchResultHandlerFactory::create(
-            const std::type_info& expectedTypeInfo
+            bool isCastable
+          , const std::type_info& expectedTypeInfo
           , const std::string& expectedTypeString
           , const SelfDescribe* resultProvider)
 {
-    return new MismatchResultHandler(expectedTypeInfo
+    return new MismatchResultHandler(isCastable
+                         , expectedTypeInfo
                          , expectedTypeString
                          , resultProvider);
 }

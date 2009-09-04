@@ -30,7 +30,7 @@ class TestMockObject2 : public TESTCPP_NS::TestFixture
 	struct Base0
    {
       virtual int  base00() = 0;
-      virtual bool base01(int) const = 0;
+      virtual bool base01(long) const = 0;
       virtual ~Base0() {}
    };
 
@@ -64,6 +64,25 @@ public:
 	void tearDown()
    {
       TESTCPP_VERIFY_RESOURCE_CHECK_POINT(checkpoint);
+   }
+
+   // returnValue() : int => long
+   void testShouldBeAbleToConvertReturnValue()
+   {
+      MockObject<Interface> mock;
+      mock.method(&Interface::base11).stubs().will(returnValue(12));
+
+      TS_ASSERT_EQUALS(12, mock->base11(""));
+   }
+
+   // returnValue() : int => long
+   void testShouldBeAbleToConvertConstraints()
+   {
+      MockObject<Interface> mock;
+      mock.method(&Interface::base01)
+        .stubs().with(eq(10)).will(returnValue(true));
+
+      TS_ASSERT(mock->base01(10));
    }
 
    // typeid()
