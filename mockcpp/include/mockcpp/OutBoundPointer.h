@@ -20,6 +20,7 @@
 #define __MOCKCPP_OUTBOUND_POINTER_H
 
 #include <mockcpp/mockcpp.h>
+#include <mockcpp/types/AnyCast.h>
 #include <mockcpp/DecoratedConstraint.h>
 #include <mockcpp/IsConst.h>
 

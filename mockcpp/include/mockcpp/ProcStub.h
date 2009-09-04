@@ -20,6 +20,7 @@
 #define __MOCKCPP_PROC_STUB_H
 
 #include <mockcpp/types/RefAny.h>
+#include <mockcpp/types/AnyCast.h>
 
 #include <mockcpp/Stub.h>
 #include <mockcpp/Asserter.h>

@@ -17,6 +17,7 @@
 ***/
 
 #include <mockcpp/types/Any.h>
+#include <mockcpp/types/AnyCast.h>
 
 #include <mockcpp/Void.h>
 #include <mockcpp/OutputStringStream.h>

@@ -70,7 +70,7 @@ am__installdirs = "$(DESTDIR)$(libdir)" "$(DESTDIR)$(pkgincludedir)"
 LTLIBRARIES = $(lib_LTLIBRARIES) $(noinst_LTLIBRARIES)
 libmockcpp_for_test_la_LIBADD =
 am__libmockcpp_for_test_la_SOURCES_DIST = AfterMatcher.cpp AnyBase.cpp \
-	Any.cpp Asserter.cpp AssertionFailedError.cpp \
+	AnyCast.cpp Any.cpp Asserter.cpp AssertionFailedError.cpp \
 	BeforeMatcher.cpp CallerMatcher.cpp \
 	ChainableMockMethodCore.cpp ChainableMockObjectBase.cpp \
 	ChainableMockObject.cpp MockObjectBase.cpp \
@@ -100,28 +100,28 @@ am__libmockcpp_for_test_la_SOURCES_DIST = AfterMatcher.cpp AnyBase.cpp \
 	IsStringEndWith.cpp IsStringContains.cpp \
 	DelegatedMethodGetter.cpp DieStub.cpp InterfaceInfo.cpp \
 	GenericMethodIndicesChecker.cpp DestructorChecker.cpp
-am__objects_1 = AfterMatcher.lo AnyBase.lo Any.lo Asserter.lo \
-	AssertionFailedError.lo BeforeMatcher.lo CallerMatcher.lo \
-	ChainableMockMethodCore.lo ChainableMockObjectBase.lo \
-	ChainableMockObject.lo MockObjectBase.lo ChainingMockHelper.lo \
-	ConstraintSet.lo DecoratedConstraint.lo DefaultMatcher.lo \
-	DefaultStub.lo RepeatStub.lo Exception.lo ExpectsMatcher.lo \
-	Formatter.lo GlobalMockObject.lo IdentityBuilder.lo \
-	IgnoreResultHandler.lo IgnoreResultHandlerFactory.lo \
-	IgnoreReturnStub.lo Invocation.lo InvocationId.lo \
-	InvocationMocker.lo InvocationMockerSet.lo \
-	InvocationTimesMatcher.lo InvokedAtLeast.lo InvokedAtMost.lo \
-	InvokedExactly.lo InvokedOnce.lo InvokedTimesMatcher.lo \
-	IsAnythingHelper.lo MismatchResultHandler.lo \
-	MismatchResultHandlerFactory.lo NormalResultHandler.lo \
-	NormalResultHandlerFactory.lo InvocationMockBuilderGetter.lo \
-	OutBoundPointer.lo PendingMatcher.lo ProcStub.lo RefAny.lo \
-	Result.lo ReturnObjectList.lo ReturnStub.lo \
-	SimpleInvocationRecorder.lo StubsMatcher.lo \
-	TestFailureMatcher.lo TypelessConstraintAdapter.lo \
-	TypelessStubAdapter.lo TypeString.lo VoidResultHandler.lo \
-	VoidResultHandlerFactory.lo WillStub.lo ThenStub.lo \
-	VirtualTableUtils.lo VirtualTable.lo \
+am__objects_1 = AfterMatcher.lo AnyBase.lo AnyCast.lo Any.lo \
+	Asserter.lo AssertionFailedError.lo BeforeMatcher.lo \
+	CallerMatcher.lo ChainableMockMethodCore.lo \
+	ChainableMockObjectBase.lo ChainableMockObject.lo \
+	MockObjectBase.lo ChainingMockHelper.lo ConstraintSet.lo \
+	DecoratedConstraint.lo DefaultMatcher.lo DefaultStub.lo \
+	RepeatStub.lo Exception.lo ExpectsMatcher.lo Formatter.lo \
+	GlobalMockObject.lo IdentityBuilder.lo IgnoreResultHandler.lo \
+	IgnoreResultHandlerFactory.lo IgnoreReturnStub.lo \
+	Invocation.lo InvocationId.lo InvocationMocker.lo \
+	InvocationMockerSet.lo InvocationTimesMatcher.lo \
+	InvokedAtLeast.lo InvokedAtMost.lo InvokedExactly.lo \
+	InvokedOnce.lo InvokedTimesMatcher.lo IsAnythingHelper.lo \
+	MismatchResultHandler.lo MismatchResultHandlerFactory.lo \
+	NormalResultHandler.lo NormalResultHandlerFactory.lo \
+	InvocationMockBuilderGetter.lo OutBoundPointer.lo \
+	PendingMatcher.lo ProcStub.lo RefAny.lo Result.lo \
+	ReturnObjectList.lo ReturnStub.lo SimpleInvocationRecorder.lo \
+	StubsMatcher.lo TestFailureMatcher.lo \
+	TypelessConstraintAdapter.lo TypelessStubAdapter.lo \
+	TypeString.lo VoidResultHandler.lo VoidResultHandlerFactory.lo \
+	WillStub.lo ThenStub.lo VirtualTableUtils.lo VirtualTable.lo \
 	ChainableMockMethodContainer.lo ChainableMockMethodNameKey.lo \
 	ChainableMockMethodIndexKey.lo StubContainer.lo \
 	StringConstraint.lo IsStringStartWith.lo IsStringEndWith.lo \
@@ -475,6 +475,7 @@ CLEANFILES = $(EXTRA_HEADERS)
 MOCKCPP_SRCS = \
  AfterMatcher.cpp \
  AnyBase.cpp \
+ AnyCast.cpp \
  Any.cpp \
  Asserter.cpp \
  AssertionFailedError.cpp \
@@ -649,6 +650,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/AfterMatcher.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Any.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/AnyBase.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/AnyCast.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/Asserter.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/AssertionFailedError.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/BeforeMatcher.Plo@am__quote@

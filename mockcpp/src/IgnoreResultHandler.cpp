@@ -18,6 +18,7 @@
 
 #include <mockcpp/IgnoreResultHandler.h>
 #include <mockcpp/Ignore.h>
+#include <mockcpp/types/AnyCast.h>
 
 MOCKCPP_NS_START
 

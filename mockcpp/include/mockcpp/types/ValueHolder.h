@@ -19,6 +19,8 @@
 #ifndef __MOCKPP_VALUEHOLDER_H
 #define __MOCKPP_VALUEHOLDER_H
 
+#include <iostream>
+
 #include <mockcpp/mockcpp.h>
 
 #include <mockcpp/types/Holder.h>
@@ -49,6 +51,74 @@ public:
 private:
 
     ValueType held;
+};
+
+///////////////////////////////////////////////
+template <typename ValueType>
+struct UnsignedLongHolder : public Holder<ValueType>
+{
+public:
+
+    UnsignedLongHolder(const unsigned long& value)
+      : held(value)
+    {
+    }
+
+    const ValueType& getValue() const
+    {
+       return reinterpret_cast<const ValueType&>(held);
+    }
+
+    PlaceHolder * clone() const
+    { return new UnsignedLongHolder(held); }
+
+protected:
+
+    unsigned long held;
+};
+
+///////////////////////////////////////////////
+template <>
+struct ValueHolder<unsigned long> 
+   : public UnsignedLongHolder<unsigned long>
+{
+    ValueHolder(unsigned long value)
+      : UnsignedLongHolder<unsigned long>(value)
+    {
+    }
+};
+
+///////////////////////////////////////////////
+template <>
+struct ValueHolder<unsigned int> 
+   : public UnsignedLongHolder<unsigned int>
+{
+    ValueHolder(unsigned int value)
+      : UnsignedLongHolder<unsigned int>(value)
+    {
+    }
+};
+
+///////////////////////////////////////////////
+template <>
+struct ValueHolder<unsigned short> 
+   : public UnsignedLongHolder<unsigned short>
+{
+    ValueHolder(unsigned short value)
+      : UnsignedLongHolder<unsigned short>(value)
+    {
+    }
+};
+
+///////////////////////////////////////////////
+template <>
+struct ValueHolder<unsigned char> 
+   : public UnsignedLongHolder<unsigned char>
+{
+    ValueHolder(unsigned char value)
+      : UnsignedLongHolder<unsigned char>(value)
+    {
+    }
 };
 
 MOCKCPP_NS_END

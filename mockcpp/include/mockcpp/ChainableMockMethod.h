@@ -21,6 +21,7 @@
 
 #include <mockcpp/mockcpp.h>
 #include <mockcpp/types/Any.h>
+#include <mockcpp/types/AnyCast.h>
 #include <mockcpp/Invocation.h>
 #include <mockcpp/Invokable.h>
 #include <mockcpp/Result.h>
