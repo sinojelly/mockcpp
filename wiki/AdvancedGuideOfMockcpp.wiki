@@ -3,7 +3,7 @@
 
 =Default Specification=
 
-Default specification is defined by using _*defaults()*_, rather than _*expects()/stubs()*_. Relations between _*defaults()*_ and _*expects()/stubs()*_ could be thought as relations between *default* and *case* in C/C++ *switch* sentences. If all specifications of a method of a mock object specified with _*expects()/stubs()*_ don't match one of your invocations to the method in question, the specification defined with _*defaults()*_ (if have any) will be used to perform the returned behavior. 
+Default specification is defined by using _*defaults()*_, rather than _*expects()/stubs()*_. Relations between _*defaults()*_ and _*expects()/stubs()*_ could be thought as relations between *default* and *case* in C/C++ *switch* statements. If all specifications of a method of a mock object specified with _*expects()/stubs()*_ don't match one of your invocations to the method in question, the specification defined with _*defaults()*_ (if have any) will be used to perform the returned behavior. 
 
 This is a very useful feature, which helps you write your tests in a neater way.  
 
