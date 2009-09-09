@@ -493,7 +493,7 @@ In previous example, according to the implementation of the method _*billing()*_
      }
 }}}
 
-Please note that mock++ does not provide this capabities for MSVC, due to the evil ABI definition of type info.  ( it proves again that -- M$crosoft sucks, in terms of techniques. It should develop products only for non-developers).
+Please note that mock++ does not provide this capabities for MSVC, due to the evil ABI definition of type info.  ( it proves again that -- Micro$oft sucks, in terms of techniques. It should develop products only for non-developers).
 
 =Object Assignment=
 
