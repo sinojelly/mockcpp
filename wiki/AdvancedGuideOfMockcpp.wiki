@@ -17,7 +17,7 @@ struct TestCaseInfoReader
       virtual ~TestCaseInfoReader() {}
 };
 
-class TestGeneralTestFilter: public CxxTest::TestSuite
+class TestGeneralTestFilter: public TESTCPP_NS::TestFixture
 {
       MockObject<TestCaseInfoReader> testcase;
 
@@ -87,7 +87,7 @@ struct TestCase : public TestCaseInfoReader
       virtual ~TestCase() {}
 };
 
-class TestTestCaseRunner: public CxxTest::TestSuite
+class TestTestCaseRunner : TESTCPP_NS::TestFixture
 {
       MockObject<TestFilter> filter;
       MockObject<TestCase> testcase;
@@ -188,7 +188,7 @@ Here is an example:
 
 {{{
 
-class TestGeneralTestFilter: public CxxTest::TestSuite
+class TestGeneralTestFilter : public TESTCPP_NS::TestFixture
 {
       MockObject<NameMatcher> testcaseMatcher;
 
@@ -301,7 +301,7 @@ struct Interface : public Base0, public Base1
    virtual ~Interface() {}
 };
 
-class TestBar : public CxxTest::TestSuite
+class TestBar : public TESTCPP_NS::TestFixture
 {
 public:
 
@@ -407,7 +407,7 @@ Here is the test fixture for testing *BillManager*:
 
 {{{
 
-class TestBillingManager : public CxxTest::TestSuite
+class TestBillingManager : public TESTCPP_NS::TestFixture
 {
 public:
  
