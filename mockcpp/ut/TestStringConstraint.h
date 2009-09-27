@@ -71,7 +71,7 @@ public:
 
    void testShouldBeAbleToEvalAPCharWithSpecifiedPredict()
    {
-      char* input = "abcd";
+      char* input = (char*)"abcd";
       TS_ASSERT(constraint->eval(input));
    }
 
