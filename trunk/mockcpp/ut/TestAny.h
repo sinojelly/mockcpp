@@ -178,6 +178,14 @@ public:
       TS_ASSERT_EQUALS(2, any_cast<unsigned long>(a));
    }
 
+   void testShouldBeAbleToCastNonnegtiveIntToUnsignedLong()
+   {
+      Any a((int)5);
+
+      TS_ASSERT(any_castable<unsigned long>(a));
+      TS_ASSERT_EQUALS(5, any_cast<unsigned long>(a));
+   }
+
    void testShouldBeAbleToCastInScopeUnsignedCharToChar()
    {
       Any a((unsigned char)std::numeric_limits<char>::max());
