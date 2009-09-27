@@ -47,6 +47,16 @@ class TestMockObject2 : public TESTCPP_NS::TestFixture
    {
       virtual const std::string& a() {}
       virtual void b(bool) {}
+
+      enum Result
+      {
+         S_OK,
+         S_FAILED
+      };
+
+      virtual Result getResult() const = 0;
+      virtual unsigned int getResult1() const = 0;
+      virtual void setResult(int) = 0;
    };
 
 
@@ -61,9 +71,43 @@ public:
 		checkpoint = TESTCPP_SET_RESOURCE_CHECK_POINT();
 
    }
+
 	void tearDown()
    {
       TESTCPP_VERIFY_RESOURCE_CHECK_POINT(checkpoint);
+   }
+
+   // returnValue() : int => enum
+   void testShouldBeAbleToConvertReturnValueFromIntToEnum()
+   {
+      MockObject<Interface> mock;
+      mock.method(&Interface::getResult).stubs().will(returnValue(1));
+
+      TS_ASSERT_EQUALS(Interface::S_FAILED, mock->getResult());
+   }
+
+#if 0
+   // returnValue() : enum => unsigned int 
+   void testShouldBeAbleToConvertReturnValueFromEnumToInt()
+   {
+      MockObject<Interface> mock;
+      mock.method(&Interface::getResult1)
+          .stubs().will(returnValue(Interface::S_FAILED));
+
+      TS_ASSERT_EQUALS(1, mock->getResult1());
+   }
+#endif
+
+   // eq() : int => enum
+   void testShouldBeAbleToConvertConstraintsFromIntToEnum()
+   {
+      MockObject<Interface> mock;
+      mock.method(&Interface::setResult)
+         .expects(once()).with(eq(Interface::S_FAILED));
+
+      mock->setResult(1);
+
+      mock.verify();
    }
 
    // returnValue() : int => long
@@ -75,7 +119,7 @@ public:
       TS_ASSERT_EQUALS(12, mock->base11(""));
    }
 
-   // returnValue() : int => long
+   // eq() : int => long
    void testShouldBeAbleToConvertConstraints()
    {
       MockObject<Interface> mock;
