@@ -263,5 +263,70 @@ public:
       const std::string& result = any_cast<const std::string&>(ref);
       TS_ASSERT_EQUALS(std::string("abcdef"), result);
    }
+
+   enum Enum { Enum10 = 10 };
+
+   void testShouldBeAbleToEnumToSameEnum()
+   {
+      Any e(Enum10);
+
+      TS_ASSERT_EQUALS(Enum10, any_cast<Enum>(e));
+   }
+
+   void testShouldBeAbleToCastLongToEnum()
+   {
+      Any l((long)10);
+
+      TS_ASSERT_EQUALS(Enum10, any_cast<Enum>(l));
+   }
+
+   void testShouldBeAbleToCastIntToEnum()
+   {
+      Any i((int)10);
+
+      TS_ASSERT_EQUALS(Enum10, any_cast<Enum>(i));
+   }
+
+   void testShouldBeAbleToCastShortToEnum()
+   {
+      Any s((short)10);
+
+      TS_ASSERT_EQUALS(Enum10, any_cast<Enum>(s));
+   }
+
+   void testShouldBeAbleToCastCharToEnum()
+   {
+      Any c((char)10);
+
+      TS_ASSERT_EQUALS(Enum10, any_cast<Enum>(c));
+   }
+
+   void testShouldBeAbleToCastUnsignedLongToEnum()
+   {
+      Any l((unsigned long)10);
+
+      TS_ASSERT_EQUALS(Enum10, any_cast<Enum>(l));
+   }
+
+   void testShouldBeAbleToCastUnsignedIntToEnum()
+   {
+      Any i((unsigned int)10);
+
+      TS_ASSERT_EQUALS(Enum10, any_cast<Enum>(i));
+   }
+
+   void testShouldBeAbleToCastUnsignedShortToEnum()
+   {
+      Any s((unsigned short)10);
+
+      TS_ASSERT_EQUALS(Enum10, any_cast<Enum>(s));
+   }
+
+   void testShouldBeAbleToCastUnsignedCharToEnum()
+   {
+      Any c((unsigned char)10);
+
+      TS_ASSERT_EQUALS(Enum10, any_cast<Enum>(c));
+   }
 };
 
