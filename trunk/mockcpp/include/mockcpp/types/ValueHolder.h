@@ -57,24 +57,23 @@ private:
 template <typename ValueType>
 struct UnsignedLongHolder : public Holder<ValueType>
 {
+protected:
+    union Held{
+       unsigned long  ul;
+       unsigned int   ui;
+       unsigned short us;
+       unsigned char  uc;
+       Held(const unsigned long  value) : ul(value) {}
+       Held(const unsigned int   value) : ul(value) {}
+       Held(const unsigned short value) : ul(value) {}
+       Held(const unsigned char  value) : ul(value) {}
+    } held;
 public:
 
-    UnsignedLongHolder(const unsigned long& value)
-      : held(value)
+    UnsignedLongHolder(const ValueType& value)
+        : held(value)
     {
     }
-
-    const ValueType& getValue() const
-    {
-       return reinterpret_cast<const ValueType&>(held);
-    }
-
-    PlaceHolder * clone() const
-    { return new UnsignedLongHolder(held); }
-
-protected:
-
-    unsigned long held;
 };
 
 ///////////////////////////////////////////////
@@ -86,6 +85,14 @@ struct ValueHolder<unsigned long>
       : UnsignedLongHolder<unsigned long>(value)
     {
     }
+
+    const unsigned long& getValue() const
+    {
+       return held.ul;
+    }
+
+    PlaceHolder * clone() const
+    { return new ValueHolder(held.ul); }
 };
 
 ///////////////////////////////////////////////
@@ -97,6 +104,14 @@ struct ValueHolder<unsigned int>
       : UnsignedLongHolder<unsigned int>(value)
     {
     }
+
+    const unsigned int& getValue() const
+    {
+       return held.ui;
+    }
+
+    PlaceHolder * clone() const
+    { return new ValueHolder(held.ui); }
 };
 
 ///////////////////////////////////////////////
@@ -108,6 +123,14 @@ struct ValueHolder<unsigned short>
       : UnsignedLongHolder<unsigned short>(value)
     {
     }
+
+    const unsigned short& getValue() const
+    {
+       return held.us;
+    }
+
+    PlaceHolder * clone() const
+    { return new ValueHolder(held.us); }
 };
 
 ///////////////////////////////////////////////
@@ -119,7 +142,116 @@ struct ValueHolder<unsigned char>
       : UnsignedLongHolder<unsigned char>(value)
     {
     }
+
+    const unsigned char& getValue() const
+    {
+       return held.uc;
+    }
+
+    PlaceHolder * clone() const
+    { return new ValueHolder(held.uc); }
 };
+
+///////////////////////////////////////////////
+template <typename ValueType>
+struct SignedLongHolder : public Holder<ValueType>
+{
+protected:
+    union Held{
+       long  sl;
+       int   si;
+       short ss;
+       char  sc;
+       Held(const long  value) : sl(value) {}
+       Held(const int   value) : sl(value) {}
+       Held(const short value) : sl(value) {}
+       Held(const char  value) : sl(value) {}
+    } held;
+public:
+
+    SignedLongHolder(const ValueType& value)
+        : held(value)
+    {
+    }
+};
+
+///////////////////////////////////////////////
+template <>
+struct ValueHolder<long> 
+   : public SignedLongHolder<long>
+{
+    ValueHolder(const long& value)
+      : SignedLongHolder<long>(value)
+    {
+    }
+
+    const long& getValue() const
+    {
+       return held.sl;
+    }
+
+    PlaceHolder * clone() const
+    { return new ValueHolder(held.sl); }
+};
+
+///////////////////////////////////////////////
+template <>
+struct ValueHolder<int> 
+   : public SignedLongHolder<int>
+{
+    ValueHolder(const int& value)
+      : SignedLongHolder<int>(value)
+    {
+    }
+
+    const int& getValue() const
+    {
+       return held.si;
+    }
+
+    PlaceHolder * clone() const
+    { return new ValueHolder(held.si); }
+};
+
+///////////////////////////////////////////////
+template <>
+struct ValueHolder<short> 
+   : public SignedLongHolder<short>
+{
+    ValueHolder(const short& value)
+      : SignedLongHolder<short>(value)
+    {
+    }
+
+    const short& getValue() const
+    {
+       return held.ss;
+    }
+
+    PlaceHolder * clone() const
+    { return new ValueHolder(held.ss); }
+};
+
+///////////////////////////////////////////////
+template <>
+struct ValueHolder<char> 
+   : public SignedLongHolder<char>
+{
+    ValueHolder(const char& value)
+      : SignedLongHolder<char>(value)
+    {
+    }
+
+    const char& getValue() const
+    {
+       return held.sc;
+    }
+
+    PlaceHolder * clone() const
+    { return new ValueHolder(held.sc); }
+};
+
+///////////////////////////////////////////////
 
 MOCKCPP_NS_END
 
