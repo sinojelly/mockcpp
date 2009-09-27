@@ -19,6 +19,8 @@
 #ifndef __MOCKPP_ANY_CAST_H
 #define __MOCKPP_ANY_CAST_H
 
+#include <boost/type_traits/is_enum.hpp>
+
 #include <mockcpp/mockcpp.h>
 
 #include <mockcpp/types/AnyBase.h>
@@ -30,7 +32,7 @@
 MOCKCPP_NS_START
 
 /////////////////////////////////////////////////////////////////
-template<typename ValueType>
+template <typename ValueType>
 ValueType* __any_cast(AnyBase* operand)
 {
    typedef typename TypeTraits<ValueType>::Type nonref;
@@ -47,10 +49,40 @@ ValueType* __any_cast(AnyBase* operand)
 }
 
 /////////////////////////////////////////////////////////////////
-template<typename ValueType>
+template <typename ValueType, bool IsEnum>
+struct AnyCast
+{
+   static ValueType* cast(AnyBase* operand)
+   {
+      return __any_cast<ValueType>(operand);
+   }
+};
+
+/////////////////////////////////////////////////////////////////
+template <typename ValueType>
+struct AnyCast<ValueType, true>
+{
+   static ValueType* cast(AnyBase* operand)
+   {
+      ValueType* p = 0;
+      ( p = __any_cast<ValueType>(operand)) || \
+      ( p = (ValueType*)__any_cast<unsigned long>(operand)) || \
+      ( p = (ValueType*)__any_cast<unsigned int>(operand)) || \
+      ( p = (ValueType*)__any_cast<unsigned short>(operand)) || \
+      ( p = (ValueType*)__any_cast<unsigned char>(operand)) || \
+      ( p = (ValueType*)__any_cast<long>(operand)) || \
+      ( p = (ValueType*)__any_cast<int>(operand)) || \
+      ( p = (ValueType*)__any_cast<short>(operand)) || \
+      ( p = (ValueType*)__any_cast<char>(operand)) ;
+      return p;
+   }
+};
+
+/////////////////////////////////////////////////////////////////
+template <typename ValueType>
 ValueType* any_cast(AnyBase* operand)
 {
-   return __any_cast<ValueType>(operand);
+   return AnyCast<ValueType, boost::is_enum<ValueType>::value>::cast(operand);
 }
 
 /////////////////////////////////////////////////////////////////
@@ -124,7 +156,6 @@ bool any_castable(const AnyBase& val)
 
     return (!val.empty()) && (any_cast<nonref>(&val) != 0);
 }
-
 
 /////////////////////////////////////////////////////////////////
 
