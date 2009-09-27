@@ -129,7 +129,7 @@ static void freeMemory(void* p) throw (Error)
    if(header->magic != magicNumber)
    {
       char buf[100];
-      snprintf(buf, sizeof(buf), "memory corruption occurred at %x", p);
+      snprintf(buf, sizeof(buf), "memory corruption occurred at %x", (unsigned int)p);
       throw Error(buf);
    }
 

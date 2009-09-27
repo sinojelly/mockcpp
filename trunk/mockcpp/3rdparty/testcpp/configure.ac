@@ -4,8 +4,7 @@ AC_INIT([testcpp], [0.2], [darwin.yuan@gmail.com])
 AM_INIT_AUTOMAKE([-Wall -Werror foreign])
 LT_INIT([dlopen])
 LT_CONFIG_LTDL_DIR([libltdl])
-#LTDL_INIT([installable])
-LTDL_INIT([convenience])
+LTDL_INIT([installable])
 
 AC_PROG_LIBTOOL
 AC_PROG_CXX
