@@ -1,16 +1,16 @@
 #labels Manual,English,Featured
 =Work in progress=
 
-= Background =
+=1. Background =
 
-mockcpp is a C/C++ mocking framework. It's neither a reinvention of the wheel nor Yet Another C++ Mocking Framework.
+mock++ is a C/C++ mocking framework. It's neither a reinvention of the wheel nor Yet Another C++ Mocking Framework.
 
-Before we started developing mockcpp, the only framework we could find on the Internet was mockpp. And it's the only option when we were
+Before we started developing mock++, the only framework we could find on the Internet was mockpp. And it's the only option when we were
 practicing agile. Though mockpp is an excellent framework, the long compilation time and obscure compilation error messages
 resulted from the use of over sophisticated template was playing a negative role in our TDD practice. In addition, some features we needed
 were missing in mockpp. Then we decided to develop a new framework after our failed attempt to extend it due to its complexity.
 
-mockcpp tries to meet these goals:
+mock++ tries to meet these goals:
 
     * Using template as less as possible to boost compilation speed, reduce obscurity of error message.
     * The error messages emitted from the framework should be easy to understand, complete to help developers identify the problems quickly.
@@ -18,8 +18,13 @@ mockcpp tries to meet these goals:
     * Extensibility to meet unique needs.
     * Ability to mock free function.
 
+mock++ is largely inspired by [http://mockpp.sourceforge.net/ mockpp], [http://www.jmock.org/ jmock]
 
-= Introcution =
+=2. Introcution =
+
+mock++ currently supports following constraints / actions:
+
+    # Setting call count -- {{{expects() / stubs()}}}
 
 == Using Actions ==
 
@@ -29,14 +34,14 @@ Actions play important roles in mocking framework and are the most fundamental v
 
 ===Types of Actions===
 
-  * Returning a value:  _*returnValue(value)*_
-  * Returning more than one values: _*returnObjectList(o1, o2, ...)*_
-  * Throwing an exception: _*throws(exception)*_
-  * Ignoring return value: _*ignoreReturnValue()*_
-  * Delegating to a stub method: _*invoke(stubFucntion)*_
-  * Returning a value repeatly: _*repeat(value, times)*_
-  * Increment a value: _*increase(from, to) / increase(from)*_
+  * Returning a value:  {{{returnValue(value)}}}
+  * Returning more than one values: {{{returnObjectList(o1, o2, ...)}}}
+  * Throwing an exception: {{{throws(exception)}}}
+  * Ignoring return value: {{{ignoreReturnValue()}}}
+  * Delegating to a stub method: {{{invoke(stubFucntion)}}}
+  * Returning a value repeatly: {{{repeat(value, times)}}}
+  * Incrementing a value: {{{increase(from, to) / increase(from)}}}
 
 ===Usage===
 
-Use _*will*_(behavior) /_*then*_(behavior)
+Use {{{will(behavior) / then(behavior)}}}
