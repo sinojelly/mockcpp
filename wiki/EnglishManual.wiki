@@ -1,12 +1,12 @@
 #labels Manual,English,Featured
-Work in progress
+=Work in progress=
 
 = Background =
 
 mockcpp is a C/C++ mocking framework. It's neither a reinvention of the wheel nor Yet Another C++ Mocking Framework.
 
 Before we started developing mockcpp, the only framework we could find on the Internet was mockpp. And it's the only option when we were
-practicing Agile practices. Though mockpp is an excellent framework, the long compilation time and obscure compilation error messages
+practicing agile. Though mockpp is an excellent framework, the long compilation time and obscure compilation error messages
 resulted from the use of over sophisticated template was playing a negative role in our TDD practice. In addition, some features we needed
 were missing in mockpp. Then we decided to develop a new framework after our failed attempt to extend it due to its complexity.
 
