@@ -18,13 +18,19 @@ mock++ tries to meet these goals:
     * Extensibility to meet unique needs.
     * Ability to mock free function.
 
-mock++ is largely inspired by [http://mockpp.sourceforge.net/ mockpp], [http://www.jmock.org/ jmock]
+mock++ is largely inspired by [http://mockpp.sourceforge.net/ mockpp], [http://www.jmock.org/ jmock].
 
 =2. Introcution =
 
 mock++ currently supports following constraints / actions:
 
-    # Setting call count -- {{{expects() / stubs()}}}
+    # Matching call count -- {{{expects() / stubs()}}}
+    # Matching caller -- {{{caller()}}}
+    # Expectation order --- {{{before()}}}
+    # Matching arguments -- {{{with()}}}
+    # Expectation order --- {{{after()}}}
+    # Setting actions -- {{{will() / then()}}}
+    # Assigning an identifier -- {{{id()}}}
 
 == Using Actions ==
 
