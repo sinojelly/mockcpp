@@ -32,6 +32,18 @@ mock++ currently supports following constraints / actions:
     # Setting actions -- {{{will() / then()}}}
     # Assigning an identifier -- {{{id()}}}
 
+Except for expects() / stubs(), other constraints / actions are optional and they should appear in the above below:
+{{{
+mock.method(&Interface::method)
+      .expects(once())
+      .before(anotherMock, "close")
+      .with(eq(1), any(), neq(2.0))
+      .after(anotherMock, "open")
+      .will(returnValue(true))
+      .then(throws(std::exception))
+      .id("myMethod");
+}}}
+
 == Using Actions ==
 
 ===Purpose===
