@@ -69,3 +69,24 @@ returnValue() is used to set value to be returned when the mocked method is call
 You might want to return different values for the same method call. To do this, use returnObjectList(). mockcpp will return each of value specified in returnObjectList() in turn. If returnObjectList() is the last action, mockcpp will issue an error if the mocked method is called and the values have been used. If it's not, the action following it will take effect. In addition, the number of values supported by returnObjectList is limited. It might be a problem under some circumstance. To workaround this, use then() since it can be called any number of times.
 
 To throw an exception, use throws(exception) even the method's return type of is void. When the method's return type is not void, an action must be specified even the return value is uninterested.
+
+
+Usage
+
+
+To specify arguments we are expecting, use with(contraint1, contraint2, …), where the constraints should be in the same order as in the method prototype. You can also use any() to ignore a argument. Calls to any() following the last non-ignoring constraints can be omitted.
+
+
+For eq() and neq(), an compilation error will be thrown if equality test is not supported by the given type. To fix this, Add this capability by overloading '=='.
+
+mirror is to constrain the content of a memory block. size argument can be ignored if it's used in object content comparison.
+
+Note that when testing object content. the random padding bytes used to adjust object alignment can sometimes cause error. in C, you can use memset to set those bytes to 0. In C++, same effect can be achieved by using eq() on object whose '==' operator is overloaded.
+
+
+startWith()，endWith(), contains() are used to constrain a string. startWith() tests if a string starts with the specified prefix, endWith() tests if a string ends with the specified prefix. Now you can guess what contains() means.
+
+smirror is to test if a string equals to the specifed one. It's special implementation of mirror(). They only differ in that for smirror(), size can be calculated by mockcpp hence programmer is free from providing it. In addition, smirror() doesn't have the padding issue.
+
+
+For output argument, 
