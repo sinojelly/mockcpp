@@ -32,7 +32,7 @@ mock++ currently supports following constraints / actions:
     # Setting actions -- {{{will() / then()}}}
     # Assigning an identifier -- {{{id()}}}
 
-Except for expects() / stubs(), other constraints / actions are optional and should appear in the order below:
+Except for {{{expects() / stubs()}}}, other constraints / actions are optional and should appear in the order below:
 
 {{{
     mock.method(&Interface::method)
@@ -91,9 +91,9 @@ last action will be used for any additional calls as long as the constraints are
 
 You might want to return different values for the same method call. To do this, use {{{returnObjectList()}}}. mock++ will return each value specified in {{{returnObjectList()}}} in turn. If {{{returnObjectList()}}} is the last action, mock++ will issue an error if the mocked method is called and the values have been used up. Otherwise, the action following it will take effect. 
 
-Currently the number of values supported by returnObjectList is limited. It might be a problem under some circumstance. To workaround this, use then() since it can be called any number of times.
+Currently the number of values supported by {{{returnObjectList}}} is limited. It might be a problem under some circumstance. To workaround this, use {{{then()}}} since it can be called any number of times.
 
-To throw an exception, use throws(exception). 
+To throw an exception, use {{{throws(exception)}}}. 
 
 When the method has return value, an action must be specified even the return value is uninterested.
 
