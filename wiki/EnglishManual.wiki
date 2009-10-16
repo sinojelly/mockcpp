@@ -32,7 +32,7 @@ mock++ currently supports following constraints / actions:
     # Setting actions -- {{{will() / then()}}}
     # Assigning an identifier -- {{{id()}}}
 
-Except for expects() / stubs(), other constraints / actions are optional and they should appear in the above below:
+Except for expects() / stubs(), other constraints / actions are optional and should appear in the order below:
 {{{
 mock.method(&Interface::method)
       .expects(once())
@@ -62,17 +62,15 @@ Actions play important roles in mocking framework and are the most fundamental v
 
 ===Usage===
 
-Use {{{will(behavior) / then(behavior)}}}
-
-
-To specify actions, use will(behavior) / then(behavior). will() must be called before then() and can be called only once whereas then() multiple times.
+To specify actions, use {{{will(behavior) / then(behavior)}}}. {{{will()}}} must be called before {{{then()}}} and can be called only once whereas {{{then()}}} multiple times.
+{{{
      mock.method(&Interface::foo)
                 .stubs()
                 .will(returnValue(10))
                 .then(repeat(20, 2))
                 .then(throws(std::exception))
                 .then(returnValue(5));
-
+}}}
 When using will()/then(), the specified actions will take effect in the order specified. In case of the number of calls is greater than the number of actions, the
 last action will be used for any additional calls as long as the constraints are meet. The following assertion are true given the mock specification above, for instance.
 
