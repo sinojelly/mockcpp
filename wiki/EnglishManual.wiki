@@ -1,7 +1,7 @@
 #labels Manual,English,Featured
 =Work in progress=
 
-=1. Background =
+=1. Background=
 
 mock++ is a C/C++ mocking framework. It's neither a reinvention of the wheel nor Yet Another C++ Mocking Framework.
 
@@ -20,7 +20,7 @@ mock++ tries to meet these goals:
 
 mock++ is largely inspired by [http://mockpp.sourceforge.net/ mockpp], [http://www.jmock.org/ jmock].
 
-=2. Introcution =
+=2. Introcution=
 
 mock++ currently supports following constraints / actions:
 
@@ -45,7 +45,7 @@ Except for expects() / stubs(), other constraints / actions are optional and sho
         .id("myMethod");
 }}}
 
-== Using Actions ==
+==2.1 Using Actions==
 
 ===Purpose===
 
@@ -135,7 +135,30 @@ void test_should_throw_exception_if_open_file_failed ()
 }}}
 
 
-==2.2 Argument Matchers==
+==2.2 Matching Arguments==
+
+===Purpose===
+
+===Matchers===
+
+Input Argument Matcher
+  * Generic Comparison
+    * {{{eq(value)}}}
+    * {{{neq(value)}}}
+  * Memory Matchers 
+    * {{{mirror(object)}}} 
+    * {{{mirror(address, size)}}}
+  * String Matchers
+    * {{{smirror(str)}}}
+    * {{{startWith(str)}}}
+    * {{{endWith(str)}}}
+    * {{{contains(str)}}}
+  * Wildcard
+    * {{{any()}}}
+
+Output Argument Matcher
+  * Output through reference: {{{outBound(reference, constraint)}}}
+  * Output through pointer: {{{outBound(point, constraint)}}}
 
 ===Usage===
 
