@@ -33,15 +33,16 @@ mock++ currently supports following constraints / actions:
     # Assigning an identifier -- {{{id()}}}
 
 Except for expects() / stubs(), other constraints / actions are optional and should appear in the order below:
+
 {{{
-mock.method(&Interface::method)
-      .expects(once())
-      .before(anotherMock, "close")
-      .with(eq(1), any(), neq(2.0))
-      .after(anotherMock, "open")
-      .will(returnValue(true))
-      .then(throws(std::exception))
-      .id("myMethod");
+    mock.method(&Interface::method)
+        .expects(once())
+        .before(anotherMock, "close")
+        .with(eq(1), any(), neq(2.0))
+        .after(anotherMock, "open")
+        .will(returnValue(true))
+        .then(throws(std::exception))
+        .id("myMethod");
 }}}
 
 == Using Actions ==
@@ -63,40 +64,89 @@ Actions play important roles in mocking framework and are the most fundamental v
 ===Usage===
 
 To specify actions, use {{{will(behavior) / then(behavior)}}}. {{{will()}}} must be called before {{{then()}}} and can be called only once whereas {{{then()}}} multiple times.
+
 {{{
-     mock.method(&Interface::foo)
-                .stubs()
-                .will(returnValue(10))
-                .then(repeat(20, 2))
-                .then(throws(std::exception))
-                .then(returnValue(5));
+    mock.method(&Interface::foo)
+        .stubs()
+        .will(returnValue(10))
+        .then(repeat(20, 2))
+        .then(throws(std::exception))
+        .then(returnValue(5));
 }}}
-When using will()/then(), the specified actions will take effect in the order specified. In case of the number of calls is greater than the number of actions, the
-last action will be used for any additional calls as long as the constraints are meet. The following assertion are true given the mock specification above, for instance.
 
-returnValue() is used to set value to be returned when the mocked method is called. If it's the last action specified, the value will be returned on all method calls. If it's not, that value will be used only once.
+When using {{{will() / then()}}}, actions will take effect in the order specified. In case of the number of calls is greater than the number of actions, the
+last action will be used for any additional calls as long as the constraints are met. Given the mock above specification, for instance, the following assertions are true:
 
-You might want to return different values for the same method call. To do this, use returnObjectList(). mockcpp will return each of value specified in returnObjectList() in turn. If returnObjectList() is the last action, mockcpp will issue an error if the mocked method is called and the values have been used. If it's not, the action following it will take effect. In addition, the number of values supported by returnObjectList is limited. It might be a problem under some circumstance. To workaround this, use then() since it can be called any number of times.
+{{{ 
+    TS_ASSERT_EQUALS(10, mock->foo());
+    TS_ASSERT_EQUALS(20, mock->foo());
+    TS_ASSERT_EQUALS(20, mock->foo()); 
+    TS_ASSERT_THROWS(mock->foo(), std::exception); 
+    TS_ASSERT_EQUALS(5, mock->foo()); 
+    TS_ASSERT_EQUALS(5, mock->foo()); 
+    TS_ASSERT_EQUALS(5, mock->foo()); 
+}}}
 
-To throw an exception, use throws(exception) even the method's return type of is void. When the method's return type is not void, an action must be specified even the return value is uninterested.
+{{{returnValue()}}} is used to set value to be returned when the mocked method is called. If it's the last action specified, the value will be returned on all method calls. Otherwise, that value will be used only once.
+
+You might want to return different values for the same method call. To do this, use {{{returnObjectList()}}}. mock++ will return each value specified in {{{returnObjectList()}}} in turn. If {{{returnObjectList()}}} is the last action, mockcpp will issue an error if the mocked method is called and the values have been used up. Otherwise, the action following it will take effect. 
+
+Currently the number of values supported by returnObjectList is limited. It might be a problem under some circumstance. To workaround this, use then() since it can be called any number of times.
+
+To throw an exception, use throws(exception). 
+
+When the method has return value, an action must be specified even the return value is uninterested.
+
+===Example===
+
+{{{
+// Interface on which AwkProcessor depends
+struct ITextFileReader
+{
+    virtual void open(const char* name) = 0;
+    virtual bool close() = 0;
+    virtual String readLine() = 0;
+
+    virtual ~ITextFile() {}
+};
+
+// Code under test
+struct AwkProcessor
+{
+    AwkProcessor(ITextFileReader* fileReader);
+
+    String process(const char* textFileName, String script); 
+};
+
+// Test case
+void test_should_throw_exception_if_open_file_failed ()
+{
+   MockObject<ITextFileReader> textFile;
+
+   textFile.method(&ITextFile::open)
+                 .stubs()
+                 .will(throwException(Exception( "File Not Exist" )));
+
+    ///////////////////////////////////////////////
+    AwkProcessor awkProcessor(textFile);
+
+    TS_ASSERT_THROWS( awkProcessor.process("myFile.txt", "{print $2}"), Exception);
+}
+}}}
 
 
-Usage
+==2.2 Argument Matchers==
 
+===Usage===
 
-To specify arguments we are expecting, use with(contraint1, contraint2, …), where the constraints should be in the same order as in the method prototype. You can also use any() to ignore a argument. Calls to any() following the last non-ignoring constraints can be omitted.
+To specify arguments you are expecting, use {{{with(contraint1, contraint2, …)}}}, where the constraints should be in the same order as in the method prototype. You can also use {{{any()}}} to ignore a argument. Calls to {{{any()}}} following the last explict constraints can be omitted.
 
+For {{{eq()}}} and {{{neq()}}}, an compilation error will occur if equality test is not supported by the given type. To fix this, Add this capability by overloading '=='.
 
-For eq() and neq(), an compilation error will be thrown if equality test is not supported by the given type. To fix this, Add this capability by overloading '=='.
+{{{mirror()}}} is used to constrain the content of a memory block. size can be ignored if it's used in object content comparison.
 
-mirror is to constrain the content of a memory block. size argument can be ignored if it's used in object content comparison.
+Note that when comparing object content. the random padding bytes used to adjust object alignment can sometimes cause error. in C, you can use {{{memset}}} to set those bytes to 0. In C++, the same effect can be achieved by using {{{eq()}}} on object whose '==' operator is overloaded.
 
-Note that when testing object content. the random padding bytes used to adjust object alignment can sometimes cause error. in C, you can use memset to set those bytes to 0. In C++, same effect can be achieved by using eq() on object whose '==' operator is overloaded.
+{{{startWith()，endWith(), contains()}}} are used to match a string. {{{startWith()}}} tests if a string starts with the specified prefix, {{{endWith()}}} tests if a string ends with the specified prefix. Now you can guess what contains() means.
 
-
-startWith()，endWith(), contains() are used to constrain a string. startWith() tests if a string starts with the specified prefix, endWith() tests if a string ends with the specified prefix. Now you can guess what contains() means.
-
-smirror is to test if a string equals to the specifed one. It's special implementation of mirror(). They only differ in that for smirror(), size can be calculated by mockcpp hence programmer is free from providing it. In addition, smirror() doesn't have the padding issue.
-
-
-For output argument, 
+{{{smirror()}}} is to test if a string equals to the specifed one. It's a case of mirror(). They only differ in that for {{{smirror()}}}, size can be calculated by mockcpp hence programmer is free from providing it. In addition, {{{smirror()}}} doesn't have the padding issue.
