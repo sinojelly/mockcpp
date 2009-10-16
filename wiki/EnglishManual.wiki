@@ -51,3 +51,21 @@ Actions play important roles in mocking framework and are the most fundamental v
 ===Usage===
 
 Use {{{will(behavior) / then(behavior)}}}
+
+
+To specify actions, use will(behavior) / then(behavior). will() must be called before then() and can be called only once whereas then() multiple times.
+     mock.method(&Interface::foo)
+                .stubs()
+                .will(returnValue(10))
+                .then(repeat(20, 2))
+                .then(throws(std::exception))
+                .then(returnValue(5));
+
+When using will()/then(), the specified actions will take effect in the order specified. In case of the number of calls is greater than the number of actions, the
+last action will be used for any additional calls as long as the constraints are meet. The following assertion are true given the mock specification above, for instance.
+
+returnValue() is used to set value to be returned when the mocked method is called. If it's the last action specified, the value will be returned on all method calls. If it's not, that value will be used only once.
+
+You might want to return different values for the same method call. To do this, use returnObjectList(). mockcpp will return each of value specified in returnObjectList() in turn. If returnObjectList() is the last action, mockcpp will issue an error if the mocked method is called and the values have been used. If it's not, the action following it will take effect. In addition, the number of values supported by returnObjectList is limited. It might be a problem under some circumstance. To workaround this, use then() since it can be called any number of times.
+
+To throw an exception, use throws(exception) even the method's return type of is void. When the method's return type is not void, an action must be specified even the return value is uninterested.
