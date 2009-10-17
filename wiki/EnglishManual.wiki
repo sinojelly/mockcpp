@@ -22,17 +22,17 @@ mock++ is largely inspired by [http://mockpp.sourceforge.net/ mockpp], [http://w
 
 =2. Introcution=
 
-mock++ currently supports following constraints / actions:
+mock++ currently supports following constraints/actions:
 
-    # Matching call count -- {{{expects() / stubs()}}}
+    # Matching call count -- {{{expects()/stubs()}}}
     # Matching caller -- {{{caller()}}}
     # Expectation order --- {{{before()}}}
     # Matching arguments -- {{{with()}}}
     # Expectation order --- {{{after()}}}
-    # Setting actions -- {{{will() / then()}}}
+    # Setting actions -- {{{will()/then()}}}
     # Assigning an identifier -- {{{id()}}}
 
-Except for {{{expects() / stubs()}}}, other constraints / actions are optional and should appear in the order below:
+Except for {{{expects()/stubs()}}}, other constraints/actions are optional and should appear in the order below:
 
 {{{
     mock.method(&Interface::method)
@@ -59,11 +59,11 @@ Actions play important roles in mocking framework and are the most fundamental v
   * Ignoring return value: {{{ignoreReturnValue()}}}
   * Delegating to a stub method: {{{invoke(stubFucntion)}}}
   * Returning a value repeatly: {{{repeat(value, times)}}}
-  * Incrementing a value: {{{increase(from, to) / increase(from)}}}
+  * Incrementing a value: {{{increase(from, to)/increase(from)}}}
 
 ===Usage===
 
-To specify actions, use {{{will(behavior) / then(behavior)}}}. {{{will()}}} must be called before {{{then()}}} and can be called only once whereas {{{then()}}} multiple times.
+To specify actions, use {{{will(behavior)/then(behavior)}}}. {{{will()}}} must be called before {{{then()}}} and can be called only once whereas {{{then()}}} multiple times.
 
 {{{
     mock.method(&Interface::foo)
@@ -74,7 +74,7 @@ To specify actions, use {{{will(behavior) / then(behavior)}}}. {{{will()}}} must
         .then(returnValue(5));
 }}}
 
-When using {{{will() / then()}}}, actions will take effect in the order specified. In case of the number of calls is greater than the number of actions, the
+When using {{{will()/then()}}}, actions will take effect in the order specified. In case of the number of calls is greater than the number of actions, the
 last action will be used for any additional calls as long as the constraints are met. Given the mock above specification, for instance, the following assertions are true:
 
 {{{ 
@@ -138,6 +138,12 @@ void test_should_throw_exception_if_open_file_failed ()
 ==2.2 Matching Arguments==
 
 ===Purpose===
+
+You can have multiple mock specification for the same method. When the mock method is called, mock++ will find the mock specification whose argument matchers are all satisfied and execute the action specified (return a value, throw an exception, etc.). In this case argument matchers are actually acting as selectors instead of constraints.
+
+mock++ will fail the test case if it can't find a proper mock specification. In this case argument matchers act more like constraint.
+
+For C/C++ supports output arguments(through reference/pointer), argument matchers are acting like stubs.
 
 ===Matchers===
 
