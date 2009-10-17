@@ -188,7 +188,7 @@ For output argument, {{{outBound()/outBoundP()}}} can be used to set output valu
   * When a method is called multiple times by the tested method and might return different values under different circumstances. (use {{{returnObjectList(…)}}} if the mocked method return value types)
   * When value is obtained through output argument
 
-====When to Avoid It===
+===When to Avoid It===
 
   * Argument value has nothing to do with the correctness of method implementation
   * Call to {{{log}}} or {{{debug}}}
