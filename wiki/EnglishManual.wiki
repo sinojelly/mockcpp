@@ -179,3 +179,16 @@ Note that when comparing object content. the random padding bytes used to adjust
 {{{startWith()，endWith(), contains()}}} are used to match a string. {{{startWith()}}} tests if a string starts with the specified prefix, {{{endWith()}}} tests if a string ends with the specified prefix. Now you can guess what contains() means.
 
 {{{smirror()}}} is to test if a string equals to the specifed one. It's a case of mirror(). They only differ in that for {{{smirror()}}}, size can be calculated by mock++ hence programmer is free from providing it. In addition, {{{smirror()}}} doesn't have the padding issue.
+
+For output argument, {{{outBound()/outBoundP()}}} can be used to set output value and input constraint should be left unspecified. For inout argument, argument constraint can be specified in {{{outBound()/outBoundP()}}} or left unspecified if you don't care about the input value.
+
+===When to Use It===
+
+  * When the input value determines whether the implementation of the tested method is correct or not. i.e. No matter how the method implementation is refactored, the argument constraints are always valid or the implementation could be wrong once the constraints are removed.
+  * When a method is called multiple times by the tested method and might return different values under different circumstances. (use {{{returnObjectList(…)}}} if the mocked method return value types)
+  * When value is obtained through output argument
+
+====When to Avoid It===
+
+  * Argument value has nothing to do with the correctness of method implementation
+  * Call to {{{log}}} or {{{debug}}}
