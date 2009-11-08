@@ -3,6 +3,7 @@
 // for new/delete
 #include <new>
 #include <stdlib.h>
+#include <cstdio>
 
 // for error string
 #include <sstream>
