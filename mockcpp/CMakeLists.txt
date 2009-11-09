@@ -1,0 +1,7 @@
+
+CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+
+PROJECT(mockcpp)
+
+ADD_SUBDIRECTORY(src src/.libs)
+
