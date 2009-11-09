@@ -8,7 +8,7 @@ ELSE()
 ENDIF(PYTHONINTERP_FOUND)
 
 IF(WIN32)
-    SET(MOVE move /A /Y )
+    SET(MOVE move /Y )
 ELSE()
     SET(MOVE mv -f )
 ENDIF()
