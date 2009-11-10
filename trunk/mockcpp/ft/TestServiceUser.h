@@ -31,6 +31,11 @@ int service_f17_stub(const char* fmt, ...)
 	return 2008;
 }
 
+struct VirtualTable
+{
+   void (*pmf0)(int, double);
+};
+
 class TestServiceUser: public TESTCPP_NS::TestFixture
 {
 public:

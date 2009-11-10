@@ -282,12 +282,12 @@ EXTRA_VTBL_HEADERS_DEFS = --allow-mi=$(ALLOW_MI) --max-inheritance=$(MAX_INHERIT
 EXTRA_PARAMS_HEADERS_DEFS = --max-parameters=$(MAX_PARAMETERS) --include-path=$(MOCKCPP_SRC_PATH)
 
 $(VBTL_RELATED_HEADER_FILES) : 
-	$(PYTHON) $(top_builddir)/src/generate_vtbl_related_files.py $(EXTRA_VTBL_HEADERS_DEFS) $(@F)
+	@$(PYTHON) $(top_builddir)/src/generate_vtbl_related_files.py $(EXTRA_VTBL_HEADERS_DEFS) $(@F)
 	@$(DIFF) $@ $(@F) >/dev/null 2>&1 || $(COPY) $(MOCKCPP_SRC_PATH)/$(@F) $@
 	@$(RM) $(MOCKCPP_SRC_PATH)/$(@F)
 
 $(ARG_RELATED_HEADER_FILES) : 
-	$(PYTHON) $(top_builddir)/src/generate_arg_related_files.py $(EXTRA_PARAMS_HEADERS_DEFS) $(@F)
+	@$(PYTHON) $(top_builddir)/src/generate_arg_related_files.py $(EXTRA_PARAMS_HEADERS_DEFS) $(@F)
 	@$(DIFF) $@ $(@F) >/dev/null 2>&1 || $(COPY) $(MOCKCPP_SRC_PATH)/$(@F) $@
 	@$(RM) $(MOCKCPP_SRC_PATH)/$(@F)
 
