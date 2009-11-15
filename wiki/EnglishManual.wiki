@@ -51,7 +51,7 @@ Except for {{{expects()/stubs()}}}, other constraints/actions are optional and s
 
 Actions play important roles in mocking framework and are the most fundamental value provided by mocking frameworks. Through actions, mocks act as stubs, yet in a better way.
 
-===Types of Actions===
+===Supported Actions===
 
   * Returning a value:  {{{returnValue(value)}}}
   * Returning more than one values: {{{returnObjectList(o1, o2, ...)}}}
@@ -193,31 +193,97 @@ For output argument, {{{outBound()/outBoundP()}}} can be used to set output valu
   * Argument value has nothing to do with the correctness of method implementation
   * Call to {{{log}}} or {{{debug}}}
 
+
 ==2.3 Cardinality==
-
-
 
 ===Purpose===
 
+Call count is important in many cases. In these cases, the number of calls reflect the correctness of the implementation. And the sole purpose of Cardinality is helping developer to do this type of validation. 
 
+===Supported Constraints===
 
-===Types===
-
-
+  * the method is called exactly once: {{{once}}}
+  * The call is expected at least {{{n}}} times:
+    * {{{atLeast(n)}}}
+    * {{{atLeastOnce()}}}
+  * The call is expected at most n times:
+    * {{{atMost(n)}}}
+    * {{{atMostOnce()}}}
+  * the method will never be called: {{{never}}}
 
 ===Usage===
 
-
+To specify number of calls, use {{{expects(times)}}}, where times is the constraints, such as {{{once()}}}; Use {{{stubs}}} if you do don't care about the number of calls.
 
 ===When to Use It===
 
-
+  * If the method being called can modify the system state and the number of calls to it determines the correctness of the implementation. i.e. No matter how the tested method is refactored, the constraint of the number of calls to the mocked method is always true as long as the tested method is consuming some type of services through the mocked method.
 
 ===When to Avoid It===
 
-
+  * The number of calls has nothing to do with the correctness of implementation
+  * Calls to method which are irrelevant to the implementation, such debug, log
+  * If the method being called is for query, then we'd better not to specify the precise number of calls. Use {{{atLeast()}}} instead to make sure it's called or simply ignore it
 
 ===Example===
+
+{{{
+// Interface on which AwkProcessor depends
+struct ITextFileReader
+{
+   virtual void open(const char* name) = 0;
+   virtual bool close() = 0;
+   virtual String readLine() = 0;
+
+   virtual ~ITextFile() {}
+};
+}}}
+
+{{{
+// Code under test
+struct AwkProcessor
+{
+   AwkProcessor(ITextFileReader* fileReader);
+
+   String process(const char* textFileName, String script); 
+};
+}}}
+
+{{{
+// test case
+void test_should_be_able_to_process_a_text_file()
+{
+   MockObject<ITextFileReader> textFile;
+
+   String line1("1  A");
+   String line2("2  B");
+   String line3("3  C");
+
+   char * fileName = "testFile";
+
+   ///////////////////////////////////////////////
+   textFile.method(&ITextFile::open)
+                 .expects(atLeast(1))
+                 .with(endWith(fileName));
+
+   textFile.method(&ITextFile::close)
+                 .expects(atLeast(1))
+                 .will(ignoreReturnValue());
+
+   textFile.method(&ITextFile::readLine)
+                 .stubs()
+                 .will(returnObjectList(line1, line2, line3))
+                 .then(throws(EOFError));
+
+   ///////////////////////////////////////////////
+   AwkProcessor awkProcessor(textFile);
+
+   String result = awkProcessor.process(fileName, "{print $2}");
+    
+    TS_ASSERT_EQUALS("A\nB\nC\n", result);
+}
+
+}}}
 
 
 ==2.4 Expectation Order==
