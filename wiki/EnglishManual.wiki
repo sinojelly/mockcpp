@@ -202,7 +202,7 @@ Call count is important in many cases. In these cases, the number of calls refle
 
 ===Supported Constraints===
 
-  * the method is called exactly once: {{{once}}}
+  * the method is called exactly once: {{{once()}}}
   * The call is expected at least {{{n}}} times:
     * {{{atLeast(n)}}}
     * {{{atLeastOnce()}}}
@@ -213,7 +213,7 @@ Call count is important in many cases. In these cases, the number of calls refle
 
 ===Usage===
 
-To specify number of calls, use {{{expects(times)}}}, where times is the constraints, such as {{{once()}}}; Use {{{stubs}}} if you do don't care about the number of calls.
+To specify number of calls, use {{{expects(times)}}}, where times is the constraints, such as {{{once()}}}; Use {{{stubs()}}} if you do don't care about the number of calls.
 
 ===When to Use It===
 
