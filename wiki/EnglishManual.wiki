@@ -141,7 +141,7 @@ void test_should_throw_exception_if_open_file_failed ()
 
 You can have multiple mock specification for the same method. When the mock method is called, mock++ will find the mock specification whose argument matchers are all satisfied and execute the action specified (return a value, throw an exception, etc.). In this case argument matchers are actually acting as selectors instead of constraints.
 
-mock++ will fail the test case if it can't find a proper mock specification. In this case argument matchers act more like constraint.
+mock++ will fail the test case if it can't find a proper mock specification. In this case argument matchers act more like constraints.
 
 For C/C++ supports output arguments(through reference/pointer), argument matchers are acting like stubs.
 
@@ -192,3 +192,94 @@ For output argument, {{{outBound()/outBoundP()}}} can be used to set output valu
 
   * Argument value has nothing to do with the correctness of method implementation
   * Call to {{{log}}} or {{{debug}}}
+
+==2.3 Cardinality==
+
+
+
+===Purpose===
+
+
+
+===Types===
+
+
+
+===Usage===
+
+
+
+===When to Use It===
+
+
+
+===When to Avoid It===
+
+
+
+===Example===
+
+
+==2.4 Expectation Order==
+
+
+
+===Purpose===
+
+
+
+===Usage===
+
+
+
+===When to Use It===
+
+
+
+===When to Avoid It===
+
+
+
+===Example===
+
+
+==2.5 Identifier==
+
+
+
+===Purpose===
+
+
+
+===Usage===
+
+
+
+===When to Use It===
+
+
+
+===Example===
+
+
+==2.6 Caller==
+
+
+
+===Purpose===
+
+
+
+===Usage===
+
+
+
+===When to Use It===
+
+
+
+===Example===
+
+
+
+==3. Troubleshooting==
