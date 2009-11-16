@@ -505,11 +505,11 @@ method(TestCaseResultCollector::startTestCase)
 在测试代码中，有一条用户编写的mock规范与之对应：
 
 {{{
-      collector.METHOD(TestCaseResultCollector::startTestCase)
-             .expects(exactly(0))
-             .before(fixture, "setUp")
-             .with(eq((TestCaseInfoReader*)testcase[0]))
-             .id("startTestCase");
+collector.METHOD(TestCaseResultCollector::startTestCase)
+     .expects(exactly(0))
+     .before(fixture, "setUp")
+     .with(eq((TestCaseInfoReader*)testcase[0]))
+     .id("startTestCase");
 }}}
 
 这条详细调用信息描述的是：
