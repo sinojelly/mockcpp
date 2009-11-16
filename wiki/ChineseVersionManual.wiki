@@ -514,7 +514,7 @@ method(TestCaseResultCollector::startTestCase)
 
 这条详细调用信息描述的是：
 
-你期待的调用次数是精确的0次（通过expects(once())来指定），但你实际的调用次数却是1次（通过invoked(1)得知实际的调用次数）。
+你期待的调用次数是精确的0次（通过*expects(once())*来指定），但你实际的调用次数却是1次（通过*invoked(1)*得知实际的调用次数）。
 
 所以，结合之前的那条错误信息：
 
