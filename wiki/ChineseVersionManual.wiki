@@ -474,7 +474,7 @@ mock++以一种一致而简洁的方式来完成这个目标。其错误信息�
 
 错误信息是一句文字描述，比如：
 
-"expected invoking exactly 0 times, but it's actually invoked 1 times."
+*expected invoking exactly 0 times, but it's actually invoked 1 times.*
 
 而实际调用的详细信息就像一条调用规范，其基本格式为：
 
@@ -499,5 +499,25 @@ method(TestCaseResultCollector::startTestCase)
      .invoked(1)
      .before(testcpp::TestFixture, "setUp")
      .with(eq((testcpp::TestCaseInfoReader*)0x00304388))
-     .id(startTestCase);
+     .id("startTestCase");
 }}}
+
+在测试代码中，有一条用户编写的mock规范与之对应：
+
+{{{
+      collector.METHOD(TestCaseResultCollector::startTestCase)
+             .expects(exactly(0))
+             .before(fixture, "setUp")
+             .with(eq((TestCaseInfoReader*)testcase[0]))
+             .id("startTestCase");
+}}}
+
+这条详细调用信息描述的是：
+
+你期待的调用次数是精确的0次（通过expects(once())来指定），但你实际的调用次数却是1次（通过invoked(1)得知实际的调用次数）。
+
+所以，结合之前的那条错误信息：
+
+*expected invoking exactly 0 times, but it's actually invoked 1 times.*
+
+你就可以更加准确的知道你的错误所在。
