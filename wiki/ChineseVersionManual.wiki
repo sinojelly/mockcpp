@@ -471,3 +471,33 @@ void test_should_invoke_validators_in_order()
 mock++以一种一致而简洁的方式来完成这个目标。其错误信息的标准格式分为两种：
   # 只有错误信息，以文字的方式告知相关错误；
   # 除了错误信息，还提供对一个方法实际调用的详细信息；
+
+错误信息是一句文字描述，比如：
+
+"expected invoking exactly 0 times, but it's actually invoked 1 times."
+
+而实际调用的详细信息就像一条调用规范，其基本格式为：
+
+{{{
+method(方法名)
+    .expects(在规范中所指定的调用次数约束)
+    .invoked(实际调用次数)
+    .before(参照对象的类型, "参照mock规范的ID")
+    .with(带有实际参数值的参数约束)
+    .after(参照对象的类型, "参照mock规范的ID")
+    .will(带有实际的行为值的行为规范)
+    .id("本规范的ID")
+}}}
+
+实际调用的详细信息会按照用户编写的mock规范所列出的约束进行输出。
+
+例如：
+
+{{{
+method(TestCaseResultCollector::startTestCase)
+     .expects(exactly(0))
+     .invoked(1)
+     .before(testcpp::TestFixture, "setUp")
+     .with(eq((testcpp::TestCaseInfoReader*)0x00304388))
+     .id(startTestCase);
+}}}
