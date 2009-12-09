@@ -30,7 +30,8 @@ MOCKCPP_NS_START
 /////////////////////////////////////////////////////////////////////////
 struct ChainableMockMethodContainerImpl
 {
-   typedef std::pair<ChainableMockMethodKey*, ChainableMockMethodCore*> ValueType;
+   typedef std::pair<ChainableMockMethodKey*, \
+                     ChainableMockMethodCore*> ValueType;
    typedef std::list<ValueType> List;
    typedef List::iterator Iterator;
    typedef List::const_iterator ConstIterator;
@@ -58,14 +59,26 @@ struct ChainableMockMethodContainerImpl
 /////////////////////////////////////////////////////////////////////////
 namespace
 {
+  inline ChainableMockMethodKey* getKey(ChainableMockMethodContainerImpl::ValueType& value)
+  {
+    return value.first;
+  }
+
+  inline ChainableMockMethodCore* getMethodCore(ChainableMockMethodContainerImpl::ValueType& value)
+  {
+    return value.second;
+  }
+
   void resetMethod(ChainableMockMethodContainerImpl::ValueType value)
   {
-    value.second->reset();
+    getMethodCore(value)->reset();
 
-    // coz we don't know if MethodCore is referring Key or not, 
-    // so we delete MethodCore first.
-    delete value.second;
-    delete value.first;
+    // We don't know wether MethodCore is referring a "key" or not,
+	// so if we delete the key prior to methodCore might result in
+	// unexpected behavior.
+    delete getMethodCore(value);
+
+    delete getKey(value);
   }
 }
 
@@ -130,7 +143,7 @@ ChainableMockMethodContainerImpl::findInvocationMocker(const std::string& id) co
 {
    for (ConstIterator i = methods.begin(); i != methods.end(); ++i)
    {
-      InvocationMocker* mocker = i->second->getInvocationMocker(id);
+	  InvocationMocker* mocker = i->second->getInvocationMocker(id);
       if(mocker != 0)
       {
          return mocker;
@@ -151,7 +164,7 @@ namespace
 
     bool operator()(ChainableMockMethodContainerImpl::ValueType value)
     {
-       return myKey->equals(value.first);
+       return myKey->equals(getKey(value));
     }
 
     ChainableMockMethodKey* myKey;
