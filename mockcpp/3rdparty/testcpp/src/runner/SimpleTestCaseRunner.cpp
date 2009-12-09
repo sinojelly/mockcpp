@@ -11,25 +11,47 @@ void SimpleTestCaseRunner::run(TestFixtureDesc* desc
       , TestCaseResultCollector* collector)
 {
    collector->startTestCase(testcase);
+   bool errorOccurred = false;
 
    try {
       desc->getFixture()->setUp();
       testcase->run();
-      desc->getFixture()->tearDown();
    }
    catch(AssertionFailure& failure)
    {
+      errorOccurred = true;
       collector->addCaseFailure(testcase, failure);
    }
    catch(std::exception& e)
    {
+      errorOccurred = true;
       collector->addCaseError(testcase, e.what());
    }
    catch(...)
    {
+      errorOccurred = true;
       collector->addCaseError(testcase, "Unknown Exception");
    }
 
+   try {
+      desc->getFixture()->tearDown();
+   }
+   catch(AssertionFailure& failure)
+   {
+      if(!errorOccurred)
+         collector->addCaseFailure(testcase, failure);
+   }
+   catch(std::exception& e)
+   {
+      if(!errorOccurred)
+         collector->addCaseError(testcase, e.what());
+   }
+   catch(...)
+   {
+      if(!errorOccurred)
+         collector->addCaseError(testcase, "Unknown Exception");
+   }
+ 
    collector->endTestCase(testcase);
 }
 
