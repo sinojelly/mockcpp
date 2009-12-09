@@ -32,7 +32,7 @@ std::string InvocationId::getId(void) const
 
 std::string InvocationId::toString(void) const
 {
-    return std::string(".id(") + id + std::string(")");
+    return std::string(".id(\"") + id + std::string("\")");
 }
 
 
