@@ -32,20 +32,22 @@ MOCKCPP_NS_START
 struct ChainableMockObjectImpl;
 struct Invokable;
 
-
 class ChainableMockObject 
       : public ChainableMockObjectBase
 {
+public:
+	typedef void* FunctionEntry;
 public:
 
     ChainableMockObject(const std::string& name);
 
     ~ChainableMockObject();
 
-    // Building-invocation-mocker time interface -- Used in test case
+    // Building-invocation-mocker interface -- Used in test case
     InvocationMockBuilderGetter method(const std::string& name);
+	InvocationMockBuilderGetter method(const FunctionEntry entry, const std::string& name);
 
-    // Invoking time interface --  Used in Functor
+    // Invoking interface --  Used in Functor
     template <typename RT>
     ChainableMockMethod<RT> invoke(const std::string& name) 
     {

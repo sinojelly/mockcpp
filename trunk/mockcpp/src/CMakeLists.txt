@@ -133,6 +133,9 @@ SET(MOCKCPP_SRCS
     VoidResultHandlerFactory.cpp
     WillStub.cpp)
 
+IF(WIN32)
+   SET(MOCKCPP_SRCS ${MOCKCPP_SRCS} Win32Hook.cpp)
+ENDIF(WIN32)
 ######################################################
 SET(MOCKCPP_HEADERS_PATH ${CMAKE_SOURCE_DIR}/include/mockcpp)
 SET(MOCKCPP_SOURCES_PATH ${CMAKE_SOURCE_DIR}/src)

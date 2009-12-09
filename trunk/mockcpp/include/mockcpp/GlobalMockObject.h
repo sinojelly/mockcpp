@@ -20,9 +20,6 @@
 #define __MOCKCPP_GLOBAL_MOCK_OBJECT_H
 
 #include <mockcpp/mockcpp.h>
-
-//#include <ChainableMockMethodCore.h>
-
 #include <mockcpp/ChainableMockObject.h>
 
 MOCKCPP_NS_START
