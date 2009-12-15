@@ -16,39 +16,31 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#ifndef __MOCKCPP_CHAINABLE_MOCK_OBJECT_H_
-#define __MOCKCPP_CHAINABLE_MOCK_OBJECT_H_
+#ifndef __MOCKCPP_HOOK_MOCK_OBJECT_H__
+#define __MOCKCPP_HOOK_MOCK_OBJECT_H__
 
 #include <mockcpp/mockcpp.h>
-
 #include <mockcpp/ChainableMockObjectBase.h>
-#include <mockcpp/ChainableMockMethod.h>
 #include <mockcpp/InvocationMockBuilderGetter.h>
-
-#include <string>
+#include <mockcpp/ChainableMockMethod.h>
 
 MOCKCPP_NS_START
 
-struct ChainableMockObjectImpl;
-struct Invokable;
+struct HookMockObjectImpl;
 
-class ChainableMockObject 
-      : public ChainableMockObjectBase
+struct HookMockObject : public ChainableMockObjectBase
 {
-public:
-
-    ChainableMockObject(const std::string& name);
-
-    ~ChainableMockObject();
-
+    HookMockObject(const std::string& name);
+	~HookMockObject();
+	
     // Building-invocation-mocker interface -- Used in test case
-    InvocationMockBuilderGetter method(const std::string& name);
+    InvocationMockBuilderGetter method(const std::string& name, const void* api, const void* stub);
 
     // Invoking interface --  Used in Functor
     template <typename RT>
-    ChainableMockMethod<RT> invoke(const std::string& name) 
+    ChainableMockMethod<RT> invoke(const void* api) 
     {
-      return ChainableMockMethod<RT>(getInvokable(name)); 
+      return ChainableMockMethod<RT>(getInvokable(api)); 
     }
 
     void reset();
@@ -56,14 +48,12 @@ public:
 private:
 
     // It's only for template-method invoke. we have to make it visible.
-    Invokable* getInvokable(const std::string& name); 
+    Invokable* getInvokable(const void* api);
 
-private:
-
-    ChainableMockObjectImpl* This;
+private:	
+    HookMockObjectImpl* This;	
 };
 
 MOCKCPP_NS_END
 
 #endif
-

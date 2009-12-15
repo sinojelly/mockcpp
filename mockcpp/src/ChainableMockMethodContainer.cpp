@@ -57,8 +57,8 @@ struct ChainableMockMethodContainerImpl
 };
 
 /////////////////////////////////////////////////////////////////////////
-namespace
-{
+//namespace
+//{
   inline ChainableMockMethodKey* getKey(ChainableMockMethodContainerImpl::ValueType& value)
   {
     return value.first;
@@ -80,7 +80,7 @@ namespace
 
     delete getKey(value);
   }
-}
+//}
 
 /////////////////////////////////////////////////////////////////////////
 void
