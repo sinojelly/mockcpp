@@ -17,10 +17,11 @@
 ***/
 
 #include <mockcpp/Functor.h>
+#include <mockcpp/GlobalMockObject.h>
 
 MOCKCPP_NS_START
 
-ChainableMockObject GlobalMockObject::instance("");
+MockObjectType GlobalMockObject::instance("");
 
 void GlobalMockObject::verify()
 {

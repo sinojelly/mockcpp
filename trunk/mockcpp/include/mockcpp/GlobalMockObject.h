@@ -20,16 +20,27 @@
 #define __MOCKCPP_GLOBAL_MOCK_OBJECT_H
 
 #include <mockcpp/mockcpp.h>
-#include <mockcpp/ChainableMockObject.h>
+
+#ifdef MOCKCPP_USE_MOCKABLE
+#  include <mockcpp/ChainableMockObject.h>
+#else
+#  include <mockcpp/HookMockObject.h>
+#endif
 
 MOCKCPP_NS_START
+
+#ifdef MOCKCPP_USE_MOCKABLE
+typedef ChainableMockObject MockObjectType;
+#else
+typedef HookMockObject MockObjectType;
+#endif
 
 struct GlobalMockObject
 {
    static void verify();
    static void reset();
 
-   static ChainableMockObject instance;
+   static MockObjectType instance;
 };
 
 MOCKCPP_NS_END

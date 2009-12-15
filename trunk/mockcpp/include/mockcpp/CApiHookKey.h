@@ -16,40 +16,34 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
+#ifndef __MOCKCPP_CHAINABLE_MOCK_METHOD_NAME_KEY_H
+#define __MOCKCPP_CHAINABLE_MOCK_METHOD_NAME_KEY_H
+
 #include <mockcpp/mockcpp.h>
 
-#include <typeinfo>
-
-#include <stdlib.h>
-
-#if defined(__GNUC__)
-#include <cxxabi.h>
-#endif
-
-#include <string>
+#include <mockcpp/ChainableMockMethodKey.h>
+#include <mockcpp/CApiHook.h>
 
 MOCKCPP_NS_START
 
-MOCKCPP_EXPORT
-std::string getDemangledName(const std::type_info& typeInfo)
+struct CApiHookKey
+    : public ChainableMockMethodKey
 {
-#if defined(__GNUC__)
-   int status;
+   CApiHookKey(const void* api, const void* stub);
+   CApiHookKey(const void* api);
 
-   char* name = abi::__cxa_demangle( typeInfo.name(), 0, 0, & status);
-
-   std::string result(name);
-
-   ::free(name);
+   ~CApiHookKey();
    
-   return result;
+   bool equals(const ChainableMockMethodKey * const rhs) const;
 
-#else
+   const void* getApiAddress() const;
 
-   return typeInfo.name();
-
-#endif
-}
+private:
+   CApiHook* hook;
+   const void* apiAddress;
+};
 
 MOCKCPP_NS_END
+
+#endif
 

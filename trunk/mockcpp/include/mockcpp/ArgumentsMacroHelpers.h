@@ -38,7 +38,7 @@
 #define __ARG_DECL(n) __ARG(n) __PARAM(n)
 #define ARG_DECL(n) __ARG_DECL(n) ,
 #define END_ARG_DECL(n) __ARG_DECL(n)
-
+#define REST_ARG_DECL(n) , __ARG_DECL(n)
 
 #define DECL_TEMPLATE_ARGS(n) SIMPLE_REPEAT(n, TEMPLATE_ARGS)
 #define DECL_VARDIC_ARGS(n) SIMPLE_REPEAT(n, ARGS)
@@ -50,6 +50,6 @@
 
 #define DECL_REST_ARGS(n) SIMPLE_REPEAT(n, REST_ARGS)
 #define DECL_REST_PARAMS(n) SIMPLE_REPEAT(n, REST_PARAMS)
-
+#define DECL_REST_ARG_DECL(n) SIMPLE_REPEAT(n, REST_ARG_DECL)
 #endif
 
