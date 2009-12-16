@@ -259,7 +259,9 @@ MOCKCPP_SRCS = \
  DieStub.cpp \
  InterfaceInfo.cpp \
  GenericMethodIndicesChecker.cpp \
- DestructorChecker.cpp
+ DestructorChecker.cpp \
+ HookMockObject.cpp \
+ CApiHookKey.cpp
 
 libmockcpp_la_SOURCES = $(MOCKCPP_SRCS)
 

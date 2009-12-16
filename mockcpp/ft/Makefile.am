@@ -4,7 +4,8 @@ TESTCPP_ROOT = $(THIRD_PARTY_ROOT)/testcpp
 
 AM_CPPFLAGS = -I$(top_builddir)/include \
               -I$(THIRD_PARTY_ROOT) \
-              -I$(TESTCPP_ROOT)/include
+              -I$(TESTCPP_ROOT)/include \
+              -DMOCKCPP_USE_MOCKABLE
 
 TARGET_SRC = mockcpp-ft.cpp
 
