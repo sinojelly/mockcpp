@@ -38,8 +38,7 @@ struct HookMockObjectImpl
          const void* stub, InvocationMockerNamespace* ns);
    
    ChainableMockMethodCore*
-   getMethod(const void* api, 
-		  InvocationMockerNamespace* ns);
+   getMethod(const void* api);
    
    void reset();
 
@@ -83,7 +82,7 @@ HookMockObjectImpl::
 getMethod(const std::string& name, const void* api, 
          const void* stub, InvocationMockerNamespace* ns)
 {
-    ChainableMockMethodCore* method = getMethod(api, ns);
+    ChainableMockMethodCore* method = getMethod(api);
     if (method != 0)
     {
       return method;
@@ -95,7 +94,7 @@ getMethod(const std::string& name, const void* api,
 //////////////////////////////////////////////////////////////
 ChainableMockMethodCore*
 HookMockObjectImpl::
-getMethod(const void* api, InvocationMockerNamespace* ns) 
+getMethod(const void* api) 
 {
     CApiHookKey key(api);
     return container->getMethod(&key);
@@ -127,7 +126,7 @@ HookMockObject::method(const std::string& name, const void* api, const void* stu
 Invokable*
 HookMockObject::getInvokable(const void* api) 
 {
-   ChainableMockMethodCore* method = This->getMethod(api, this);
+   ChainableMockMethodCore* method = This->getMethod(api);
    MOCKCPP_ASSERT_TRUE_MESSAGE(
 	   "mockcpp internal error",
 	   method != 0);
