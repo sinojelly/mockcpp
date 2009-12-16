@@ -33,6 +33,7 @@ MOCKCPP_NS_START
 template <typename F>
 struct CApiHookFunctor;
 
+const std::string empty_caller("");
 ////////////////////////////////////////////
 #define CAPIHOOK_FUNCTOR_DEF(n) \
 template <typename R DECL_TEMPLATE_ARGS(n)> \
@@ -41,12 +42,11 @@ struct CApiHookFunctor<R(DECL_ARGS(n))> \
     static R hook(const void* const unused, const void* address \
 	              DECL_REST_ARG_DECL(n)) \
     { \
-	   return R(); \
+	    return GlobalMockObject::instance.invoke<R>(address) \
+                                    (empty_caller DECL_REST_PARAMS(n)); \
     } \
 }
 
-// return GlobalMockObject::instance.invoke<R>(address) \
-                                    ("" DECL_REST_PARAMS(n)); 
 CAPIHOOK_FUNCTOR_DEF(0);
 CAPIHOOK_FUNCTOR_DEF(1);
 CAPIHOOK_FUNCTOR_DEF(2);

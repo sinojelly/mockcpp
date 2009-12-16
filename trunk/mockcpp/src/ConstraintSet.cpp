@@ -82,6 +82,8 @@ ConstraintSetImpl::~ConstraintSetImpl()
     }
 
     constraints.clear();
+
+	return;
 }
 
 ////////////////////////////////////////////////////////////

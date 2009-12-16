@@ -57,8 +57,8 @@ struct ChainableMockMethodContainerImpl
 };
 
 /////////////////////////////////////////////////////////////////////////
-//namespace
-//{
+namespace
+{
   inline ChainableMockMethodKey* getKey(ChainableMockMethodContainerImpl::ValueType& value)
   {
     return value.first;
@@ -80,13 +80,17 @@ struct ChainableMockMethodContainerImpl
 
     delete getKey(value);
   }
-//}
+}
 
 /////////////////////////////////////////////////////////////////////////
 void
 ChainableMockMethodContainerImpl::reset()
 {
-    for_each(methods.begin(), methods.end(), resetMethod);
+    //for_each(methods.begin(), methods.end(), resetMethod);
+	for(Iterator i = methods.begin(); i != methods.end(); i++)
+	{
+		resetMethod(*i);
+	}
     methods.clear();
     verified = false;
 }

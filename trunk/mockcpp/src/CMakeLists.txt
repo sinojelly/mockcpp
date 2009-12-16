@@ -59,6 +59,10 @@ ADD_DEFINITIONS(
     -DMOCKCPP_MAX_PARAMETERS=${MOCKCPP_MAX_PARAMETERS}
 )
 
+IF(MSVC)
+    ADD_DEFINITIONS(-DMSVC_VMG_ENABLED)
+ENDIF(MSVC)
+
 SET(MOCKCPP_SRCS 
     AfterMatcher.cpp
     AnyBase.cpp
@@ -138,7 +142,7 @@ SET(MOCKCPP_SRCS
     CApiHookKey.cpp)
 
 IF(WIN32)
-   SET(MOCKCPP_SRCS ${MOCKCPP_SRCS} Win32Hook.cpp)
+   SET(MOCKCPP_SRCS ${MOCKCPP_SRCS} Win32CApiHook.cpp)
 ENDIF(WIN32)
 ######################################################
 SET(MOCKCPP_HEADERS_PATH ${CMAKE_SOURCE_DIR}/include/mockcpp)

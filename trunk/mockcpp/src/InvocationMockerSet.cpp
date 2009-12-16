@@ -76,8 +76,15 @@ InvocationMockerSet::getInvocationMocker(const std::string& id) const
 void
 InvocationMockerSet::reset()
 {
-    for_each(mockers.begin(), mockers.end(), deleteMocker);
+    //for_each(mockers.begin(), mockers.end(), deleteMocker);
+	for(Iterator i = mockers.begin(); i != mockers.end(); i++)
+	{
+		deleteMocker(*i);
+	}
+
     mockers.clear();
+	
+	return;
 }
 
 //////////////////////////////////////////////////////////////
