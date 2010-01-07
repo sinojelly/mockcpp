@@ -64,42 +64,73 @@ public:
       TESTCPP_VERIFY_RESOURCE_CHECK_POINT(checkpoint);
    }
 
-	/////////////////////////////////////////////////////////
-	void testShouldBeAChainableMockMethodKeyType()
+   // @test
+	void ShouldBeAChainableMockMethodKeyType()
 	{
       TS_ASSERT(dynamic_cast<ChainableMockMethodNameKey*>(key) != 0);
    }
 
-	/////////////////////////////////////////////////////////
-   void testShouldBeEqualToItself()
+   // @test
+   void ShouldBeEqualToItself()
    {
       TS_ASSERT(key->equals(key));
    }
    
-   void testShouldNotEqualToNullPointer()
+   // @test
+   void ShouldNotEqualToNullPointer()
    {
       TS_ASSERT(!key->equals(0));
    }
 
-   void testShouldNotEqualToOtherTypesOfKeys()
+   // @test
+   void ShouldNotEqualToOtherTypesOfKeys()
    {
-      ChainableMockMethodKey* rhs = new ChainableMockMethodNameKeyStub("method");
+      ChainableMockMethodKey* rhs = \
+          new ChainableMockMethodNameKeyStub("method");
+
+      __BEGIN_TEST
+
       TS_ASSERT(!key->equals(rhs));
+
+      __CLEANUP
+
       delete rhs;
+
+      __END_TEST
    }
 
-   void testShouldEqualToSameTypeOfKeysWithSameName()
+   // @test
+   void ShouldEqualToSameTypeOfKeysWithSameName()
    {
-      ChainableMockMethodKey* rhs = new ChainableMockMethodNameKey("method");
+      ChainableMockMethodKey* rhs = \
+          new ChainableMockMethodNameKey("method");
+
+      __BEGIN_TEST
+
       TS_ASSERT(key->equals(rhs));
+
+      __CLEANUP
+
       delete rhs;
+
+      __END_TEST
    }
 
-   void testShouldNotEqualToSameTypeOfKeysWithDifferentName()
+   // @test
+   void ShouldNotEqualToSameTypeOfKeysWithDifferentName()
    {
-      ChainableMockMethodKey* rhs = new ChainableMockMethodNameKey("method1");
+      ChainableMockMethodKey* rhs = \
+          new ChainableMockMethodNameKey("method1");
+
+      __BEGIN_TEST
+
       TS_ASSERT(!key->equals(rhs));
+
+      __CLEANUP
+
       delete rhs;
+
+      __END_TEST
    }
 };
 

@@ -42,7 +42,7 @@ class TestChainableMockMethodContainer : public TESTCPP_NS::TestFixture
 
       std::string& getName(void) const
       {
-          return const_cast<std::string&>(name);
+         return const_cast<std::string&>(name);
       } 
 
       std::string name;
@@ -88,10 +88,17 @@ public:
    void ShouldReturnNullIfMethodWithTheSpecifiedKeyWasNotAddedToContainer()
    {
       MOCKCPP_NS::ChainableMockMethodContainer container;
+
+      __BEGIN_TEST
+
       TS_ASSERT(0 == container.getMethod(key));
+
+      __CLEANUP
 
       delete key;
 		delete method;
+
+      __END_TEST
    }
 
    // @test

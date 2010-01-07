@@ -21,7 +21,10 @@ class TestChainableMockMethod: public TESTCPP_NS::TestFixture
       : stub(returnValue(returned))
     {}
 
-    ~InvokableStub() { delete stub; }
+    ~InvokableStub()
+    {
+       delete stub;
+    }
 
     const Any& invoke( const std::string& nameOfCaller
               , const RefAny& p1
