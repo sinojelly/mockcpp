@@ -76,14 +76,16 @@ public:
 
 	/////////////////////////////////////////////////////////
 
-	void testShouldBeAbleToAddAMethod()
+   // @test
+	void shouldBeAbleToAddAMethod()
 	{
       MOCKCPP_NS::ChainableMockMethodContainer container;
       container.addMethod(key, method);
       TS_ASSERT_EQUALS(method, container.getMethod(key));
 	}
 
-   void testShouldReturnNullIfMethodWithTheSpecifiedKeyWasNotAddedToContainer()
+   // @test
+   void ShouldReturnNullIfMethodWithTheSpecifiedKeyWasNotAddedToContainer()
    {
       MOCKCPP_NS::ChainableMockMethodContainer container;
       TS_ASSERT(0 == container.getMethod(key));
@@ -92,7 +94,8 @@ public:
 		delete method;
    }
 
-   void testShouldThrowExceptionIfAMethodWithTheSameKeyHasBeedAdded()
+   // @test
+   void ShouldThrowExceptionIfAMethodWithTheSameKeyHasBeedAdded()
    {
       MOCKCPP_NS::ChainableMockMethodContainer container;
       container.addMethod(key, method);
@@ -100,7 +103,8 @@ public:
       TS_ASSERT_THROWS(container.addMethod(key, method), MOCKCPP_NS::Exception);
    }
 
-   void testYouCannotGetTheMethodAnyLongerAfterTheContainerIsReset()
+   // @test
+   void YouCannotGetTheMethodAnyLongerAfterTheContainerIsReset()
    {
       MOCKCPP_NS::ChainableMockMethodContainer container;
       container.addMethod(key, method);
@@ -108,7 +112,8 @@ public:
       TS_ASSERT(0 == container.getMethod(key));
    }
 
-   void testShouldBeAbleToVerifyEveryMethodInTheContainer()
+   // @test
+   void ShouldBeAbleToVerifyEveryMethodInTheContainer()
    {
       InvocationMockBuilderGetter builderGetter(method, method);
 
@@ -120,7 +125,8 @@ public:
       TS_ASSERT_THROWS(container.verify(), MOCKCPP_NS::Exception);
    }
   
-   void testShouldBeAbleToGetInvocationMockerById()
+   // @test
+   void ShouldBeAbleToGetInvocationMockerById()
    {
       InvocationMockBuilderGetter builderGetter(method, method);
 
@@ -132,6 +138,7 @@ public:
       TS_ASSERT(container.findInvocationMocker("1") != 0);
    }
    
+   // @test
    void testShouldReturnNullIfAInvocationMockerWithSpecifiedIdWasNeverBuilt()
    {
       InvocationMockBuilderGetter builderGetter(method, method);

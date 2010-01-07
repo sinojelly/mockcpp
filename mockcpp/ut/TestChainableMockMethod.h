@@ -57,20 +57,23 @@ public:
       checkpoint = TESTCPP_SET_RESOURCE_CHECK_POINT();
       invokable = new InvokableStub("abcdefg");
    }
+
    void tearDown()
    {
       delete invokable;
       TESTCPP_VERIFY_RESOURCE_CHECK_POINT(checkpoint);
    }
 
-   void testShouldBeAbleToReturnAReferenceType()
+   // @test
+   void shouldBeAbleToReturnAReferenceType()
    {
       ChainableMockMethod<const std::string&> method(invokable);
       std::string str = method(__FUNCTION__);
       TS_ASSERT_EQUALS(std::string("abcdefg"), str);
    }
 
-   void testShouldBeAbleToReturnAReferenceTypeDirectly()
+   // @test
+   void shouldBeAbleToReturnAReferenceTypeDirectly()
    {
       ChainableMockMethod<const std::string&> method(invokable);
       TS_ASSERT_EQUALS(std::string("abcdefg"), method(__FUNCTION__));

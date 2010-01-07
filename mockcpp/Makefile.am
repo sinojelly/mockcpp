@@ -1,2 +1,2 @@
 
-SUBDIRS = 3rdparty/testcpp src ut ft
+SUBDIRS = 3rdparty/cxxtestplus src ut ft

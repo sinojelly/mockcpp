@@ -902,7 +902,7 @@ CXX
 CXXFLAGS
 CCC
 CXXCPP'
-ac_subdirs_all='3rdparty/testcpp'
+ac_subdirs_all='3rdparty/cxxtestplus'
 
 # Initialize some variables set by options.
 ac_init_help=
@@ -14531,7 +14531,7 @@ MOCKCPP_MAX_PARAMS=$max_parameters
 
 
 
-subdirs="$subdirs 3rdparty/testcpp"
+subdirs="$subdirs 3rdparty/cxxtestplus"
 
 ac_config_files="$ac_config_files Makefile src/Makefile ut/Makefile ft/Makefile samples/cpp/Makefile samples/cpp/src/Makefile samples/cpp/ut/Makefile"
 

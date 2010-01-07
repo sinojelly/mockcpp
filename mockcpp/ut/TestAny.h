@@ -40,42 +40,48 @@ public:
 
 	/////////////////////////////////////////////////////////
 
-	void testShouldBeEmptyIfANewInstanceIsNotInitialized()
+   // @test
+	void ShouldBeEmptyIfANewInstanceIsNotInitialized()
 	{
 		Any i;
 
 		TS_ASSERT(i.empty());
 	}
 
-	void testShouldNotBeEmptyIfAInstanceIsInitialized()
+   // @test
+	void ShouldNotBeEmptyIfAInstanceIsInitialized()
 	{
 		Any i(0);
 
 		TS_ASSERT(!i.empty());
 	}
 
-	void testShouldBeCastableForSameType()
+   // @test
+	void ShouldBeCastableForSameType()
 	{
 		RefAny ref(10);
 
 		TS_ASSERT(any_castable<int>(ref));
 	}
 
-   void testShouldBeAbleStorePChar()
+   // @test
+   void ShouldBeAbleStorePChar()
    {
 		RefAny ref((char*)"abcd");
 
 		TS_ASSERT(any_castable<char*>(ref));
    }
    
-   void testShouldBeAbleStoreNullPchar()
+   // @test
+   void ShouldBeAbleStoreNullPchar()
    {
 		RefAny ref((char*)0);
 
 		TS_ASSERT(any_castable<char*>(ref));
    }
 
-   void testShouldBeAbleCastUnsignedCharToUnsignedShort()
+   // @test
+   void ShouldBeAbleCastUnsignedCharToUnsignedShort()
    {
       Any a((unsigned char)12);
 
@@ -83,7 +89,8 @@ public:
       TS_ASSERT_EQUALS(12, any_cast<unsigned short>(a));
    }
 
-   void testShouldBeAbleCastNonnegtiveShortToUnsignedShort()
+   // @test
+   void ShouldBeAbleCastNonnegtiveShortToUnsignedShort()
    {
       Any a((short)5);
 
@@ -91,7 +98,8 @@ public:
       TS_ASSERT_EQUALS(5, any_cast<unsigned short>(a));
    }
 
-   void testShouldBeAbleCastNonnegtiveCharToUnsignedShort()
+   // @test
+   void ShouldBeAbleCastNonnegtiveCharToUnsignedShort()
    {
       Any a((char)2);
 
@@ -99,7 +107,8 @@ public:
       TS_ASSERT_EQUALS(2, any_cast<unsigned short>(a));
    }
 
-   void testShouldBeAbleCastUnsignedIntWithinLimitationToUnsignedShort()
+   // @test
+   void ShouldBeAbleCastUnsignedIntWithinLimitationToUnsignedShort()
    {
       Any a(65535);
 
@@ -107,14 +116,16 @@ public:
       TS_ASSERT_EQUALS(65535, any_cast<unsigned short>(a));
    }
 
-   void testShouldNotCastUnsignedIntExceedingTheLimitationToUnsignedShort()
+   // @test
+   void ShouldNotCastUnsignedIntExceedingTheLimitationToUnsignedShort()
    {
       Any a(65536);
 
       TS_ASSERT(!any_castable<unsigned short>(a));
    }
 
-   void testShouldBeAbleCastUnsignedShortToUnsignedInt()
+   // @test
+   void ShouldBeAbleCastUnsignedShortToUnsignedInt()
    {
       Any a((unsigned short)15);
 
@@ -122,7 +133,8 @@ public:
       TS_ASSERT_EQUALS(15, any_cast<unsigned int>(a));
    }
 
-   void testShouldBeAbleCastUnsignedCharToUnsignedInt()
+   // @test
+   void ShouldBeAbleCastUnsignedCharToUnsignedInt()
    {
       Any a((unsigned char)12);
 
@@ -130,7 +142,8 @@ public:
       TS_ASSERT_EQUALS(12, any_cast<unsigned int>(a));
    }
 
-   void testShouldBeAbleCastNonnegtiveIntToUnsignedInt()
+   // @test
+   void ShouldBeAbleCastNonnegtiveIntToUnsignedInt()
    {
       Any a(1);
 
@@ -138,7 +151,8 @@ public:
       TS_ASSERT_EQUALS(1, any_cast<unsigned int>(a));
    }
 
-   void testShouldBeAbleCastNonnegtiveShortToUnsignedInt()
+   // @test
+   void ShouldBeAbleCastNonnegtiveShortToUnsignedInt()
    {
       Any a((short)5);
 
@@ -146,7 +160,8 @@ public:
       TS_ASSERT_EQUALS(5, any_cast<unsigned int>(a));
    }
 
-   void testShouldBeAbleCastNonnegtiveCharToUnsignedInt()
+   // @test
+   void ShouldBeAbleCastNonnegtiveCharToUnsignedInt()
    {
       Any a((char)2);
 
@@ -154,7 +169,8 @@ public:
       TS_ASSERT_EQUALS(2, any_cast<unsigned int>(a));
    }
 
-   void testShouldBeAbleCastNonnegtiveIntToUnsignedLong()
+   // @test
+   void ShouldBeAbleCastNonnegtiveIntToUnsignedLong()
    {
       Any a(1);
 
@@ -162,7 +178,8 @@ public:
       TS_ASSERT_EQUALS(1, any_cast<unsigned long>(a));
    }
 
-   void testShouldBeAbleToCastNonnegtiveShortToUnsignedLong()
+   // @test
+   void ShouldBeAbleToCastNonnegtiveShortToUnsignedLong()
    {
       Any a((short)5);
 
@@ -170,7 +187,8 @@ public:
       TS_ASSERT_EQUALS(5, any_cast<unsigned long>(a));
    }
 
-   void testShouldBeAbleToCastNonnegtiveCharToUnsignedLong()
+   // @test
+   void ShouldBeAbleToCastNonnegtiveCharToUnsignedLong()
    {
       Any a((char)2);
 
@@ -178,7 +196,8 @@ public:
       TS_ASSERT_EQUALS(2, any_cast<unsigned long>(a));
    }
 
-   void testShouldBeAbleToCastNonnegtiveIntToUnsignedLong()
+   // @test
+   void ShouldBeAbleToCastNonnegtiveIntToUnsignedLong()
    {
       Any a((int)5);
 
@@ -186,7 +205,8 @@ public:
       TS_ASSERT_EQUALS(5, any_cast<unsigned long>(a));
    }
 
-   void testShouldBeAbleToCastInScopeUnsignedCharToChar()
+   // @test
+   void ShouldBeAbleToCastInScopeUnsignedCharToChar()
    {
       Any a((unsigned char)std::numeric_limits<char>::max());
 
@@ -194,14 +214,16 @@ public:
       TS_ASSERT_EQUALS(std::numeric_limits<char>::max(), any_cast<char>(a));
    }
 
-   void testShouldNotCastInScopeUnsignedCharToChar()
+   // @test
+   void ShouldNotCastInScopeUnsignedCharToChar()
    {
       Any a((unsigned char)std::numeric_limits<char>::max()+1);
 
       TS_ASSERT(!any_castable<char>(a));
    }
 
-   void testShouldBeAbleToCastInScopeUnsignedShortToShort()
+   // @test
+   void ShouldBeAbleToCastInScopeUnsignedShortToShort()
    {
       Any a((unsigned short)32767);
 
@@ -209,14 +231,16 @@ public:
       TS_ASSERT_EQUALS(32767, any_cast<short>(a));
    }
 
-   void testShouldNotCastInScopeUnsignedShortToShort()
+   // @test
+   void ShouldNotCastInScopeUnsignedShortToShort()
    {
       Any a((unsigned short)32768);
 
       TS_ASSERT(!any_castable<short>(a));
    }
 
-   void testShouldBeAbleToCastInScopeUnsignedIntToInt()
+   // @test
+   void ShouldBeAbleToCastInScopeUnsignedIntToInt()
    {
       Any a((unsigned int)std::numeric_limits<int>::max());
 
@@ -224,14 +248,16 @@ public:
       TS_ASSERT_EQUALS(std::numeric_limits<int>::max(), any_cast<int>(a));
    }
 
-   void testShouldNotCastInScopeUnsignedIntToInt()
+   // @test
+   void ShouldNotCastInScopeUnsignedIntToInt()
    {
       Any a((unsigned int)std::numeric_limits<int>::max()+1);
 
       TS_ASSERT(!any_castable<int>(a));
    }
 
-   void testShouldBeAbleToCastInScopeUnsignedLongToLong()
+   // @test
+   void ShouldBeAbleToCastInScopeUnsignedLongToLong()
    {
       Any a((unsigned long)std::numeric_limits<long>::max());
 
@@ -239,14 +265,16 @@ public:
       TS_ASSERT_EQUALS(std::numeric_limits<long>::max(), any_cast<long>(a));
    }
 
-   void testShouldNotCastInScopeUnsignedLongToLong()
+   // @test
+   void ShouldNotCastInScopeUnsignedLongToLong()
    {
       Any a((unsigned long)std::numeric_limits<long>::max()+1);
 
       TS_ASSERT(!any_castable<long>(a));
    }
 
-   void testShouldBeAbleToGetTypeAndValueString()
+   // @test
+   void ShouldBeAbleToGetTypeAndValueString()
    {
       const std::string& str = std::string("abcdef");
       RefAny ref(str);
@@ -254,7 +282,8 @@ public:
       TS_ASSERT_EQUALS(std::string("\"") + str + std::string("\""), ref.toString());
    }
 
-   void testShouldBeAbleToAnyCastReferenceCorrectly()
+   // @test
+   void ShouldBeAbleToAnyCastReferenceCorrectly()
    {
       const std::string& str = std::string("abcdef");
       Any i(str);
@@ -266,63 +295,72 @@ public:
 
    enum Enum { Enum10 = 10 };
 
-   void testShouldBeAbleToEnumToSameEnum()
+   // @test
+   void ShouldBeAbleToEnumToSameEnum()
    {
       Any e(Enum10);
 
       TS_ASSERT_EQUALS(Enum10, any_cast<Enum>(e));
    }
 
-   void testShouldBeAbleToCastLongToEnum()
+   // @test
+   void ShouldBeAbleToCastLongToEnum()
    {
       Any l((long)10);
 
       TS_ASSERT_EQUALS(Enum10, any_cast<Enum>(l));
    }
 
-   void testShouldBeAbleToCastIntToEnum()
+   // @test
+   void ShouldBeAbleToCastIntToEnum()
    {
       Any i((int)10);
 
       TS_ASSERT_EQUALS(Enum10, any_cast<Enum>(i));
    }
 
-   void testShouldBeAbleToCastShortToEnum()
+   // @test
+   void ShouldBeAbleToCastShortToEnum()
    {
       Any s((short)10);
 
       TS_ASSERT_EQUALS(Enum10, any_cast<Enum>(s));
    }
 
-   void testShouldBeAbleToCastCharToEnum()
+   // @test
+   void ShouldBeAbleToCastCharToEnum()
    {
       Any c((char)10);
 
       TS_ASSERT_EQUALS(Enum10, any_cast<Enum>(c));
    }
 
-   void testShouldBeAbleToCastUnsignedLongToEnum()
+   // @test
+   void shouldBeAbleToCastUnsignedLongToEnum()
    {
       Any l((unsigned long)10);
 
       TS_ASSERT_EQUALS(Enum10, any_cast<Enum>(l));
    }
 
-   void testShouldBeAbleToCastUnsignedIntToEnum()
+   // @test
+   void ShouldBeAbleToCastUnsignedIntToEnum()
    {
       Any i((unsigned int)10);
 
       TS_ASSERT_EQUALS(Enum10, any_cast<Enum>(i));
    }
 
-   void testShouldBeAbleToCastUnsignedShortToEnum()
+   // @test
+   void ShouldBeAbleToCastUnsignedShortToEnum()
    {
       Any s((unsigned short)10);
 
       TS_ASSERT_EQUALS(Enum10, any_cast<Enum>(s));
    }
 
-   void testShouldBeAbleToCastUnsignedCharToEnum()
+   // @test
+   void ShouldBeAbleToCastUnsignedCharToEnum()
    {
       Any c((unsigned char)10);
 
