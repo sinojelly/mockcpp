@@ -1,6 +1,6 @@
 
 THIRD_PARTY_ROOT = $(top_builddir)/3rdparty
-TESTCPP_ROOT = $(THIRD_PARTY_ROOT)/testcpp
+TESTCPP_ROOT = $(THIRD_PARTY_ROOT)/cxxtestplus
 
 AM_CPPFLAGS = \
   -I$(top_builddir)/include \
@@ -13,7 +13,7 @@ if USE_TEST_TARGET
 else
    MOCKCPP_LIB_FOR_TEST = \
      $(top_builddir)/src/libmockcpp.la \
-     $(top_builddir)/3rdparty/testcpp/src/libtestcpp.la
+     $(top_builddir)/3rdparty/cxxtestplus/src/libcxxtestplus.la
 endif
 
 AM_LDFLAGS = \
@@ -23,7 +23,6 @@ AM_LDFLAGS = \
   -rpath /dev/null \
   $(MOCKCPP_LIB_FOR_TEST)
 
-#  $(THIRD_PARTY_ROOT)/testcpp/src/libtestcpp.la
 
 TARGET_SRC1 = mockcpp-ut1.cpp
 TARGET_SRC2 = mockcpp-ut2.cpp
@@ -55,7 +54,7 @@ CLEANFILES = \
  $(TARGET_SRC5) \
  $(TARGET_SRC6)
 
-UTCG = $(PYTHON) $(TESTCPP_ROOT)/scripts/testcppgen.py
+UTCG = $(PYTHON) $(TESTCPP_ROOT)/scripts/cxxtestplus-gen.py
 
 TESTSUITES1 = \
  TestAny.h \

@@ -7,6 +7,6 @@ fi
 
 all_tests=`ls libmockcpp-ut?.la`
 
-../3rdparty/testcpp/src/runner/testcpp-runner ${all_tests} \
-    -L../3rdparty/testcpp/src/listeners -ltestcppstdoutlistener -c10 $* 
+../3rdparty/cxxtestplus/src/runner/cxxtestplus-runner ${all_tests} \
+    -L../3rdparty/cxxtestplus/src/listeners -l"cxxtestplus_stdout_listener -c" -c10 $* 
 

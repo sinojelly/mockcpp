@@ -1,0 +1,283 @@
+
+#include <sstream>
+#include <list>
+#include <errno.h>
+
+#include <testcpp/AssertionFailure.h>
+
+#include <testcpp/runner/InternalError.h>
+#include <testcpp/runner/TestCaseSandboxResultReporter.h>
+#include <testcpp/runner/TestCaseSandboxResultDecoder.h>
+
+#include <testcpp/comm/WrittableChannel.h>
+#include <testcpp/comm/ReadableChannel.h>
+
+TESTCPP_NS_START
+
+struct TestCaseSandboxResultDecoderImpl
+{
+	void addCaseError(const std::string& msg);
+	void addCaseFailure(const AssertionFailure& failure);
+
+   AssertionFailure readAssertionFailure();
+   void handleAssertionFailure();
+   void handleError();
+   void handleInternalError();
+   void handleStartCase();
+   void handleEndCase();
+   void flushRegularEvents();
+   void flushErrorEvents();
+   void flushFailureEvents();
+   void flushEndEvent();
+
+   bool decode();
+   void flush(bool crashed);
+
+   TestCaseSandboxResultDecoderImpl(ReadableChannel* ch
+             , TestCaseInfoReader* tc
+             , TestCaseResultCollector* rc)
+      : channel(ch), testcase(tc), collector(rc)
+      , startReceived(false), endReceived(false)
+      , errorReceived(false), failureReceived(false)
+      , crashInformed(false)
+   {}
+
+   ~TestCaseSandboxResultDecoderImpl()
+   {
+      if(channel != 0)
+      { delete channel; }
+   }
+
+   ReadableChannel* channel;
+   TestCaseInfoReader* testcase;
+   TestCaseResultCollector* collector;
+
+   typedef std::list<std::string> Errors;
+   typedef std::list<AssertionFailure> Failures;
+   
+   Errors errors;
+   Failures failures;
+   bool startReceived;
+   bool endReceived;
+   bool errorReceived;
+   bool failureReceived;
+   bool crashInformed;
+};
+
+/////////////////////////////////////////////////////////////////////////
+void
+TestCaseSandboxResultDecoderImpl::addCaseError(const std::string& msg)
+{
+   if(!startReceived || endReceived || crashInformed)
+   {
+      throw Error(TESTCPP_INTERNAL_ERROR(1001));
+   }
+
+   errors.push_back(msg);
+
+   errorReceived = true;
+}
+
+/////////////////////////////////////////////////////////////////////////
+void
+TestCaseSandboxResultDecoderImpl::addCaseFailure(const AssertionFailure& failure)
+{
+   if(!startReceived || endReceived || crashInformed)
+   {
+      throw Error(TESTCPP_INTERNAL_ERROR(1002));
+   }
+
+   failures.push_back(failure);
+
+   failureReceived = true;
+}
+
+/////////////////////////////////////////////////////////////////////////
+void
+TestCaseSandboxResultDecoderImpl::flushErrorEvents()
+{
+   Errors::iterator error = errors.begin();
+   for(; error != errors.end(); error++)
+   {
+      collector->addCaseError(testcase, (*error));
+   }
+
+   errors.clear();
+}
+
+/////////////////////////////////////////////////////////////////////////
+void
+TestCaseSandboxResultDecoderImpl::flushFailureEvents()
+{
+   Failures::iterator failure = failures.begin();
+   for(; failure != failures.end(); failure++)
+   {
+      collector->addCaseFailure(testcase, (*failure));
+   }
+
+   failures.clear();
+}
+
+/////////////////////////////////////////////////////////////////////////
+void
+TestCaseSandboxResultDecoderImpl::flushEndEvent()
+{
+   if(endReceived)
+   {
+      collector->endTestCase(testcase);
+   }
+}
+
+/////////////////////////////////////////////////////////////////////////
+void
+TestCaseSandboxResultDecoderImpl::flushRegularEvents()
+{
+   if(!startReceived)
+   {
+      return;
+   }
+
+   collector->startTestCase(testcase);
+
+   flushErrorEvents();
+   flushFailureEvents();
+
+   flushEndEvent();
+}
+
+/////////////////////////////////////////////////////////////////////////
+void
+TestCaseSandboxResultDecoderImpl::flush(bool crashed)
+{
+   if(crashInformed)
+   {
+      return;
+   }
+
+   flushRegularEvents();
+
+   if(crashed && !endReceived)
+   {
+      collector->addCaseCrash(testcase);
+      crashInformed = true;
+   }
+}
+
+/////////////////////////////////////////////////////////////////////////
+namespace
+{
+   const unsigned char startCmd = 1;
+   const unsigned char endCmd = 2;
+   const unsigned char errorCmd = 3;
+   const unsigned char failureCmd = 4;
+}
+
+/////////////////////////////////////////////////////////////
+AssertionFailure
+TestCaseSandboxResultDecoderImpl::readAssertionFailure()
+{
+   std::string file = channel->readString();
+   int line = channel->readInt();
+   std::string reason = channel->readString();
+   return AssertionFailure(file, line, reason);
+}
+
+/////////////////////////////////////////////////////////////
+void
+TestCaseSandboxResultDecoderImpl::handleAssertionFailure()
+{
+   AssertionFailure failure = readAssertionFailure();
+   addCaseFailure(failure);
+}
+
+/////////////////////////////////////////////////////////////
+void
+TestCaseSandboxResultDecoderImpl::handleError()
+{
+   std::string errMsg = channel->readString();
+   addCaseError(errMsg);
+}
+
+/////////////////////////////////////////////////////////////
+void
+TestCaseSandboxResultDecoderImpl::handleInternalError()
+{
+   const char * err = TESTCPP_INTERNAL_ERROR(1003);
+   addCaseError(err);
+   throw Error(err);
+}
+
+/////////////////////////////////////////////////////////////////////////
+void
+TestCaseSandboxResultDecoderImpl::handleStartCase()
+{
+   if(startReceived || endReceived || errorReceived || failureReceived || crashInformed)
+   {
+      throw Error(TESTCPP_INTERNAL_ERROR(1004));
+   }
+
+   startReceived = true;
+}
+
+/////////////////////////////////////////////////////////////////////////
+void
+TestCaseSandboxResultDecoderImpl::handleEndCase()
+{
+   if(endReceived || !startReceived || crashInformed)
+   {
+      throw Error(TESTCPP_INTERNAL_ERROR(1005));
+   }
+
+   endReceived = true;
+}
+/////////////////////////////////////////////////////////////////////////
+bool TestCaseSandboxResultDecoderImpl::decode()
+{
+   switch(channel->readByte())
+   {
+   case startCmd:
+      handleStartCase(); break;
+   case endCmd:
+      handleEndCase();
+      return true;
+   case errorCmd:
+      handleError(); break;
+   case failureCmd:
+      handleAssertionFailure(); break;
+   default:
+      handleInternalError();
+   }
+   return false;
+}
+
+/////////////////////////////////////////////////////////////////////////
+TestCaseSandboxResultDecoder::TestCaseSandboxResultDecoder(ReadableChannel* channel
+             , TestCaseInfoReader* testcase
+             , TestCaseResultCollector* collector)
+   : This(new TestCaseSandboxResultDecoderImpl(channel, testcase, collector))
+{
+}
+
+/////////////////////////////////////////////////////////////////////////
+TestCaseSandboxResultDecoder::~TestCaseSandboxResultDecoder()
+{
+   delete This;
+}
+
+/////////////////////////////////////////////////////////////////////////
+bool TestCaseSandboxResultDecoder::decode()
+{
+   return This->decode();
+}
+
+/////////////////////////////////////////////////////////////////////////
+void TestCaseSandboxResultDecoder::flush(bool crashed)
+{
+   This->flush(crashed);
+}
+
+/////////////////////////////////////////////////////////////////////////
+
+
+TESTCPP_NS_END
+
