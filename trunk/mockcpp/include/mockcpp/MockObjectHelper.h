@@ -16,12 +16,31 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#ifndef __MOCKCPP_HPP_
-#define __MOCKCPP_HPP_
+#ifndef __MOCKCPP_MOCK_OBJECT_HELPER_H__
+#define __MOCKCPP_MOCK_OBJECT_HELPER_H__
 
 #include <mockcpp/mockcpp.h>
-#include <mockcpp/ChainingMockHelper.h>
-#include <mockcpp/MockObjectHelper.h>
+#include <mockcpp/MockObject.h>
+
+#include <boost/typeof/typeof.hpp>
+
+MOCKCPP_NS_START
+
+template <class MockObjectClass>
+struct MockObjectTraits
+{
+   typedef typename MockObjectClass::MockedInterface TYPE;
+};
+
+MOCKCPP_NS_END
+
+#define METHOD(m) method(&m, #m)
+
+#define MOCK_METHOD(obj, m) \
+   obj.method(&MOCKCPP_NS::MockObjectTraits<BOOST_TYPEOF(obj)>::TYPE::m, \
+       (MOCKCPP_NS::TypeString< \
+            MOCKCPP_NS::MockObjectTraits<BOOST_TYPEOF(obj)>::TYPE \
+       >::value() + "::"#m).c_str()) 
 
 #endif
 

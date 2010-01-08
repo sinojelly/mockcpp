@@ -44,9 +44,9 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 LTLIBRARIES = $(noinst_LTLIBRARIES)
-libcpp_la_LIBADD =
-am_libcpp_la_OBJECTS = CompositeChecker.lo
-libcpp_la_OBJECTS = $(am_libcpp_la_OBJECTS)
+libsample_la_LIBADD =
+am_libsample_la_OBJECTS = CompositeChecker.lo
+libsample_la_OBJECTS = $(am_libsample_la_OBJECTS)
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -60,8 +60,8 @@ CXXLD = $(CXX)
 CXXLINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	--mode=link $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
-SOURCES = $(libcpp_la_SOURCES)
-DIST_SOURCES = $(libcpp_la_SOURCES)
+SOURCES = $(libsample_la_SOURCES)
+DIST_SOURCES = $(libsample_la_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -197,8 +197,8 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AM_CPPFLAGS = -I$(top_builddir)/include -I$(top_builddir)/3rdparty -I$(top_builddir)/samples/cpp/include
-noinst_LTLIBRARIES = libcpp.la
-libcpp_la_SOURCES = \
+noinst_LTLIBRARIES = libsample.la
+libsample_la_SOURCES = \
  CompositeChecker.cpp 
 
 all: all-am
@@ -244,8 +244,8 @@ clean-noinstLTLIBRARIES:
 	  echo "rm -f \"$${dir}/so_locations\""; \
 	  rm -f "$${dir}/so_locations"; \
 	done
-libcpp.la: $(libcpp_la_OBJECTS) $(libcpp_la_DEPENDENCIES) 
-	$(CXXLINK)  $(libcpp_la_OBJECTS) $(libcpp_la_LIBADD) $(LIBS)
+libsample.la: $(libsample_la_OBJECTS) $(libsample_la_DEPENDENCIES) 
+	$(CXXLINK)  $(libsample_la_OBJECTS) $(libsample_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)

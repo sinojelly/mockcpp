@@ -1,11 +1,11 @@
 
 THIRD_PARTY_ROOT = $(top_builddir)/3rdparty
-TESTCPP_ROOT = $(THIRD_PARTY_ROOT)/cxxtestplus
+CXXTESTPLUS_ROOT = $(THIRD_PARTY_ROOT)/cxxtestplus
 
 AM_CPPFLAGS = \
   -I$(top_builddir)/include \
   -I$(THIRD_PARTY_ROOT) \
-  -I$(TESTCPP_ROOT)/include 
+  -I$(CXXTESTPLUS_ROOT)/include 
 
 if USE_TEST_TARGET
    MOCKCPP_LIB_FOR_TEST = \
@@ -54,7 +54,7 @@ CLEANFILES = \
  $(TARGET_SRC5) \
  $(TARGET_SRC6)
 
-UTCG = $(PYTHON) $(TESTCPP_ROOT)/scripts/cxxtestplus-gen.py
+UTCG = $(PYTHON) $(CXXTESTPLUS_ROOT)/scripts/cxxtestplus-gen.py
 
 TESTSUITES1 = \
  TestAny.h \
