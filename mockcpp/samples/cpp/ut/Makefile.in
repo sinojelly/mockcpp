@@ -34,7 +34,6 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
-noinst_PROGRAMS = cpp-ut$(EXEEXT)
 subdir = samples/cpp/ut
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -44,11 +43,11 @@ am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 mkinstalldirs = $(install_sh) -d
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
-PROGRAMS = $(noinst_PROGRAMS)
-nodist_cpp_ut_OBJECTS = cpp-ut.$(OBJEXT)
-cpp_ut_OBJECTS = $(nodist_cpp_ut_OBJECTS)
-cpp_ut_DEPENDENCIES = $(top_builddir)/libs/libcxxtest.la \
-	$(top_srcdir)/src/libmockcpp.la $(PROJECT_ROOT)/src/libcpp.la
+LTLIBRARIES = $(noinst_LTLIBRARIES)
+libsample_ut_la_LIBADD =
+am__objects_1 = sample-ut.lo
+am_libsample_ut_la_OBJECTS = $(am__objects_1)
+libsample_ut_la_OBJECTS = $(am_libsample_ut_la_OBJECTS)
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -62,8 +61,8 @@ CXXLD = $(CXX)
 CXXLINK = $(LIBTOOL) --tag=CXX $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	--mode=link $(CXXLD) $(AM_CXXFLAGS) $(CXXFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
-SOURCES = $(nodist_cpp_ut_SOURCES)
-DIST_SOURCES =
+SOURCES = $(libsample_ut_la_SOURCES)
+DIST_SOURCES = $(libsample_ut_la_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
@@ -198,24 +197,40 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-CXXTEST_ROOT = $(top_builddir)/3rdparty/cxxtest
-PROJECT_ROOT = $(top_builddir)/samples/cpp
+THIRD_PARTY_ROOT = $(top_builddir)/3rdparty
+CXXTESTPLUS_ROOT = $(THIRD_PARTY_ROOT)/cxxtestplus
 AM_CPPFLAGS = \
   -I$(top_builddir)/include \
-  -I$(top_builddir)/3rdparty \
-  -I$(CXXTEST_ROOT) \
-  -I$(PROJECT_ROOT)/include
+  -I$(THIRD_PARTY_ROOT) \
+  -I$(CXXTESTPLUS_ROOT)/include \
+  -I$(top_builddir)/samples/cpp/include 
 
-nodist_cpp_ut_SOURCES = cpp-ut.cpp
-CLEANFILES = cpp-ut.cpp
-cpp_ut_LDADD = \
-  $(top_builddir)/libs/libcxxtest.la \
-  $(top_srcdir)/src/libmockcpp.la \
-  $(PROJECT_ROOT)/src/libcpp.la
+@USE_TEST_TARGET_FALSE@MOCKCPP_LIB_FOR_TEST = \
+@USE_TEST_TARGET_FALSE@     $(top_builddir)/src/libmockcpp.la \
+@USE_TEST_TARGET_FALSE@     $(top_builddir)/3rdparty/cxxtestplus/src/libcxxtestplus.la
 
-UTCG = $(CXXTEST_ROOT)/cxxtestgen.pl
+@USE_TEST_TARGET_TRUE@MOCKCPP_LIB_FOR_TEST = \
+@USE_TEST_TARGET_TRUE@     $(top_builddir)/src/libmockcpp-for-test.la
+
+AM_LDFLAGS = \
+  -module \
+  -dynamic \
+  -no-undefined \
+  -rpath /dev/null \
+  $(MOCKCPP_LIB_FOR_TEST) \
+  $(top_builddir)/samples/cpp/src/libsample.la 
+
+TARGET_SRC = sample-ut.cpp
+noinst_LTLIBRARIES = \
+ libsample-ut.la 
+
+libsample_ut_la_SOURCES = $(TARGET_SRC)
+CLEANFILES = \
+ $(TARGET_SRC) 
+
+UTCG = $(PYTHON) $(CXXTESTPLUS_ROOT)/scripts/cxxtestplus-gen.py
 TESTSUITES = \
- TestCompositeChecker.h
+   TestCompositeChecker.h
 
 all: all-am
 
@@ -252,17 +267,16 @@ $(ACLOCAL_M4):  $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 $(am__aclocal_m4_deps):
 
-clean-noinstPROGRAMS:
-	@list='$(noinst_PROGRAMS)'; test -n "$$list" || exit 0; \
-	echo " rm -f" $$list; \
-	rm -f $$list || exit $$?; \
-	test -n "$(EXEEXT)" || exit 0; \
-	list=`for p in $$list; do echo "$$p"; done | sed 's/$(EXEEXT)$$//'`; \
-	echo " rm -f" $$list; \
-	rm -f $$list
-cpp-ut$(EXEEXT): $(cpp_ut_OBJECTS) $(cpp_ut_DEPENDENCIES) 
-	@rm -f cpp-ut$(EXEEXT)
-	$(CXXLINK) $(cpp_ut_OBJECTS) $(cpp_ut_LDADD) $(LIBS)
+clean-noinstLTLIBRARIES:
+	-test -z "$(noinst_LTLIBRARIES)" || rm -f $(noinst_LTLIBRARIES)
+	@list='$(noinst_LTLIBRARIES)'; for p in $$list; do \
+	  dir="`echo $$p | sed -e 's|/[^/]*$$||'`"; \
+	  test "$$dir" != "$$p" || dir=.; \
+	  echo "rm -f \"$${dir}/so_locations\""; \
+	  rm -f "$${dir}/so_locations"; \
+	done
+libsample-ut.la: $(libsample_ut_la_OBJECTS) $(libsample_ut_la_DEPENDENCIES) 
+	$(CXXLINK)  $(libsample_ut_la_OBJECTS) $(libsample_ut_la_LIBADD) $(LIBS)
 
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
@@ -270,7 +284,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/cpp-ut.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/sample-ut.Plo@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	$(CXXCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
@@ -383,7 +397,7 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-am
-all-am: Makefile $(PROGRAMS)
+all-am: Makefile $(LTLIBRARIES)
 installdirs:
 install: install-am
 install-exec: install-exec-am
@@ -413,7 +427,7 @@ maintainer-clean-generic:
 	@echo "it deletes files that may require special tools to rebuild."
 clean: clean-am
 
-clean-am: clean-generic clean-libtool clean-noinstPROGRAMS \
+clean-am: clean-generic clean-libtool clean-noinstLTLIBRARIES \
 	mostlyclean-am
 
 distclean: distclean-am
@@ -485,7 +499,7 @@ uninstall-am:
 .MAKE: install-am install-strip
 
 .PHONY: CTAGS GTAGS all all-am check check-am clean clean-generic \
-	clean-libtool clean-noinstPROGRAMS ctags distclean \
+	clean-libtool clean-noinstLTLIBRARIES ctags distclean \
 	distclean-compile distclean-generic distclean-libtool \
 	distclean-tags distdir dvi dvi-am html html-am info info-am \
 	install install-am install-data install-data-am install-dvi \
@@ -498,8 +512,8 @@ uninstall-am:
 	pdf pdf-am ps ps-am tags uninstall uninstall-am
 
 
-cpp-ut.cpp : $(TESTSUITES)
-	$(UTCG) --have-eh --have-std --part -o $@ $^
+$(TARGET_SRC) : $(TESTSUITES)
+	$(UTCG) -o $@ $^
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
