@@ -29,10 +29,10 @@ public:
       {
             filter = new GeneralTestFilter("*TestFixture", "testcase?");
 
-            testcase.METHOD(TestCaseInfoReader::getCaseName)
+            MOCK_METHOD(testcase, getCaseName)
                             .defaults().will(returnValue("testcase1"));
 
-            testcase.METHOD(TestCaseInfoReader::getFixtureName)
+            MOCK_METHOD(testcase, getFixtureName)
                             .defaults().will(returnValue("FooTestFixture"));
       }
 
@@ -50,7 +50,7 @@ public:
 
      void test_should_tell_unmatched_if_test_fixture_name_does_not_match()
      {
-          fixture.METHOD(TestFixtureInfoReader::getFixtureName)
+          MOCK_METHOD(fixture, getFixtureName)
              .stubs().will(returnValue("FooFixture"));
 
           TS_ASSERT_FALSE(filter->matches(testcase));
@@ -58,7 +58,7 @@ public:
 
      void test_should_tell_unmatched_if_testcase_name_does_not_match()
      {
-          fixture.METHOD(TestFixtureInfoReader::getCaseName)
+          MOCK_METHOD(fixture, getCaseName)
              .stubs().will(returnValue("testcase10"));
 
           TS_ASSERT_FALSE(filter->matches(testcase));
@@ -99,12 +99,12 @@ public:
       {
             runner = new SandboxTestRunner();
 
-            filter.METHOD(TestFilter::matches)
+            MOCK_METHOD(filter, matches)
                     .defaults()
                     .with(eq((TestCase*)testcase)
                     .will(returnValue(true));
 
-            filter.METHOD(TestFilter::matches)
+            MOCK_METHOD(filter, matches)
                     .defaults()
                     .with(neq((TestCase*)testcase)
                     .will(returnValue(false));
@@ -120,7 +120,7 @@ public:
 
      void test_should_run_matched_test_cases()
      {
-           testcase.METHOD(TestCase::run).expects(once());
+           MOCK_METHOD(testcase, run).expects(once());
 
            runner->run(testcase, filter);
 
@@ -131,7 +131,7 @@ public:
      {
           MockObject<TestCase> unmatchedTestCase;
          
-          unmatchedTestCase.METHOD(TestCase::run)
+          MOCK_METHOD(unmatchedTestCase, run)
                   .expects(never());
 
            runner->run(unmatchedTestCase, filter);
@@ -141,7 +141,7 @@ public:
 
      void test_should_throw_an_AsstionFailure_exception_if_the_test_case_did_that()
      {
-           testcase.METHOD(TestCase::run)
+           MOCK_METHOD(testcase, run)
                  .stubs().will(throws(AssertionFailure("AssertionFailure"));
 
            TS_ASSERT_THROWS(runner->run(testcase, filter), AssertionFailure);
@@ -149,7 +149,7 @@ public:
 
      void test_should_throw_a_CrashException_if_the_test_case_crashed()
      {
-           testcase.METHOD(TestCase::run)
+           MOCK_METHOD(testcase, run)
                  .stubs().will(die());
 
            TS_ASSERT_THROWS(runner->run(testcase, filter), CrashException);
