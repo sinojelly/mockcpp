@@ -30,10 +30,10 @@ public:
             filter = new GeneralTestFilter("*TestFixture", "testcase?");
 
             MOCK_METHOD(testcase, getCaseName)
-                            .defaults().will(returnValue("testcase1"));
+                      .defaults().will(returnValue("testcase1"));
 
             MOCK_METHOD(testcase, getFixtureName)
-                            .defaults().will(returnValue("FooTestFixture"));
+                      .defaults().will(returnValue("FooTestFixture"));
       }
 
      void tearDown()
