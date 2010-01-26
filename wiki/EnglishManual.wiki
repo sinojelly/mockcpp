@@ -351,7 +351,7 @@ You can also use the overloaded version to specify a qualified id:
 
 ===When to Use It===
 
-It's a fast way to write fragile tests. Avoid using this when the orders doesn't matter to the implementation.
+  * It's a fast way to write fragile tests. Avoid using this when order doesn't matter to the implementation.
 
 
 ==2.5 Identifier==
