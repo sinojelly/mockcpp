@@ -292,21 +292,66 @@ void test_should_be_able_to_process_a_text_file()
 
 ===Purpose===
 
+It shouldn't be the case very often. But there are times when you want to specify the order of messages sent to mocks to make sure that the interactions between the unit under test and mocks are correct.
 
+===Supported Orders===
+
+  * {{{before(id)}}}, {{{before(object, id)}}}
+  * {{{after(id)}}}, {{{after(object, id)}}}
+
+===Related===
+
+  * {{{id(id)}}}
 
 ===Usage===
 
+{{{before()}}} / {{{after()}}} can be used multiple times in mock specification:
+{{{
+      MockObject<Interface> mock;
 
+      mock.method(&Interface::foo)
+                 .stubs()
+                 .will(returnValue(10))
+                 .id("foo");
+
+      mock.method(&Interface::bar)
+                 .stubs()
+                 .will(returnValue(true))
+                 .id("bar");
+
+      mock.method(&Interface::fix)
+                 .stubs()
+                 .after("foo")
+                 .after("bar")
+                 .will(returnValue(true));
+}}}
+
+You can also use the overloaded version to specify a qualified id:
+{{{
+      MockObject<Interface> mock0;
+      MockObject<Interface> mock1;
+      MockObject<Interface> mock2;
+      
+      mock0.method(&Interface::foo)
+                 .stubs()
+                 .will(returnValue(10))
+                 .id("foo");
+
+      mock1.method(&Interface::foo)
+                 .stubs()
+                 .will(returnValue(1))
+                 .id("foo");
+
+      mock2.method(&Interface::foo)
+                 .stubs()
+                 .after(mock0, "foo")
+                 .after(mock1, "foo")
+                 .will(returnValue(11));
+}}}
 
 ===When to Use It===
 
-
-
-===When to Avoid It===
-
-
-
-===Example===
+It's a fast way to write fragile tests. Avoid using this when the orders doesn't matter to the implementation.
 
 
 ==2.5 Identifier==
