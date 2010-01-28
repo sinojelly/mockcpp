@@ -31,7 +31,7 @@ mock++当前的实现支持七种类型的约束/行为：
 除了调用次数约束之外，所有其它的调用约束或行为都可以任意。但一旦你使用其中的一部分或全部，则必须按照上面所列的顺序给出。比如：
 
 {{{
-mock.method(&Interface::method)
+MOCK_METHOD(mock, method)
       .expects(once())
       .before(anotherMock, "close")
       .with(eq(1), any(), neq(2.0))
@@ -62,7 +62,7 @@ mock.method(&Interface::method)
 函数调用行为通过_will_(behavior)/_then_(behavior)来指定。_then_()必须在_will_()之后。_will_()只会出现一次，但_then_()可以出现任意多次。比如：
 
 {{{
-     mock.method(&Interface::foo)
+     MOCK_METHOD(mock, foo)
                 .stubs()
                 .will(returnValue(10))
                 .then(repeat(20, 2))
@@ -130,7 +130,7 @@ void test_should_throw_exception_if_open_file_failed ()
 {
    MockObject<ITextFileReader> textFile;
 
-   textFile.method(&ITextFile::open)
+     MOCK_METHOD(textFile, open)
                  .stubs()
                  .will(throwException(Exception( "File Not Exist" )));
 
@@ -269,15 +269,15 @@ void test_should_be_able_to_process_a_text_file()
    char * fileName = "testFile";
 
    ///////////////////////////////////////////////
-   textFile.method(&ITextFile::open)
+     MOCK_METHOD(textFile, open)
                  .expects(atLeast(1))
                  .with(endWith(fileName));
 
-   textFile.method(&ITextFile::close)
+     MOCK_METHOD(textFile, close)
                  .expects(atLeast(1))
                  .will(ignoreReturnValue());
 
-   textFile.method(&ITextFile::readLine)
+     MOCK_METHOD(textFile, readLine)
                  .stubs()
                  .will(returnObjectList(line1, line2, line3))
                  .then(throws(EOFError));
@@ -318,17 +318,17 @@ _before_()/_after()可以在一个*_调用规范_*中指定多次，以满足复
 {{{
       MockObject<Interface> mock;
 
-      mock.method(&Interface::foo)
+     MOCK_METHOD(mock, foo)
                  .stubs()
                  .will(returnValue(10))
                  .id("foo");
 
-      mock.method(&Interface::bar)
+     MOCK_METHOD(mock, bar)
                  .stubs()
                  .will(returnValue(true))
                  .id("bar");
 
-      mock.method(&Interface::fix)
+     MOCK_METHOD(mock, fix)
                  .stubs()
                  .after("foo")
                  .after("bar")
@@ -343,17 +343,17 @@ _before_()/_after()可以在一个*_调用规范_*中指定多次，以满足复
       MockObject<Interface> mock1;
       MockObject<Interface> mock2;
       
-      mock0.method(&Interface::foo)
+     MOCK_METHOD(mock0, foo)
                  .stubs()
                  .will(returnValue(10))
                  .id("foo");
 
-      mock1.method(&Interface::foo)
+     MOCK_METHOD(mock1, foo)
                  .stubs()
                  .will(returnValue(1))
                  .id("foo");
 
-      mock2.method(&Interface::foo)
+     MOCK_METHOD(mock2, foo)
                  .stubs()
                  .after(mock0, "foo")
                  .after(mock1, "foo")
@@ -428,19 +428,19 @@ void test_should_invoke_validators_in_order()
    ///////////////////////////////////////////////
    User user("darwin");
    ///////////////////////////////////////////////
-   validator0.method(&IUserValidator::validate)
+   MOCK_METHOD(validator0, validate)
                        .expects(atLeast(1))
 		       .before(validate1, "v")
                        .with(eq(user))
                        .will(returnValue(true));
 
-   validator1.method(&IUserValidator::validate)
+   MOCK_METHOD(validator1, validate)
                        .expects(atLeast(1))
                        .with(eq(user))
                        .will(returnValue(true))
                        .id("v");
 
-   validator2.method(&IUserValidator::validate)
+   MOCK_METHOD(validator2, validate)
                        .expects(atLeast(1))
                        .with(eq(user))
                        .after(validate1, "v")
@@ -494,7 +494,7 @@ method(方法名)
 例如：
 
 {{{
-method(TestCaseResultCollector::startTestCase)
+   MOCK_METHOD(collector, startTestCase)
      .expects(exactly(0))
      .invoked(1)
      .before(testcpp::TestFixture, "setUp")
@@ -505,7 +505,7 @@ method(TestCaseResultCollector::startTestCase)
 在测试代码中，有一条用户编写的mock规范与之对应：
 
 {{{
-collector.METHOD(TestCaseResultCollector::startTestCase)
+   MOCK_METHOD(collector, startTestCase)
      .expects(exactly(0))
      .before(fixture, "setUp")
      .with(eq((TestCaseInfoReader*)testcase[0]))
