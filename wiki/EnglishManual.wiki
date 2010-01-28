@@ -1,6 +1,4 @@
 #labels Manual,English,Featured
-=Work in progress=
-
 =1. Background=
 
 mock++ is a C/C++ mocking framework. It's neither a reinvention of the wheel nor Yet Another C++ Mocking Framework.
@@ -360,7 +358,7 @@ In order to reference a mock specification in {{{before()/after()}}}, an id need
 
 ===Usage===
 
-Use {{{id(identifier)}}} to assign an id, in which 'identifier' should to be a string.
+Use {{{id(identifier)}}} where 'identifier' is a string.
 
 ===When to Use It===
 
@@ -441,18 +439,10 @@ void test_should_invoke_validators_in_order()
 
 ===Purpose===
 
-
+This feature is mainly used in C unit test/integration test. It can narrow the scope of mock specification for function which has more than one callers and can not be described by above selectors in a call flow.
 
 ===Usage===
 
-
-
-===When to Use It===
-
-
-
-===Example===
-
-
+Use {{{caller(function)}}} where 'function' is the name of the function in string form.
 
 ==3. Troubleshooting==
