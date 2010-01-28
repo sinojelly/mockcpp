@@ -250,7 +250,7 @@ struct AwkProcessor
 }}}
 
 {{{
-// test case
+// Test case
 void test_should_be_able_to_process_a_text_file()
 {
    MockObject<ITextFileReader> textFile;
@@ -287,8 +287,6 @@ void test_should_be_able_to_process_a_text_file()
 
 
 ==2.4 Expectation Order==
-
-
 
 ===Purpose===
 
@@ -356,26 +354,90 @@ You can also use the overloaded version to specify a qualified id:
 
 ==2.5 Identifier==
 
-
-
 ===Purpose===
 
-
+In order to reference a mock specification in {{{before()/after()}}}, an id needs to be assigned to it.
 
 ===Usage===
 
-
+Use {{{id(identifier)}}} to assign an id, in which 'identifier' should to be a string.
 
 ===When to Use It===
 
-
+Only in case of you wanting to specify expectation order {{{id()}}} should be used.
 
 ===Example===
 
+{{{
+// Dependent interface
+struct IUserValidator
+{
+   virtual bool validate(const User&) const = 0;   
+   
+   virtual ~IUserValidator() {}
+};
+}}}
+
+{{{
+// Code under test
+struct SequenceUserValidator : public IUserValidator
+{
+   typedef std::list<IUserValidator*> Validators;
+
+   CompositeUserValidator(Validators*);
+
+   bool validate(const User&) const;
+
+ private:
+   Validators* validators;
+};
+}}}
+
+{{{
+// Test case
+void test_should_invoke_validators_in_order()
+{
+   MockObject<IUserValidate> validator0;
+
+   MockObject<IUserValidate> validator1;
+
+   MockObject<IUserValidate> validator2;
+    
+   ///////////////////////////////////////////////
+   SequenceUserValidator::Validators validators;
+
+   validators.push_back(validator0);
+   validators.push_back(validator1);
+   validators.push_back(validator2);
+   ///////////////////////////////////////////////
+   User user("darwin");
+   ///////////////////////////////////////////////
+   validator0.method(&IUserValidator::validate)
+                       .expects(atLeast(1))
+		       .before(validate1, "v")
+                       .with(eq(user))
+                       .will(returnValue(true));
+
+   validator1.method(&IUserValidator::validate)
+                       .expects(atLeast(1))
+                       .with(eq(user))
+                       .will(returnValue(true))
+                       .id("v");
+
+   validator2.method(&IUserValidator::validate)
+                       .expects(atLeast(1))
+                       .with(eq(user))
+                       .after(validate1, "v")
+                       .will(returnValue(true));    
+   ///////////////////////////////////////////////
+   SequenceUserValidator validator(&validators);
+
+   TS_ASSERT(validator.validate(user)); 
+}
+
+}}}
 
 ==2.6 Caller==
-
-
 
 ===Purpose===
 
