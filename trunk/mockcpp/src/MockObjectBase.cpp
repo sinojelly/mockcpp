@@ -31,6 +31,7 @@ struct MockObjectBaseImpl : public IndexInvokableGetter
 {
    MockObjectBaseImpl( unsigned int numberOfVptr
                      , ChainableMockMethodContainer* c
+                     , ObjectNameGetter* nameGetter
                      , const std::type_info& info);
 
    ~MockObjectBaseImpl();
@@ -59,10 +60,11 @@ private:
 MockObjectBaseImpl::
 MockObjectBaseImpl( unsigned int numberOfVptr
                   , ChainableMockMethodContainer* c
+                  , ObjectNameGetter* nameGetter
                   , const std::type_info& info)
     : container(c)
 {
-	vtbl = new VirtualTable(this, numberOfVptr, info);
+	vtbl = new VirtualTable(this, nameGetter, numberOfVptr, info);
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -130,6 +132,7 @@ MockObjectBase::MockObjectBase( const std::string& objName
 {
 	This = new MockObjectBaseImpl(numberOfVptr
                , this->getMethodContainer()
+               , this
                , info);
 }
 
