@@ -21,16 +21,16 @@
 
 #include <mockcpp/mockcpp.h>
 
-#include <string>
+#include <mockcpp/ObjNameGetter.h>
 
 MOCKCPP_NS_START
 
 struct InvocationMocker;
 
 struct InvocationMockerNamespace
+    : public ObjectNameGetter
 {
    virtual InvocationMocker* getInvocationMocker(const std::string& id) const = 0;
-   virtual std::string& getName(void) const = 0;
 
    virtual ~InvocationMockerNamespace() {}
 };

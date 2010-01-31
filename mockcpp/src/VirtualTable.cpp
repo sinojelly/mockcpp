@@ -23,7 +23,9 @@
 #include <mockcpp/Asserter.h>
 #include <mockcpp/OutputStringStream.h>
 #include <mockcpp/MethodInfoReader.h>
+#include <mockcpp/ObjNameGetter.h>
 #include <mockcpp/VirtualTableUtils.h>
+
 
 MOCKCPP_NS_START
 
@@ -40,6 +42,7 @@ namespace
 struct VirtualTableImpl
 {
 	VirtualTableImpl( IndexInvokableGetter* getter
+                   , ObjectNameGetter* nameGetter
                    , unsigned int numberOfVptr
                    , const std::type_info& info);
    ~VirtualTableImpl();
@@ -55,6 +58,7 @@ struct VirtualTableImpl
    void** vtbl;
    unsigned int numberOfVptr;
    IndexInvokableGetter* indexInvokableGetter;
+   ObjectNameGetter* nameGetter;
    bool expectsBeingDeleted;
    bool expectsKeepAlive;
    bool deleted;
@@ -141,14 +145,18 @@ namespace
    {
       void method()
       {
+         VirtualTableImpl* pThis = getVirtualTableImpl((void*)this, VPTRIndex);
+
          oss_t oss;
          oss << "The method you are invoking is not " 
              << "specified by mocker" 
              << " ("
+             << pThis->nameGetter->getName()
+             << "["
              << VPTRIndex << ":" 
-             << VTBLIndex << ")." ;
+             << VTBLIndex << "])." ;
 
-         VirtualTableImpl* pThis = getVirtualTableImpl((void*)this, VTBLIndex);
+
 
          MOCKCPP_FAIL(oss.str());
       }
@@ -176,10 +184,17 @@ VirtualTableImpl::reset()
 }
 
 /////////////////////////////////////////////////////////////////
-VirtualTableImpl::VirtualTableImpl(IndexInvokableGetter* getter
-     , unsigned int numberOfVPTR, const std::type_info& refTypeInfo)
-     : numberOfVptr(numberOfVPTR), indexInvokableGetter(getter)
-     , expectsBeingDeleted(false), expectsKeepAlive(false)
+VirtualTableImpl::VirtualTableImpl
+     ( IndexInvokableGetter* getter
+     , ObjectNameGetter * objNameGetter
+     , unsigned int numberOfVPTR
+     , const std::type_info& refTypeInfo)
+
+     : numberOfVptr(numberOfVPTR)
+     , indexInvokableGetter(getter)
+     , nameGetter(objNameGetter)
+     , expectsBeingDeleted(false)
+     , expectsKeepAlive(false)
 {
    if(numberOfVptr == 0)
    {
@@ -218,9 +233,16 @@ VirtualTableImpl::~VirtualTableImpl()
 }
 
 /////////////////////////////////////////////////////////////////
-VirtualTable::VirtualTable(IndexInvokableGetter* getter
-    , unsigned int numberOfVptr, const std::type_info& info)
-    : This(new VirtualTableImpl(getter, numberOfVptr, info))
+VirtualTable::VirtualTable
+    ( IndexInvokableGetter* invokableGetter
+    , ObjectNameGetter* nameGetter
+    , unsigned int numberOfVptr
+    , const std::type_info& info)
+    : This( new VirtualTableImpl
+               ( invokableGetter
+               , nameGetter
+               , numberOfVptr
+               , info))
 {}
 
 /////////////////////////////////////////////////////////////////
