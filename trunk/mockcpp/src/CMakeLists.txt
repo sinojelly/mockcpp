@@ -15,6 +15,8 @@ SET(PACKAGE \"mockcpp\")
 SET(VERSION \"2.4\")
 
 
+SET(MOCKCPP_SRC_ROOT ${CMAKE_SOURCE_DIR})
+
 # Set MOCKCPP_MAX_INHERITANCE
 #
 IF(MOCKCPP_ALLOW_MI)
@@ -141,12 +143,13 @@ SET(MOCKCPP_SRCS
     HookMockObject.cpp
     CApiHookKey.cpp)
 
-IF(WIN32)
+IF(MSVC)
    SET(MOCKCPP_SRCS ${MOCKCPP_SRCS} Win32CApiHook.cpp)
-ENDIF(WIN32)
+ELSE(MSVC)
+   SET(MOCKCPP_SRCS ${MOCKCPP_SRCS} DummyApiHook.cpp)
+ENDIF(MSVC)
 ######################################################
-SET(MOCKCPP_HEADERS_PATH ${CMAKE_SOURCE_DIR}/include/mockcpp)
-SET(MOCKCPP_SOURCES_PATH ${CMAKE_SOURCE_DIR}/src)
+SET(MOCKCPP_HEADERS_PATH ${MOCKCPP_SRC_ROOT}/include/mockcpp)
 
 SET(MOCKCPP_VTBL_RELATED_HEADERS 
     ${MOCKCPP_HEADERS_PATH}/DelegatedMethodGetDef.h 
@@ -154,6 +157,7 @@ SET(MOCKCPP_VTBL_RELATED_HEADERS
     ${MOCKCPP_HEADERS_PATH}/GenericMethodCheckerDef.h 
     ${MOCKCPP_HEADERS_PATH}/DestructorAddrGetterDef.h 
     ${MOCKCPP_HEADERS_PATH}/DestructorCheckerDef.h
+    ${MOCKCPP_HEADERS_PATH}/DefaultMethodAddrGetterDef.h
 )
 
 SET(MOCKCPP_ARG_RELATED_HEADER_FILES
@@ -169,7 +173,7 @@ ELSE(MOCKCPP_ALLOW_MI)
 ENDIF(MOCKCPP_ALLOW_MI)
 
 ######################################################
-SET(VTBL_GENERATOR ${CMAKE_SOURCE_DIR}/src/generate_vtbl_related_files.py)
+SET(VTBL_GENERATOR ${MOCKCPP_SRC_ROOT}/src/generate_vtbl_related_files.py)
 SET(EXTRA_VTBL_HEADERS_DEFS
     --allow-mi=${ALLOW_MI}
     --max-inheritance=${MOCKCPP_MAX_INHERITANCE}
@@ -185,7 +189,7 @@ FOREACH(HEADER ${MOCKCPP_VTBL_RELATED_HEADERS})
 ENDFOREACH()
 
 ######################################################
-SET(ARG_GENERATOR ${CMAKE_SOURCE_DIR}/src/generate_arg_related_files.py)
+SET(ARG_GENERATOR ${MOCKCPP_SRC_ROOT}/src/generate_arg_related_files.py)
 SET(EXTRA_ARG_HEADERS_DEFS
     --max-parameters=${MOCKCPP_MAX_PARAMETERS}
     --include-path=${MOCKCPP_HEADERS_PATH}
@@ -199,9 +203,15 @@ FOREACH(HEADER ${MOCKCPP_ARG_RELATED_HEADER_FILES})
 ENDFOREACH()
 
 ######################################################
-ADD_LIBRARY(mockcpp STATIC ${MOCKCPP_SRCS})
+LINK_DIRECTORIES(${CMAKE_BINARY_DIR}/src)
 
-INCLUDE_DIRECTORIES(BEFORE ${CMAKE_SOURCE_DIR}/include ${CMAKE_SOURCE_DIR}/3rdparty)
+IF(MSVC)
+  ADD_LIBRARY(mockcpp STATIC ${MOCKCPP_SRCS})
+ELSE(MSVC)
+  ADD_LIBRARY(mockcpp SHARED ${MOCKCPP_SRCS})
+ENDIF(MSVC)
+
+INCLUDE_DIRECTORIES(BEFORE ${MOCKCPP_SRC_ROOT}/include ${MOCKCPP_SRC_ROOT}/3rdparty)
 
 ADD_CUSTOM_TARGET(vtbl_related_headers DEPENDS ${MOCKCPP_VTBL_RELATED_HEADERS})
 ADD_CUSTOM_TARGET(arg_related_headers DEPENDS ${MOCKCPP_ARG_RELATED_HEADER_FILES})
