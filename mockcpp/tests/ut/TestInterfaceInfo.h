@@ -2,6 +2,7 @@
 #include <testcpp/testcpp.hpp>
 
 #include <mockcpp/InterfaceInfo.h>
+#include <mockcpp/Exception.h>
 
 USING_MOCKCPP_NS
 USING_TESTCPP_NS
@@ -58,6 +59,6 @@ public:
    struct Derived6 : virtual public Derived2, virtual public Derived0 {};
    void testShouldBeThrowExcpetion_VirtualInheritance()
    {
-      TS_ASSERT_THROWS(getNumberOfVtbls<Derived6>(), Exception);
+      TS_ASSERT_THROWS(getNumberOfVtbls<Derived6>(), MOCKCPP_NS::Exception);
    }
 };

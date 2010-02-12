@@ -19,6 +19,7 @@
 #include <testcpp/testcpp.hpp>
 #include <mockcpp/Invocation.h>
 #include <mockcpp/types/Any.h>
+#include <mockcpp/types/AnyCast.h>
 
 USING_MOCKCPP_NS
 

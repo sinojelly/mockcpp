@@ -22,6 +22,7 @@
 #include <mockcpp/ChainableMockMethodContainer.h>
 #include <mockcpp/ChainableMockMethodCore.h>
 #include <mockcpp/InvocationMockBuilderGetter.h>
+#include <mockcpp/ChainableMockMethodNameKey.h>
 #include <mockcpp/Exception.h>
 #include <mockcpp/ChainingMockHelper.h>
 
@@ -89,16 +90,16 @@ public:
    {
       MOCKCPP_NS::ChainableMockMethodContainer container;
 
-      __BEGIN_TEST
+      __TESTNGPP_DO
 
       TS_ASSERT(0 == container.getMethod(key));
 
-      __CLEANUP
+      __TESTNGPP_CLEANUP
 
       delete key;
 		delete method;
 
-      __END_TEST
+      __TESTNGPP_DONE
    }
 
    // @test

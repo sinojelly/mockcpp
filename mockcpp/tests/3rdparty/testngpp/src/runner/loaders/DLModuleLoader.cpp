@@ -64,8 +64,14 @@ namespace
 
    void* openModule(const std::string& modulePath)
    {
-      std::string module = modulePath + ".so";
-      return ::dlopen(module.c_str(), RTLD_LAZY);
+      void* p = ::dlopen(modulePath.c_str(), RTLD_LAZY);
+      if(p == 0)
+      {
+         std::string module = modulePath + ".so";
+         return ::dlopen(module.c_str(), RTLD_LAZY);
+      }
+
+      return p;
    }
 }
 
