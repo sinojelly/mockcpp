@@ -28,7 +28,7 @@ TESTNGPP_NS_START
 namespace
 {
 
-   const unsigned int maxLenOfLine = 50;
+   const unsigned int maxLenOfLine = 60;
 
    std::string
    formatTitle
