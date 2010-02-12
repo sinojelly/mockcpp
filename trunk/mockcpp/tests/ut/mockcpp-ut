@@ -7,4 +7,4 @@ ${TESTNGPP_ROOT}/src/runner/testngpp-runner ${MOCKCPP_UT_SUITES} \
    -L${TESTNGPP_ROOT}/src/listeners \
    -l"testngppxmllistener result.xml" \
    -l"testngppstdoutlistener -c" \
-   -t"* > ^$" -c100 $@
+   -t"* > ft" -c10 $@

@@ -24,6 +24,7 @@
 
 USING_MOCKCPP_NS
 
+// @fixture(tags=ft)
 class TestMockObject : public TESTCPP_NS::TestFixture
 {
 
