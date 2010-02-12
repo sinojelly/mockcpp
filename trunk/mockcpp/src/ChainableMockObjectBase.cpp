@@ -32,7 +32,7 @@ public:
     ChainableMockObjectBaseImpl(const std::string& name);
 
     ChainableMockMethodContainer container;
-    std::string objectName;
+    const std::string objectName;
 };
 
 //////////////////////////////////////////////////////////////
@@ -81,7 +81,7 @@ ChainableMockObjectBase::verify()
 }
 
 //////////////////////////////////////////////////////////////
-std::string&
+const std::string&
 ChainableMockObjectBase::getName() const
 {
     return This->objectName;

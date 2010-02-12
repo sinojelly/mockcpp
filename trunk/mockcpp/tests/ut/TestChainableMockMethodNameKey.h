@@ -20,6 +20,8 @@
 
 #include <mockcpp/ChainableMockMethodNameKey.h>
 
+using namespace mockcpp;
+
 class TestChainableMockMethodNameKey: public TESTCPP_NS::TestFixture
 {
    ChainableMockMethodNameKey* key;
@@ -88,15 +90,15 @@ public:
       ChainableMockMethodKey* rhs = \
           new ChainableMockMethodNameKeyStub("method");
 
-      __BEGIN_TEST
+      __TESTNGPP_DO
 
       TS_ASSERT(!key->equals(rhs));
 
-      __CLEANUP
+      __TESTNGPP_CLEANUP
 
       delete rhs;
 
-      __END_TEST
+      __TESTNGPP_DONE
    }
 
    // @test
@@ -105,15 +107,15 @@ public:
       ChainableMockMethodKey* rhs = \
           new ChainableMockMethodNameKey("method");
 
-      __BEGIN_TEST
+      __TESTNGPP_DO
 
       TS_ASSERT(key->equals(rhs));
 
-      __CLEANUP
+      __TESTNGPP_CLEANUP
 
       delete rhs;
 
-      __END_TEST
+      __TESTNGPP_DONE
    }
 
    // @test
@@ -122,15 +124,15 @@ public:
       ChainableMockMethodKey* rhs = \
           new ChainableMockMethodNameKey("method1");
 
-      __BEGIN_TEST
+      __TESTNGPP_DO
 
       TS_ASSERT(!key->equals(rhs));
 
-      __CLEANUP
+      __TESTNGPP_CLEANUP
 
       delete rhs;
 
-      __END_TEST
+      __TESTNGPP_DONE
    }
 };
 

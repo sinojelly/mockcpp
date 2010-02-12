@@ -39,7 +39,7 @@ public:
 
     ~ChainableMockObjectBase();
 
-    std::string& getName(void) const;
+    const std::string& getName(void) const;
 
     // InvocationMockerNamespace -- id("id");
     InvocationMocker* getInvocationMocker(const std::string& id) const;

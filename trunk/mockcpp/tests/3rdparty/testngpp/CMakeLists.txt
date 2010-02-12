@@ -28,8 +28,6 @@ ENDIF(MSVC)
 ADD_SUBDIRECTORY(src)
 ADD_SUBDIRECTORY(src/listeners)
 ADD_SUBDIRECTORY(src/runner)
-#ADD_SUBDIRECTORY(ut)
-ADD_SUBDIRECTORY(samples)
 
 ########################################################
 INSTALL(DIRECTORY include/testngpp DESTINATION include

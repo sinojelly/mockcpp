@@ -19,22 +19,23 @@
 #include <testcpp/testcpp.hpp>
 
 #include <mockcpp/IncrementStub.h>
+#include <mockcpp/types/AnyCast.h>
 
 USING_MOCKCPP_NS
 
 class TestIncrementStub: public TESTCPP_NS::TestFixture
 {
 private:
-   TESTCPP_RCP checkpoint;
+   TESTNGPP_RCP checkpoint;
 
 public:
    void setUp()
    {
-      checkpoint = TESTCPP_SET_RESOURCE_CHECK_POINT();
+      checkpoint = TESTNGPP_SET_RESOURCE_CHECK_POINT();
    }
    void tearDown()
    {
-      TESTCPP_VERIFY_RESOURCE_CHECK_POINT(checkpoint);
+      TESTNGPP_VERIFY_RESOURCE_CHECK_POINT(checkpoint);
    }
 
    void testShouldBeAbleIncreaseFromStartValue()

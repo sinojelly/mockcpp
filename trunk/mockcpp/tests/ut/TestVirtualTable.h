@@ -16,6 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 #include <iostream>
+#include <string>
 
 #include <testcpp/testcpp.hpp>
 
@@ -25,6 +26,7 @@
 #include <mockcpp/Exception.h>
 #include <mockcpp/MethodInfoReader.h>
 #include <mockcpp/DestructorChecker.h>
+#include <mockcpp/ObjNameGetter.h>
 
 USING_MOCKCPP_NS
 
@@ -67,6 +69,16 @@ class TestVirtualTable: public TESTCPP_NS::TestFixture
       virtual void b(bool) {}
    };
 
+   struct ThisObject : public ObjectNameGetter
+   {
+      ThisObject():name("object") {}
+   
+      const std::string& getName() const
+      { return name; }
+
+      const std::string name;
+   };
+
 private:
 
    TESTCPP_RCP checkpoint;
@@ -77,6 +89,7 @@ private:
 
    Interface* pI;
 
+   ThisObject object;
 public:
 
    void setUp()
@@ -84,6 +97,7 @@ public:
       checkpoint = TESTCPP_SET_RESOURCE_CHECK_POINT();
 
       vtbl = new VirtualTable(&indexInvokableGetter
+                     , &object
                      , sizeof(Interface)/sizeof(void*)
                      , typeid(Interface));
       TS_ASSERT(vtbl != 0);
@@ -126,7 +140,8 @@ public:
    void testShouldThrowExceptionIfTheNumberOfVptrExceedsTheMaxSettingOfConfiguration()
    {
       TS_ASSERT_THROWS( new VirtualTable(&indexInvokableGetter
-                      , MOCKCPP_MAX_INHERITANCE + 1
+                      , &object
+                      , 10 
                       , typeid(Interface)), MOCKCPP_NS::Exception);
    }
 
@@ -170,7 +185,7 @@ public:
 
    void testShouldThrowExceptionIfIndexOfVtblExceedsTheLimitationOfConfiguration()
    {
-      unsigned int indexOfVtbl = MOCKCPP_MAX_VTBL_SIZE;
+      unsigned int indexOfVtbl = 20; //MOCKCPP_MAX_VTBL_SIZE;
       unsigned int indexOfVptr = getDeltaOfMethod(&Interface::base11);
       void* methodAddr = MOCKCPP_NS::getAddrOfMethod(&TestMethodHolder::base11);
  
@@ -180,7 +195,7 @@ public:
    void testShouldThrowExceptionIfIndexOfVtblExceedsTheNumberOfVptr()
    {
       unsigned int indexOfVtbl = getIndexOfMethod(&Interface::base11);
-      unsigned int indexOfVptr = MOCKCPP_MAX_INHERITANCE;
+      unsigned int indexOfVptr = 5; //MOCKCPP_MAX_INHERITANCE;
       void* methodAddr = MOCKCPP_NS::getAddrOfMethod(&TestMethodHolder::base11);
  
       TS_ASSERT_THROWS(vtbl->addMethod(methodAddr, indexOfVtbl, indexOfVptr), MOCKCPP_NS::Exception);

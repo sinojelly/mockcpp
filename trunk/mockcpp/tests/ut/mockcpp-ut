@@ -1,12 +1,10 @@
 #!/bin/bash
 
-OS_NAME=`uname`
-if test "x$OS_NAME" = xDarwin; then
-   export DYLD_LIBRARY_PATH=`cd ../src/.libs && pwd`:$DYLD_LIBRARY_PATH
-fi
+TESTNGPP_ROOT=`pwd`/../3rdparty/testngpp
 
-all_tests=`ls libmockcpp-ut?.la`
-
-../3rdparty/cxxtestplus/src/runner/cxxtestplus-runner ${all_tests} \
-    -L../3rdparty/cxxtestplus/src/listeners -l"cxxtestplus_stdout_listener -c" -c10 $* 
-
+MOCKCPP_UT_SUITES=`ls libmockcpp-ut-*`
+${TESTNGPP_ROOT}/src/runner/testngpp-runner ${MOCKCPP_UT_SUITES} \
+   -L${TESTNGPP_ROOT}/src/listeners \
+   -l"testngppxmllistener result.xml" \
+   -l"testngppstdoutlistener -c" \
+   -t"* > ^$" -c100 $@

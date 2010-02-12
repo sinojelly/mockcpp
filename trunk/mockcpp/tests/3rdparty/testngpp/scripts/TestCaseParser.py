@@ -7,9 +7,6 @@ from PreprocessScope import *
 from Message import *
 
 
-
-
-
 ##########################################################
 class TestCaseParser:
    #######################################################
@@ -20,6 +17,10 @@ class TestCaseParser:
       self.done = None
       self.numberOfUnclosedBraces = 0
       self.file = file
+
+   #######################################################
+   def verify_scope(self, scope):
+      return False
 
    #######################################################
    def verify_testcase_tag(self, tag):
