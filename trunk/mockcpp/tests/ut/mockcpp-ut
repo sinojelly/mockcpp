@@ -3,8 +3,13 @@
 TESTNGPP_ROOT=`pwd`/../3rdparty/testngpp
 
 MOCKCPP_UT_SUITES=`ls libmockcpp-ut-*`
-${TESTNGPP_ROOT}/src/runner/testngpp-runner ${MOCKCPP_UT_SUITES} \
+${TESTNGPP_ROOT}/src/runner/testngpp-runner \
+libmockcpp-ut-TestAny \
    -L${TESTNGPP_ROOT}/src/listeners \
    -l"testngppxmllistener result.xml" \
-   -l"testngppstdoutlistener -c" \
+   -l"testngppstdoutlistener -c -s" \
    -t"* > ft" -c10 $@
+
+
+
+
