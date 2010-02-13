@@ -1,7 +1,0 @@
-#!/bin/bash
-
-../src/runner/testngpp-runner libsample \
-   -L../src/listeners \
-   -l"testngppxmllistener result.xml" \
-   -l"testngppstdoutlistener -c -s -f -v" \
-   -t"* > ^$" -c100 $@
