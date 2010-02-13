@@ -90,6 +90,7 @@ private:
    Interface* pI;
 
    ThisObject object;
+
 public:
 
    void setUp()
@@ -130,14 +131,16 @@ public:
 
 	/////////////////////////////////////////////////////////
 
-   void testShouldBeAbleToConvertToPointerToInterfaceType()
+   // @test
+   void shouldBeAbleToConvertToPointerToInterfaceType()
    {
       Interface* p = (Interface*) vtbl->toPointerToInterface();
 
       TS_ASSERT_THROWS(p->a(), MOCKCPP_NS::Exception);
    }
 
-   void testShouldThrowExceptionIfTheNumberOfVptrExceedsTheMaxSettingOfConfiguration()
+   // @test
+   void shouldThrowExceptionIfTheNumberOfVptrExceedsTheMaxSettingOfConfiguration()
    {
       TS_ASSERT_THROWS( new VirtualTable(&indexInvokableGetter
                       , &object
@@ -145,9 +148,8 @@ public:
                       , typeid(Interface)), MOCKCPP_NS::Exception);
    }
 
-
-
-   void testShouldBeAbleToSetMethod()
+   // @test
+   void shouldBeAbleToSetMethod()
    {
       unsigned int indexOfVtbl = getIndexOfMethod(&Interface::base11);
       unsigned int indexOfVptr = getDeltaOfMethod(&Interface::base11);
@@ -165,7 +167,8 @@ public:
       TS_ASSERT(p->base11(true) != p->base11(false));
    }
 
-   void testShouldThrowExceptionIfAMethodIsNotSet()
+   // @test
+   void shouldThrowExceptionIfAMethodIsNotSet()
    {
       unsigned int indexOfVtbl = getIndexOfMethod(&Interface::base11);
       unsigned int indexOfVptr = getDeltaOfMethod(&Interface::base11);
@@ -183,7 +186,8 @@ public:
       TS_ASSERT_THROWS(p->b(true), MOCKCPP_NS::Exception);
    }
 
-   void testShouldThrowExceptionIfIndexOfVtblExceedsTheLimitationOfConfiguration()
+   // @test
+   void shouldThrowExceptionIfIndexOfVtblExceedsTheLimitationOfConfiguration()
    {
       unsigned int indexOfVtbl = 20; //MOCKCPP_MAX_VTBL_SIZE;
       unsigned int indexOfVptr = getDeltaOfMethod(&Interface::base11);
@@ -192,7 +196,8 @@ public:
       TS_ASSERT_THROWS(vtbl->addMethod(methodAddr, indexOfVtbl, indexOfVptr), MOCKCPP_NS::Exception);
    }
 
-   void testShouldThrowExceptionIfIndexOfVtblExceedsTheNumberOfVptr()
+   // @test
+   void shouldThrowExceptionIfIndexOfVtblExceedsTheNumberOfVptr()
    {
       unsigned int indexOfVtbl = getIndexOfMethod(&Interface::base11);
       unsigned int indexOfVptr = 5; //MOCKCPP_MAX_INHERITANCE;
@@ -201,7 +206,8 @@ public:
       TS_ASSERT_THROWS(vtbl->addMethod(methodAddr, indexOfVtbl, indexOfVptr), MOCKCPP_NS::Exception);
    }
 
-   void testShouldBeAbleToGetPreviouslySetIndexInvokableGetterByReturnedPointerToInterface()
+   // @test
+   void shouldBeAbleToGetPreviouslySetIndexInvokableGetterByReturnedPointerToInterface()
    {
       unsigned int indexOfVtbl = getIndexOfMethod(&Interface::base11);
       unsigned int indexOfVptr = getDeltaOfMethod(&Interface::base11);
@@ -214,7 +220,8 @@ public:
       TS_ASSERT_EQUALS(getter, &indexInvokableGetter);
    }
 
-   void testShouldThrowExceptionIfItExpectedToBeDeletedButActuallyNotWhenItIsVerified()
+   // @test
+   void shouldThrowExceptionIfItExpectedToBeDeletedButActuallyNotWhenItIsVerified()
    {
       std::pair<unsigned int, unsigned int> indices = \
          getIndexOfDestructor<Interface, Interface>();
@@ -225,7 +232,8 @@ public:
       TS_ASSERT_THROWS(vtbl->verify(), Exception);
     }
 
-    void testShouldPassVerifyIfThePointerIsDeletedAsExpected()
+   // @test
+    void shouldPassVerifyIfThePointerIsDeletedAsExpected()
     {
       std::pair<unsigned int, unsigned int> indices = \
          getIndexOfDestructor<Interface, Interface>();
@@ -239,7 +247,8 @@ public:
       TS_ASSERT_THROWS_NOTHING(vtbl->verify());
     }
 
-    void testShouldPassVerifyIfThePointerIsNotDeletedAsExpected()
+    // @test
+    void shouldPassVerifyIfThePointerIsNotDeletedAsExpected()
     {
       std::pair<unsigned int, unsigned int> indices = \
          getIndexOfDestructor<Interface, Interface>();
@@ -249,7 +258,8 @@ public:
       TS_ASSERT_THROWS_NOTHING(vtbl->verify());
     }
 
-    void testShouldFailThrowExceptionWhileTryingToDeleteThePointerWhichWasExpectedNotTo()
+    // @test
+    void shouldFailThrowExceptionWhileTryingToDeleteThePointerWhichWasExpectedNotTo()
     {
       std::pair<unsigned int, unsigned int> indices = \
          getIndexOfDestructor<Interface, Interface>();
@@ -261,7 +271,8 @@ public:
       TS_ASSERT_THROWS(delete p, Exception);
     }
 
-    void testShouldThrowExceptionIfAnObjectIsExpectedBothKeepAliveAndBeingDelete()
+    // @test
+    void shouldThrowExceptionIfAnObjectIsExpectedBothKeepAliveAndBeingDelete()
     {
       std::pair<unsigned int, unsigned int> indices = \
          getIndexOfDestructor<Interface, Interface>();
@@ -271,7 +282,8 @@ public:
       TS_ASSERT_THROWS(vtbl->expectsBeingDeleted(), Exception);
     }
 
-    void testShouldThrowExceptionIfAnObjectIsExpectedBothKeepAliveAndBeingDelete2()
+    // @test
+    void shouldThrowExceptionIfAnObjectIsExpectedBothKeepAliveAndBeingDelete2()
     {
       std::pair<unsigned int, unsigned int> indices = \
          getIndexOfDestructor<Interface, Interface>();
@@ -281,7 +293,8 @@ public:
       TS_ASSERT_THROWS(vtbl->expectsKeepAlive(), Exception);
     }
 
-    void testShouldThrowExceptionWhenTryingToExpectsADeletedObjectKeepAlive()
+    // @test
+    void shouldThrowExceptionWhenTryingToExpectsADeletedObjectKeepAlive()
     {
       std::pair<unsigned int, unsigned int> indices = \
          getIndexOfDestructor<Interface, Interface>();
@@ -292,7 +305,8 @@ public:
       TS_ASSERT_THROWS(vtbl->expectsKeepAlive(), Exception);
     }
 
-    void testShouldThrowAnExceptionWhenTryingToAccessMethodsOfADeleteObject()
+    // @test
+    void shouldThrowAnExceptionWhenTryingToAccessMethodsOfADeleteObject()
     {
       std::pair<unsigned int, unsigned int> indices = \
          getIndexOfDestructor<Interface, Interface>();

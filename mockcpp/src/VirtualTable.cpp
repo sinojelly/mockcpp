@@ -227,7 +227,7 @@ VirtualTableImpl::~VirtualTableImpl()
 
     if(vtbl != 0)
     {
-	   freeVtbls(vtbl, numberOfVptr);
+       freeVtbls(vtbl, numberOfVptr);
        vtbl = 0;
     }
 }

@@ -29,20 +29,20 @@ void** createVtbls(unsigned int numberOfVptr)
 void freeVtbls(void** vtbl, unsigned int numberOfVptr)
 {
 #if defined(_MSC_VER)
-	RTTIClassHierarchyDescriptor* desc = 0;
+	 RTTIClassHierarchyDescriptor* desc = 0;
    for(unsigned int i=0; i<numberOfVptr; i++)
    {
       int base = i*SLOTS_PER_VTBL;
-	  if(vtbl[base] != 0)
-	  {
-		  RTTICompleteObjectLocator* rtti = (RTTICompleteObjectLocator*)vtbl[base];
-		  desc = rtti->pClassDescriptor;
-		  delete rtti;
-	  }
+	    if(vtbl[base] != 0)
+	    {
+	    	  RTTICompleteObjectLocator* rtti = (RTTICompleteObjectLocator*)vtbl[base];
+	    	  desc = rtti->pClassDescriptor;
+	    	  delete rtti;
+	    }
    }
    if(desc != 0)
    {
-	   delete desc;
+	    delete desc;
    }
 #endif
 
@@ -63,7 +63,7 @@ void initializeVtbls(void** vptr, void**vtbl, unsigned int numberOfVptr, const s
 	RTTIClassHierarchyDescriptor * desc = 0;
 	if(hasRtti)
 	{
-	   desc = new RTTIClassHierarchyDescriptor(numberOfVptr>1?true:false);
+	   desc = new RTTIClassHierarchyDescriptor(numberOfVptr > 1 ? true : false);
 	}
 
 #endif
@@ -76,8 +76,8 @@ void initializeVtbls(void** vptr, void**vtbl, unsigned int numberOfVptr, const s
       vtbl[base + 0] = (void*)(-1*(sizeof(void*)*i));
       vtbl[base + 1] = (void*)&info;
 #elif defined(_MSC_VER)
-	  //FIXME
-	  vtbl[base + 0] = hasRtti?new RTTICompleteObjectLocator(i, info, desc):0;
+	    //FIXME
+	    vtbl[base + 0] = hasRtti ? new RTTICompleteObjectLocator(i, info, desc) : 0;
 #endif
 
       vptr[i] = (void*)&vtbl[base + EXTRA_VTBL_SLOT];
