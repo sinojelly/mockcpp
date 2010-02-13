@@ -36,7 +36,22 @@ namespace
 
    bool initialized = false;
 
-   void** vtbl = createVtbls(MOCKCPP_MAX_INHERITANCE);
+   struct VTBLForDestructor
+   {
+      VTBLForDestructor()
+      {
+         vtbl = createVtbls(MOCKCPP_MAX_INHERITANCE);
+      }
+
+      ~VTBLForDestructor()
+      {
+         freeVtbls(vtbl, MOCKCPP_MAX_INHERITANCE);
+      }
+     
+      void** vtbl; 
+   };
+
+   VTBLForDestructor vtbl;
 }
 
 ////////////////////////////////////////////////////////////////////////
@@ -52,7 +67,7 @@ struct DestructorChecker
 
 ///////////////////////////////////////////////////////////////////////
 #define MOCKCPP_SET_DESTRUCTOR_CHECKER_VTBL(I, J) do{ \
-   vtbl[getRealVtblIndex(I,J)] = getAddrOfMethod(&DestructorChecker<I,J,DummyType>::check); \
+   vtbl.vtbl[getRealVtblIndex(I,J)] = getAddrOfMethod(&DestructorChecker<I,J,DummyType>::check); \
 }while(0)
 
 static void initialize()
@@ -64,8 +79,6 @@ static void initialize()
    {
       return;
    } 
-
-
 
    #include <mockcpp/DestructorCheckerDef.h>
 
@@ -88,7 +101,7 @@ void* createDestructorChecker(const std::type_info& info)
    
    FakeObject* object = new FakeObject();
 
-   initializeVtbls(object->vptr, vtbl, MOCKCPP_MAX_INHERITANCE,info, false);
+   initializeVtbls(object->vptr, vtbl.vtbl, MOCKCPP_MAX_INHERITANCE, info, false);
 
    return (void*)object;
 }
