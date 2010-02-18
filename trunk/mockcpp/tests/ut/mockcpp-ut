@@ -6,7 +6,7 @@ MOCKCPP_UT_SUITES=`ls libmockcpp-ut-*`
 ${TESTNGPP_ROOT}/src/runner/testngpp-runner \
    -L${TESTNGPP_ROOT}/src/listeners \
    -l"testngppxmllistener result.xml" \
-   -l"testngppstdoutlistener -c -t -v" \
+   -l"testngppstdoutlistener -c -v" \
    -t"* > ft" -c10 $@ \
    ${MOCKCPP_UT_SUITES}
 
