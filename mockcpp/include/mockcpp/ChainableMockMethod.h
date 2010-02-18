@@ -87,8 +87,7 @@ class ChainableMockMethod : public ChainableMockMethodBase<RT>
               Result( any_castable<RT>(anyResult) 
                     , typeid(RT)
                     , TypeString<RT>::value()
-                    , resultProvider)
-                    . getResult(anyResult);
+                    , resultProvider).getResult(anyResult);
 
       MOCKCPP_ASSERT_FALSE_MESSAGE(
          "The return value for a non-void method was not specified",

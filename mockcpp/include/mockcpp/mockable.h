@@ -23,7 +23,7 @@
 #  include <mockcpp/Functor.h>
 #  include <boost/typeof/typeof.hpp>
 #  define MOCKABLE(function) MOCKCPP_NS::Functor<BOOST_TYPEOF(function)> function(#function, __FUNCTION__)
-#  define MCALL(function) MOCKCPP_NS::Functor<typeof(function)>(#function, __FUNCTION__) 
+#  define MCALL(function) MOCKCPP_NS::Functor<BOOST_TYPEOF(function)>(#function, __FUNCTION__) 
 #else
 #  define MOCKABLE(function)
 #  define MCALL(function) function

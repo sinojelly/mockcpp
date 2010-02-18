@@ -87,6 +87,13 @@ public:
       TS_ASSERT_EQUALS(Interface::S_FAILED, mock->getResult());
    }
 
+   TEST(from_unsigned_int_to_unsigned_int)
+   {
+      MockObject<Interface> mock;
+      mock.method(&Interface::getResult1).stubs().will(returnValue((unsigned int)1));
+
+      TS_ASSERT_EQUALS(1, mock->getResult1());
+   }
 #if 0
    // returnValue() : enum => unsigned int 
    void testShouldBeAbleToConvertReturnValueFromEnumToInt()

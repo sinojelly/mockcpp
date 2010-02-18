@@ -30,14 +30,6 @@ class TestAny: public TESTCPP_NS::TestFixture
 {
 
 public:
-	void setUp()
-	{
-	}
-
-	void tearDown()
-	{
-	}
-
 	/////////////////////////////////////////////////////////
 
    // @test
@@ -365,6 +357,12 @@ public:
       Any c((unsigned char)10);
 
       TS_ASSERT_EQUALS(Enum10, any_cast<Enum>(c));
+   }
+
+   TEST(castable_unsigned_int)
+   {
+      Any ui((unsigned int)2);
+      TS_ASSERT(any_castable<unsigned int>(ui));
    }
 };
 
