@@ -27,37 +27,38 @@
 MOCKCPP_NS_START
 
 ///////////////////////////////////////////////
+struct DestructorChecker
+{
+   virtual void* getObject() const = 0;
 
-void* createDestructorChecker(const std::type_info& info);
-unsigned int getIndexOfVptrOfDestructor();
-unsigned int getIndexOfVtblOfDestructor();
+   virtual void getIndices
+      ( unsigned int& vptrIndex
+      , unsigned int& vtblIndex) = 0;
+
+   virtual ~DestructorChecker() {}
+};
+
+///////////////////////////////////////////////
+DestructorChecker*
+createDestructorChecker(const std::type_info& info);
 
 ///////////////////////////////////////////////
 template <class Interface, class Original>
 std::pair<unsigned int, unsigned int> getIndexOfDestructor()
 {
-   Original* original = (Original*) \
+   DestructorChecker* checker = \
       createDestructorChecker(typeid(Original));
 
-   Interface* checker =  original;
+   Interface* iface = (Original*) checker->getObject();
 
-   delete checker;
+   delete iface;
 
    unsigned int vptrIndex = 0;
    unsigned int vtblIndex = 0;
 
-   try
-   {
-      vptrIndex = getIndexOfVptrOfDestructor();
-      vtblIndex = getIndexOfVtblOfDestructor();
+   checker->getIndices(vptrIndex, vtblIndex);
 
-      // FIXME:
-      ::operator delete(original);
-   }
-   catch(...)
-   {
-      throw;
-   }
+   delete checker;
 
    return std::pair<unsigned int, unsigned int>
        (vptrIndex, vtblIndex);

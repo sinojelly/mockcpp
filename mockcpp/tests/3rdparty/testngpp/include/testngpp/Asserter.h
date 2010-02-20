@@ -127,7 +127,7 @@ TESTNGPP_NS_START
       __TESTNGPP_REPORT_FAILURE ( \
           "expected " #expr " will throw an exception of type " #except ", but actually not."); \
    }catch(except){ \
-      ASSERT_EQUALS(expected, value); \
+      ASSERT_EQ(expected, value); \
    } \
 }while(0)
 
