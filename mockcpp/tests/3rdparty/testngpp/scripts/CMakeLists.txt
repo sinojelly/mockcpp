@@ -1,0 +1,17 @@
+
+INCLUDE(FindPythonInterp)
+
+IF(PYTHONINTERP_FOUND)
+  SET(PYTHON ${PYTHON_EXECUTABLE})
+ELSE(PYTHONINTERP_FOUND)
+  MESSAGE(FATAL_ERROR "No Python interpreter found")
+ENDIF(PYTHONINTERP_FOUND)
+
+ADD_CUSTOM_TARGET(compile-testngppgen
+   ${PYTHON} pycompile.py) 
+   
+INSTALL(DIRECTORY . DESTINATION testngpp/generator
+       FILES_MATCHING PATTERN "*.pyc"
+       PATTERN "CMakeFiles" EXCLUDE
+       PATTERN ".svn" EXCLUDE
+       PATTERN ".py" EXCLUDE)
