@@ -19,35 +19,20 @@
 #ifndef __MOCKCPP_DESTRUCTOR_CHECKER_H
 #define __MOCKCPP_DESTRUCTOR_CHECKER_H
 
-#include <typeinfo>
 #include <algorithm>
+#include <typeinfo>
 
 #include <mockcpp/mockcpp.h>
+#include <mockcpp/MethodIndiceChecker.h>
+#include <mockcpp/Asserter.h>
 
 MOCKCPP_NS_START
-
-///////////////////////////////////////////////
-struct DestructorChecker
-{
-   virtual void* getObject() const = 0;
-
-   virtual void getIndices
-      ( unsigned int& vptrIndex
-      , unsigned int& vtblIndex) = 0;
-
-   virtual ~DestructorChecker() {}
-};
-
-///////////////////////////////////////////////
-DestructorChecker*
-createDestructorChecker(const std::type_info& info);
 
 ///////////////////////////////////////////////
 template <class Interface, class Original>
 std::pair<unsigned int, unsigned int> getIndexOfDestructor()
 {
-   DestructorChecker* checker = \
-      createDestructorChecker(typeid(Original));
+   MethodIndiceChecker* checker = createMethodIndiceChecker(typeid(Original));
 
    Interface* iface = (Original*) checker->getObject();
 
@@ -56,9 +41,10 @@ std::pair<unsigned int, unsigned int> getIndexOfDestructor()
    unsigned int vptrIndex = 0;
    unsigned int vtblIndex = 0;
 
-   checker->getIndices(vptrIndex, vtblIndex);
-
+   bool result = checker->getIndice(true, vptrIndex, vtblIndex);
    delete checker;
+
+   MOCKCPP_ASSERT_TRUE_MESSAGE("You are trying to mock an interface without virtual destructor", result); 
 
    return std::pair<unsigned int, unsigned int>
        (vptrIndex, vtblIndex);

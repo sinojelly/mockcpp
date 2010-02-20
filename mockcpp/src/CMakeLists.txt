@@ -80,13 +80,11 @@ SET(MOCKCPP_SRCS
     DefaultMatcher.cpp
     DefaultStub.cpp
     DelegatedMethodGetter.cpp
-    DestructorChecker.cpp
+    MethodIndiceChecker.cpp
     DieStub.cpp
     Exception.cpp
     ExpectsMatcher.cpp
     Formatter.cpp
-    GenericMethodIndicesChecker.cpp
-    GlobalMockObject.cpp
     IdentityBuilder.cpp
     IgnoreResultHandler.cpp
     IgnoreResultHandlerFactory.cpp
@@ -135,7 +133,9 @@ SET(MOCKCPP_SRCS
     VoidResultHandlerFactory.cpp
     WillStub.cpp
     HookMockObject.cpp
-    CApiHookKey.cpp)
+    CApiHookKey.cpp
+    GlobalMockObject.cpp
+)
 
 IF(MSVC)
    SET(MOCKCPP_SRCS ${MOCKCPP_SRCS} Win32CApiHook.cpp)
@@ -148,9 +148,8 @@ SET(MOCKCPP_HEADERS_PATH ${MOCKCPP_SRC_ROOT}/include/mockcpp)
 SET(MOCKCPP_VTBL_RELATED_HEADERS 
     ${MOCKCPP_HEADERS_PATH}/DelegatedMethodGetDef.h 
     ${MOCKCPP_HEADERS_PATH}/DelegatedMethodGetByVptrDef.h 
-    ${MOCKCPP_HEADERS_PATH}/GenericMethodCheckerDef.h 
     ${MOCKCPP_HEADERS_PATH}/DestructorAddrGetterDef.h 
-    ${MOCKCPP_HEADERS_PATH}/DestructorCheckerDef.h
+    ${MOCKCPP_HEADERS_PATH}/MethodIndiceCheckerDef.h
     ${MOCKCPP_HEADERS_PATH}/DefaultMethodAddrGetterDef.h
 )
 
@@ -202,7 +201,7 @@ LINK_DIRECTORIES(${CMAKE_BINARY_DIR}/src ${CMAKE_BINARY_DIR}/tests/3rdparty/test
 IF(MSVC)
   ADD_LIBRARY(mockcpp STATIC ${MOCKCPP_SRCS})
 ELSE(MSVC)
-  ADD_LIBRARY(mockcpp SHARED ${MOCKCPP_SRCS})
+  ADD_LIBRARY(mockcpp STATIC ${MOCKCPP_SRCS})
 ENDIF(MSVC)
 
 INCLUDE_DIRECTORIES(BEFORE ${MOCKCPP_SRC_ROOT}/include ${MOCKCPP_SRC_ROOT}/3rdparty)

@@ -21,14 +21,11 @@
 
 #include <mockcpp/mockcpp.h>
 #include <mockcpp/MethodTypeTraits.h>
+#include <mockcpp/MethodIndiceChecker.h>
 
 MOCKCPP_NS_START
 
 ///////////////////////////////////////////////////////////////////////
-void* createMethodInfoChecker(const std::type_info& info);
-unsigned int getIndexOfVptrOfMethod();
-unsigned int getIndexOfVtblOfMethod();
-
 ///////////////////////////////////////////////
 template <class Interface, typename Method>
 std::pair<unsigned int, unsigned int>
@@ -42,23 +39,20 @@ getIndicesOfMethod(Method m)
    Checker check = \
       reinterpret_cast<Checker>(expectedMethod);
 
-   Interface* checker = (Interface*) \
-      createMethodInfoChecker(typeid(Interface));
+   MethodIndiceChecker* checker = createMethodIndiceChecker(typeid(Interface));
 
-   (checker->*check)();
+   Interface* iface = (Interface*)checker->getObject();
+
+   (iface->*check)();
    
    unsigned int vptrIndex = 0;
    unsigned int vtblIndex = 0;
 
-   try
-   {
-      vptrIndex = getIndexOfVptrOfMethod();
-      vtblIndex = getIndexOfVtblOfMethod();
-   }
-   catch(...)
-   {
-      throw;
-   }
+   bool result = checker->getIndice(false, vptrIndex, vtblIndex);
+
+   delete checker;
+
+   MOCKCPP_ASSERT_TRUE_MSG("You are trying to mock a non-pure-virtual object", result); 
 
    return std::pair<unsigned int, unsigned int>
        (vptrIndex, vtblIndex);

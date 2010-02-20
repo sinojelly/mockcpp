@@ -72,6 +72,7 @@ public:
 		TS_ASSERT(any_castable<char*>(ref));
    }
 
+#if 0
    // @test
    void ShouldBeAbleCastUnsignedCharToUnsignedShort()
    {
@@ -364,5 +365,6 @@ public:
       Any ui((unsigned int)2);
       TS_ASSERT(any_castable<unsigned int>(ui));
    }
+#endif
 };
 

@@ -17,7 +17,7 @@
 ***/
 
 #include <iostream>
-#include <mockcpp/DestructorChecker.h>
+#include <mockcpp/MethodIndiceChecker.h>
 #include <mockcpp/MethodInfoReader.h>
 #include <mockcpp/Asserter.h>
 #include <mockcpp/VirtualTableUtils.h>
@@ -45,12 +45,19 @@ struct Indices
    {}
 };
 
+///////////////////////////////////////////////////////////////////////
+struct VTBL
+{
+    VTBL();
+   ~VTBL();
+
+   void** table;
+};
+
 ////////////////////////////////////////////////////////////////////////
 struct FakeObject
 {
    void* vptr[MOCKCPP_MAX_INHERITANCE];
-   void** vtbl;
-
    Indices* indices;
 
    FakeObject(const std::type_info& info, Indices* ind);
@@ -61,8 +68,14 @@ struct FakeObject
    }
 
    ~FakeObject();
+
+   static VTBL vtbl;
 };
 
+////////////////////////////////////////////////////////////////////////
+VTBL FakeObject::vtbl;
+
+////////////////////////////////////////////////////////////////////////
 FakeObject*
 getFakeObject(void* caller, unsigned int vptrIndex)
 {
@@ -72,7 +85,7 @@ getFakeObject(void* caller, unsigned int vptrIndex)
 
 ////////////////////////////////////////////////////////////////////////
 template <int IndexOfVptr, int IndexOfVtbl, typename T>
-struct Destructor
+struct Method
 {
    void check(void*)
    {
@@ -83,37 +96,42 @@ struct Destructor
 };
 
 ///////////////////////////////////////////////////////////////////////
-#define MOCKCPP_SET_DESTRUCTOR_CHECKER_VTBL(I, J) do{ \
-   vtbl[getRealVtblIndex(I,J)] = getAddrOfMethod(&Destructor<I,J,DummyType>::check); \
+#define MOCKCPP_SET_METHOD_INDICE_CHECKER_VTBL(I, J) do{ \
+   table[getRealVtblIndex(I,J)] = getAddrOfMethod(&Method<I,J,DummyType>::check); \
 }while(0)
+
+////////////////////////////////////////////////////////////////////////
+VTBL::VTBL()
+{
+   table = createVtbls(MOCKCPP_MAX_INHERITANCE);
+   #include <mockcpp/MethodIndiceCheckerDef.h>
+}
+
+////////////////////////////////////////////////////////////////////////
+VTBL::~VTBL()
+{
+   freeVtbls(table, MOCKCPP_MAX_INHERITANCE);
+}
 
 ////////////////////////////////////////////////////////////////////////
 FakeObject::
 FakeObject(const std::type_info& info, Indices* ind)
    : indices(ind)
 {
-   vtbl = createVtbls(MOCKCPP_MAX_INHERITANCE);
-   #include <mockcpp/DestructorCheckerDef.h>
-   initializeVtbls(vptr, vtbl, MOCKCPP_MAX_INHERITANCE, info, false);
+   initializeVtbls(vptr, vtbl.table, MOCKCPP_MAX_INHERITANCE, info, false);
 }
 
 ////////////////////////////////////////////////////////////////////////
 FakeObject::
 ~FakeObject()
 {
-   freeVtbls(vtbl, MOCKCPP_MAX_INHERITANCE);
 }
 
 ///////////////////////////////////////////////////////////////////////
-#define MOCKCPP_THROW_NO_PURE_VIRTUAL_EXCEPTION() do { \
-   MOCKCPP_FAIL("You are trying to mock an interface without virtual destructor"); \
-} while(0)
-
-///////////////////////////////////////////////
-struct DestructorCheckerImpl
-   : public DestructorChecker
+struct MethodIndiceCheckerImpl
+   : public MethodIndiceChecker
 {
-   DestructorCheckerImpl(const std::type_info& info)
+   MethodIndiceCheckerImpl(const std::type_info& info)
       : obj(new FakeObject(info, &indices))
    {
    }
@@ -121,8 +139,9 @@ struct DestructorCheckerImpl
    void* getObject() const
    { return obj; }
 
-   void getIndices
-      ( unsigned int& vptrIndex
+   bool getIndice
+      ( bool objDeleted
+      , unsigned int& vptrIndex
       , unsigned int& vtblIndex)
    {
       vptrIndex = indices.indexOfVPTR;
@@ -130,17 +149,21 @@ struct DestructorCheckerImpl
 
       if(vptrIndex == invalidIndex)
       {
-         MOCKCPP_THROW_NO_PURE_VIRTUAL_EXCEPTION();
+         if(!objDeleted) delete obj;
+
+         obj = 0;
+         return false;
       }
 
       delete obj;
       obj = 0;
+
+      return true;
    }
 
-   ~DestructorCheckerImpl()
+   ~MethodIndiceCheckerImpl()
    {
-      if(obj != 0)
-         delete obj;
+      if(obj != 0) delete obj;
    }
 
 private:
@@ -148,18 +171,14 @@ private:
    Indices     indices;
 };
 
-
 ////////////////////////////////////////////////////////////////////////
 }
 
-
 ///////////////////////////////////////////////////////////////////////
-DestructorChecker* createDestructorChecker(const std::type_info& info)
+MethodIndiceChecker* createMethodIndiceChecker(const std::type_info& info)
 {
-   return new DestructorCheckerImpl(info);
+   return new MethodIndiceCheckerImpl(info);
 }
-
-
 
 ///////////////////////////////////////////////////////////////////////
 

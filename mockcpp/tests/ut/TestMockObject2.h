@@ -67,13 +67,12 @@ private:
 
 public:
 
-	void setUp()
+	 void setUp()
    {
-		checkpoint = TESTCPP_SET_RESOURCE_CHECK_POINT();
-
+		  checkpoint = TESTCPP_SET_RESOURCE_CHECK_POINT();
    }
 
-	void tearDown()
+	 void tearDown()
    {
       TESTCPP_VERIFY_RESOURCE_CHECK_POINT(checkpoint);
    }
@@ -87,13 +86,14 @@ public:
       TS_ASSERT_EQUALS(Interface::S_FAILED, mock->getResult());
    }
 
-   TEST(from_unsigned_int_to_unsigned_int)
+   TEST(getResult : "unsigned int" => "unsigned int")
    {
       MockObject<Interface> mock;
       mock.method(&Interface::getResult1).stubs().will(returnValue((unsigned int)1));
 
       TS_ASSERT_EQUALS(1, mock->getResult1());
    }
+
 #if 0
    // returnValue() : enum => unsigned int 
    void testShouldBeAbleToConvertReturnValueFromEnumToInt()
@@ -122,7 +122,7 @@ public:
    void testShouldBeAbleToConvertReturnValue()
    {
       MockObject<Interface> mock;
-      mock.method(&Interface::base11).stubs().will(returnValue(12));
+      mock.method(&Interface::base11).stubs().will(returnValue((long)12));
 
       TS_ASSERT_EQUALS(12, mock->base11(""));
    }
@@ -132,7 +132,7 @@ public:
    {
       MockObject<Interface> mock;
       mock.method(&Interface::base01)
-        .stubs().with(eq(10)).will(returnValue(true));
+        .stubs().with(eq((long)10)).will(returnValue(true));
 
       TS_ASSERT(mock->base01(10));
    }
@@ -261,9 +261,10 @@ public:
       TS_ASSERT_THROWS_NOTHING(delete (Interface*)mock);
    }
 
+
    struct WrongInterface { virtual void foo() = 0; };
 
-   void testShouldThrowExceptionIfTryingToMockAnInterfaceWithoutVirtualDestructor()
+   TEST(Interface Without Virtual Destructor : throw Exception)
    {
       TS_ASSERT_THROWS(MockObject<WrongInterface> mock, Exception);
    }

@@ -37,14 +37,11 @@ template <typename Signed, typename BaseType >
 Signed* signed_type_any_cast(AnyBase* op)
 {
    Signed *p = 0;
-   if((p = __any_cast<Signed>(op)) ||
-      (p = (Signed*)type_any_cast<BaseType>(op))
-   )
-   {
-      return p;
-   }
 
-   return 0;
+   (p = __any_cast<Signed>(op)) ||
+   (p = (Signed*)type_any_cast<BaseType>(op));
+
+   return p;
 }
 
 ///////////////////////////////////////////////////////
@@ -184,8 +181,6 @@ unsigned long* any_cast<unsigned long>(AnyBase* op)
 {
    return scope_check_any_cast<unsigned long>(op);
 }
-
-///////////////////////////////////////////////////////
 
 MOCKCPP_NS_END
 
