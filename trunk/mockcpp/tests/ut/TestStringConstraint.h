@@ -16,8 +16,10 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
+#include <iostream>
 #include <testcpp/testcpp.hpp>
 
+#include <mockcpp/mockcpp.hpp>
 #include <mockcpp/StringConstraint.h>
 
 #include <mockcpp/StringPredict.h>
@@ -28,7 +30,6 @@ class TestStringConstraint: public TESTCPP_NS::TestFixture
 {
    struct StringPredictStub : public StringPredict
    {
-
      bool predict(const std::string& input, const std::string& target) const 
      {
         return input == target;
@@ -63,10 +64,10 @@ public:
    void testShouldBeAbleToEvalAStringWithSpecifiedPredict()
    {
       std::string input0("abcd");
-      TS_ASSERT(constraint->eval(input0));
+      ASSERT_TRUE(constraint->eval(input0));
 
       std::string input1("aabcd");
-      TS_ASSERT(!constraint->eval(input1));
+      ASSERT_FALSE(constraint->eval(input1));
    }
 
    void testShouldBeAbleToEvalAPCharWithSpecifiedPredict()

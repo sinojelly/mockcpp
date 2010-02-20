@@ -6,8 +6,7 @@ from get_long_opt import *
 
 delegatedMethodGetDefFileName = "DelegatedMethodGetDef.h"
 delegatedMethodGetByVptrDefFileName = "DelegatedMethodGetByVptrDef.h"
-destructorCheckerDefFileName = "DestructorCheckerDef.h"
-genericMethodCheckerDefFileName = "GenericMethodCheckerDef.h"
+methodIndiceCheckerDefFileName = "MethodIndiceCheckerDef.h"
 destructorGetterDefFileName = "DestructorAddrGetterDef.h"
 defaultMethodGetterDefFileName = "DefaultMethodAddrGetterDef.h"
 
@@ -21,19 +20,6 @@ longOpts = [ allowMIOpt
            , maxVtblSizeOpt
            , includePathOpt]
 
-def getGenericMethodCheckerDefContent(maxInheritance, maxVtblSize):
-   lineStr = '''MOCKCPP_SET_GENERIC_METHOD_CHECKER_VTBL(%d, %d);'''
-   lines = []
-   for i in range(0, maxInheritance):
-      for j in range(0, maxVtblSize):
-         lines.append(lineStr % (i,j))
-
-   return getContent(lines)
-
-def generateGenericMethodCheckerDef(includePath, maxInheritance, maxVtblSize):
-   content = getGenericMethodCheckerDefContent(maxInheritance, maxVtblSize)
-   writeFile(includePath + "/" + genericMethodCheckerDefFileName, content)
-
 def getDestructorAddrGetterDefContent(maxInheritance):
    lineStr = '''MOCKCPP_GET_DESTRUCTOR_ADDR(%d)'''
    lines = []
@@ -46,8 +32,8 @@ def generateDestructorAddrGetterDef(includePath, maxInheritance):
    content = getDestructorAddrGetterDefContent(maxInheritance)
    writeFile(includePath + "/" + destructorGetterDefFileName, content)
 
-def getDestructorCheckerDefContent(maxInheritance, maxVtblSize):
-   lineStr = '''MOCKCPP_SET_DESTRUCTOR_CHECKER_VTBL(%d, %d);'''
+def getMethodIndiceCheckerDefContent(maxInheritance, maxVtblSize):
+   lineStr = '''MOCKCPP_SET_METHOD_INDICE_CHECKER_VTBL(%d, %d);'''
    lines = []
    for i in range(0, maxInheritance):
       for j in range(0, maxVtblSize):
@@ -55,9 +41,9 @@ def getDestructorCheckerDefContent(maxInheritance, maxVtblSize):
 
    return getContent(lines)
 
-def generateDestructorCheckerDef(includePath, maxInheritance, maxVtblSize):
-   content = getDestructorCheckerDefContent(maxInheritance, maxVtblSize)
-   writeFile(includePath + "/" + destructorCheckerDefFileName, content)
+def generateMethodIndiceCheckerDef(includePath, maxInheritance, maxVtblSize):
+   content = getMethodIndiceCheckerDefContent(maxInheritance, maxVtblSize)
+   writeFile(includePath + "/" + methodIndiceCheckerDefFileName, content)
 
 def getDefaultMethodAddrGetterDefContent(maxInheritance, maxVtblSize):
    lineStr = '''MOCKCPP_SET_DEFAULT_METHOD(%d, %d);'''
@@ -129,15 +115,12 @@ def main():
    if delegatedMethodGetByVptrDefFileName in args:
       generateDelegatedMethodGetByIndexDef(includePath, maxInheritance)
 
-   if destructorCheckerDefFileName in args:
-      generateDestructorCheckerDef(includePath, maxInheritance, maxVtblSize)
+   if methodIndiceCheckerDefFileName in args:
+      generateMethodIndiceCheckerDef(includePath, maxInheritance, maxVtblSize)
 
    if destructorGetterDefFileName in args:
       generateDestructorAddrGetterDef(includePath, maxInheritance)
      
-   if genericMethodCheckerDefFileName in args:
-      generateGenericMethodCheckerDef(includePath, maxInheritance, maxVtblSize)
-
    if defaultMethodGetterDefFileName in args:
       generateDefaultMethodAddrGetterDef(includePath, maxInheritance, maxVtblSize)
 

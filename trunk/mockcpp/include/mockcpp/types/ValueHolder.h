@@ -53,6 +53,7 @@ private:
     ValueType held;
 };
 
+#if 0
 ///////////////////////////////////////////////
 template <typename ValueType>
 struct UnsignedLongHolder : public Holder<ValueType>
@@ -250,6 +251,8 @@ struct ValueHolder<char>
     PlaceHolder * clone() const
     { return new ValueHolder(held.sc); }
 };
+
+#endif
 
 ///////////////////////////////////////////////
 

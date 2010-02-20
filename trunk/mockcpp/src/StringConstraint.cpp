@@ -16,16 +16,18 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
+#include <iostream>
+
 #include <mockcpp/types/AnyCast.h>
 #include <mockcpp/StringPredict.h>
 #include <mockcpp/StringConstraint.h>
 
 MOCKCPP_NS_START
 
-template <typename Char>
+template <typename PChar>
 std::string castToString(const RefAny& val)
 {
-   Char* p = any_cast<Char*>(val);
+   PChar p = any_cast<PChar>(val);
    if(p == 0)
    {
       return std::string((char*)"");
@@ -38,22 +40,22 @@ static std::string tryToCastParameterToString(const RefAny& val)
 {
    if(any_castable<char*>(val))
    {
-      return castToString<char>(val);
+      return castToString<char*>(val);
    }
 
    if(any_castable<unsigned char*>(val))
    {
-      return castToString<unsigned char>(val);
+      return castToString<unsigned char*>(val);
    }
 
    if(any_castable<const char*>(val))
    {
-      return castToString<const char>(val);
+      return castToString<const char*>(val);
    }
 
    if(any_castable<unsigned const char*>(val))
    {
-      return castToString<unsigned const char>(val);
+      return castToString<unsigned const char*>(val);
    }
 
    if(any_castable<std::string>(val))
