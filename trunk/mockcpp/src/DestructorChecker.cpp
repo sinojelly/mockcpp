@@ -27,111 +27,139 @@ MOCKCPP_NS_START
 ///////////////////////////////////////////////////////////////////////
 namespace
 {
-   struct DummyType {};
 
-   const unsigned int invalidIndex = 0xFFFFFFFF;
+////////////////////////////////////////////////////////////////////////
+struct DummyType {};
 
+const unsigned int invalidIndex = 0xFFFFFFFF;
+
+////////////////////////////////////////////////////////////////////////
+struct Indices
+{
    unsigned int indexOfVPTR;
    unsigned int indexOfVTBL;
 
-   bool initialized = false;
+   Indices()
+      : indexOfVPTR(invalidIndex)
+      , indexOfVTBL(invalidIndex)
+   {}
+};
 
-   struct VTBLForDestructor
+////////////////////////////////////////////////////////////////////////
+struct FakeObject
+{
+   void* vptr[MOCKCPP_MAX_INHERITANCE];
+   void** vtbl;
+
+   Indices* indices;
+
+   FakeObject(const std::type_info& info, Indices* ind);
+
+   Indices& getIndices() 
    {
-      VTBLForDestructor()
-      {
-         vtbl = createVtbls(MOCKCPP_MAX_INHERITANCE);
-      }
+      return *indices;
+   }
 
-      ~VTBLForDestructor()
-      {
-         freeVtbls(vtbl, MOCKCPP_MAX_INHERITANCE);
-      }
-     
-      void** vtbl; 
-   };
+   ~FakeObject();
+};
 
-   VTBLForDestructor vtbl;
+FakeObject*
+getFakeObject(void* caller, unsigned int vptrIndex)
+{
+   void** vptr = &((void**)caller)[-(int)vptrIndex];
+   return (FakeObject*)vptr;
 }
 
 ////////////////////////////////////////////////////////////////////////
 template <int IndexOfVptr, int IndexOfVtbl, typename T>
-struct DestructorChecker
+struct Destructor
 {
    void check(void*)
    {
-      indexOfVPTR = IndexOfVptr;
-      indexOfVTBL = IndexOfVtbl;
+      FakeObject* fakeObj = getFakeObject(this, IndexOfVptr);
+      fakeObj->getIndices().indexOfVPTR = IndexOfVptr;
+      fakeObj->getIndices().indexOfVTBL = IndexOfVtbl;
    }
 };
 
 ///////////////////////////////////////////////////////////////////////
 #define MOCKCPP_SET_DESTRUCTOR_CHECKER_VTBL(I, J) do{ \
-   vtbl.vtbl[getRealVtblIndex(I,J)] = getAddrOfMethod(&DestructorChecker<I,J,DummyType>::check); \
+   vtbl[getRealVtblIndex(I,J)] = getAddrOfMethod(&Destructor<I,J,DummyType>::check); \
 }while(0)
 
-static void initialize()
+////////////////////////////////////////////////////////////////////////
+FakeObject::
+FakeObject(const std::type_info& info, Indices* ind)
+   : indices(ind)
 {
-   indexOfVPTR = invalidIndex;
-   indexOfVTBL = invalidIndex;
-
-   if(initialized)
-   {
-      return;
-   } 
-
+   vtbl = createVtbls(MOCKCPP_MAX_INHERITANCE);
    #include <mockcpp/DestructorCheckerDef.h>
-
-   initialized = true;
+   initializeVtbls(vptr, vtbl, MOCKCPP_MAX_INHERITANCE, info, false);
 }
 
-namespace
+////////////////////////////////////////////////////////////////////////
+FakeObject::
+~FakeObject()
 {
-   struct FakeObject
-   {
-      void* vptr[MOCKCPP_MAX_INHERITANCE];
-   };
-};
-
-
-///////////////////////////////////////////////////////////////////////
-void* createDestructorChecker(const std::type_info& info)
-{
-   initialize();
-   
-   FakeObject* object = new FakeObject();
-
-   initializeVtbls(object->vptr, vtbl.vtbl, MOCKCPP_MAX_INHERITANCE, info, false);
-
-   return (void*)object;
+   freeVtbls(vtbl, MOCKCPP_MAX_INHERITANCE);
 }
 
 ///////////////////////////////////////////////////////////////////////
 #define MOCKCPP_THROW_NO_PURE_VIRTUAL_EXCEPTION() do { \
-   MOCKCPP_FAIL("You are trying to mock a non-pure-virtual object"); \
+   MOCKCPP_FAIL("You are trying to mock an interface without virtual destructor"); \
 } while(0)
 
-///////////////////////////////////////////////////////////////////////
-unsigned int getIndexOfVptrOfDestructor()
+///////////////////////////////////////////////
+struct DestructorCheckerImpl
+   : public DestructorChecker
 {
-   if(indexOfVPTR == invalidIndex)
+   DestructorCheckerImpl(const std::type_info& info)
+      : obj(new FakeObject(info, &indices))
    {
-      MOCKCPP_THROW_NO_PURE_VIRTUAL_EXCEPTION();
    }
 
-   return indexOfVPTR;
-}
+   void* getObject() const
+   { return obj; }
 
-///////////////////////////////////////////////////////////////////////
-unsigned int getIndexOfVtblOfDestructor()
-{
-   if(indexOfVPTR == invalidIndex)
+   void getIndices
+      ( unsigned int& vptrIndex
+      , unsigned int& vtblIndex)
    {
-      MOCKCPP_THROW_NO_PURE_VIRTUAL_EXCEPTION();
+      vptrIndex = indices.indexOfVPTR;
+      vtblIndex = indices.indexOfVTBL;
+
+      if(vptrIndex == invalidIndex)
+      {
+         MOCKCPP_THROW_NO_PURE_VIRTUAL_EXCEPTION();
+      }
+
+      delete obj;
+      obj = 0;
    }
 
-   return indexOfVTBL;
+   ~DestructorCheckerImpl()
+   {
+      if(obj != 0)
+         delete obj;
+   }
+
+private:
+   FakeObject* obj;
+   Indices     indices;
+};
+
+
+////////////////////////////////////////////////////////////////////////
 }
+
+
+///////////////////////////////////////////////////////////////////////
+DestructorChecker* createDestructorChecker(const std::type_info& info)
+{
+   return new DestructorCheckerImpl(info);
+}
+
+
 
 ///////////////////////////////////////////////////////////////////////
 

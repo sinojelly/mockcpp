@@ -8,5 +8,7 @@ ${TESTNGPP_ROOT}/src/runner/testngpp-runner \
    -l"testngppxmllistener result.xml" \
    -l"testngppstdoutlistener -c -v" \
    -t"* > ft" -c10 $@ \
-   ${MOCKCPP_UT_SUITES}
+   libmockcpp-ut-TestMockObject2
+
+#   ${MOCKCPP_UT_SUITES}
 
