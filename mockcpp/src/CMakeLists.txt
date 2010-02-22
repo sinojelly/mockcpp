@@ -198,11 +198,7 @@ ENDFOREACH()
 ######################################################
 LINK_DIRECTORIES(${CMAKE_BINARY_DIR}/src ${CMAKE_BINARY_DIR}/tests/3rdparty/testngpp/src)
 
-IF(MSVC)
-  ADD_LIBRARY(mockcpp STATIC ${MOCKCPP_SRCS})
-ELSE(MSVC)
-  ADD_LIBRARY(mockcpp STATIC ${MOCKCPP_SRCS})
-ENDIF(MSVC)
+ADD_LIBRARY(mockcpp STATIC ${MOCKCPP_SRCS})
 
 INCLUDE_DIRECTORIES(BEFORE ${MOCKCPP_SRC_ROOT}/include ${MOCKCPP_SRC_ROOT}/3rdparty)
 
