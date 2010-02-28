@@ -58,6 +58,7 @@ void* getAddrOfMethod(Method input)
 template <typename Method>
 void* getAddrOfMethod(Method input)
 {
+   MOCKCPP_FAIL("please add /D MSVC_VMG_ENABLED to your compiler option");
 	return 0;
 }
 
@@ -66,6 +67,7 @@ void* getAddrOfMethod(Method input)
 template <class C, typename Method>
 unsigned int getIndexOfMethod(Method method)
 {
+   MOCKCPP_FAIL("please add /D MSVC_VMG_ENABLED to your compiler option");
 	return 0;
 }
 
@@ -74,6 +76,7 @@ unsigned int getIndexOfMethod(Method method)
 template <class C, typename Method>
 unsigned int getDeltaOfMethod(Method method)
 {
+   MOCKCPP_FAIL("please add /D MSVC_VMG_ENABLED to your compiler option");
 	return 0;
 }
 #endif

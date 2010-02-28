@@ -34,7 +34,7 @@ getIndicesOfMethod(Method m)
    typedef typename MethodTypeTraits<Interface, Method>::MethodType ExpectedMethodType;
    ExpectedMethodType expectedMethod = m;
 
-   typedef void (Interface::*Checker)();
+   typedef void (Interface::*Checker)(void*);
 
    Checker check = \
       reinterpret_cast<Checker>(expectedMethod);
@@ -43,7 +43,7 @@ getIndicesOfMethod(Method m)
 
    Interface* iface = (Interface*)checker->getObject();
 
-   (iface->*check)();
+   (iface->*check)(0);
    
    unsigned int vptrIndex = 0;
    unsigned int vtblIndex = 0;
@@ -52,7 +52,7 @@ getIndicesOfMethod(Method m)
 
    delete checker;
 
-   MOCKCPP_ASSERT_TRUE_MSG("You are trying to mock a non-pure-virtual object", result); 
+   MOCKCPP_ASSERT_TRUE_MESSAGE("You are trying to mock a non-pure-virtual object", result); 
 
    return std::pair<unsigned int, unsigned int>
        (vptrIndex, vtblIndex);
