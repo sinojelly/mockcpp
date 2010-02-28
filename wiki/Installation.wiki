@@ -1,4 +1,4 @@
-While configure mock++ using cmake, follow variables could be specified:
+While configure mock++ with cmake, follow variables could be specified:
 
 ||  Variable || Type || Default Value || Scope || Notes ||
 || MOCKCPP_ALLOW_MI || BOOL || TRUE || TRUE/FALSE || Allow multi-inheritance or not ||
