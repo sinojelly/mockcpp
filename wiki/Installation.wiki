@@ -1,0 +1,8 @@
+
+||  Variable || Type || Default Value || Notes ||
+|| MOCKCPP_ALLOW_MI ||
+|| MOCKCPP_MAX_INHERITANCE ||
+|| MOCKCPP_NO_NAMESPACE ||
+|| MOCKCPP_MAX_VTBL_SIZE ||
+|| MOCKCPP_MAX_PARAMETERS ||
+|| MOCKCPP_INSTALL_BOOST ||
