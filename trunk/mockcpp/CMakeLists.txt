@@ -7,3 +7,5 @@ INCLUDE(ProjectVar.txt)
 
 ADD_SUBDIRECTORY(src)
 
+INSTALL(DIRECTORY include/mockcpp DESTINATION include
+        PATTERN ".svn" EXCLUDE)
