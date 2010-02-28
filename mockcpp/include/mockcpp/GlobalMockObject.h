@@ -21,7 +21,7 @@
 
 #include <mockcpp/mockcpp.h>
 
-#ifdef MOCKCPP_USE_MOCKABLE
+#if defined(MOCKCPP_USE_MOCKABLE) && !defined(_MSC_VER)
 #  include <mockcpp/ChainableMockObject.h>
 #else
 #  include <mockcpp/HookMockObject.h>
@@ -29,7 +29,7 @@
 
 MOCKCPP_NS_START
 
-#ifdef MOCKCPP_USE_MOCKABLE
+#if defined(MOCKCPP_USE_MOCKABLE) && !defined(_MSC_VER)
 typedef ChainableMockObject MockObjectType;
 #else
 typedef HookMockObject MockObjectType;
