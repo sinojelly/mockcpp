@@ -22,13 +22,18 @@
 #ifdef __cplusplus
 #  include <mockcpp/ChainingMockHelper.h>
 
-#  ifdef MOCKCPP_USE_MOCKABLE
+#  if defined(MOCKCPP_USE_MOCKABLE) || !defined(_MSC_VER)
 #    include <mockcpp/Functor.h>
 #    define MOCKER(function) MOCKCPP_NS::GlobalMockObject::instance.method(#function)
 #  else
 #    include <mockcpp/CApiHookFunctor.h>
 #    include <boost/typeof/typeof.hpp>
-#    define MOCKER(function) MOCKCPP_NS::GlobalMockObject::instance.method(#function, function, CApiHookFunctor<BOOST_TYPEOF(function)>::hook)
+#    define MOCKER(function) \
+         MOCKCPP_NS::GlobalMockObject:: \
+             instance.method \
+                 ( #function \
+                 , function \
+                 , CApiHookFunctor<BOOST_TYPEOF(function)>::hook)
 #  endif
 
 USING_MOCKCPP_NS
