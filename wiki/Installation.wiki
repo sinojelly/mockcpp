@@ -1,8 +1,7 @@
-
-||  Variable || Type || Default Value || Notes ||
-|| MOCKCPP_ALLOW_MI ||
-|| MOCKCPP_MAX_INHERITANCE ||
-|| MOCKCPP_NO_NAMESPACE ||
-|| MOCKCPP_MAX_VTBL_SIZE ||
-|| MOCKCPP_MAX_PARAMETERS ||
-|| MOCKCPP_INSTALL_BOOST ||
+||  Variable || Type || Default Value || Scope || Notes ||
+|| MOCKCPP_ALLOW_MI || BOOL || TRUE || FALSE/TRUE || Allow multi-inheritance or not ||
+|| MOCKCPP_MAX_INHERITANCE || STRING || 2 || [2, 5] ||maximum parents number of an interface ||
+|| MOCKCPP_NO_NAMESPACE || BOOL || FALSE || TRUE/FALSE || using mockpp namespace or not ||
+|| MOCKCPP_MAX_VTBL_SIZE || STRING || 20 || [2, 50] || maximum virtual table size ||
+|| MOCKCPP_MAX_PARAMETERS || STRING || 12 || [1,12] || maximum number of parameters of a function/method ||
+|| MOCKCPP_INSTALL_BOOST || BOOL || FALSE || TRUE/FALSE || should install boost library automatically while installing ||
