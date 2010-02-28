@@ -1,4 +1,3 @@
-
 While configure mock++ using cmake, follow variables could be specified:
 
 ||  Variable || Type || Default Value || Scope || Notes ||
