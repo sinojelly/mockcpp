@@ -207,3 +207,6 @@ ADD_CUSTOM_TARGET(arg_related_headers DEPENDS ${MOCKCPP_ARG_RELATED_HEADER_FILES
 
 ADD_DEPENDENCIES(mockcpp vtbl_related_headers arg_related_headers)
 
+INSTALL(
+   TARGETS mockcpp
+   ARCHIVE DESTINATION lib)
