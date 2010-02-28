@@ -207,4 +207,3 @@ ADD_CUSTOM_TARGET(arg_related_headers DEPENDS ${MOCKCPP_ARG_RELATED_HEADER_FILES
 
 ADD_DEPENDENCIES(mockcpp vtbl_related_headers arg_related_headers)
 
-#TARGET_LINK_LIBRARIES(mockcpp testngpp)
