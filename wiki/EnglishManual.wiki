@@ -33,7 +33,7 @@ mock++ currently supports following constraints/actions:
 Except for {{{expects()/stubs()}}}, other constraints/actions are optional and should appear in the order below:
 
 {{{
-    mock.method(&Interface::method)
+    MOCK_METHOD(object, method)
         .expects(once())
         .before(anotherMock, "close")
         .with(eq(1), any(), neq(2.0))
@@ -64,7 +64,7 @@ Actions play important roles in mocking framework and are the most fundamental v
 To specify actions, use {{{will(behavior)/then(behavior)}}}. {{{will()}}} must be called before {{{then()}}} and can be called only once whereas {{{then()}}} multiple times.
 
 {{{
-    mock.method(&Interface::foo)
+    MOCK_METHOD(mock, foo)
         .stubs()
         .will(returnValue(10))
         .then(repeat(20, 2))
@@ -121,7 +121,7 @@ void test_should_throw_exception_if_open_file_failed ()
 {
    MockObject<ITextFileReader> textFile;
 
-   textFile.method(&ITextFile::open)
+   MOCK_METHOD(textFile, open)
                  .stubs()
                  .will(throwException(Exception( "File Not Exist" )));
 
@@ -260,15 +260,15 @@ void test_should_be_able_to_process_a_text_file()
    char * fileName = "testFile";
 
    ///////////////////////////////////////////////
-   textFile.method(&ITextFile::open)
+   MOCK_METHOD(textFile, open)
                  .expects(atLeast(1))
                  .with(endWith(fileName));
 
-   textFile.method(&ITextFile::close)
+   MOCK_METHOD(textFile, close)
                  .expects(atLeast(1))
                  .will(ignoreReturnValue());
 
-   textFile.method(&ITextFile::readLine)
+   MOCK_METHOD(textFile, readLine)
                  .stubs()
                  .will(returnObjectList(line1, line2, line3))
                  .then(throws(EOFError));
@@ -305,17 +305,17 @@ It shouldn't be the case very often. But there are times when you want to specif
 {{{
       MockObject<Interface> mock;
 
-      mock.method(&Interface::foo)
+      MOCK_METHOD(mock, foo)
                  .stubs()
                  .will(returnValue(10))
                  .id("foo");
 
-      mock.method(&Interface::bar)
+      MOCK_METHOD(mock, bar)
                  .stubs()
                  .will(returnValue(true))
                  .id("bar");
 
-      mock.method(&Interface::fix)
+      MOCK_METHOD(mock, fix)
                  .stubs()
                  .after("foo")
                  .after("bar")
@@ -328,17 +328,17 @@ You can also use the overloaded version to specify a qualified id:
       MockObject<Interface> mock1;
       MockObject<Interface> mock2;
       
-      mock0.method(&Interface::foo)
+      MOCK_METHOD(mock0, foo)
                  .stubs()
                  .will(returnValue(10))
                  .id("foo");
 
-      mock1.method(&Interface::foo)
+      MOCK_METHOD(mock1, foo)
                  .stubs()
                  .will(returnValue(1))
                  .id("foo");
 
-      mock2.method(&Interface::foo)
+      MOCK_METHOD(mock2, foo)
                  .stubs()
                  .after(mock0, "foo")
                  .after(mock1, "foo")
@@ -410,19 +410,19 @@ void test_should_invoke_validators_in_order()
    ///////////////////////////////////////////////
    User user("darwin");
    ///////////////////////////////////////////////
-   validator0.method(&IUserValidator::validate)
+   MOCK_METHOD(validator0, validate)
                        .expects(atLeast(1))
 		       .before(validate1, "v")
                        .with(eq(user))
                        .will(returnValue(true));
 
-   validator1.method(&IUserValidator::validate)
+   MOCK_METHOD(validator1, validate)
                        .expects(atLeast(1))
                        .with(eq(user))
                        .will(returnValue(true))
                        .id("v");
 
-   validator2.method(&IUserValidator::validate)
+   MOCK_METHOD(validator2, validate)
                        .expects(atLeast(1))
                        .with(eq(user))
                        .after(validate1, "v")
