@@ -232,11 +232,11 @@ public:
             MockObject<TestCase> testcase0;
             MockObject<TestCase> testcase1;
 
-            testcaseMatcher.METHOD(NameMatcher::matches)
+            MOCK_METHOD(testcaseMatcher, matches)
                    .stubs().with(eq((TestCaseInfoReader*)testcase0))
                    .will(returnValue(false));
 
-            testcaseMatcher.METHOD(NameMatcher::matches)
+            MOCK_METHOD(testcaseMatcher, matches)
                    .stubs().with(eq((TestCaseInfoReader*)testcase1))
                    .will(returnValue(true));
 
@@ -418,16 +418,16 @@ public:
 
            MockObject<Call> billingObject;
 
-           billingObject.METHOD(Call::getType)
+           MOCK_METHOD(billingObject, getType)
                      .stubs().will(returnValue(BillingObject::CALL));
 
-           billingObject.METHOD(Call::getPhoneNumberOfOriginator)
+           MOCK_METHOD(billingObject, getPhoneNumberOfOriginator)
                      .stubs().will(returnValue(std::string("123456789")));
 
-           billingObject.METHOD(Call::getPhoneNumberOfTerminator)
+           MOCK_METHOD(billingObject, getPhoneNumberOfTerminator)
                      .stubs().will(returnValue(std::string("987654321")));
 
-           billingObject.METHOD(Call::getDurationInSeconds)
+           MOCK_METHOD(billingObject, getDurationInSeconds)
                      .stubs().will(returnValue((unsigned int)78));
            
            manager.billing(billingObject, bill);
@@ -486,7 +486,7 @@ In previous example, according to the implementation of the method _*billing()*_
 
            MockObject<InternetAccess> billingObject;
 
-           billingObject.METHOD(Call::getType)
+           MOCK_METHOD(billingObject, getType)
                      .stubs().will(returnValue(BillingObject::CALL));
            
            TS_ASSERT_THROWS(manager.billing(billingObject, bill), Error);
@@ -558,7 +558,7 @@ Besides, you must be aware of that, a mock object constructed with the default c
 {{{
 MockObject<Foo> foo1;
 MockObject<Foo> foo2 = foo1;
-foo2.METHOD(Foo::foo).stubs().will(returnValue(10));
+MOCK_METHOD(foo2, foo).stubs().will(returnValue(10));
 }}}
 
 When you set a specification of the method _*foo()*_ of object _*foo2*_, you are actually setting the specification to the method _*foo()*_ of object _*foo1*_.
