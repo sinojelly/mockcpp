@@ -138,6 +138,8 @@ SET(MOCKCPP_SRCS
     GlobalMockObject.cpp
 )
 
+SET(MOCKCPP_SRCS ${MOCKCPP_SRCS} ports/failure/gtest_report_failure.cpp)
+
 IF(MSVC)
    SET(MOCKCPP_SRCS ${MOCKCPP_SRCS} Win32CApiHook.cpp)
 ELSE(MSVC)
