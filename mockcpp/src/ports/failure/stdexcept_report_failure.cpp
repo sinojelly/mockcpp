@@ -17,7 +17,7 @@
 ***/
 
 #include <mockcpp/AssertionFailedError.h>
-#include <gtest/gtest.h>
+#include <mockcpp/Exception.h>
 
 MOCKCPP_NS_START
 
@@ -25,13 +25,7 @@ void
 reportFailure(unsigned srcline, const char* srcfile,
              const std::string& message)
 {
-    using namespace testing;
-    using namespace testing::internal;
-
-    AssertHelper( testing::TestPartResult::kFatalFailure
-                , srcfile
-                , srcline
-                , message.c_str()) = Message();
+    throw Exception(srcline, srcfile, message);
 }
 
 
