@@ -26,11 +26,35 @@
 
 USING_MOCKCPP_NS
           
-class TestAny: public TESTCPP_NS::TestFixture 
-{
+#define DATA_GROUP(data,...) { data, ##__VA_ARGS__}
+#define DATA_PROVIDER(name, items, data1, ...)\
+const Any getDataProvider##name(unsigned int index, unsigned int item) \
+{ \
+   const Any name[][items] = {data1, ##__VA_ARGS__}; \
+   return name[index][item]; \
+}
 
-public:
-	/////////////////////////////////////////////////////////
+struct TestAny: public TESTCPP_NS::TestFixture 
+{
+   DATA_PROVIDER
+            ( myData, 3
+            , DATA_GROUP(1, 1.0, (const char*)"abc")
+            , DATA_GROUP(2, 2.1, (const char*)"cde")
+            );
+
+   TEST($> get data from data provider)
+   {
+      ASSERT_TRUE(any_castable<int>(getDataProvidermyData(0,0)));
+
+      ASSERT_EQ(1, any_cast<int>(getDataProvidermyData(0, 0)));
+      ASSERT_EQ(2, any_cast<int>(getDataProvidermyData(1, 0)));
+
+      ASSERT_EQ(1.0, any_cast<double>(getDataProvidermyData(0, 1)));
+      ASSERT_EQ(2.1, any_cast<double>(getDataProvidermyData(1, 1)));
+
+      ASSERT_EQ((const char*)"abc", any_cast<const char*>(getDataProvidermyData(0, 2)));
+      ASSERT_EQ((const char*)"cde", any_cast<const char*>(getDataProvidermyData(1, 2)));
+   }
 
    // @test
 	void ShouldBeEmptyIfANewInstanceIsNotInitialized()
@@ -363,6 +387,17 @@ public:
    {
       Any ui((unsigned int)2);
       TS_ASSERT(any_castable<unsigned int>(ui));
+   }
+
+   TEST(define Any array)
+   {
+      Any objects[] = {1, (const char*)"string", 1.2};
+
+      ASSERT_EQ(1, any_cast<int>(objects[0]));
+      ASSERT_EQ(1, any_cast<unsigned int>(objects[0]));
+
+      ASSERT_EQ((const char*)"string", any_cast<const char*>(objects[1]));
+      ASSERT_EQ(1.2, any_cast<double>(objects[2]));
    }
 };
 

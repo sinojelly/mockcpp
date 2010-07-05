@@ -36,9 +36,10 @@ class AssertionFailedError : public Exception
 };
 
 void
-assertionFailed(unsigned srcline
-					, const char* srcfile
-					, const std::string& message);
+assertionFailed
+      ( unsigned int       line
+      , const char*        file
+      , const std::string& message);
 
 MOCKCPP_NS_END
 

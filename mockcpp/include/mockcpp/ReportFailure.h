@@ -16,41 +16,21 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#ifndef __MOCKCPP_EXCEPTION_H
-#define __MOCKCPP_EXCEPTION_H
+#ifndef __MOCKCPP_REPORT_FAILURE_H
+#define __MOCKCPP_REPORT_FAILURE_H
 
 #include <mockcpp/mockcpp.h>
 
-#include <string>
-
-#include <exception>
-
 MOCKCPP_NS_START
 
-class Exception
-    : public std::exception
-{
-public:
+void
+reportFailure
+      ( unsigned int       line
+      , const char*        file
+      , const std::string& message);
 
-	Exception (unsigned srcline, const char* srcfile, const std::string &message);
-
-	virtual ~Exception() throw();
-
-   virtual std::string getMessage() const;
-
-	unsigned getSrcLine() const;
-
-	std::string getSrcFile() const;
-
-   virtual const char *what() const throw();
-
-private:
-
-   std::string message;
-   unsigned     srcline;
-   std::string srcfile;
-   mutable std::string  what_helper;
-};
+#define MOCKCPP_REPORT_FAILURE(msg) \
+   MOCKCPP_NS::reportFailure(__LINE__, __FILE__, msg)
 
 MOCKCPP_NS_END
 
