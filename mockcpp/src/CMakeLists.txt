@@ -145,19 +145,40 @@ SET(MOCKCPP_SRCS
 )
 
 IF(${MOCKCPP_XUNIT} STREQUAL "GTEST" OR ${MOCKCPP_XUNIT} STREQUAL "gtest")
-   SET(MOCKCPP_SRCS ${MOCKCPP_SRCS} ports/failure/gtest_report_failure.cpp)
+
    IF(NOT DEFINED MOCKCPP_XUNIT_HOME)
       MESSAGE(FATAL_ERROR "Please specify MOCKCPP_XUNIT_HOME as the home path of googletest")
    ENDIF()
-   FIND_FILE(gtest.h 
+   FIND_FILE(GTEST_HEADER
+             gtest.h 
              PATHS ${MOCKCPP_XUNIT_HOME}/include/gtest 
              NO_DEFAULT_PATH 
              NO_CMAKE_ENVIRONMENT_PATH 
              NO_CMAKE_PATH 
              NO_SYSTEM_ENVIRONMENT_PATH 
              NO_CMAKE_SYSTEM_PATH)
+   IF(NOT GTEST_HEADER)
+      MESSAGE(FATAL_ERROR "gtest.h not found int ${MOCKCPP_XUNIT_HOME}/include/gtest, please specify MOCKCPP_XUNIT_HOME as the home path of googletest correctly.")
+   ENDIF()
    INCLUDE_DIRECTORIES(BEFORE ${MOCKCPP_XUNIT_HOME}/include)
+   SET(MOCKCPP_SRCS ${MOCKCPP_SRCS} ports/failure/gtest_report_failure.cpp)
+
 ELSEIF(${MOCKCPP_XUNIT} STREQUAL "CPPUNIT" OR ${MOCKCPP_XUNIT} STREQUAL "cppunit")
+   IF(NOT DEFINED MOCKCPP_XUNIT_HOME)
+      MESSAGE(FATAL_ERROR "Please specify MOCKCPP_XUNIT_HOME as the home path of cppunit")
+   ENDIF()
+   FIND_FILE(CPPUNIT_HEADER Exception.h 
+             PATHS ${MOCKCPP_XUNIT_HOME}/include/cppunit
+             NO_DEFAULT_PATH 
+             NO_CMAKE_ENVIRONMENT_PATH 
+             NO_CMAKE_PATH 
+             NO_SYSTEM_ENVIRONMENT_PATH 
+             NO_CMAKE_SYSTEM_PATH)
+   IF(NOT ${GTEST_HEADER})
+      MESSAGE(FATAL_ERROR "Can't find file Exception.h, please specify MOCKCPP_XUNIT_HOME as the home path of cppunit correctly.")
+   ENDIF()
+   INCLUDE_DIRECTORIES(BEFORE ${MOCKCPP_XUNIT_HOME}/include)
+   SET(MOCKCPP_SRCS ${MOCKCPP_SRCS} ports/failure/cppunit_report_failure.cpp)
 ELSE()
    SET(MOCKCPP_SRCS ${MOCKCPP_SRCS} ports/failure/stdexcept_report_failure.cpp)
 ENDIF()
