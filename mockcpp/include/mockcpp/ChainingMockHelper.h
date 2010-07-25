@@ -23,6 +23,7 @@
 #include <mockcpp/IsEqual.h>
 #include <mockcpp/IsNotEqual.h>
 #include <mockcpp/IsGreaterThan.h>
+#include <mockcpp/IsLessThan.h>
 #include <mockcpp/IsMirror.h>
 #include <mockcpp/Spy.h>
 #include <mockcpp/OutBound.h>
@@ -59,6 +60,12 @@ template <typename T>
 Constraint* gt(const T& val)
 {
    return new IsGreaterThan<T>(val);
+}
+
+template <typename T>
+Constraint* lt(const T& val)
+{
+   return new IsLessThan<T>(val);
 }
 
 ////////////////////////////////////////////////////////////////
