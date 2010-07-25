@@ -24,7 +24,6 @@
 #include <mockcpp/InvocationId.h>
 #include <mockcpp/Method.h>
 #include <mockcpp/StubContainer.h>
-#include <mockcpp/ReportFailure.h>
 
 #include <list>
 #include <algorithm>
@@ -254,8 +253,7 @@ Any& InvocationMocker::invoke(const Invocation& inv)
     }
     catch (Exception& ex)
     {
-      MOCKCPP_REPORT_FAILURE(ex.getMessage() + "\n" +
-                    This->toString());
+      MOCKCPP_FAIL(ex.getMessage() + "\n" + This->toString());
     }
 
 	return getEmptyAny();
@@ -270,8 +268,7 @@ void InvocationMocker::verify()
     }
     catch (Exception& ex)
     {
-      MOCKCPP_REPORT_FAILURE(ex.getMessage() + "\n" +
-                    This->toString());
+      MOCKCPP_FAIL(ex.getMessage() + "\n" + This->toString());
     }
 }
 

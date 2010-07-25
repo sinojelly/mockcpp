@@ -23,7 +23,7 @@
 
 #include <mockcpp/OutputStringStream.h>
 #include <mockcpp/MethodTypeTraits.h>
-#include <mockcpp/Asserter.h>
+#include <mockcpp/ReportFailure.h>
 #include <mockcpp/TypeString.h>
 
 MOCKCPP_NS_START
@@ -58,7 +58,7 @@ void* getAddrOfMethod(Method input)
    oss << "Method address should be even, please make sure the method "
        << TypeString<Method>::value() << " is NOT a virtual method";
  
-	MOCKCPP_ASSERT_TRUE_MESSAGE(
+	MOCKCPP_ASSERT_TRUE(
 		oss.str(),
 	   !(m.desc.u.index%2));
 
@@ -78,7 +78,7 @@ GnuMethodDescription getGnuDescOfVirtualMethod(Method input)
    oss << "Virtual method address should be odd, please make sure the method "
        << TypeString<Method>::value() << " is a virtual method";
  
-	MOCKCPP_ASSERT_TRUE_MESSAGE(
+	MOCKCPP_ASSERT_TRUE(
 		oss.str(),
 	   (m.desc.u.index%2));
 

@@ -29,6 +29,7 @@
 #include <mockcpp/DestructorChecker.h>
 #include <mockcpp/OutputStringStream.h>
 #include <mockcpp/Asserter.h>
+#include <mockcpp/ReportFailure.h>
 
 MOCKCPP_NS_START
 
@@ -80,7 +81,7 @@ struct MockObject : public MockObjectBase
              << TypeString<TargetInterface>::value()
              << ".";
 
-         MOCKCPP_FAIL(oss.str());
+         MOCKCPP_REPORT_FAILURE(oss.str());
       }
 
       identifyDestructor<TargetInterface, Interface>();

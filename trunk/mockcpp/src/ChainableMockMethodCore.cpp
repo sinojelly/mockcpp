@@ -96,11 +96,13 @@ std::string
 ChainableMockMethodCoreImpl::
 tellNoMatchedExpectation(const Invocation& inv)
 {
-    return std::string("Unexpected invocation") + "\n" 
-       + "Invoked: " + methodName + inv.toString() 
-       + ".caller(" + inv.getNameOfCaller() + ")\n" 
+    return std::string("\n")
+       + "=====================================\n"
+       + std::string("Unexpected invocation: the invocation cannot be found in allowed invoking list.") + "\n" 
+       + "Invoked: " + methodName + inv.toString() + "\n"
        + "Allowed: \n"
-       + this->toString();
+       + this->toString()
+       + "=====================================\n";
 }
 
 /////////////////////////////////////////////////////////////

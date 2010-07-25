@@ -5,7 +5,7 @@
 
 #include <mockcpp/mockcpp.h>
 #include <mockcpp/Exception.h>
-#include <mockcpp/Asserter.h>
+#include <mockcpp/ReportFailure.h>
 
 using namespace __cxxabiv1;
 
@@ -23,13 +23,13 @@ getNumberOfVtblsByBaseClassTypeInfo(const __base_class_type_info& info
 {
    if(info.__offset_flags & __base_class_type_info::__virtual_mask)
    {
-      MOCKCPP_FAIL("virtual inheritance of interfaces is not" \
+      MOCKCPP_REPORT_FAILURE("virtual inheritance of interfaces is not" \
                   " a good practice, hence, mockcpp does not support it");
    }
 
    if(!(info.__offset_flags & __base_class_type_info::__public_mask))
    {
-      MOCKCPP_FAIL("no-public inheritance of interfaces is not" \
+      MOCKCPP_REPORT_FAILURE("no-public inheritance of interfaces is not" \
                   " a good practice, hence, mockcpp does not support it");
    }
 
@@ -42,7 +42,7 @@ getNumberOfVtblsByVmi(const __vmi_class_type_info* vmi, unsigned int number)
 {
    if(vmi->__flags&__vmi_class_type_info::__diamond_shaped_mask)
    {
-      MOCKCPP_FAIL("Diamond inheritance of interfaces is not" \
+      MOCKCPP_REPORT_FAILURE("Diamond inheritance of interfaces is not" \
                   " a good practice, hence, mockcpp does not support it");
    }
 
@@ -81,7 +81,7 @@ getNumberOfBaseClasses(const std::type_info& info)
    }
    catch(std::bad_cast& e)
    {
-      MOCKCPP_FAIL("the type you are trying to mock is not a class.");
+      MOCKCPP_REPORT_FAILURE("the type you are trying to mock is not a class.");
    }
 
    return 0;

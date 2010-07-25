@@ -52,7 +52,7 @@ getIndicesOfMethod(Method m)
 
    delete checker;
 
-   MOCKCPP_ASSERT_TRUE_MESSAGE("You are trying to mock a non-pure-virtual object", result); 
+   MOCKCPP_ASSERT_TRUE("You are trying to mock a non-pure-virtual object", result); 
 
    return std::pair<unsigned int, unsigned int>
        (vptrIndex, vtblIndex);

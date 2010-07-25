@@ -23,6 +23,7 @@
 #include <mockcpp/InvocationMockBuilderGetter.h>
 #include <mockcpp/InvocationMockerNamespace.h>
 #include <mockcpp/CApiHookKey.h>
+#include <mockcpp/ReportFailure.h>
 
 MOCKCPP_NS_START
 
@@ -127,7 +128,7 @@ Invokable*
 HookMockObject::getInvokable(const void* api) 
 {
    ChainableMockMethodCore* method = This->getMethod(api);
-   MOCKCPP_ASSERT_TRUE_MESSAGE(
+   MOCKCPP_ASSERT_TRUE(
 	   "mockcpp internal error",
 	   method != 0);
    return method;

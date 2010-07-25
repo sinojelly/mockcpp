@@ -19,7 +19,7 @@
 #include <mockcpp/ChainableMockMethodContainer.h>
 #include <mockcpp/ChainableMockMethodCore.h>
 #include <mockcpp/ChainableMockMethodKey.h>
-#include <mockcpp/Asserter.h>
+#include <mockcpp/ReportFailure.h>
 
 #include <list>
 #include <utility>
@@ -201,7 +201,7 @@ ChainableMockMethodContainer::addMethod(ChainableMockMethodKey* key, \
 {
     if(getMethod(key) != 0)
     {
-       MOCKCPP_FAIL("internal error (1022), please report this bug to" PACKAGE_BUGREPORT ".");
+       MOCKCPP_REPORT_FAILURE("internal error (1022), please report this bug to" PACKAGE_BUGREPORT ".");
     }
 
     This->addMethod(key, method);

@@ -16,7 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#include <mockcpp/AssertionFailedError.h>
+#include <mockcpp/Asserter.h>
 #include <gtest/gtest.h>
 
 MOCKCPP_NS_START
@@ -32,6 +32,8 @@ reportFailure(unsigned srcline, const char* srcfile,
                 , srcfile
                 , srcline
                 , message.c_str()) = Message();
+
+    MOCKCPP_FAIL("failed due to mockcpp exception");
 }
 
 

@@ -18,11 +18,10 @@
 #ifndef __MOCKCPP_MSVC_METHOD_INFO_READER_H
 #define __MOCKCPP_MSVC_METHOD_INFO_READER_H
 
-
 #include <mockcpp/mockcpp.h>
+#include <mockcpp/ReportFailure.h>
 
 MOCKCPP_NS_START
- 
 
 #ifdef MSVC_VMG_ENABLED
 
@@ -58,7 +57,7 @@ void* getAddrOfMethod(Method input)
 template <typename Method>
 void* getAddrOfMethod(Method input)
 {
-   MOCKCPP_FAIL("please add /D MSVC_VMG_ENABLED and /vmg to your compiler option");
+   MOCKCPP_REPORT_FAILURE("please add /D MSVC_VMG_ENABLED and /vmg to your compiler option");
 	return 0;
 }
 
@@ -67,7 +66,7 @@ void* getAddrOfMethod(Method input)
 template <class C, typename Method>
 unsigned int getIndexOfMethod(Method method)
 {
-   MOCKCPP_FAIL("please add /D MSVC_VMG_ENABLED and /vmg to your compiler option");
+   MOCKCPP_REPORT_FAILURE("please add /D MSVC_VMG_ENABLED and /vmg to your compiler option");
 	return 0;
 }
 
@@ -76,7 +75,7 @@ unsigned int getIndexOfMethod(Method method)
 template <class C, typename Method>
 unsigned int getDeltaOfMethod(Method method)
 {
-   MOCKCPP_FAIL("please add /D MSVC_VMG_ENABLED and /vmg to your compiler option");
+   MOCKCPP_REPORT_FAILURE("please add /D MSVC_VMG_ENABLED and /vmg to your compiler option");
 	return 0;
 }
 #endif
