@@ -32,6 +32,18 @@ reportFailure
 #define MOCKCPP_REPORT_FAILURE(msg) \
    MOCKCPP_NS::reportFailure(__LINE__, __FILE__, msg)
 
+#define MOCKCPP_ASSERT_FALSE(msg, expr) do {\
+   if(expr) { \
+      MOCKCPP_REPORT_FAILURE(msg); \
+   } \
+} while(0)
+
+#define MOCKCPP_ASSERT_TRUE(msg, expr) do {\
+   if(!(expr)) { \
+      MOCKCPP_REPORT_FAILURE(msg); \
+   } \
+} while(0)
+
 MOCKCPP_NS_END
 
 #endif

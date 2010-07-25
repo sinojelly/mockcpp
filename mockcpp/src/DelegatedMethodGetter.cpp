@@ -18,7 +18,7 @@
 
 #include <mockcpp/mockcpp.h>
 #include <mockcpp/OutputStringStream.h>
-#include <mockcpp/Asserter.h>
+#include <mockcpp/ReportFailure.h>
 
 MOCKCPP_NS_START
 
@@ -32,7 +32,7 @@ void maxVtblSizeTooBigError(unsigned int index)
        << MOCKCPP_MAX_VTBL_SIZE
        << ")";
 
-   MOCKCPP_FAIL(oss.str());
+   MOCKCPP_REPORT_FAILURE(oss.str());
 }
 
 void maxInheritanceTooBigError(unsigned int index)
@@ -45,7 +45,7 @@ void maxInheritanceTooBigError(unsigned int index)
        << MOCKCPP_MAX_INHERITANCE
        << ")";
 
-   MOCKCPP_FAIL(oss.str());
+   MOCKCPP_REPORT_FAILURE(oss.str());
 }
 
 MOCKCPP_NS_END

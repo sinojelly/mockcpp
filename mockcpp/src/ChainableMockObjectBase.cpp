@@ -22,6 +22,7 @@
 #include <mockcpp/ChainableMockMethodCore.h>
 #include <mockcpp/InvocationMocker.h>
 #include <mockcpp/ChainableMockMethodContainer.h>
+#include <mockcpp/ReportFailure.h>
 
 MOCKCPP_NS_START
 
@@ -77,7 +78,13 @@ getInvocationMocker(const std::string& id) const
 void
 ChainableMockObjectBase::verify()
 {
-    This->container.verify();
+    try {
+       This->container.verify();
+    }
+    catch(std::exception& ex)
+    {
+       MOCKCPP_REPORT_FAILURE(ex.what());
+    }
 }
 
 //////////////////////////////////////////////////////////////

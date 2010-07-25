@@ -26,6 +26,7 @@
 #include <mockcpp/Invokable.h>
 #include <mockcpp/Result.h>
 #include <mockcpp/Asserter.h>
+#include <mockcpp/ReportFailure.h>
 
 MOCKCPP_NS_START
 
@@ -38,6 +39,33 @@ public:
     ChainableMockMethodBase(Invokable* invokable_)
 		: invokable(invokable_)
     {}
+
+    
+    RT invoke( const std::string& nameOfCaller
+             , const RefAny& p01 
+             , const RefAny& p02 
+             , const RefAny& p03 
+             , const RefAny& p04 
+             , const RefAny& p05 
+             , const RefAny& p06 
+             , const RefAny& p07 
+             , const RefAny& p08 
+             , const RefAny& p09
+             , const RefAny& p10
+             , const RefAny& p11 
+             , const RefAny& p12 
+    )
+    {
+       SelfDescribe* resultProvider = 0;
+
+       const Any& result = \
+           invokable->invoke( nameOfCaller
+                            , p01, p02, p03, p04, p05, p06
+                            , p07, p08, p09, p10, p11, p12
+                            , resultProvider);
+
+       return getResult(result, resultProvider);
+    }
 
     RT operator()( const std::string& nameOfCaller
                  , const RefAny& p01 = RefAny()
@@ -54,15 +82,17 @@ public:
                  , const RefAny& p12 = RefAny()
     )
     {
-       SelfDescribe* resultProvider = 0;
+        try {
+           return invoke( nameOfCaller
+                        , p01, p02, p03, p04, p05, p06
+                        , p07, p08, p09, p10, p11, p12);
+        }
+        catch(std::exception& ex)
+        {
+           MOCKCPP_REPORT_FAILURE(ex.what());
+        }
 
-       const Any& result = \
-           invokable->invoke( nameOfCaller
-                            , p01, p02, p03, p04, p05, p06
-                            , p07, p08, p09, p10, p11, p12
-                            , resultProvider);
-
-       return getResult(result, resultProvider);
+        return RT();
     }
 
     virtual ~ChainableMockMethodBase() {}

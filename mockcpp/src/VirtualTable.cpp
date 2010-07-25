@@ -20,7 +20,7 @@
 #include <iostream>
 
 #include <mockcpp/VirtualTable.h>
-#include <mockcpp/Asserter.h>
+#include <mockcpp/ReportFailure.h>
 #include <mockcpp/OutputStringStream.h>
 #include <mockcpp/MethodInfoReader.h>
 #include <mockcpp/ObjNameGetter.h>
@@ -71,7 +71,7 @@ VirtualTableImpl::validateVptr(void** pVptr)
 {
    if(pVptr != fakeObject->vptr)
    {
-      MOCKCPP_FAIL( PACKAGE " internal error(1018). please report this bug to "
+      MOCKCPP_REPORT_FAILURE( PACKAGE " internal error(1018). please report this bug to "
              PACKAGE_BUGREPORT ".");
    }
 }
@@ -93,7 +93,7 @@ VirtualTableImpl::validateNumberOfVptr()
              "maximun 7, then rebuild " PACKAGE "; \n"
           << "3. you can refine your design to make it simpler.";
 
-      MOCKCPP_FAIL(oss.str());
+      MOCKCPP_REPORT_FAILURE(oss.str());
    }
 }
 /////////////////////////////////////////////////////////////////
@@ -111,7 +111,7 @@ VirtualTableImpl::validateIndexOfVtbl(unsigned int index)
        << "FYI: the index of method which you are trying to mock is "
        << index + 1 << ".";
 
-   MOCKCPP_ASSERT_TRUE_MESSAGE(
+   MOCKCPP_ASSERT_TRUE(
       oss.str(), 
       index < MOCKCPP_MAX_VTBL_SIZE);
 }
@@ -122,7 +122,7 @@ VirtualTableImpl::validateIndexOfVptr(unsigned int index)
 {
    if(index >= numberOfVptr)
    {
-      MOCKCPP_FAIL(PACKAGE " internal error. please report it to " PACKAGE_BUGREPORT ".");
+      MOCKCPP_REPORT_FAILURE(PACKAGE " internal error. please report it to " PACKAGE_BUGREPORT ".");
    }
 }
 
@@ -158,7 +158,7 @@ namespace
 
 
 
-         MOCKCPP_FAIL(oss.str());
+         MOCKCPP_REPORT_FAILURE(oss.str());
       }
    };
 }
@@ -279,7 +279,7 @@ namespace
          VirtualTableImpl* pThis = getVirtualTableImpl(this, VPTRIndex);
          if(pThis->expectsKeepAlive)
          {
-            MOCKCPP_FAIL("trying to delete an object expected keeping alive.");
+            MOCKCPP_REPORT_FAILURE("trying to delete an object expected keeping alive.");
          }
 
          // FIXME: The memory won't be freed automatically.
@@ -287,7 +287,7 @@ namespace
          // delete [] pThis->vtbl;
          if(pThis->deleted)
          {
-            MOCKCPP_FAIL("object has been deleted previously, you are deleting it again.");
+            MOCKCPP_REPORT_FAILURE("object has been deleted previously, you are deleting it again.");
          }
 
          pThis->deleted = true;
@@ -330,7 +330,7 @@ VirtualTable::verify()
 {
    if(This->expectsBeingDeleted && !This->deleted)
    {
-      MOCKCPP_FAIL("Object is expected Being Deleted, but it actually didn't happen.");
+      MOCKCPP_REPORT_FAILURE("Object is expected Being Deleted, but it actually didn't happen.");
    }
 
    This->expectsBeingDeleted = false;
@@ -343,7 +343,7 @@ VirtualTable::expectsBeingDeleted()
 {
     if(This->expectsKeepAlive)
     {
-       MOCKCPP_FAIL("What do you really want? You are expecting "
+       MOCKCPP_REPORT_FAILURE("What do you really want? You are expecting "
                     "to delete an object alive which you expected "
                     "it should keep alive");
     }
@@ -357,12 +357,12 @@ VirtualTable::expectsKeepAlive()
 {
    if(This->deleted)
    {
-       MOCKCPP_FAIL("The object you expects keeping alive has actually been deleted.");
+       MOCKCPP_REPORT_FAILURE("The object you expects keeping alive has actually been deleted.");
    }
 
    if(This->expectsBeingDeleted)
    {
-       MOCKCPP_FAIL("What do you really want? You are expecting "
+       MOCKCPP_REPORT_FAILURE("What do you really want? You are expecting "
                     "to keep an object alive which you expected "
                     "it should be deleted");
    }
@@ -376,7 +376,7 @@ VirtualTable::getInvokableGetter(void* caller, unsigned int vptrIndex)
    VirtualTableImpl* pThis = getVirtualTableImpl(caller, vptrIndex);
    if(pThis->deleted)
    {
-       MOCKCPP_FAIL("The object you are trying to access has been deleted.");
+       MOCKCPP_REPORT_FAILURE("The object you are trying to access has been deleted.");
    }
 
    return pThis->indexInvokableGetter;

@@ -24,7 +24,7 @@
 
 #include <mockcpp/mockcpp.h>
 #include <mockcpp/MethodIndiceChecker.h>
-#include <mockcpp/Asserter.h>
+#include <mockcpp/ReportFailure.h>
 
 MOCKCPP_NS_START
 
@@ -44,7 +44,7 @@ std::pair<unsigned int, unsigned int> getIndexOfDestructor()
    bool result = checker->getIndice(true, vptrIndex, vtblIndex);
    delete checker;
 
-   MOCKCPP_ASSERT_TRUE_MESSAGE("You are trying to mock an interface without virtual destructor", result); 
+   MOCKCPP_ASSERT_TRUE("You are trying to mock an interface without virtual destructor", result); 
 
    return std::pair<unsigned int, unsigned int>
        (vptrIndex, vtblIndex);
