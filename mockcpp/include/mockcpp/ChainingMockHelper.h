@@ -23,6 +23,7 @@
 #include <mockcpp/IsEqual.h>
 #include <mockcpp/IsNotEqual.h>
 #include <mockcpp/IsMirror.h>
+#include <mockcpp/Spy.h>
 #include <mockcpp/OutBound.h>
 #include <mockcpp/OutBoundPointer.h>
 #include <mockcpp/IncrementStub.h>
@@ -61,6 +62,11 @@ static inline Constraint* eq(const char* s)
 }
 #endif
 
+template <typename T>
+Constraint* spy(T& val)
+{
+   return new Spy<T>(val);
+}
 ////////////////////////////////////////////////////////////////
 template <typename T>
 Constraint* outBound(const T& val, Constraint* constraint = 0)
