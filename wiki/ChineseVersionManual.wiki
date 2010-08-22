@@ -158,9 +158,15 @@ void test_should_throw_exception_if_open_file_failed ()
 
   * 相等：   eq (value) 
   * 不等：   neq (value)
+  * 大于 :    gt (value)
+  * 小于 :    lt (vlaue)
   * 内存匹配
     * mirror (object)
     * mirror (address, size)
+  * 对象内容监控  
+    * spy(address, size)
+  * 引用传值 : outBound(object) 
+  * 指针传值 : outBoundP(address)
   * 字符串匹配：
     * smirror (str)
     * startWith (str)
