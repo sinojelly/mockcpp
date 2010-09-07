@@ -42,9 +42,12 @@ SET(UT_CASES
   TestStringConstraint.h
   TestStubContainter.h
   TestVirtualTable.h
+  TestCheck.h
 )
 
 LINK_DIRECTORIES(
+	${PROJECT_HOME}/../../build/src/Debug
+	${PROJECT_HOME}/../../build_testngpp/src/Debug
   ${PROJECT_HOME}/src
   ${CMAKE_BINARY_DIR}/3rdparty/testngpp/src)
 
@@ -57,6 +60,11 @@ INCLUDE_DIRECTORIES(BEFORE
 
 SET(TEST_GENERATOR ${CMAKE_SOURCE_DIR}/3rdparty/testngpp/scripts/testngppgen.py)
 SET(TESTCASE_PREFIX mockcpp-ut)
+
+IF(MSVC)
+    ADD_DEFINITIONS(-DMSVC_VMG_ENABLED)
+    SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /vmg")
+ENDIF(MSVC)
 
 FOREACH(CASE ${UT_CASES})
   GET_FILENAME_COMPONENT(CASE_NAME ${CASE} NAME_WE)
