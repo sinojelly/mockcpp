@@ -158,11 +158,30 @@ IF(${MOCKCPP_XUNIT} STREQUAL "GTEST" OR ${MOCKCPP_XUNIT} STREQUAL "gtest")
              NO_SYSTEM_ENVIRONMENT_PATH 
              NO_CMAKE_SYSTEM_PATH)
    IF(NOT GTEST_HEADER)
-      MESSAGE(FATAL_ERROR "gtest.h not found int ${MOCKCPP_XUNIT_HOME}/include/gtest, please specify MOCKCPP_XUNIT_HOME as the home path of googletest correctly.")
+      MESSAGE(FATAL_ERROR "gtest.h not found in ${MOCKCPP_XUNIT_HOME}/include/gtest, please specify MOCKCPP_XUNIT_HOME as the home path of googletest correctly.")
    ENDIF()
    INCLUDE_DIRECTORIES(BEFORE ${MOCKCPP_XUNIT_HOME}/include)
    SET(MOCKCPP_SRCS ${MOCKCPP_SRCS} ports/failure/gtest_report_failure.cpp)
 
+ELSEIF(${MOCKCPP_XUNIT} STREQUAL "CppUTest" OR ${MOCKCPP_XUNIT} STREQUAL "cpputest")
+
+   IF(NOT DEFINED MOCKCPP_XUNIT_HOME)
+      MESSAGE(FATAL_ERROR "Please specify MOCKCPP_XUNIT_HOME as the home path of googletest")
+   ENDIF()
+   FIND_FILE(CPPUTEST_HEADER
+             TestHarness.h 
+             PATHS ${MOCKCPP_XUNIT_HOME}/include/CppUTest
+             NO_DEFAULT_PATH 
+             NO_CMAKE_ENVIRONMENT_PATH 
+             NO_CMAKE_PATH 
+             NO_SYSTEM_ENVIRONMENT_PATH 
+             NO_CMAKE_SYSTEM_PATH)
+   IF(NOT CPPUTEST_HEADER)
+      MESSAGE(FATAL_ERROR "TestHarness.h not found in ${MOCKCPP_XUNIT_HOME}/include/CppUTest, please specify MOCKCPP_XUNIT_HOME as the home path of CppUTest correctly.")
+   ENDIF()
+   INCLUDE_DIRECTORIES(BEFORE ${MOCKCPP_XUNIT_HOME}/include ${MOCKCPP_XUNIT_HOME}/include/Platforms/VisualCpp)
+   SET(MOCKCPP_SRCS ${MOCKCPP_SRCS} ports/failure/cpputest_report_failure.cpp)   
+   
 ELSEIF(${MOCKCPP_XUNIT} STREQUAL "CPPUNIT" OR ${MOCKCPP_XUNIT} STREQUAL "cppunit")
    IF(NOT DEFINED MOCKCPP_XUNIT_HOME)
       MESSAGE(FATAL_ERROR "Please specify MOCKCPP_XUNIT_HOME as the home path of cppunit")

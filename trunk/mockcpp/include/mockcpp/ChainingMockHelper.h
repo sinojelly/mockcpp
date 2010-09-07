@@ -26,6 +26,7 @@
 #include <mockcpp/IsLessThan.h>
 #include <mockcpp/IsMirror.h>
 #include <mockcpp/Spy.h>
+#include <mockcpp/Check.h>
 #include <mockcpp/OutBound.h>
 #include <mockcpp/OutBoundPointer.h>
 #include <mockcpp/IncrementStub.h>
@@ -81,6 +82,31 @@ Constraint* spy(T& val)
 {
    return new Spy<T>(val);
 }
+
+template <typename Predict>
+struct PredictTypeTraits
+{
+};
+
+template <typename Predict, typename T>
+struct PredictTypeTraits<bool (Predict::*)(T)>
+{
+    typedef T ParaType;
+};
+
+template <typename Predict>
+Constraint* check(Predict pred)
+{
+    typedef typename PredictTypeTraits<BOOST_TYPEOF(&Predict::operator())>::ParaType T;
+    return new Check<T, Predict>(pred);
+}
+
+template <typename T>
+Constraint* check(bool (*pred)(T))
+{
+    return new Check<T, bool (*)(T)>(pred);
+}
+
 ////////////////////////////////////////////////////////////////
 template <typename T>
 Constraint* outBound(const T& val, Constraint* constraint = 0)
