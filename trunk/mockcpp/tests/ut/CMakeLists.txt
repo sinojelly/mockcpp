@@ -43,6 +43,7 @@ SET(UT_CASES
   TestStubContainter.h
   TestVirtualTable.h
   TestCheck.h
+  TestBlockAllocator.h
 )
 
 LINK_DIRECTORIES(
