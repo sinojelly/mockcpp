@@ -17,27 +17,28 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#ifndef __MOCKCPP_PAGEALLOCATOR_H__
-#define __MOCKCPP_PAGEALLOCATOR_H__
+#ifdef _MSC_VER
 
-#include <mockcpp/MemAllocator.h>
+#include <Windows.h>
+#include <mockcpp/Win32CodeModifier.h>
 
 MOCKCPP_NS_START
 
+bool Win32CodeModifier::modify(void *dest, void *src, size_t size)
+{
+	DWORD  dwOldProtect(0);
+	DWORD  dwReadWrite(PAGE_EXECUTE_READWRITE); // modify code segment must use PAGE_EXECUTE_READWRITE.
 
-struct PageAllocator : public MemAllocator
-{    
-    virtual size_t pageSize() = 0;
-
-	void * align(void *addr)
-	{
-		return (void *)(((int)addr) & ~(pageSize() - 1));
-	}
-};
+	BOOL  bRet = TRUE;
+	bRet = ::VirtualProtect(dest, size, dwReadWrite, &dwOldProtect);
+	bRet =  bRet && 
+		::WriteProcessMemory( ::GetCurrentProcess(), dest, src,  size, NULL );
+	bRet =  bRet && 
+		::VirtualProtect(dest, size, dwOldProtect, &dwReadWrite);
+	return (bool)bRet;
+}
 
 
 MOCKCPP_NS_END
 
 #endif
-
-

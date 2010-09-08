@@ -17,27 +17,31 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#ifndef __MOCKCPP_PAGEALLOCATOR_H__
-#define __MOCKCPP_PAGEALLOCATOR_H__
+#ifndef __MOCKCPP_ARCH32APIHOOK_H__
+#define __MOCKCPP_ARCH32APIHOOK_H__
 
-#include <mockcpp/MemAllocator.h>
+
+#include <mockcpp/ApiHook.h>
 
 MOCKCPP_NS_START
 
+struct MemAllocator;
+struct CodeModifier;
 
-struct PageAllocator : public MemAllocator
-{    
-    virtual size_t pageSize() = 0;
+struct Arch32ApiHookImpl;
 
-	void * align(void *addr)
-	{
-		return (void *)(((int)addr) & ~(pageSize() - 1));
-	}
+struct Arch32ApiHook : public ApiHook
+{
+	Arch32ApiHook(PageAllocator *pageAllocator, CodeModifier *codeModifier);
+	~Arch32ApiHook();
+
+	void hook(ApiHook::Address pfnOld, ApiHook::Address pfnNew);
+
+private:
+	Arch32ApiHookImpl * This;
 };
 
 
 MOCKCPP_NS_END
 
 #endif
-
-
