@@ -17,43 +17,19 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#ifndef __MOCKCPP_BLOCKALLOCATOR_H__
-#define __MOCKCPP_BLOCKALLOCATOR_H__
+#ifndef __MOCKCPP_PAGEALLOCATOR_H__
+#define __MOCKCPP_PAGEALLOCATOR_H__
 
-#include <mockcpp/PageAllocator.h>
+#include <mockcpp/MemAllocator.h>
 
 MOCKCPP_NS_START
 
 
-struct BlockAllocator : public MemAllocator
+struct PageAllocator : public MemAllocator
 {    
-    BlockAllocator(unsigned int blockSize, unsigned int blockNum);
-	BlockAllocator(unsigned int blockSize, MOCKCPP_NS::PageAllocator *poolAllocator);
-    ~BlockAllocator();
-    void* alloc(size_t size);
-    void free(void* ptr);
-
-private:
-    struct Block 
-    {
-        Block* next;        
-    };
-
-private:
-    bool isBadBlock(void* ptr) const;
-    bool misaligned(void* ptr) const;
-    bool outOfScope(void* ptr) const;
-    bool hasBeenFreed(void* ptr) const;
-
-private:
-    unsigned int sizeOfBlock;
-    unsigned int numOfBlocks;
-	MOCKCPP_NS::MemAllocator *pageAllocator;
-    void* buffer;
-    Block* headOfFreeList;	
-	unsigned int sizeOfPool;
-	unsigned int numOfPool;
+    virtual size_t pageSize() = 0;
 };
+
 
 MOCKCPP_NS_END
 

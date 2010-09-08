@@ -143,6 +143,8 @@ SET(MOCKCPP_SRCS
     CApiHookKey.cpp
     GlobalMockObject.cpp
     BlockAllocator.cpp
+    Win32PageAllocator.cpp
+    Win32ProtectPageAllocator.cpp
 )
 
 IF(${MOCKCPP_XUNIT} STREQUAL "GTEST" OR ${MOCKCPP_XUNIT} STREQUAL "gtest")
