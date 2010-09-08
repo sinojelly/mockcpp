@@ -78,7 +78,7 @@ namespace
 	// unexpected behavior.
     delete getMethodCore(value);
 
-    delete getKey(value); // TODO: Exception here. On Win7, when call GlobalMockObject::verify()
+    delete getKey(value);
   }
 }
 

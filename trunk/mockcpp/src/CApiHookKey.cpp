@@ -17,6 +17,7 @@
 ***/
 
 #include <mockcpp/CApiHookKey.h>
+#include <mockcpp/ApiHook.h>
 
 MOCKCPP_NS_START
 
@@ -24,7 +25,7 @@ MOCKCPP_NS_START
 CApiHookKey::CApiHookKey(const void* api, const void* stub)
    : apiAddress(api)
 {
-   hook = new CApiHook((CApiHook::Address)api, (CApiHook::Address)stub);
+   hook = new CApiHook((ApiHook::Address)api, (ApiHook::Address)stub);
 }
 
 ///////////////////////////////////////////////////////////

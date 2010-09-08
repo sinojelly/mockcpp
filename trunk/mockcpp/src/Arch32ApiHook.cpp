@@ -1,0 +1,185 @@
+/***
+    mockcpp is a generic C/C++ mock framework.
+    Copyright (C) <2010>  <Darwin Yuan: darwin.yuan@gmail.com>
+	                      <Chen Guodong: sinojelly@gmail.com>
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+***/
+
+#include <string.h>
+#include <mockcpp/PageAllocator.h>
+#include <mockcpp/BlockAllocator.h>
+#include <mockcpp/CodeModifier.h>
+#include <mockcpp/Arch32ApiHook.h>
+
+MOCKCPP_NS_START
+
+namespace {
+
+const unsigned char thunkCodeTemplate[]  =  
+{ 
+  0xB8, 0x00, 0x00, 0x00, 0x00, // mov eax, [new_addr]
+  0xB9, 0x00, 0x00, 0x00, 0x00, // mov ecx, [old_addr]
+  0x5B,       // pop  ebx
+  0x51,       // push ecx
+  0x53,       // push ebx
+  0xFF, 0xD0, // call eax
+  0x5B,       // pop  ebx
+  0x59,       // pop  ecx
+  0x53,       // push ebx
+  0xC3        // ret
+};
+
+// E9 :  jmp near
+const unsigned char jmpCodeTemplate[]  =  
+{ 
+	0xE9, 0x00, 0x00, 0x00, 0x00  // jmp thunk
+};
+
+BlockAllocator *thunkAllocator = 0;
+
+}
+
+
+struct Arch32ApiHookImpl
+{
+	void hook(ApiHook::Address pfnOld, ApiHook::Address pfnNew );
+
+	Arch32ApiHookImpl(PageAllocator *pageAllocator, CodeModifier *codeModifier);
+	~Arch32ApiHookImpl();
+
+private:
+	ApiHook::Address  m_pfnOld; // save old func addr.
+	
+    char m_byNew[sizeof(jmpCodeTemplate)];  //jmp to thunk
+	char m_byOld[sizeof(jmpCodeTemplate)];  //save old func content which will be covered with jmp to thunk code, so as to recover it when unhook.
+	char *m_thunk; //thunk code, for jumping to mock func(CApiHookFunctor<BOOST_TYPEOF(function)>::hook) and pass old func addr as parameter.
+
+	CodeModifier *modifier;
+
+	bool changeCode(char* code);
+	bool allocThunk();
+	void freeThunk();
+	void initHook(ApiHook::Address pfnOld, ApiHook::Address pfnNew );
+	void initThunk(ApiHook::Address pfnOld, ApiHook::Address pfnNew );
+	void startHook();
+	void stopHook();
+};
+
+/////////////////////////////////////////////////////////////////
+Arch32ApiHookImpl::Arch32ApiHookImpl(PageAllocator *pageAllocator, CodeModifier *codeModifier)
+	: modifier(codeModifier)
+{
+	if (0 == thunkAllocator)
+	{
+		thunkAllocator = new BlockAllocator(sizeof( thunkCodeTemplate ), pageAllocator);
+	}
+}
+
+/////////////////////////////////////////////////////////////////
+bool Arch32ApiHookImpl::allocThunk()
+{
+	m_thunk = (char *)thunkAllocator->alloc(sizeof( thunkCodeTemplate ));
+	return m_thunk != 0;
+}
+
+/////////////////////////////////////////////////////////////////
+void Arch32ApiHookImpl::freeThunk()
+{
+	thunkAllocator->free(m_thunk);
+}
+
+/////////////////////////////////////////////////////////////////
+void Arch32ApiHookImpl::initThunk(ApiHook::Address pfnOld, ApiHook::Address pfnNew )
+{
+	memcpy( m_thunk, thunkCodeTemplate, sizeof( thunkCodeTemplate ) );  
+	*(unsigned long*)(m_thunk + 1) = (unsigned long)pfnNew;
+	*(unsigned long*)(m_thunk + 6) = (unsigned long)pfnOld;
+}
+
+/////////////////////////////////////////////////////////////////
+void Arch32ApiHookImpl::initHook(ApiHook::Address pfnOld, ApiHook::Address pfnNew )
+{
+    memcpy( m_byNew, jmpCodeTemplate, sizeof( jmpCodeTemplate ) );  
+
+    *(unsigned long*)(m_byNew + 1) = 
+		(unsigned long)m_thunk - (unsigned long)pfnOld - sizeof(jmpCodeTemplate);
+
+    m_pfnOld  =  pfnOld;
+
+    memcpy((void*)m_byOld, (void*)m_pfnOld, sizeof(jmpCodeTemplate));
+}
+
+/////////////////////////////////////////////////////////////////
+bool Arch32ApiHookImpl::changeCode(char* code)
+{
+	return modifier->modify((void *)m_pfnOld, code,sizeof(jmpCodeTemplate));
+}
+
+/////////////////////////////////////////////////////////////////
+void Arch32ApiHookImpl::startHook()
+{
+	Arch32ApiHookImpl::changeCode((char*)m_byNew);
+}
+
+/////////////////////////////////////////////////////////////////
+void Arch32ApiHookImpl::stopHook()
+{
+	Arch32ApiHookImpl::changeCode((char*)m_byOld);
+}
+
+/////////////////////////////////////////////////////////////////
+void Arch32ApiHookImpl::hook(ApiHook::Address pfnOld, ApiHook::Address pfnNew )
+{
+	if (!allocThunk())
+	{
+		return;
+	}
+
+    initHook(pfnOld, pfnNew);
+	initThunk(pfnOld, pfnNew);
+
+	startHook();
+}
+
+/////////////////////////////////////////////////////////////////
+Arch32ApiHookImpl::~Arch32ApiHookImpl()
+{
+	stopHook();
+	freeThunk(); // TODO: it must call dtor before destroying the members.
+}
+
+/////////////////////////////////////////////////////////////////
+Arch32ApiHook::Arch32ApiHook(PageAllocator *pageAllocator, CodeModifier *codeModifier)
+	: This(new Arch32ApiHookImpl(pageAllocator, codeModifier))
+{
+}
+
+/////////////////////////////////////////////////////////////////
+Arch32ApiHook::~Arch32ApiHook()
+{
+	delete This;
+}
+
+/////////////////////////////////////////////////////////////////
+void Arch32ApiHook::hook(ApiHook::Address pfnOld, ApiHook::Address pfnNew )
+{
+	This->hook(pfnOld, pfnNew);
+}
+
+/////////////////////////////////////////////////////////////////
+
+MOCKCPP_NS_END
+
+

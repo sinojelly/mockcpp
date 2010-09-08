@@ -17,27 +17,50 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#ifndef __MOCKCPP_PAGEALLOCATOR_H__
-#define __MOCKCPP_PAGEALLOCATOR_H__
+#ifndef _MSC_VER
 
-#include <mockcpp/MemAllocator.h>
+#include <stdlib.h>
+#include <mockcpp/Linux32ProtectPageAllocator.h>
+#include <string.h>
+#include <sys/mman.h>
+
 
 MOCKCPP_NS_START
 
+Linux32ProtectPageAllocator::Linux32ProtectPageAllocator(PageAllocator *pageAllocator)
+	: allocator(pageAllocator)
+{
+}
 
-struct PageAllocator : public MemAllocator
-{    
-    virtual size_t pageSize() = 0;
+void* Linux32ProtectPageAllocator::alloc(size_t size)
+{
+	void *pages = allocator->alloc(size);
 
-	void * align(void *addr)
+	if (pages == NULL)
 	{
-		return (void *)(((int)addr) & ~(pageSize() - 1));
+		return NULL;
 	}
-};
+
+	if (mprotect(allocator->align(pages) , 2 * pageSize(), PROT_EXEC|PROT_WRITE|PROT_READ) != 0)
+	{
+		allocator->free(pages);
+		return NULL;
+	}
+
+	return pages;
+}
+
+void Linux32ProtectPageAllocator::free(void* ptr)
+{
+	allocator->free(ptr);
+}
+
+size_t Linux32ProtectPageAllocator::pageSize()
+{
+	return allocator->pageSize();
+}
 
 
 MOCKCPP_NS_END
 
 #endif
-
-

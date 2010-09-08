@@ -145,6 +145,10 @@ SET(MOCKCPP_SRCS
     BlockAllocator.cpp
     Win32PageAllocator.cpp
     Win32ProtectPageAllocator.cpp
+    Win32CodeModifier.cpp
+    Arch32ApiHook.cpp
+    Linux32PageAllocator.cpp
+    Linux32ProtectPageAllocator.cpp
 )
 
 IF(${MOCKCPP_XUNIT} STREQUAL "GTEST" OR ${MOCKCPP_XUNIT} STREQUAL "gtest")

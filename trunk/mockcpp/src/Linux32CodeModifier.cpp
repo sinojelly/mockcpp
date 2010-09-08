@@ -17,27 +17,34 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#ifndef __MOCKCPP_PAGEALLOCATOR_H__
-#define __MOCKCPP_PAGEALLOCATOR_H__
+#ifndef _MSC_VER
 
-#include <mockcpp/MemAllocator.h>
+#include <sys/mman.h>
+#include <mockcpp/Linux32CodeModifier.h>
+#include <mockcpp/PageAllocator.h>
+
 
 MOCKCPP_NS_START
 
 
-struct PageAllocator : public MemAllocator
-{    
-    virtual size_t pageSize() = 0;
+Linux32CodeModifier(PageAllocator *pageAllocator)
+	: page(pageAllocator)
+{
+}
 
-	void * align(void *addr)
+bool Linux32CodeModifier::modify(void *dest, void *src, size_t size)
+{
+	if (mprotect(page->align(dest) , 2 * page->pageSize(), PROT_EXEC|PROT_WRITE|PROT_READ) != 0)
 	{
-		return (void *)(((int)addr) & ~(pageSize() - 1));
+		return false;
 	}
-};
+
+	(void)memcpy(dest, src, size);
+
+	return true;
+}
 
 
 MOCKCPP_NS_END
 
 #endif
-
-
