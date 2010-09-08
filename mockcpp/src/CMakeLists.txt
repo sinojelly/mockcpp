@@ -143,12 +143,7 @@ SET(MOCKCPP_SRCS
     CApiHookKey.cpp
     GlobalMockObject.cpp
     BlockAllocator.cpp
-    Win32PageAllocator.cpp
-    Win32ProtectPageAllocator.cpp
-    Win32CodeModifier.cpp
     Arch32ApiHook.cpp
-    Linux32PageAllocator.cpp
-    Linux32ProtectPageAllocator.cpp
 )
 
 IF(${MOCKCPP_XUNIT} STREQUAL "GTEST" OR ${MOCKCPP_XUNIT} STREQUAL "gtest")
@@ -210,9 +205,21 @@ ELSE()
 ENDIF()
 
 IF(MSVC)
-   SET(MOCKCPP_SRCS ${MOCKCPP_SRCS} Win32CApiHook.cpp)
+   SET(MOCKCPP_SRCS 
+	   ${MOCKCPP_SRCS} 
+	   Win32CApiHook.cpp 
+	   Win32PageAllocator.cpp 
+	   Win32ProtectPageAllocator.cpp 
+	   Win32CodeModifier.cpp
+   ) 
 ELSE(MSVC)
-   SET(MOCKCPP_SRCS ${MOCKCPP_SRCS} DummyApiHook.cpp)
+   SET(MOCKCPP_SRCS 
+       ${MOCKCPP_SRCS} 
+       Linux32ApiHook.cpp
+       Linux32PageAllocator.cpp
+       Linux32ProtectPageAllocator.cpp
+       Linux32CodeModifier.cpp
+   )
 ENDIF(MSVC)
 ######################################################
 SET(MOCKCPP_HEADERS_PATH ${MOCKCPP_SRC_ROOT}/include/mockcpp)

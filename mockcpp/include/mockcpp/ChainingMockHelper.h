@@ -97,7 +97,11 @@ struct PredictTypeTraits<bool (Predict::*)(T)>
 template <typename Predict>
 Constraint* check(Predict pred)
 {
+#ifdef _MSC_VER
     typedef typename PredictTypeTraits<BOOST_TYPEOF(&Predict::operator())>::ParaType T;
+#else
+    typedef typename PredictTypeTraits<typeof(&Predict::operator())>::ParaType T;
+#endif
     return new Check<T, Predict>(pred);
 }
 

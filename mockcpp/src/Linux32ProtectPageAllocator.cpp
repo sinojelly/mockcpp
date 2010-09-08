@@ -17,8 +17,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#ifndef _MSC_VER
-
 #include <stdlib.h>
 #include <mockcpp/Linux32ProtectPageAllocator.h>
 #include <string.h>
@@ -63,4 +61,3 @@ size_t Linux32ProtectPageAllocator::pageSize()
 
 MOCKCPP_NS_END
 
-#endif

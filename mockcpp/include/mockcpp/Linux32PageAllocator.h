@@ -23,6 +23,7 @@
 
 #include <mockcpp/PageAllocator.h>
 
+MOCKCPP_NS_START
 
 struct Linux32PageAllocator : public PageAllocator
 {
@@ -30,8 +31,13 @@ struct Linux32PageAllocator : public PageAllocator
 	void* alloc(size_t size);
 	void free(void* ptr);
 	size_t pageSize();
+	
+private:
+	size_t sizeOfPage;
 };
 
+
+MOCKCPP_NS_END
 
 #endif
 

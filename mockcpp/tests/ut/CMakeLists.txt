@@ -44,14 +44,14 @@ SET(UT_CASES
   TestVirtualTable.h
   TestCheck.h
   TestBlockAllocator.h
-  TestWin32ApiHook.h
+  TestApiHook.h
 )
 
 LINK_DIRECTORIES(
 	${PROJECT_HOME}/../../build/src/Debug
 	${PROJECT_HOME}/../../build_testngpp/src/Debug
-  ${PROJECT_HOME}/src
-  ${CMAKE_BINARY_DIR}/3rdparty/testngpp/src)
+    ${PROJECT_HOME}/../../build/src
+    ${PROJECT_HOME}/../../build_testngpp/src)
 
 INCLUDE_DIRECTORIES(BEFORE 
   .

@@ -34,7 +34,7 @@ int func2(int a)
 	return 0;
 }
 
-FIXTURE(Win32ApiHook)
+FIXTURE(ApiHook)
 {
 	static const int a = 3;
 	static const int b = 5;
