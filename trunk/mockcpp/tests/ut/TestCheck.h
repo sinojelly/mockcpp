@@ -82,19 +82,21 @@ FIXTURE(Check)
 	
 	}
 
-	// TODO: rewrite this test!   --- testngpp not support chinese comment here.maybe it's too old.
-	#if 0
+	// TODO: warning C4717: mockcpp::toString<bool __cdecl(STRUCT_T *)>
+	#if 1
 	TEST(If the second member is not expected => it should throw something)
 	{
 		STRUCT_T input = {1, 3};
 
-		MOCK_METHOD(mocker, method)
-			.expects(once())
-			.with(check(is_the_second_member_2));
+		//MOCK_METHOD(mocker, method)
+		//	.expects(once())
+		//	.with(check(is_the_second_member_2));
 
-		ASSERT_THROWS_ANYTHING(client(mocker, &input));
+		//ASSERT_THROWS_ANYTHING(client(mocker, &input));
 
-		mocker.reset();
+		//ASSERT_THROWS_ANYTHING(mocker.verify());
+
+		//mocker.reset();
 	}
 	#endif
 

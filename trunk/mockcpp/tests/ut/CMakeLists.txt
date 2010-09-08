@@ -44,6 +44,7 @@ SET(UT_CASES
   TestVirtualTable.h
   TestCheck.h
   TestBlockAllocator.h
+  TestWin32ApiHook.h
 )
 
 LINK_DIRECTORIES(

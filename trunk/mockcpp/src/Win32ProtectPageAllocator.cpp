@@ -17,46 +17,49 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#ifndef __MOCKCPP_BLOCKALLOCATOR_H__
-#define __MOCKCPP_BLOCKALLOCATOR_H__
+#ifdef _MSC_VER
 
-#include <mockcpp/PageAllocator.h>
+#include <Windows.h>
+#include <mockcpp/Win32ProtectPageAllocator.h>
 
 MOCKCPP_NS_START
 
+Win32ProtectPageAllocator::Win32ProtectPageAllocator(PageAllocator *pageAllocator)
+	: allocator(pageAllocator)
+{
+}
 
-struct BlockAllocator : public MemAllocator
-{    
-    BlockAllocator(unsigned int blockSize, unsigned int blockNum);
-	BlockAllocator(unsigned int blockSize, MOCKCPP_NS::PageAllocator *poolAllocator);
-    ~BlockAllocator();
-    void* alloc(size_t size);
-    void free(void* ptr);
+void* Win32ProtectPageAllocator::alloc(size_t size)
+{
 
-private:
-    struct Block 
-    {
-        Block* next;        
-    };
+	LPVOID pages = allocator->alloc(size);
 
-private:
-    bool isBadBlock(void* ptr) const;
-    bool misaligned(void* ptr) const;
-    bool outOfScope(void* ptr) const;
-    bool hasBeenFreed(void* ptr) const;
+	if (pages == NULL)
+	{
+		return NULL;
+	}
 
-private:
-    unsigned int sizeOfBlock;
-    unsigned int numOfBlocks;
-	MOCKCPP_NS::MemAllocator *pageAllocator;
-    void* buffer;
-    Block* headOfFreeList;	
-	unsigned int sizeOfPool;
-	unsigned int numOfPool;
-};
+	DWORD oldProtect;
+	if (VirtualProtect( pages, pageSize(), PAGE_EXECUTE_READWRITE, &oldProtect) == 0)
+	{
+		allocator->free(pages);
+		return NULL;
+	}
+
+	return pages;
+}
+
+void Win32ProtectPageAllocator::free(void* ptr)
+{
+	// TODO: should i VirtualProtect here?
+	allocator->free(ptr);
+}
+
+size_t Win32ProtectPageAllocator::pageSize()
+{
+	return allocator->pageSize();
+}
 
 MOCKCPP_NS_END
 
 #endif
-
-
