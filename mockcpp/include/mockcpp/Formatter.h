@@ -52,7 +52,7 @@ std::string toString(T* p)
 template <typename T>
 std::string toString(const T* s)
 {
-	return MOCKCPP_NS::toString(const_cast<T*>(s));
+	return MOCKCPP_NS::toPointerString((void*)s);
 }
 
 ///////////////////////////////////////////////////////

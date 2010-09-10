@@ -35,7 +35,7 @@ bool Win32CodeModifier::modify(void *dest, void *src, size_t size)
 		::WriteProcessMemory( ::GetCurrentProcess(), dest, src,  size, NULL );
 	bRet =  bRet && 
 		::VirtualProtect(dest, size, dwOldProtect, &dwReadWrite);
-	return (bool)bRet;
+	return (bRet == TRUE);
 }
 
 

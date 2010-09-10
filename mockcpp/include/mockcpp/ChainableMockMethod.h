@@ -27,6 +27,7 @@
 #include <mockcpp/Result.h>
 #include <mockcpp/Asserter.h>
 #include <mockcpp/ReportFailure.h>
+//#include <boost/type_traits/remove_reference.hpp>
 
 MOCKCPP_NS_START
 
@@ -92,6 +93,8 @@ public:
            MOCKCPP_REPORT_FAILURE(ex.what());
         }
 
+		//static remove_reference<RT>::type retVal;
+        //return retVal;
         return RT();
     }
 
