@@ -48,9 +48,9 @@ SET(UT_CASES
 )
 
 LINK_DIRECTORIES(
-	${PROJECT_HOME}/../../build/src/Debug
+	${PROJECT_HOME}/../../build_mockcpp/src/Debug
 	${PROJECT_HOME}/../../build_testngpp/src/Debug
-    ${PROJECT_HOME}/../../build/src
+    ${PROJECT_HOME}/../../build_mockcpp/src
     ${PROJECT_HOME}/../../build_testngpp/src)
 
 INCLUDE_DIRECTORIES(BEFORE 

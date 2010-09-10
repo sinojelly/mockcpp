@@ -42,7 +42,7 @@ public:
 
     std::string toString() const
     {
-      return std::string("follow(") + 
+      return std::string("check(") + 
              MOCKCPP_NS::toTypeAndValueString(predict) +
              std::string(")");
     }
