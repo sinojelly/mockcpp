@@ -1,0 +1,14 @@
+
+as a user:
+	sudo make install 
+	and then use /usr/local/include/mockcpp and /usr/local/lib/libmockcpp.a.
+	if the test framework you use is not testngpp, such as cpputest, gtest etc. , you should enter a build dir, and then run these commands:
+	cmake -DMOCKCPP_XUNIT=cpputest ../mockcpp/mockcpp
+	make
+	make install
+	if you want to specify the install dir, you should run cmake as this:
+	cmake -DCMAKE_INSTALL_PREFIX=/usr/local/somedir ../mockcpp/mockcpp 
+
+as a mockcpp maintainer:
+	make all
+	it will make mockcpp and it's tests, and then run the tests.(build.sh do the same thing, and much faster.) 
