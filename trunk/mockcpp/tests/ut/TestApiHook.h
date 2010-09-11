@@ -43,8 +43,8 @@ FIXTURE(ApiHook)
 	SETUP()
 	{
 		MOCKER(func)
-			.expects(once())
-			.with(any(), any())
+			.expects(once());
+//			.with(any(), any())
 //			.will(returnValue(ret));
 	}
 
