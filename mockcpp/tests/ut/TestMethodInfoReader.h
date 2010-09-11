@@ -17,6 +17,7 @@
 ***/
 
 #include <testcpp/testcpp.hpp>
+
 #include <mockcpp/Exception.h>
 #include <mockcpp/MethodInfoReader.h>
 
