@@ -43,9 +43,9 @@ FIXTURE(ApiHook)
 	SETUP()
 	{
 		MOCKER(func)
-			.expects(once());
-//			.with(any(), any())
-//			.will(returnValue(ret));
+			.expects(once())
+			.with(eq(a), eq(b))
+			.will(returnValue(ret));
 	}
 
 	TEARDOWN()
@@ -53,10 +53,7 @@ FIXTURE(ApiHook)
 		GlobalMockObject::verify();
 		GlobalMockObject::reset();
 	}
-	TEST(test)
-	{
-	}
-#if 0
+	
 	TEST(can mock C function)
 	{
 		ASSERT_EQ(ret, func(a, b));
@@ -78,5 +75,4 @@ FIXTURE(ApiHook)
 		ASSERT_EQ(ret, func(a, b));
 		ASSERT_EQ(20, func2(500));
 	}
-#endif
 };

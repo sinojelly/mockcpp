@@ -1,6 +1,7 @@
 
 #include <iostream>
 #include <typeinfo>
+#include <string.h>
 
 #include <mockcpp/mockcpp.h>
 
@@ -26,7 +27,9 @@ namespace
 ///////////////////////////////////////////////////////////////////////
 void** createVtbls(unsigned int numberOfVptr)
 {
-	return new void*[numberOfVptr * SLOTS_PER_VTBL];
+	void **p = new void*[numberOfVptr * SLOTS_PER_VTBL];
+	(void)memset(p, 0, sizeof(void *) * numberOfVptr * SLOTS_PER_VTBL);
+	return p;
 }
 
 void freeVtbls(void** vtbl, unsigned int numberOfVptr)

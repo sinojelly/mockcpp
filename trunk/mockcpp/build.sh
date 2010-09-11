@@ -2,7 +2,7 @@
 # build mockcpp and it's tests, and at last run all tests.
 
 function build() { 
-	mkdir $1 2>nul
+	mkdir $1 2>/dev/null
 	cd $1
 	cmake $2
 	make

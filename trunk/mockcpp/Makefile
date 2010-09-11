@@ -4,7 +4,7 @@ BUILD_TESTS_DIR    = ../../build_tests
 
 .PHONY : all mockcpp testngpp tests test install clean clean_mockcpp clean_testngpp clean_tests
 
-cmake_build = mkdir $(1) 2>nul ; echo "$(1) exists!" && cd $(1) && cmake $(2) && make
+cmake_build = mkdir $(1) 2>/dev/null ; echo "$(1) exists!" && cd $(1) && cmake $(2) && make
 
 all : test
 
@@ -24,12 +24,12 @@ test : tests
 	@cd $(BUILD_TESTS_DIR)/ut && ../../build_testngpp/src/runner/testngpp-runner $(shell echo *.so) -L"../../build_testngpp/src/listeners" -l"testngppstdoutlistener -c -f"
 
 clean_mockcpp :
-	@$(shell cd $(BUILD_MOCKCPP_DIR) && make clean) >nul
+	@$(shell cd $(BUILD_MOCKCPP_DIR) && make clean) >/dev/null
 
 clean_testngpp :
-	@$(shell cd $(BUILD_TESTNGPP_DIR) && make clean) >nul
+	@$(shell cd $(BUILD_TESTNGPP_DIR) && make clean) >/dev/null
 
 clean_tests :
-	@$(shell cd $(BUILD_TESTS_DIR) && make clean) >nul
+	@$(shell cd $(BUILD_TESTS_DIR) && make clean) >/dev/null
 
 clean : clean_mockcpp clean_testngpp clean_tests
