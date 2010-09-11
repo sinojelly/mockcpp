@@ -63,13 +63,14 @@ public:
                             , p01, p02, p03, p04, p05, p06
                             , p07, p08, p09, p10, p11, p12
                             , resultProvider);
+		return getResult(result, resultProvider);
         }
         catch(std::exception& ex)
         {
            MOCKCPP_REPORT_FAILURE(ex.what());
         }
-	extern const Any& result;
-	return getResult(result, resultProvider);
+//	extern const Any& result;
+//	return getResult(result, resultProvider);
     }
 
     virtual ~ChainableMockMethodBase() {}
