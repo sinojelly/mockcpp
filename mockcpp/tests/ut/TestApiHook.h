@@ -36,12 +36,15 @@ int func2(int a)
 
 FIXTURE(ApiHook)
 {
-	static const int a = 3;
-	static const int b = 5;
-	static const int ret = 10;
+	int a; //TODO: static const cause linux .so load failure.
+	int b;
+	int ret;
 
 	SETUP()
 	{
+		a = 3;
+		b = 5;
+		ret = 10;
 		MOCKER(func)
 			.expects(once())
 			.with(eq(a), eq(b))

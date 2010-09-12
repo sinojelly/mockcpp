@@ -69,8 +69,8 @@ public:
         {
            MOCKCPP_REPORT_FAILURE(ex.what());
         }
-//	extern const Any& result;
-//	return getResult(result, resultProvider);
+		const Any& dummyResult = Any();
+		return getResult(dummyResult, resultProvider);
     }
 
     virtual ~ChainableMockMethodBase() {}
