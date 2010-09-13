@@ -33,3 +33,10 @@ clean_tests :
 	@$(shell cd $(BUILD_TESTS_DIR) && make clean) >/dev/null
 
 clean : clean_mockcpp clean_testngpp clean_tests
+
+cmake_codeblocks = cd $(1) && cmake -G "CodeBlocks - Unix Makefiles" $(2)
+
+codeblocks :
+	@$(call cmake_codeblocks,$(BUILD_MOCKCPP_DIR), ../mockcpp/mockcpp)
+	@$(call cmake_codeblocks,$(BUILD_TESTNGPP_DIR), ../mockcpp/mockcpp/tests/3rdparty/testngpp)
+	@$(call cmake_codeblocks,$(BUILD_TESTS_DIR), ../mockcpp/mockcpp/tests)
