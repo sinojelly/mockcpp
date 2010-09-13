@@ -83,24 +83,33 @@ public:
    void testShouldBeAbleToStringnizeNullObjectAddr()
    {
       A* p = 0;	
-
+#ifdef _MSC_VER
+	  std::string expected = "(" + getDemangledName(typeid(A)) + " *)NULL";
+#else
       std::string expected = "(" + getDemangledName(typeid(A)) + "*)NULL";
+#endif
       TS_ASSERT_EQUALS(expected, toTypeAndValueString(p));
    }
 
    void testShouldBeAbleToStringnizeObjectAddr()
    {
       A* p = (A*)0x12ab;	
-
+#ifdef _MSC_VER
+	  std::string expected = "(" + getDemangledName(typeid(A)) + " *)0x000012ab";
+#else
       std::string expected = "(" + getDemangledName(typeid(A)) + "*)0x000012ab";
+#endif
       TS_ASSERT_EQUALS(expected, toTypeAndValueString(p));
    }
 
    void testShouldBeAbleToStringnizeConstObjectAddr()
    {
       const A* p = (const A*)0x12ab;	
-
+#ifdef _MSC_VER
+	  std::string expected = std::string("(") + getDemangledName(typeid(A)) + " const *)0x000012ab";
+#else
       std::string expected = std::string("(") + getDemangledName(typeid(A)) + " const*)0x000012ab";
+#endif
       TS_ASSERT_EQUALS(expected, toTypeAndValueString(p));
    }
 
@@ -115,7 +124,11 @@ public:
    {
       char* s = (char*)"abc";
       oss_t oss;
-      oss << "(char*)" << (void*)s ;
+#ifdef _MSC_VER
+      oss << "(char *)" << (void*)s ;
+#else
+	  oss << "(char*)" << (void*)s ;
+#endif
       TS_ASSERT_EQUALS(oss.str(), toTypeAndValueString(s));
    }
 
@@ -123,21 +136,33 @@ public:
    {
       const char* s = "abc";
       oss_t oss;
-      oss << "(char const*)" << (void*)s ;
+#ifdef _MSC_VER
+      oss << "(char const *)" << (void*)s ;
+#else
+	  oss << "(char const*)" << (void*)s ;
+#endif
       TS_ASSERT_EQUALS(oss.str(), toTypeAndValueString(s));
    }
 
    void testShouldBeAbleToStringnizeNullPChar()
    {
       char* s = 0;
-      std::string expected("(char*)NULL");
+#ifdef _MSC_VER
+      std::string expected("(char *)NULL");
+#else
+	  std::string expected("(char*)NULL");
+#endif
       TS_ASSERT_EQUALS(expected, toTypeAndValueString(s));
    }
 
    void testShouldBeAbleToStringnizeNullConstPChar()
    {
       const char* s = 0;
-      std::string expected("(char const*)NULL");
+#ifdef _MSC_VER
+      std::string expected("(char const *)NULL");
+#else
+	  std::string expected("(char const*)NULL");
+#endif
       TS_ASSERT_EQUALS(expected, toTypeAndValueString(s));
    }
 
@@ -172,7 +197,11 @@ public:
    void testShouldBeAbleToStringnizeVerySmallDouble()
    {
       double d = .0000000000000000000001;
-      std::string expected("(double)1e-22");
+#ifdef _MSC_VER
+      std::string expected("(double)1e-022");
+#else
+	  std::string expected("(double)1e-22");
+#endif
       TS_ASSERT_EQUALS(expected, toTypeAndValueString(d));
    }
 
@@ -214,7 +243,11 @@ public:
    void testShouldBeAbleToStringnizeVerySmallFloat()
    {
       float f = .0000000000000000000001;
-      std::string expected("(float)1e-22");
+#ifdef _MSC_VER
+      std::string expected("(float)1e-022");
+#else
+	  std::string expected("(float)1e-22");
+#endif
       TS_ASSERT_EQUALS(expected, toTypeAndValueString(f));
    }
 
