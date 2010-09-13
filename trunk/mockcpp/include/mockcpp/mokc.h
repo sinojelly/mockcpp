@@ -27,22 +27,13 @@
 #    define MOCKER(function) MOCKCPP_NS::GlobalMockObject::instance.method(#function)
 #  else
 #    include <mockcpp/CApiHookFunctor.h>
-#  if defined(_MSC_VER)
 #    include <boost/typeof/typeof.hpp>
 #    define MOCKER(function) \
          MOCKCPP_NS::GlobalMockObject:: \
              instance.method \
                  ( #function \
-                 , function \
-                 , CApiHookFunctor<BOOST_TYPEOF(function)>::hook)
-#  else
-#    define MOCKER(function) \
-         MOCKCPP_NS::GlobalMockObject:: \
-             instance.method \
-                 ( #function \
                  , (const void *)function \
-                 , (const void *)CApiHookFunctor<typeof(function)>::hook)
-#  endif
+                 , (const void *)CApiHookFunctor<BOOST_TYPEOF(function)>::hook)
 #  endif
 
 USING_MOCKCPP_NS
