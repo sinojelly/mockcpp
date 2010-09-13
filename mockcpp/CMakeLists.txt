@@ -19,3 +19,6 @@ IF(MOCKCPP_INSTALL_BOOST)
             PATTERN ".svn" EXCLUDE)
   ENDIF()
 ENDIF()
+
+SET(MOCKCPP_XUNIT "testngpp" CACHE STRING "Set to gtest/cpputest/cppunit to use other testframeworks.")
+
