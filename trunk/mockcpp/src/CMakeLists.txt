@@ -201,6 +201,7 @@ ELSEIF(${MOCKCPP_XUNIT} STREQUAL "CPPUNIT" OR ${MOCKCPP_XUNIT} STREQUAL "cppunit
    INCLUDE_DIRECTORIES(BEFORE ${MOCKCPP_XUNIT_HOME}/include)
    SET(MOCKCPP_SRCS ${MOCKCPP_SRCS} ports/failure/cppunit_report_failure.cpp)
 ELSE()
+   MESSAGE(STATUS "You haven't specified MOCKCPP_XUNIT to gtest/cpputest/cppunit, use default testngpp.")
    SET(MOCKCPP_SRCS ${MOCKCPP_SRCS} ports/failure/stdexcept_report_failure.cpp)
 ENDIF()
 
