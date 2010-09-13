@@ -39,7 +39,7 @@ Linux32CodeModifier codeModifier(&protectPageAllocator);
 
 /////////////////////////////////////////////////////////////////
 CApiHook::CApiHook(ApiHook::Address pfnOld, ApiHook::Address pfnNew)
-   : hooker(new Arch32ApiHook(&pageAllocator, &codeModifier))
+   : hooker(new Arch32ApiHook(&protectPageAllocator, &codeModifier))
 {
 	hooker->hook(pfnOld, pfnNew);
 }

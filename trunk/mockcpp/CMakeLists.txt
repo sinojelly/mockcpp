@@ -22,3 +22,4 @@ ENDIF()
 
 SET(MOCKCPP_XUNIT "testngpp" CACHE STRING "Set to gtest/cpputest/cppunit to use other testframeworks.")
 
+

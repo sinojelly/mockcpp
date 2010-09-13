@@ -15,5 +15,5 @@ build ../build_testngpp ../mockcpp/mockcpp/tests/3rdparty/testngpp
 build ../build_tests ../mockcpp/mockcpp/tests
 
 cd ut
-../../build_testngpp/src/runner/testngpp-runner $(ls *.so) -L"../../build_testngpp/src/listeners" -l"testngppstdoutlistener -c -f"
+../../build_testngpp/src/runner/testngpp-runner $(ls *.so) -L"../../build_testngpp/src/listeners" -l"testngppstdoutlistener -c -f" -s
 

@@ -22,7 +22,6 @@
 #include <string.h>
 #include <sys/mman.h>
 
-
 MOCKCPP_NS_START
 
 Linux32ProtectPageAllocator::Linux32ProtectPageAllocator(PageAllocator *pageAllocator)
