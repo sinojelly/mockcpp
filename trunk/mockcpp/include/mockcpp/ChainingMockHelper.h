@@ -1,5 +1,5 @@
 /***
-    mockcpp is a generic C/C++ mock framework.
+	mockcpp is a generic C/C++ mock framework.
     Copyright (C) <2009>  <Darwin Yuan: darwin.yuan@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
@@ -19,6 +19,7 @@
 #ifndef __MOCKCPP_CHAINING_MOCK_HELPER_H
 #define __MOCKCPP_CHAINING_MOCK_HELPER_H
 
+#include <boost/typeof/typeof.hpp>
 #include <mockcpp/mockcpp.h>
 #include <mockcpp/IsEqual.h>
 #include <mockcpp/IsNotEqual.h>
