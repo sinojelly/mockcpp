@@ -99,7 +99,7 @@ template <typename Predict>
 Constraint* check(Predict pred)
 {
 #ifdef _MSC_VER
-    typedef typename PredictTypeTraits<BOOST_TYPEOF(&Predict::operator())>::ParaType T; //GCC: error: ‘&’ cannot appear in a constant-expression
+    typedef typename PredictTypeTraits<BOOST_TYPEOF(&Predict::operator())>::ParaType T; //GCC: error: '&' cannot appear in a constant-expression
 #else
     typedef typename PredictTypeTraits<typeof(&Predict::operator())>::ParaType T;
 #endif
