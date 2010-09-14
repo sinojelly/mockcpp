@@ -21,6 +21,7 @@
 
 #ifdef __cplusplus
 #  include <mockcpp/ChainingMockHelper.h>
+#  include <mockcpp/ProcStub.h>
 
 #  if defined(MOCKCPP_USE_MOCKABLE) 
 #    include <mockcpp/Functor.h>
