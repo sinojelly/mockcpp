@@ -27,6 +27,56 @@ MOCKCPP_NS_START
 
 namespace {
 
+/*   |   frame pointer   |<-- ebp
+     |   local vars      |
+     |   parameters      |
+     |   ret addr        | // call foo(...)
+
+             |
+             V
+  |->|   frame pointer   |
+  |  |   local vars      |
+  |  |   parameters      |   
+  |  |   old addr        |   
+  |  |   ret addr        |   
+  |--| new frame pointer |
+     |-------------------| <- ebp
+     |   local vars      |
+     |                   | // leave
+     |                   | // ret
+
+    
+    push ebp
+    mov ebp, esp
+    mov eax, [new_addr]
+    mov ecx, [old_addr]     
+    push ecx
+    call eax
+    leave 
+    ret 
+
+    note: leave equals to 
+	mov  esp,ebp 
+	pop  ebp
+
+	hook function is:
+    hook(unsigned int old_addr, void* unused1, void* unused2, ...)
+*/
+
+const unsigned char thunkCodeTemplate[]  =  
+{ 
+	0x55,       // push ebp
+	0x8B, 0xEC, // mov ebp, esp
+	0xB8, 0x00, 0x00, 0x00, 0x00, // mov eax, [new_addr]
+	0xB9, 0x00, 0x00, 0x00, 0x00, // mov ecx, [old_addr]
+	0x51,       // push ecx
+	0xFF, 0xD0, // call eax
+	0x8B, 0xE5, // mov  esp,ebp 
+	0x5D,       // pop  ebp
+	0xC3        // ret
+};
+
+/*
 const unsigned char thunkCodeTemplate[]  =  
 { 
   0xB8, 0x00, 0x00, 0x00, 0x00, // mov eax, [new_addr]
@@ -40,6 +90,7 @@ const unsigned char thunkCodeTemplate[]  =
   0x53,       // push ebx
   0xC3        // ret
 };
+*/
 
 // E9 :  jmp near
 const unsigned char jmpCodeTemplate[]  =  
@@ -104,8 +155,8 @@ void Arch32ApiHookImpl::freeThunk()
 void Arch32ApiHookImpl::initThunk(ApiHook::Address pfnOld, ApiHook::Address pfnNew )
 {
 	memcpy( m_thunk, thunkCodeTemplate, sizeof( thunkCodeTemplate ) );  
-	*(unsigned long*)(m_thunk + 1) = (unsigned long)pfnNew;
-	*(unsigned long*)(m_thunk + 6) = (unsigned long)pfnOld;
+	*(unsigned long*)(m_thunk + 4) = (unsigned long)pfnNew;
+	*(unsigned long*)(m_thunk + 9) = (unsigned long)pfnOld;
 }
 
 /////////////////////////////////////////////////////////////////

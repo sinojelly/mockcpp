@@ -146,6 +146,8 @@ public:
       TS_ASSERT(typeid(pInterface) == typeid(Interface*));
    }
 
+//#ifndef _MSC_VER , testcpp not support #if 
+   //TODO: VC does not support
    // dynamic_cast
    void testShouldSupportDownCast1()
    {
@@ -157,7 +159,10 @@ public:
       TS_ASSERT(p != 0);
       TS_ASSERT_EQUALS(10, p->base00());
    }
+//#endif
 
+//#ifndef _MSC_VER , testcpp not support #if 
+   //TODO: VC does not support
    // dynamic_cast to second
    void testShouldSupportDownCast2()
    {
@@ -174,6 +179,7 @@ public:
 
       TS_ASSERT_EQUALS(10, p->base12());
    }
+//#endif
 
    // delete
    void testShouldSupportDeleteAMockObjectWhoMocksASimpleInterface()

@@ -56,9 +56,12 @@ public:
       TS_ASSERT_EQUALS(sizeof(Derived5)/sizeof(void*), getNumberOfVtbls<Derived5>());
    }
 
+//#ifndef _MSC_VER , testcpp not support #if 
+   //TODO: VC does not support
    struct Derived6 : virtual public Derived2, virtual public Derived0 {};
    void testShouldBeThrowExcpetion_VirtualInheritance()
    {
       TS_ASSERT_THROWS(getNumberOfVtbls<Derived6>(), MOCKCPP_NS::Exception);
    }
+//#endif
 };
