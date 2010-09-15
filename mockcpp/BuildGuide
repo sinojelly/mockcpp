@@ -1,5 +1,8 @@
 
-as a user:
+as a user
+=========
+	Linux
+	------
 	sudo make install 
 	and then use /usr/local/include/mockcpp and /usr/local/lib/libmockcpp.a.
 	if the test framework you use is not testngpp, such as cpputest, gtest etc. , you should enter a build dir, and then run these commands:
@@ -8,7 +11,22 @@ as a user:
 	make install
 	if you want to specify the install dir, you should run cmake as this:
 	cmake -DCMAKE_INSTALL_PREFIX=/usr/local/somedir ../mockcpp/mockcpp 
+	
+	Windows
+	-------
+	Run cmake-gui.exe, choose the mockcpp root dir as source dir, and any other (nonexist) dir as binaries dir.
+	Then hit configure button, it will show you some variables that should be set. if you do not care, let it be default, hit configure again.
+	And then hit the generate button.
 
-as a mockcpp maintainer:
+as a mockcpp maintainer
+=======================
+	Linux
+	------
 	make all
 	it will make mockcpp and it's tests, and then run the tests.(build.sh do the same thing, and much faster.) 
+	
+	Windows
+	-------
+	run the PowerShell script build.ps1 .
+	maybe you should modify some variables defined in the script first, such as the path of vcbuild/cmake, etc.
+	
