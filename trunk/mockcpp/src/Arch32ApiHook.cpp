@@ -76,22 +76,6 @@ const unsigned char thunkCodeTemplate[]  =
 	0xC3        // ret
 };
 
-/*
-const unsigned char thunkCodeTemplate[]  =  
-{ 
-  0xB8, 0x00, 0x00, 0x00, 0x00, // mov eax, [new_addr]
-  0xB9, 0x00, 0x00, 0x00, 0x00, // mov ecx, [old_addr]
-  0x5B,       // pop  ebx
-  0x51,       // push ecx
-  0x53,       // push ebx
-  0xFF, 0xD0, // call eax
-  0x5B,       // pop  ebx
-  0x59,       // pop  ecx
-  0x53,       // push ebx
-  0xC3        // ret
-};
-*/
-
 // E9 :  jmp near
 const unsigned char jmpCodeTemplate[]  =  
 { 
