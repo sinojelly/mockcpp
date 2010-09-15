@@ -38,7 +38,9 @@ bool Linux32CodeModifier::modify(void *dest, void *src, size_t size)
 		return false;
 	}
 
-	(void)memcpy(dest, src, size);
+	//(void)memcpy(dest, src, size); // something wrong on linux: after memcpy(or 5 single byte copy),  the 4 bytes following jmp, src is 0x07c951b0, but dest is 0x07b851b0. so use unsigned int *, it works ok.
+	*((unsigned char *)dest) = *((unsigned char *)src);
+	*((unsigned int *)((unsigned int)dest + 1)) = *((unsigned int *)((unsigned int)src + 1));
 
 	return true;
 }
