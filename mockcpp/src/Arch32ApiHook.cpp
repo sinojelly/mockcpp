@@ -27,23 +27,26 @@ MOCKCPP_NS_START
 
 namespace {
 
-/*   |   frame pointer   |<-- ebp
-     |   local vars      |
-     |   parameters      |
-     |   ret addr        | // call foo(...)
+/*   
+		|   frame pointer   |<-- ebp
+		|   local vars      |
+		|   parameters      | para1, para2, ...
+		|   ret addr		| call func_to_be_mocked(para1,para2, ...)
 
-             |
-             V
-  |->|   frame pointer   |
-  |  |   local vars      |
-  |  |   parameters      |   
-  |  |   old addr        |   
-  |  |   ret addr        |   
-  |--| new frame pointer |
-     |-------------------| <- ebp
-     |   local vars      |
-     |                   | // leave
-     |                   | // ret
+					|         func_to_be_mocked: jmp to thunk   
+					V
+	 |->|   frame pointer   | 
+	 |  |   local vars      |
+	 |  |   parameters      |   
+	 |  |   ret addr        |   
+	 |--|   frame pointer   | thunk begin
+	    |   old addr        |   
+		|   ret addr        | call hook(old_addr, unused, unused, para1, para2, ...)
+		| new frame pointer | hook begin
+		|-------------------| <- ebp
+		|   local vars      |
+		|					| 
+		|					| 
 
     
     push ebp
@@ -71,8 +74,7 @@ const unsigned char thunkCodeTemplate[]  =
 	0xB9, 0x00, 0x00, 0x00, 0x00, // mov ecx, [old_addr]
 	0x51,       // push ecx
 	0xFF, 0xD0, // call eax
-	0x8B, 0xE5, // mov  esp,ebp 
-	0x5D,       // pop  ebp
+	0xC9,       // leave
 	0xC3        // ret
 };
 
