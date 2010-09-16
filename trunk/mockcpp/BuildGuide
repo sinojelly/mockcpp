@@ -15,9 +15,13 @@ as a user
 	Windows
 	-------
 	Run cmake-gui.exe, choose the mockcpp root dir as source dir, and any other (nonexist) dir as binaries dir.
-	Then hit configure button, it will show you some variables that should be set. if you do not care, let it be default, hit configure again.
+	Then hit configure button, it will show you some variables that should be set, you can modify them or let it be default, hit configure again.
 	And then hit the generate button.
+	Note: 
+	if you want to use mockcpp with other test framework, such as gtest, cpputest, etc., 
+	you must modify MOCKCPP_XUNIT's value, hit configure, and then specify the test framework home path, hit configure again, at last hit the generate button.
 
+	
 as a mockcpp maintainer
 =======================
 	Linux
