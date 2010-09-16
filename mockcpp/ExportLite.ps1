@@ -10,9 +10,6 @@ function export_subdir($subdir)
 	svn export $subdir $dest_dir\$subdir --force	
 }
 
-#if (!(test-path $dest_dir\include)) { mkdir $dest_dir\include }
-#svn export include $dest_dir\include --force
-
 export_subdir include
 export_subdir src
 export_subdir tests
