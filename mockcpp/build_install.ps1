@@ -4,7 +4,7 @@
 # Build mockcpp and it's tests, and at last run all tests.
 
 # You can change this testngpp install dir by yourself, it must be an absolute path.
-$TESTNGPP_INSTALL_DIR="D:\mockcpp_installed"
+$INSTALL_DIR="D:\mockcpp_installed"
 
 # add vcbuild path  and cmake path
 # It's better to add to your computer's path environment variable, than to modify $env:path below.
@@ -20,7 +20,7 @@ $env:VCBUILD_DEFAULT_CFG="Debug|Win32"
 function build($build_dir, $src_dir) { 
 	if (!(test-path $build_dir)) { mkdir $build_dir }
 	cd $build_dir
-	Invoke-Expression "cmake -DCMAKE_INSTALL_PREFIX=$TESTNGPP_INSTALL_DIR $src_dir $VC_VER"
+	Invoke-Expression "cmake -DCMAKE_INSTALL_PREFIX=$INSTALL_DIR $src_dir $VC_VER"
 	ls *.sln -name | vcbuild
 	vcbuild INSTALL.vcproj
 }
