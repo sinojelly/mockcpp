@@ -23,6 +23,15 @@
 #include <mockcpp/CodeModifier.h>
 #include <mockcpp/Arch32ApiHook.h>
 
+#ifdef _MSC_VER
+#include <mockcpp/Win32PageAllocator.h>
+#include <mockcpp/Win32ProtectPageAllocator.h>
+#else
+#include <mockcpp/Linux32PageAllocator.h>
+#include <mockcpp/Linux32ProtectPageAllocator.h>
+#endif
+
+
 MOCKCPP_NS_START
 
 namespace {
@@ -84,7 +93,16 @@ const unsigned char jmpCodeTemplate[]  =
 	0xE9, 0x00, 0x00, 0x00, 0x00  // jmp thunk
 };
 
-BlockAllocator *thunkAllocator = 0;
+#ifdef _MSC_VER
+Win32PageAllocator pageAllocator;
+Win32ProtectPageAllocator protectedPageAllocator(&pageAllocator);
+#else
+Linux32PageAllocator pageAllocator;
+Linux32ProtectPageAllocator protectedPageAllocator(&pageAllocator);
+#endif
+
+// TODO: remove the preprocess macro;  support AllocatorContainer.
+BlockAllocator thunkAllocator(sizeof( thunkCodeTemplate ), &protectedPageAllocator);
 
 }
 
@@ -93,7 +111,7 @@ struct Arch32ApiHookImpl
 {
 	void hook(ApiHook::Address pfnOld, ApiHook::Address pfnNew );
 
-	Arch32ApiHookImpl(PageAllocator *pageAllocator, CodeModifier *codeModifier);
+	Arch32ApiHookImpl(CodeModifier *codeModifier);
 	~Arch32ApiHookImpl();
 
 private:
@@ -115,26 +133,26 @@ private:
 };
 
 /////////////////////////////////////////////////////////////////
-Arch32ApiHookImpl::Arch32ApiHookImpl(PageAllocator *pageAllocator, CodeModifier *codeModifier)
+Arch32ApiHookImpl::Arch32ApiHookImpl(CodeModifier *codeModifier)
 	: modifier(codeModifier)
 {
-	if (0 == thunkAllocator)
-	{
-		thunkAllocator = new BlockAllocator(sizeof( thunkCodeTemplate ), pageAllocator);
-	}
+	//if (0 == thunkAllocator) // can not find a proper way to delete it.
+	//{
+	//	thunkAllocator = new BlockAllocator(sizeof( thunkCodeTemplate ), pageAllocator);
+	//}
 }
 
 /////////////////////////////////////////////////////////////////
 bool Arch32ApiHookImpl::allocThunk()
 {
-	m_thunk = (char *)thunkAllocator->alloc(sizeof( thunkCodeTemplate ));
+	m_thunk = (char *)thunkAllocator.alloc(sizeof( thunkCodeTemplate ));
 	return m_thunk != 0;
 }
 
 /////////////////////////////////////////////////////////////////
 void Arch32ApiHookImpl::freeThunk()
 {
-	thunkAllocator->free(m_thunk);
+	thunkAllocator.free(m_thunk);
 }
 
 /////////////////////////////////////////////////////////////////
@@ -198,8 +216,8 @@ Arch32ApiHookImpl::~Arch32ApiHookImpl()
 }
 
 /////////////////////////////////////////////////////////////////
-Arch32ApiHook::Arch32ApiHook(PageAllocator *pageAllocator, CodeModifier *codeModifier)
-	: This(new Arch32ApiHookImpl(pageAllocator, codeModifier))
+Arch32ApiHook::Arch32ApiHook(CodeModifier *codeModifier)
+	: This(new Arch32ApiHookImpl(codeModifier))
 {
 }
 
@@ -216,6 +234,7 @@ void Arch32ApiHook::hook(ApiHook::Address pfnOld, ApiHook::Address pfnNew )
 }
 
 /////////////////////////////////////////////////////////////////
+
 
 MOCKCPP_NS_END
 

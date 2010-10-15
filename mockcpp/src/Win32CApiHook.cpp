@@ -22,8 +22,8 @@
 #include <windows.h>
 #include <mockcpp/CApiHook.h>
 #include <mockcpp/Asserter.h>
-#include <mockcpp/Win32PageAllocator.h>
-#include <mockcpp/Win32ProtectPageAllocator.h>
+//#include <mockcpp/Win32PageAllocator.h>
+//#include <mockcpp/Win32ProtectPageAllocator.h>
 #include <mockcpp/BlockAllocator.h>
 #include <mockcpp/Win32CodeModifier.h>
 #include <mockcpp/Arch32ApiHook.h>
@@ -32,9 +32,6 @@ MOCKCPP_NS_START
 
 namespace {
 
-Win32PageAllocator pageAllocator;
-Win32ProtectPageAllocator protectPageAllocator(&pageAllocator);
-
 Win32CodeModifier codeModifier;
 
 }
@@ -42,7 +39,7 @@ Win32CodeModifier codeModifier;
 
 /////////////////////////////////////////////////////////////////
 CApiHook::CApiHook(ApiHook::Address pfnOld, ApiHook::Address pfnNew)
-   : hooker(new Arch32ApiHook(&pageAllocator, &codeModifier))
+   : hooker(new Arch32ApiHook(&codeModifier))
 {
 	hooker->hook(pfnOld, pfnNew);
 }
