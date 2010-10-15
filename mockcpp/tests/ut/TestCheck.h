@@ -140,3 +140,67 @@ FIXTURE(Check)
 		ASSERT_EQ(10, input.a);
 	}
 };
+
+
+struct Interface0 
+{
+    virtual void method00() = 0;
+    virtual void method01() = 0;
+
+    virtual ~Interface0(){}
+};
+
+struct Interface1 
+{
+    virtual void method10() = 0;
+    virtual void method11() = 0;
+
+    virtual ~Interface1(){}
+};
+
+struct Interface2 : public Interface0, public Interface1
+{
+    virtual void method20();
+    virtual void method21();
+    virtual int method22(int a);
+
+    virtual ~Interface2(){}
+};
+
+FIXTURE(Interface_Method_index)
+{
+    TEST(aaaa)
+    {
+        typedef void (Interface1::*method_t1)();
+        std::pair<unsigned int, unsigned int> indices;
+
+        indices = getIndicesOfMethod<Interface1, void ()>(&Interface1::method10);
+        std::cout << "Interface1::method10 :  " << indices.first << "  "<< indices.second << std::endl; // 0  0
+
+		indices = getIndicesOfMethod<Interface1, method_t1>(&Interface1::method11);
+        std::cout << "Interface1::method11 :  " << indices.first << "  "<< indices.second << std::endl; // 0  1
+		
+        typedef void (Interface2::*method_t2)();
+        indices = getIndicesOfMethod<Interface2, method_t2>(&Interface2::method00);
+        std::cout << "Interface2::method00 :  " << indices.first << "  "<< indices.second << std::endl; // 0  0
+
+        indices = getIndicesOfMethod<Interface2, method_t2>(&Interface2::method01);
+        std::cout << "Interface2::method01 :  " << indices.first << "  "<< indices.second << std::endl; // 0  1
+
+        indices = getIndicesOfMethod<Interface2, method_t2>(&Interface2::method10);
+        std::cout << "Interface2::method10 :  " << indices.first << "  "<< indices.second << std::endl; // 1  0
+		
+        indices = getIndicesOfMethod<Interface2, method_t2>(&Interface2::method11);
+        std::cout << "Interface2::method11 :  " << indices.first << "  "<< indices.second << std::endl; // 1  1
+		
+        indices = getIndicesOfMethod<Interface2, method_t2>(&Interface2::method20);
+        std::cout << "Interface2::method20 :  " << indices.first << "  "<< indices.second << std::endl; // 0  3
+		
+        indices = getIndicesOfMethod<Interface2, method_t2>(&Interface2::method21);
+        std::cout << "Interface2::method21 :  " << indices.first << "  "<< indices.second << std::endl; // 0  4
+
+        typedef int (Interface2::*method_t21)(int);
+        indices = getIndicesOfMethod<Interface2, method_t21>(&Interface2::method22);
+        std::cout << "Interface2::method22 :  " << indices.first << "  "<< indices.second << std::endl; // 0  5
+    }
+};

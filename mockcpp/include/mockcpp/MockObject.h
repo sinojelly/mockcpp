@@ -101,8 +101,16 @@ struct MockObject : public MockObjectBase
    
    void verify()
    {
-	  MockObjectBase::verify();
-	  reset();
+      try
+      {
+	      MockObjectBase::verify();
+	      reset();
+      }
+	  catch(...)
+	  {
+	      reset();
+		  throw;
+	  }
    }
 
    void reset()
