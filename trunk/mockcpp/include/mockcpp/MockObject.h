@@ -98,6 +98,12 @@ struct MockObject : public MockObjectBase
    {
       expectsKeepAlive();
    }
+   
+   void verify()
+   {
+	  MockObjectBase::verify();
+	  reset();
+   }
 
    void reset()
    {
