@@ -25,14 +25,13 @@
 
 MOCKCPP_NS_START
 
-struct MemAllocator;
 struct CodeModifier;
 
 struct Arch32ApiHookImpl;
 
 struct Arch32ApiHook : public ApiHook
 {
-	Arch32ApiHook(PageAllocator *pageAllocator, CodeModifier *codeModifier);
+	Arch32ApiHook(CodeModifier *codeModifier);
 	~Arch32ApiHook();
 
 	void hook(ApiHook::Address pfnOld, ApiHook::Address pfnNew);
