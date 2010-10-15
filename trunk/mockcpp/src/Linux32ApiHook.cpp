@@ -19,8 +19,8 @@
 
 #include <mockcpp/CApiHook.h>
 #include <mockcpp/Asserter.h>
-//#include <mockcpp/Linux32PageAllocator.h>
-//#include <mockcpp/Linux32ProtectPageAllocator.h>
+#include <mockcpp/Linux32PageAllocator.h>
+#include <mockcpp/Linux32ProtectPageAllocator.h>
 #include <mockcpp/Linux32CodeModifier.h>
 #include <mockcpp/BlockAllocator.h>
 #include <mockcpp/Arch32ApiHook.h>
@@ -29,6 +29,9 @@ MOCKCPP_NS_START
 
 namespace {
 
+Linux32PageAllocator pageAllocator;
+Linux32ProtectPageAllocator protectPageAllocator(&pageAllocator);
+
 Linux32CodeModifier codeModifier(&protectPageAllocator);
 
 }
@@ -36,7 +39,7 @@ Linux32CodeModifier codeModifier(&protectPageAllocator);
 
 /////////////////////////////////////////////////////////////////
 CApiHook::CApiHook(ApiHook::Address pfnOld, ApiHook::Address pfnNew)
-   : hooker(new Arch32ApiHook(&codeModifier))
+   : hooker(new Arch32ApiHook(&protectPageAllocator, &codeModifier))
 {
 	hooker->hook(pfnOld, pfnNew);
 }
