@@ -170,5 +170,11 @@ void BlockAllocator::free(void* ptr)
     headOfFreeList = (Block *)ptr;
 }
 
+bool BlockAllocator::freeable(void* ptr)
+{
+    return !isBadBlock(ptr);
+}
+
+
 MOCKCPP_NS_END
 
