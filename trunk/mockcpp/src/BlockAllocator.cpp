@@ -172,6 +172,11 @@ void BlockAllocator::free(void* ptr)
 
 bool BlockAllocator::freeable(void* ptr)
 {
+    if (0 == ptr)
+    {
+        return true;
+    }
+	
     return !isBadBlock(ptr);
 }
 

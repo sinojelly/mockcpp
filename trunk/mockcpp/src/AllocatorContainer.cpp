@@ -17,6 +17,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
+#include <stdlib.h>
+#include <new>
+
 #include <mockcpp/AllocatorContainer.h>
 #include <mockcpp/BlockAllocator.h>
 
@@ -26,15 +29,14 @@ MOCKCPP_NS_START
 /////////////////////////////////////////////////////////////////
 void AllocatorContainer::free(void* ptr)
 {
-    std::list<BlockAllocator*>::iterator it;
-
-    for (it = allocators.begin(); it != allocators.end(); ++it)
+    ALLOCATOR_NODE *p;
+    APR_RING_FOREACH(p, allocators, ALLOCATOR_NODE, link)
     {
-        if ((*it)->freeable(ptr))
+        if (p->allocator->freeable(ptr))
         {
-           (*it)->free(ptr);
-           return;
-        }
+            p->allocator->free(ptr);
+            return;
+        }    
     }
 }
 
@@ -46,17 +48,16 @@ void *AllocatorContainer::alloc(size_t size)
         return 0;
     }
     
-    void *temp = 0;
-    std::list<BlockAllocator*>::iterator it;
-
-    for (it = allocators.begin(); it != allocators.end(); ++it)
+    void *temp = 0; 
+    ALLOCATOR_NODE *p;
+    APR_RING_FOREACH(p, allocators, ALLOCATOR_NODE, link)
     {
-        temp = (*it)->alloc(size);
+        temp = p->allocator->alloc(size);
         if (temp != 0)
         {
             return temp;
-        }
-    }    
+        }    
+    }
 
     BlockAllocator* allocator = addAllocator();
     
@@ -70,8 +71,11 @@ BlockAllocator* AllocatorContainer::addAllocator()
 
     // use placement new to avoid mem_checker failure.
     BlockAllocator *tempAllocator = new (temp)BlockAllocator(blockSize, pageAllocator);
-        
-    allocators.push_back(tempAllocator);
+
+    ALLOCATOR_NODE *p = (ALLOCATOR_NODE *)malloc(sizeof(ALLOCATOR_NODE));
+    p->allocator = tempAllocator;
+    
+    APR_RING_INSERT_TAIL(allocators, p, ALLOCATOR_NODE, link);
 
     return tempAllocator;
 }
@@ -79,10 +83,13 @@ BlockAllocator* AllocatorContainer::addAllocator()
 /////////////////////////////////////////////////////////////////
 void AllocatorContainer::initialize(size_t _blockSize, PageAllocator *_pageAllocator)
 {
-    if (allocators.size() > 0)
+    if (allocators != 0)
     {
         return;
     }
+
+    allocators = (ALLOCATOR_NODES *)malloc(sizeof(ALLOCATOR_NODES));
+    APR_RING_INIT(allocators, ALLOCATOR_NODE, link);
 
     blockSize = _blockSize;
     pageAllocator = _pageAllocator;
@@ -93,15 +100,17 @@ void AllocatorContainer::initialize(size_t _blockSize, PageAllocator *_pageAlloc
 /////////////////////////////////////////////////////////////////
 AllocatorContainer::~AllocatorContainer()
 {
-    std::list<BlockAllocator*>::iterator it;
+    ALLOCATOR_NODE *p;
+	while (!APR_RING_EMPTY(allocators, ALLOCATOR_NODE, link))
+	{
+		p = APR_RING_FIRST(allocators);
+		APR_RING_REMOVE(p, link);
+        p->allocator->~BlockAllocator();
+        ::free(p->allocator); 
+        ::free(p); 
+	}
 
-    for (it = allocators.begin(); it != allocators.end(); ++it)
-    {
-        (*it)->~BlockAllocator();
-        ::free(*it);
-    }
-
-    allocators.clear();
+	free(allocators);
 }
 
 /////////////////////////////////////////////////////////////////
