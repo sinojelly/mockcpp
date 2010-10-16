@@ -20,10 +20,11 @@
 #ifndef __MOCKCPP_ALLOCATORCONTAINER_H__
 #define __MOCKCPP_ALLOCATORCONTAINER_H__
 
-#include <list>
-
 #include <mockcpp/MemAllocator.h>
 
+// if use vector or list, mem checker will detect a memory leak after a testcase run finished, 
+// so use apr_ring, it use malloc, not new, mem check will not report failures.
+#include <mockcpp/apr_ring.h>
 
 MOCKCPP_NS_START
 
@@ -42,12 +43,21 @@ struct AllocatorContainer : public MemAllocator
     void free(void* ptr);
 
 private:
-    BlockAllocator* addAllocator();    
+    BlockAllocator* addAllocator();  
+
+
+private:
+	struct ALLOCATOR_NODE
+	{
+		APR_RING_ENTRY(ALLOCATOR_NODE) link;
+		BlockAllocator* allocator;
+	};
+	APR_RING_HEAD(ALLOCATOR_NODES, ALLOCATOR_NODE);
+	ALLOCATOR_NODES *allocators;
 
 private:
     size_t blockSize;
     PageAllocator *pageAllocator;
-    std::list<BlockAllocator*> allocators; 
 };
 
 
