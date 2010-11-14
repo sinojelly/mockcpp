@@ -35,17 +35,25 @@ SET(UT_CASES
   TestIsStringContains.h
   TestIsStringEndWith.h
   TestIsStringStartWith.h
-  TestMethodInfoReader.h
   TestMockObject.h
   TestMockObject2.h
   TestReturnObjectList.h
   TestStringConstraint.h
   TestStubContainter.h
-  TestVirtualTable.h
   TestCheck.h
   TestBlockAllocator.h
   TestApiHook.h
+  TestStaticMethodMocker.h
+  TestNonvirtualMethodMocker.h
 )
+
+IF(UNIX)
+  SET(UT_CASES
+  ${UT_CASES}
+  TestMethodInfoReader.h
+  TestVirtualTable.h
+  )
+ENDIF(UNIX)
 
 LINK_DIRECTORIES(
 	${PROJECT_HOME}/../../build_mockcpp/src/Debug
