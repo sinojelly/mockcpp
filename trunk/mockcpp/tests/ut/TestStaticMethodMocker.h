@@ -24,7 +24,7 @@ USING_MOCKCPP_NS
 
 FIXTURE(TestStaticMemberMocker, mock static member function)
 {
-    struct UTC
+    struct CUT
     {
         static int func()
         {
@@ -34,9 +34,9 @@ FIXTURE(TestStaticMemberMocker, mock static member function)
 
     TEST(static member function mocker test)
     {
-        MOCKER(UTC::func)
+        MOCKER(CUT::func)
             .stubs()
             .will(returnValue(100));
-        ASSERT_EQ(100, UTC::func());
+        ASSERT_EQ(100, CUT::func());
     }
 };
