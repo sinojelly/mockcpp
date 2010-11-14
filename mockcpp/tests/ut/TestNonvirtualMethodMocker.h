@@ -32,7 +32,7 @@ USING_MOCKCPP_NS
 
 FIXTURE(TestNonvirtualMemberMocker, mock nonvirtual nonstatic member method)
 {
-    struct UTC
+    struct CUT
     {
         int normal_method() //__cdecl is optional, because it has no param
         {
@@ -58,35 +58,35 @@ FIXTURE(TestNonvirtualMemberMocker, mock nonvirtual nonstatic member method)
     TEST(normal member method with no param mocked as global function)
     {
         GlobalMockObject::instance.method
-            ( "UTC::normal_method"
-            , getAddrOfMethod(&UTC::normal_method)
-            , (const void *)CApiHookFunctor<BOOST_TYPEOF(UTC::static_method)>::hook)
+            ( "CUT::normal_method"
+            , getAddrOfMethod(&CUT::normal_method)
+            , (const void *)CApiHookFunctor<BOOST_TYPEOF(CUT::static_method)>::hook)
             .stubs()
             .will(returnValue(100));
-        UTC utc;
-        ASSERT_EQ(100, utc.normal_method());
+        CUT cut;
+        ASSERT_EQ(100, cut.normal_method());
     }
 
     TEST(normal member method with one param mocked as global function)
     {
         // the param number of hook function is one more than the method mocked, 
-        // because when call utc.normal_method_1(2) occur, the this pointer is the first argument
+        // because when call CUT.normal_method_1(2) occur, the this pointer is the first argument
         GlobalMockObject::instance.method
-            ( "UTC::normal_method_1"
-            , getAddrOfMethod(&UTC::normal_method_1)
-            , (const void *)CApiHookFunctor<BOOST_TYPEOF(UTC::static_method_2)>::hook) 
+            ( "CUT::normal_method_1"
+            , getAddrOfMethod(&CUT::normal_method_1)
+            , (const void *)CApiHookFunctor<BOOST_TYPEOF(CUT::static_method_2)>::hook) 
             .stubs()
             .with(any(), eq(2))
             .will(returnValue(101));
-        UTC utc;
-        ASSERT_EQ(101, utc.normal_method_1(2));
+        CUT cut;
+        ASSERT_EQ(101, cut.normal_method_1(2));
     }
 
     TEST(static member method mocked as global function)
     {
-        MOCKER(UTC::static_method)
+        MOCKER(CUT::static_method)
             .stubs()
             .will(returnValue(100));
-        ASSERT_EQ(100, UTC::static_method());
+        ASSERT_EQ(100, CUT::static_method());
     }
 };
