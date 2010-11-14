@@ -2,7 +2,7 @@
 
 $env:path=$env:path+";D:\Tools\CMD\SubversionClient"
 
-$dest_dir="D:\mockcpp_exported_new"
+$dest_dir="D:\tools_release\mockcpp_exported"
 
 function export_subdir($subdir) 
 {
