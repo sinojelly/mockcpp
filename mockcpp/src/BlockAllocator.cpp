@@ -89,14 +89,15 @@ BlockAllocator::~BlockAllocator()
 {
     if (0 != buffer)
     {
-		if (numOfBlocks > 0)
-		{
-			::free(buffer);
-		}
-		else if (pageAllocator != 0)
+		if (pageAllocator != 0)
 		{
 			pageAllocator->free(buffer);
 		}
+        else 
+		{
+			::free(buffer);
+		}
+        
         buffer = 0;
     }
     headOfFreeList = 0;

@@ -30,19 +30,10 @@
 
 MOCKCPP_NS_START
 
-namespace {
-
-Win32PageAllocator pageAllocator;
-Win32ProtectPageAllocator protectPageAllocator(&pageAllocator);
-
-Win32CodeModifier codeModifier;
-
-}
-
 
 /////////////////////////////////////////////////////////////////
 CApiHook::CApiHook(ApiHook::Address pfnOld, ApiHook::Address pfnNew)
-   : hooker(new Arch32ApiHook(&protectPageAllocator, &codeModifier))
+   : hooker(new Arch32ApiHook(new Win32ProtectPageAllocator(new Win32PageAllocator), new Win32CodeModifier))
 {
 	hooker->hook(pfnOld, pfnNew);
 }

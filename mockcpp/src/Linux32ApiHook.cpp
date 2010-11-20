@@ -27,19 +27,10 @@
 
 MOCKCPP_NS_START
 
-namespace {
-
-Linux32PageAllocator pageAllocator;
-Linux32ProtectPageAllocator protectPageAllocator(&pageAllocator);
-
-Linux32CodeModifier codeModifier(&protectPageAllocator);
-
-}
-
 
 /////////////////////////////////////////////////////////////////
 CApiHook::CApiHook(ApiHook::Address pfnOld, ApiHook::Address pfnNew)
-   : hooker(new Arch32ApiHook(&protectPageAllocator, &codeModifier))
+   : allocator(new Linux32ProtectPageAllocator(new Linux32PageAllocator)), hooker(new Arch32ApiHook(allocator, new Linux32CodeModifier(allocator)))
 {
 	hooker->hook(pfnOld, pfnNew);
 }

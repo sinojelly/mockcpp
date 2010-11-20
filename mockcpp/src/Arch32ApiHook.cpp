@@ -131,6 +131,7 @@ private:
 	char m_byOld[sizeof(jmpCodeTemplate)];  //save old func content which will be covered with jmp to thunk code, so as to recover it when unhook.
 	char *m_thunk; //thunk code, for jumping to mock func(CApiHookFunctor<BOOST_TYPEOF(function)>::hook) and pass old func addr as parameter.
 
+    PageAllocator *allocator;
 	CodeModifier *modifier;
 
 	bool changeCode(char* code);
@@ -144,7 +145,7 @@ private:
 
 /////////////////////////////////////////////////////////////////
 Arch32ApiHookImpl::Arch32ApiHookImpl(PageAllocator *pageAllocator, CodeModifier *codeModifier)
-	: modifier(codeModifier)
+	: allocator(pageAllocator), modifier(codeModifier)
 {
     ThunkAllocator::initialize(pageAllocator);
 }
@@ -220,6 +221,9 @@ Arch32ApiHookImpl::~Arch32ApiHookImpl()
 {
 	stopHook();
 	freeThunk(); // TODO: it must call dtor before destroying the members.
+
+	delete allocator;
+    delete modifier;
 }
 
 /////////////////////////////////////////////////////////////////

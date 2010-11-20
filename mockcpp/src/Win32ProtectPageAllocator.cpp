@@ -29,6 +29,11 @@ Win32ProtectPageAllocator::Win32ProtectPageAllocator(PageAllocator *pageAllocato
 {
 }
 
+Win32ProtectPageAllocator::~Win32ProtectPageAllocator()
+{
+    delete allocator;
+}
+
 void* Win32ProtectPageAllocator::alloc(size_t size)
 {
 
