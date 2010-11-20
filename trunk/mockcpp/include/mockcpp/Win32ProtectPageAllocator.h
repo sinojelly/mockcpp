@@ -27,6 +27,7 @@ MOCKCPP_NS_START
 struct Win32ProtectPageAllocator : public PageAllocator
 {
 	Win32ProtectPageAllocator(PageAllocator *pageAllocator);
+    ~Win32ProtectPageAllocator();
 	void* alloc(size_t size = 0);
 	void free(void* ptr);
 	size_t pageSize();
