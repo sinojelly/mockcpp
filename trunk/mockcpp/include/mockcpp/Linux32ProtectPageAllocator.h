@@ -28,6 +28,7 @@ MOCKCPP_NS_START
 struct Linux32ProtectPageAllocator : public PageAllocator
 {
 	Linux32ProtectPageAllocator(PageAllocator *pageAllocator);
+	~Linux32ProtectPageAllocator();
 	void* alloc(size_t size);
 	void free(void* ptr);
 	size_t pageSize();
