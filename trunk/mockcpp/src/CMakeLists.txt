@@ -66,6 +66,12 @@ IF(MSVC)
     SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /vmg")
 ENDIF(MSVC)
 
+IF(UNIX)
+ADD_DEFINITIONS(
+    -g -ggdb
+)
+ENDIF(UNIX)
+
 SET(MOCKCPP_SRCS 
     AfterMatcher.cpp
     AnyBase.cpp
