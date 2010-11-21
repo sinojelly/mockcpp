@@ -30,6 +30,7 @@
 #include <mockcpp/OutputStringStream.h>
 #include <mockcpp/Asserter.h>
 #include <mockcpp/ReportFailure.h>
+#include <mockcpp/utils.h>
 
 MOCKCPP_NS_START
 
@@ -100,17 +101,22 @@ struct MockObject : public MockObjectBase
    }
    
    void verify()
-   {
+   {   
       try
       {
-	      MockObjectBase::verify();
-	      reset();
+         MockObjectBase::verify();
       }
-	  catch(...)
-	  {
-	      reset();
-		  throw;
-	  }
+      catch(...)
+      {
+          __RUN_NOTHROW({
+              reset();
+          });
+          throw;
+      }
+   
+      __RUN_THROW({
+          reset();
+      });      
    }
 
    void reset()

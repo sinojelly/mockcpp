@@ -21,11 +21,12 @@
 
 #include <Windows.h>
 #include <mockcpp/Win32ProtectPageAllocator.h>
+#include <new>
 
 MOCKCPP_NS_START
 
 Win32ProtectPageAllocator::Win32ProtectPageAllocator(PageAllocator *pageAllocator)
-	: allocator(pageAllocator)
+	: allocator(pageAllocator), cloneAddr(0)
 {
 }
 
@@ -65,6 +66,26 @@ size_t Win32ProtectPageAllocator::pageSize()
 	return allocator->pageSize();
 }
 
+PageAllocator *Win32ProtectPageAllocator::clone()
+{
+    cloneAddr = ::malloc(sizeof(Win32ProtectPageAllocator));
+    Win32ProtectPageAllocator *cloneObject = new (cloneAddr) Win32ProtectPageAllocator(allocator->clone());
+    cloneObject->cloneAddr = cloneAddr; // save for destorying
+    return cloneObject;
+}
+
+void Win32ProtectPageAllocator::destoryClone()
+{
+    if (cloneAddr != 0)
+    {
+        allocator->destoryClone(); // allocator must be cloned too, and this alway ok, because in clone, it called allocator->clone().
+        ::free(cloneAddr);
+        cloneAddr = 0;
+    }
+}
+
+
 MOCKCPP_NS_END
 
 #endif
+
