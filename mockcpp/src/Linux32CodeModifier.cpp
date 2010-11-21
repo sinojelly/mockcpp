@@ -27,8 +27,13 @@ MOCKCPP_NS_START
 
 
 Linux32CodeModifier::Linux32CodeModifier(PageAllocator *pageAllocator)
-	: page(pageAllocator)
+	: page(pageAllocator->clone())
 {
+}
+
+Linux32CodeModifier::~Linux32CodeModifier()
+{
+    page->destoryClone();
 }
 
 bool Linux32CodeModifier::modify(void *dest, void *src, size_t size)
