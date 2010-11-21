@@ -146,11 +146,11 @@ public:
       TS_ASSERT(typeid(pInterface) == typeid(Interface*));
    }
 
-//#ifndef _MSC_VER , testcpp not support #if 
-   //TODO: VC does not support
    // dynamic_cast
    void testShouldSupportDownCast1()
    {
+      #ifndef _MSC_VER
+	  //VC does not support   
       MockObject<Interface> mock;
       mock.method(&Interface::base00).stubs().will(returnValue(10));
       Base0* pBase0 = (Base0*)mock;
@@ -158,14 +158,14 @@ public:
       Interface* p = dynamic_cast<Interface*>(pBase0);
       TS_ASSERT(p != 0);
       TS_ASSERT_EQUALS(10, p->base00());
+	  #endif
    }
-//#endif
 
-//#ifndef _MSC_VER , testcpp not support #if 
-   //TODO: VC does not support
    // dynamic_cast to second
    void testShouldSupportDownCast2()
    {
+      #ifndef _MSC_VER
+	  //VC does not support
       MockObject<Interface> mock;
 
       mock.method(&Interface::base12).stubs().will(returnValue(10));
@@ -178,8 +178,8 @@ public:
       TS_ASSERT((void*)pBase1 != (void*)p);
 
       TS_ASSERT_EQUALS(10, p->base12());
+	  #endif
    }
-//#endif
 
    // delete
    void testShouldSupportDeleteAMockObjectWhoMocksASimpleInterface()

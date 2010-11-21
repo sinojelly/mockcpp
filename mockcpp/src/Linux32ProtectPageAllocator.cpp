@@ -29,6 +29,11 @@ Linux32ProtectPageAllocator::Linux32ProtectPageAllocator(PageAllocator *pageAllo
 {
 }
 
+Linux32ProtectPageAllocator::~Linux32ProtectPageAllocator()
+{
+    delete allocator;
+}
+
 void* Linux32ProtectPageAllocator::alloc(size_t size)
 {
 	void *pages = allocator->alloc(size);
