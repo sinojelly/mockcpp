@@ -56,7 +56,7 @@ size_t Linux32PageAllocator::pageSize()
 PageAllocator *Linux32PageAllocator::clone()
 {
     void *addr = ::malloc(sizeof(Linux32PageAllocator));
-    Linux32PageAllocator *object = new (addr) Linux32PageAllocator(allocator->clone());
+    Linux32PageAllocator *object = new (addr) Linux32PageAllocator();
     object->cloneObject = object; // save for destorying
     return object;
 }
