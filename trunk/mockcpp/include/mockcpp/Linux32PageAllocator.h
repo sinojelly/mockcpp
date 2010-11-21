@@ -37,7 +37,7 @@ struct Linux32PageAllocator : public PageAllocator
 	
 private:
 	size_t sizeOfPage;
-    void *cloneAddr;
+    Linux32PageAllocator *cloneObject;
 };
 
 

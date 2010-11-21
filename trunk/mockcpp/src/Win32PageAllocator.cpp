@@ -28,7 +28,7 @@ MOCKCPP_NS_START
 #define PAGE_SIZE    ( 64 * 1024)
 
 Win32PageAllocator::Win32PageAllocator()
-	: sizeOfPage(0), cloneAddr(0)
+	: sizeOfPage(0), cloneObject(0)
 {
 }
 
@@ -54,18 +54,18 @@ size_t Win32PageAllocator::pageSize()
 
 PageAllocator *Win32PageAllocator::clone()
 {
-    cloneAddr = malloc(sizeof(Win32PageAllocator));
-    Win32PageAllocator *cloneObject = new (cloneAddr) Win32PageAllocator;
-    cloneObject->cloneAddr = cloneAddr; // save for destorying
-    return cloneObject;
+    void *addr = malloc(sizeof(Win32PageAllocator));
+    Win32PageAllocator *object = new (addr) Win32PageAllocator;
+    object->cloneObject = object; // save for destorying
+    return object;
 }
 
 void Win32PageAllocator::destoryClone()
 {
-    if (cloneAddr != 0)
+    if (cloneObject != 0)
     {
-        ::free(cloneAddr);
-        cloneAddr = 0;
+        ::free(cloneObject);
+        cloneObject = 0;
     }
 }
 

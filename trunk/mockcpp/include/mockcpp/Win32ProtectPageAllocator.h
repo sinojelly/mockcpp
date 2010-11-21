@@ -36,7 +36,7 @@ struct Win32ProtectPageAllocator : public PageAllocator
 
 private:
 	PageAllocator *allocator;
-    void *cloneAddr;
+    Win32ProtectPageAllocator *cloneObject;
 };
 
 MOCKCPP_NS_END
