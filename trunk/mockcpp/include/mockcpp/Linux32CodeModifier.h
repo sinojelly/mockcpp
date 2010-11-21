@@ -29,6 +29,7 @@ struct PageAllocator;
 struct Linux32CodeModifier : public CodeModifier
 {
 	Linux32CodeModifier(PageAllocator *pageAllocator);
+    ~Linux32CodeModifier();
 	bool modify(void *dest, void *src, size_t size);
 
 private:
