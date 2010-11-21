@@ -100,7 +100,13 @@ void AllocatorContainer::initialize(size_t _blockSize, PageAllocator *_pageAlloc
 /////////////////////////////////////////////////////////////////
 AllocatorContainer::~AllocatorContainer()
 {
+	if (allocators == 0)
+    {
+        return;
+    }
+	
     ALLOCATOR_NODE *p;
+    
 	while (!APR_RING_EMPTY(allocators, ALLOCATOR_NODE, link))
 	{
 		p = APR_RING_FIRST(allocators);
@@ -112,6 +118,8 @@ AllocatorContainer::~AllocatorContainer()
 
 	free(allocators);
     pageAllocator->destoryClone();
+    
+    allocators = 0;
 }
 
 /////////////////////////////////////////////////////////////////

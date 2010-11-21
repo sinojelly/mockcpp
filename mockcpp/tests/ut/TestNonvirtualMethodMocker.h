@@ -19,7 +19,7 @@
 #include <testngpp/testngpp.hpp>
 #include <mockcpp/mokc.h>
 
-#include <mockcpp/MsvcMethodInfoReader.h>
+#include <mockcpp/mockcpp.hpp>
 
 
 //..\..\build_testngpp\src\runner\Debug\testngpp-runner.exe
