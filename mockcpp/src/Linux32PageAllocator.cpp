@@ -19,6 +19,7 @@
 
 #include <stdlib.h>
 #include <mockcpp/Linux32PageAllocator.h>
+#include <new>
 
 #include <limits.h>
 #ifndef PAGESIZE
