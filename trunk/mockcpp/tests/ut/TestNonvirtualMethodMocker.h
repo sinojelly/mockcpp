@@ -30,6 +30,12 @@
 USING_TESTNGPP_NS
 USING_MOCKCPP_NS
 
+#ifdef _MSC_VER
+#define __cdecl __cdecl
+#else
+#define __cdecl
+#endif
+
 FIXTURE(TestNonvirtualMemberMocker, mock nonvirtual nonstatic member method)
 {
     struct CUT
