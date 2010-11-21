@@ -28,6 +28,9 @@ MOCKCPP_NS_START
 struct PageAllocator : public MemAllocator
 {    
     virtual size_t pageSize() = 0;
+    virtual PageAllocator *clone() = 0;
+    virtual void destoryClone() = 0;
+    virtual ~PageAllocator(){}
 
 	void * align(void *addr)
 	{

@@ -92,7 +92,7 @@ void AllocatorContainer::initialize(size_t _blockSize, PageAllocator *_pageAlloc
     APR_RING_INIT(allocators, ALLOCATOR_NODE, link);
 
     blockSize = _blockSize;
-    pageAllocator = _pageAllocator;
+    pageAllocator = _pageAllocator->clone();
 
     (void)addAllocator();
 }
@@ -111,6 +111,7 @@ AllocatorContainer::~AllocatorContainer()
 	}
 
 	free(allocators);
+    pageAllocator->destoryClone();
 }
 
 /////////////////////////////////////////////////////////////////

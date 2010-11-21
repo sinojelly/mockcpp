@@ -87,6 +87,10 @@ run( TestFixtureContext* context
    {
       collector->addFixtureError(context->getFixture(), e.what());
    }
+   __TESTNGPP_CATCH(std::exception& e)
+   {
+       collector->addFixtureError(context->getFixture(), e.what());
+   }   
    __TESTNGPP_CATCH_ALL
    {
       collector->addFixtureError(context->getFixture(), "Unknown Error");

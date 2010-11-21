@@ -18,6 +18,7 @@
 
 #include <mockcpp/Functor.h>
 #include <mockcpp/GlobalMockObject.h>
+#include <mockcpp/utils.h>
 
 MOCKCPP_NS_START
 
@@ -28,13 +29,18 @@ void GlobalMockObject::verify()
    try
    {
       instance.verify();
-      instance.reset();
    }
    catch(...)
    {
-      instance.reset();
-      throw;
+       __RUN_NOTHROW({
+           instance.reset();
+       });
+       throw;
    }
+
+   __RUN_THROW({
+       instance.reset();
+   });
 }
 
 void GlobalMockObject::reset()

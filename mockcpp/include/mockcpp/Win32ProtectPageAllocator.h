@@ -1,7 +1,7 @@
 /***
     mockcpp is a generic C/C++ mock framework.
     Copyright (C) <2010>  <Darwin Yuan: darwin.yuan@gmail.com>
-	                      <Chen Guodong: sinojelly@gmail.com>
+                                   <Chen Guodong: sinojelly@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -26,14 +26,17 @@ MOCKCPP_NS_START
 
 struct Win32ProtectPageAllocator : public PageAllocator
 {
-	Win32ProtectPageAllocator(PageAllocator *pageAllocator);
+    Win32ProtectPageAllocator(PageAllocator *pageAllocator);
     ~Win32ProtectPageAllocator();
-	void* alloc(size_t size = 0);
-	void free(void* ptr);
-	size_t pageSize();
+    void *alloc(size_t size = 0);
+    void free(void* ptr);
+    size_t pageSize();
+    PageAllocator *clone();
+    void destoryClone();
 
 private:
 	PageAllocator *allocator;
+    void *cloneAddr;
 };
 
 MOCKCPP_NS_END

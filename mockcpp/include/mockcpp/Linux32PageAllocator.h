@@ -28,12 +28,16 @@ MOCKCPP_NS_START
 struct Linux32PageAllocator : public PageAllocator
 {
 	Linux32PageAllocator();
+    ~Linux32PageAllocator();
 	void* alloc(size_t size);
 	void free(void* ptr);
 	size_t pageSize();
+    PageAllocator *clone();
+    void destoryClone();
 	
 private:
 	size_t sizeOfPage;
+    void *cloneAddr;
 };
 
 

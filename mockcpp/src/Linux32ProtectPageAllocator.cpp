@@ -25,7 +25,7 @@
 MOCKCPP_NS_START
 
 Linux32ProtectPageAllocator::Linux32ProtectPageAllocator(PageAllocator *pageAllocator)
-	: allocator(pageAllocator)
+	: allocator(pageAllocator), cloneAddr(0)
 {
 }
 
@@ -60,6 +60,24 @@ void Linux32ProtectPageAllocator::free(void* ptr)
 size_t Linux32ProtectPageAllocator::pageSize()
 {
 	return allocator->pageSize();
+}
+
+PageAllocator *Linux32ProtectPageAllocator::clone()
+{
+    cloneAddr = ::malloc(sizeof(Linux32ProtectPageAllocator));
+    Linux32ProtectPageAllocator *cloneObject = new (cloneAddr) Linux32ProtectPageAllocator(allocator->clone());
+    cloneObject->cloneAddr = cloneAddr; // save for destorying
+    return cloneObject;
+}
+
+void Linux32ProtectPageAllocator::destoryClone()
+{
+    if (cloneAddr != 0)
+    {
+        allocator->destoryClone(); // allocator must be cloned too, and this alway ok, because in clone, it called allocator->clone().    
+        ::free(cloneAddr);
+        cloneAddr = 0;
+    }
 }
 
 
