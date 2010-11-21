@@ -37,7 +37,7 @@ struct Win32PageAllocator : public PageAllocator
 
 private:
     size_t sizeOfPage;
-    void *cloneAddr;
+    Win32PageAllocator *cloneObject;
 };
 
 MOCKCPP_NS_END

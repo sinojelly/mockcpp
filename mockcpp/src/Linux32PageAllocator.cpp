@@ -29,7 +29,7 @@ MOCKCPP_NS_START
 
 
 Linux32PageAllocator::Linux32PageAllocator()
-	: sizeOfPage(0), cloneAddr(0)
+	: sizeOfPage(0), cloneObject(0)
 {
 }
 
@@ -55,18 +55,18 @@ size_t Linux32PageAllocator::pageSize()
 
 PageAllocator *Linux32PageAllocator::clone()
 {
-    cloneAddr = ::malloc(sizeof(Linux32PageAllocator));
-    Linux32PageAllocator *cloneObject = new (cloneAddr) Linux32PageAllocator(allocator->clone());
-    cloneObject->cloneAddr = cloneAddr; // save for destorying
-    return cloneObject;
+    void *addr = ::malloc(sizeof(Linux32PageAllocator));
+    Linux32PageAllocator *object = new (addr) Linux32PageAllocator(allocator->clone());
+    object->cloneObject = object; // save for destorying
+    return object;
 }
 
 void Linux32PageAllocator::destoryClone()
 {
-    if (cloneAddr != 0)
+    if (cloneObject != 0)
     {
-        ::free(cloneAddr);
-        cloneAddr = 0;
+        ::free(cloneObject);
+        cloneObject = 0;
     }
 }
 

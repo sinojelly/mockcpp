@@ -50,7 +50,6 @@ inline std::string getFileName(std::string file)
 #define __RUN_THROW(block) try block \
        catch (...) \
        { \
-           std::cout << "(" << getFileName(__FILE__) << ", " << __LINE__ << ") exception : Unknown" << std::endl; \
 		   throw; \
        }
 	   

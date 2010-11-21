@@ -37,7 +37,7 @@ struct Linux32ProtectPageAllocator : public PageAllocator
 
 private:
 	PageAllocator *allocator;
-    void *cloneAddr;
+    Linux32ProtectPageAllocator *cloneObject;
 };
 
 MOCKCPP_NS_END
