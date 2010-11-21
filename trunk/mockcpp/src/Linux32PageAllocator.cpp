@@ -30,7 +30,7 @@ MOCKCPP_NS_START
 
 
 Linux32PageAllocator::Linux32PageAllocator()
-	: sizeOfPage(0), cloneObject(0)
+	: sizeOfPage(PAGESIZE), cloneObject(0)
 {
 }
 
@@ -40,7 +40,9 @@ Linux32PageAllocator::~Linux32PageAllocator()
 
 void* Linux32PageAllocator::alloc(size_t size)
 {
-	sizeOfPage = (size <= PAGESIZE) ? PAGESIZE : size;
+    // now we always specify size 0 to allocate a page in BlockAllocator. and so i fix it to be PAGESIZE, or else may be some error in clone.
+	//sizeOfPage = (size <= PAGESIZE) ? PAGESIZE : size;
+	//sizeOfPage = PAGESIZE;
 	return ::malloc(sizeOfPage);
 }
 

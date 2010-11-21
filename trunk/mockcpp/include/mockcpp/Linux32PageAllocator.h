@@ -36,7 +36,7 @@ struct Linux32PageAllocator : public PageAllocator
     void destoryClone();
 	
 private:
-	size_t sizeOfPage;
+    const size_t sizeOfPage;
     Linux32PageAllocator *cloneObject;
 };
 

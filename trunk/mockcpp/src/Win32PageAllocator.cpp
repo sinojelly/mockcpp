@@ -28,7 +28,7 @@ MOCKCPP_NS_START
 #define PAGE_SIZE    ( 64 * 1024)
 
 Win32PageAllocator::Win32PageAllocator()
-	: sizeOfPage(0), cloneObject(0)
+	: sizeOfPage(PAGE_SIZE), cloneObject(0)
 {
 }
 
@@ -38,7 +38,9 @@ Win32PageAllocator::~Win32PageAllocator()
 
 void* Win32PageAllocator::alloc(size_t size)
 {
-	sizeOfPage = (size <= PAGE_SIZE) ? PAGE_SIZE : size;
+    // now we always specify size 0 to allocate a page in BlockAllocator. and so i fix it to be PAGESIZE, or else may be some error in clone.
+	//sizeOfPage = (size <= PAGE_SIZE) ? PAGE_SIZE : size;
+	//sizeOfPage = PAGE_SIZE;
 	return ::VirtualAlloc(NULL, sizeOfPage, MEM_RESERVE | MEM_COMMIT, PAGE_EXECUTE_READWRITE );
 }
 
