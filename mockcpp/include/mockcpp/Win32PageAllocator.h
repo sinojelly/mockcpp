@@ -36,7 +36,7 @@ struct Win32PageAllocator : public PageAllocator
     void destoryClone();
 
 private:
-    size_t sizeOfPage;
+    const size_t sizeOfPage;
     Win32PageAllocator *cloneObject;
 };
 
