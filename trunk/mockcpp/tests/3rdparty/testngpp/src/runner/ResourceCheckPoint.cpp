@@ -21,6 +21,7 @@
 #include <new>
 #include <stdlib.h>
 #include <stdio.h>
+#include <inttypes.h>
 
 // for error string
 #include <sstream>
@@ -32,7 +33,7 @@
 #include <errno.h>
 #endif
 
-#include <testngpp/ResourceCheckPoint.h>
+#include <testngpp/runner/ResourceCheckPoint.h>
 #include <testngpp/internal/AssertionFailure.h>
 #include <testngpp/internal/Error.h>
 
@@ -159,7 +160,7 @@ static void freeMemory(void* p)
    if(header->magic != magicNumber)
    {
       char buf[100];
-      snprintf(buf, sizeof(buf), "memory corruption occurred at %x", (unsigned int)p);
+      snprintf(buf, sizeof(buf), "memory corruption occurred at %#"PRIxPTR, (uintptr_t) p);
       throw Error(buf);
    }
 
@@ -183,6 +184,7 @@ TESTNGPP_NS_END
 //////////////////////////////////////////////////////////////////
 USING_TESTNGPP_NS
 
+#if 0 
 //////////////////////////////////////////////////////////////////
 void* operator new (size_t size) TESTNGPP_THROW(std::bad_alloc)
 {
@@ -206,5 +208,6 @@ void operator delete [] (void * p)
 {
     freeMemory(p);
 }
+#endif
 
 //////////////////////////////////////////////////////////////////
