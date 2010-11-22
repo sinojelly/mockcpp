@@ -40,10 +40,33 @@ template <typename R DECL_TEMPLATE_ARGS(n)> \
 struct CApiHookFunctor<R(DECL_ARGS(n))> \
 { \
     static R hook(const void* address, const void* const unused1, const void* const unused2 \
-	              DECL_REST_ARG_DECL(n)) \
+                  DECL_REST_ARG_DECL(n)) \
     { \
-	    return GlobalMockObject::instance.invoke<R>(address) \
+        try \
+        { \
+            return GlobalMockObject::instance.invoke<R>(address) \
                                     (empty_caller DECL_REST_PARAMS(n)); \
+        } \
+        /*catch exceptions to avoid error on linux when hook throw exception.*/ \
+        catch (Exception &reportedException) \
+        { \
+            reportFailureNoThrows( reportedException.getSrcFile().c_str() \
+                                 , reportedException.getSrcLine() \
+                                 , reportedException.getMessage().c_str()); \
+        } \
+        catch (std::exception &otherException) \
+        { \
+            reportFailureNoThrows( __FILE__ \
+                                 , __LINE__ \
+                                 , otherException.what()); \
+        } \
+        catch (...) \
+        { \
+            reportFailureNoThrows( __FILE__ \
+                                 , __LINE__ \
+                                 , "Unknown exception!"); \
+        } \
+        return R(); \
     } \
 }
 
