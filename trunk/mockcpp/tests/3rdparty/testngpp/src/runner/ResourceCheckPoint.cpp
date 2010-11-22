@@ -22,8 +22,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define __STDC_FORMAT_MACROS
-#include <msinttypes/inttypes.h>
+#include <inttypes.h>
 
 // for error string
 #include <sstream>
