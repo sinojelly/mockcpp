@@ -11,6 +11,7 @@ SET(TESTNGPP_SRCS
   TypeString.cpp 
   Formatter.cpp 
   TestCase.cpp
+  runner/ResourceCheckPoint.cpp
   mem_checker/bool_array.cpp       
   mem_checker/mem_pool_base.cpp
   mem_checker/debug_new.cpp        
