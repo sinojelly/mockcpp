@@ -167,7 +167,7 @@ StringToOptions::parse(const std::string& s)
 {
    int argc = getNumberOfArgsInString(s);
    if(argc == 0)
-     return CArgs(argc, 0);
+     return CArgs(argc, (char **)0);
 
    return CArgs(argc, parseToCArgs(s + " ", argc));
 }

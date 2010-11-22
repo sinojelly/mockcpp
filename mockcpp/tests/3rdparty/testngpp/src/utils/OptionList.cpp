@@ -19,6 +19,7 @@
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <sstream>
 
 #ifdef _MSC_VER
 #include <GetOpt.h>
@@ -73,7 +74,8 @@ OptionList::parse(int argc, char** argv, const char* optstr)
 
 ////////////////////////////////////////////////////
 bool 
-OptionList::hasOption(const std::string& flag)
+OptionList::
+hasOption(const std::string& flag)
 {
    Options::const_iterator i = options.begin();
    for(; i != options.end(); i++)
@@ -83,6 +85,40 @@ OptionList::hasOption(const std::string& flag)
    }
    
    return false;
+}
+
+////////////////////////////////////////////////////
+unsigned int
+OptionList::
+getSingleUnsignedOption
+      ( const std::string& option
+      , const unsigned int defaultValue)
+{
+    std::ostringstream oss;
+    oss << defaultValue;
+
+    std::string result = getSingleOption(option, oss.str());
+
+    return atoi(result.c_str());
+}
+
+////////////////////////////////////////////////////
+std::string
+OptionList::
+getSingleOption
+      ( const std::string& option
+      , const std::string& defaultValue)
+{
+   Options::const_iterator i = options.begin();
+   for(; i != options.end(); i++)
+   {
+      if(i->first == option && i->second.size() > 0)
+      {
+         return i->second;
+      }
+   }
+
+   return defaultValue;
 }
 
 TESTNGPP_NS_END
