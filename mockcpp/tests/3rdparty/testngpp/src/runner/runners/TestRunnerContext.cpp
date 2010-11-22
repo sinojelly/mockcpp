@@ -1,7 +1,7 @@
 
 #include <vector>
 
-#include <testngpp/ExceptionKeywords.h>
+#include <testngpp/comm/ExceptionKeywords.h>
 
 #include <testngpp/listener/TestResultCollector.h>
 

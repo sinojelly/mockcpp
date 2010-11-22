@@ -27,7 +27,7 @@
 //$(TargetDir)
 
 
-USING_TESTNGPP_NS
+//USING_TESTNGPP_NS
 USING_MOCKCPP_NS
 
 #ifdef _MSC_VER
@@ -71,6 +71,7 @@ FIXTURE(TestNonvirtualMemberMocker, mock nonvirtual nonstatic member method)
             .will(returnValue(100));
         CUT cut;
         ASSERT_EQ(100, cut.normal_method());
+        GlobalMockObject::verify();
     }
 
     TEST(normal member method with one param mocked as global function)
@@ -86,6 +87,7 @@ FIXTURE(TestNonvirtualMemberMocker, mock nonvirtual nonstatic member method)
             .will(returnValue(101));
         CUT cut;
         ASSERT_EQ(101, cut.normal_method_1(2));
+        GlobalMockObject::verify();
     }
 
     TEST(static member method mocked as global function)
@@ -94,5 +96,6 @@ FIXTURE(TestNonvirtualMemberMocker, mock nonvirtual nonstatic member method)
             .stubs()
             .will(returnValue(100));
         ASSERT_EQ(100, CUT::static_method());
+        GlobalMockObject::verify();
     }
 };

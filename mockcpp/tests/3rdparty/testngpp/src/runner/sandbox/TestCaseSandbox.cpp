@@ -2,7 +2,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 
-#include <testngpp/ExceptionKeywords.h>
+#include <testngpp/comm/ExceptionKeywords.h>
 
 #include <testngpp/comm/PipeReadableChannel.h>
 

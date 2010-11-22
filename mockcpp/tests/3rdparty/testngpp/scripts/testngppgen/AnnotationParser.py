@@ -52,14 +52,18 @@ class AnnotationParser:
       if len(kv) != 2:
          fatal(self.file, tag, "invalid annotation attribute definition, use key=value pair")
 
-      if is_blank(kv[0]) or is_blank(kv[1]):
+      matched = re.match("\s*\"(?P<value>.*)\"\s*$", kv[1])
+      if matched: value = matched.group("value")
+      else: value = kv[1]
+
+      if is_blank(kv[0]) or is_blank(value):
          fatal(self.file, tag, "invalid annotation attribute definition, key or value cannot be null")
 
-      self.__set_key_value(tag, kv[0], kv[1])
+      self.__set_key_value(tag, kv[0], value)
 
    ########################################
    def __report_dup_key(self, tag, key):
-      fatal(self.file, tag, "invalid annotation attribute definition, duplicated \""+key+"\"")
+      fatal(self.file, tag, "invalid annotation attribute definition, duplicated \"" + key + "\"")
 
    ########################################
    def __set_key_value(self, tag, key, value):

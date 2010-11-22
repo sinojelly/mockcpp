@@ -45,12 +45,12 @@ def checkFixtureExistence(fixtureFiles):
 
 
 ##########################################################
-def process(target, fixture_files, inputEncoding, encoding):
+def process(target, fixture_files, inputEncoding, encoding, recordFixture = False):
    checkFixtureExistence(fixture_files)
 
    fixtures = []
    for file in fixture_files:
       fixtures.append(processTestFixtureFile(file, inputEncoding))
 
-   phase4(fixture_files, target, fixtures, encoding)
+   phase4(fixture_files, target, fixtures, encoding, recordFixture)
 

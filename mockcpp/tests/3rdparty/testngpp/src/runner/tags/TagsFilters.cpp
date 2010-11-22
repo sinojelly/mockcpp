@@ -100,7 +100,7 @@ generateAllScopeFilter()
    if(orFilter->isEmpty())
    {
       delete orFilter;
-      return ValueType(0, false);
+      return ValueType((const testngpp::TaggableObjFilter *)0, false);
    }
    else if(orFilter->isMalform())
    {

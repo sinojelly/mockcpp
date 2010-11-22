@@ -28,6 +28,7 @@ struct SimpleTestResultReporter
    unsigned int getNumberOfCrashedTestCases() const;
    unsigned int getNumberOfLoadedSuites() const;
    unsigned int getNumberOfUnloadableSuites() const;
+   unsigned int getNumberOfErrorFixtures() const;
 
    void addCaseError(const TestCaseInfoReader*, const std::string&);
    void addCaseCrash(const TestCaseInfoReader*);

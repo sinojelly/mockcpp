@@ -9,19 +9,35 @@ from Name import *
 ##########################################
 class TestCase:
    ########################################
-   def __init__(self, name, scope, file, line, tag):
+   def __init__(self, name, scope, file, line, annotations):
       self.traditional_name = name[0]
       self.name             = name[1]
+      self.p_test           = name[2]
       if self.name != None:
          self.name = escape_name(self.name)
       self.scope            = scope
       self.file             = file
       self.line             = line
-      self.annotations      = AnnotationParser(tag, {"id":None, "depends":None, "tags":[]}).parse()
+      annotation = None
+      if len(annotations) > 0:
+        annotation = annotations[0]
+     
+      self.annotations      = AnnotationParser(annotation, {"id":None, "depends":None, "data":None, "tags":[]}).parse()
+      if self.p_test and self.annotations["data"] == None:
+         raw_fatal(file, line, "parameterized test should have data provider")
+
       self.annotations['tags'] = TagsParser(self.annotations['tags']).parse()
 
       self.depends          = None
       self.generated        = None
+
+   ########################################
+   def get_data_provider_name(self):
+      return self.annotations['data']
+
+   ########################################
+   def is_p_test(self):
+      return self.p_test
 
    ########################################
    def get_tags(self):
@@ -42,6 +58,10 @@ class TestCase:
    ########################################
    def matches_id(self, id):
       return id != None and self.annotations["id"] == id
+
+   ########################################
+   def report_non_existing_data_provider(self):
+      raw_fatal(self.file, self.line, "data provider \"" + self.get_data_provider_name() + "\" does not exist.")
 
    ########################################
    def report_cyclic_depend_error(self):

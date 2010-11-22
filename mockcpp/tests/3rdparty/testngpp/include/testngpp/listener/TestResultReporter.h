@@ -17,6 +17,7 @@ struct TestResultReporter
     virtual unsigned int getNumberOfSkippedTestCases() const = 0;
     virtual unsigned int getNumberOfLoadedSuites() const = 0;
     virtual unsigned int getNumberOfUnloadableSuites() const = 0;
+    virtual unsigned int getNumberOfErrorFixtures() const = 0;    
 
     virtual ~TestResultReporter() {}
 };

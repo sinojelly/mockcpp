@@ -5,7 +5,7 @@
 #include <windows.h>
 #endif
 
-#include <testngpp/ExceptionKeywords.h>
+#include <testngpp/comm/ExceptionKeywords.h>
 
 #include <testngpp/utils/StupidTimer.h>
 
@@ -211,9 +211,11 @@ bool SimpleTestCaseRunner::run
 
    __TESTNGPP_CLEANUP
 
+   testcase->verifyMemChecker(); // avoid affecting the following testcase.
    timeval e = timer.stop();
    smartCollector->endTestCase(testcase, e.tv_sec, e.tv_usec);
    delete smartCollector;
+   //delete testcase->getFixture(); // when test case run finish, there is a delete in tearDown, this is duplicate.
 
    __TESTNGPP_DONE
 

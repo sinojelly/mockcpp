@@ -31,7 +31,7 @@ reportWarning
 }
 
 void TestFixture::
-reportFailure(const char* file, unsigned int line, const std::string& what)
+reportFailure(const char* file, unsigned int line, const std::string& what, bool throwException)
 {
    if(collector == 0 || testcase == 0) return;
 
@@ -39,7 +39,7 @@ reportFailure(const char* file, unsigned int line, const std::string& what)
 
    collector->addCaseFailure(testcase, failure);
 
-   throw failure;
+   if(throwException) throw failure;
 }
 //////////////////////////////////////////////////////////////////////////
 void TestFixture::
@@ -48,6 +48,16 @@ setCurrentTestCase(const TestCaseInfoReader* currentCase, TestCaseResultCollecto
    testcase = currentCase;
    collector = resultCollector;
 }
+
+//////////////////////////////////////////////////////////////////////////
+TestFixture *TestFixture::
+clone()
+{
+    TestFixture *tempFixture = new TestFixture;
+    tempFixture->setCurrentTestCase(testcase, collector);
+    return tempFixture;
+}
+
 
 TESTNGPP_NS_END
 

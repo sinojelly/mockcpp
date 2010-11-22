@@ -22,6 +22,15 @@ struct OptionList
    void parse(int argc, char** argv, const char* optstr);
    
    bool hasOption(const std::string& flag);
+
+   std::string getSingleOption
+         ( const std::string& option
+         , const std::string& defaultValue);
+
+   unsigned int
+   getSingleUnsignedOption
+         ( const std::string& option
+         , const unsigned int defaultValue);
 };
 
 TESTNGPP_NS_END

@@ -3,7 +3,6 @@
 #include <dlfcn.h>
 
 #include <testngpp/internal/Error.h>
-#include <testngpp/ExceptionKeywords.h>
 
 #include <testngpp/runner/loaders/DLModuleLoader.h>
 

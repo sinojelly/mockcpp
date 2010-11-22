@@ -32,7 +32,7 @@ TESTNGPP_NS_START
 #define TS_ASSERT_THROWS_ANYTHING(expr)        ASSERT_THROWS_ANYTHING(expr)
 #define TS_ASSERT_THROWS_NOTHING(expr)         ASSERT_THROWS_NOTHING(expr)
 #define TS_ASSERT_THROWS_EQUALS(expr, except, expected, value) \
-        ASSERT_THROWS_EQUALS(expr, except, expected, value)
+        ASSERT_THROWS_EQ(expr, except, expected, value)
 #define TS_FAIL(msg)                           FAIL(msg)
 #define TS_WARN(msg)                           WARN(msg)
 #define TS_TRACE(msg)                          INFO(msg)

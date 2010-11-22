@@ -24,6 +24,7 @@ class PreprocessScope:
       self.file   = file
       self.line   = line
 
+   ##################################
    def show(self):
       print "#" + self.inst, self.expr
 
@@ -33,6 +34,7 @@ class PreprocessScope:
       for scope in self.elses:
          scope.show()
 
+   ##################################
    def merge(self, scope):
       if scope.is_one():
         self.lines += scope.lines

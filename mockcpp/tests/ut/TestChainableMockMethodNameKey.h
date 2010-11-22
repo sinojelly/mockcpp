@@ -90,15 +90,15 @@ public:
       ChainableMockMethodKey* rhs = \
           new ChainableMockMethodNameKeyStub("method");
 
-      __TESTNGPP_DO
+      __DO__
 
       TS_ASSERT(!key->equals(rhs));
 
-      __TESTNGPP_CLEANUP
+      __CLEANUP__
 
       delete rhs;
 
-      __TESTNGPP_DONE
+      __DONE__
    }
 
    // @test
@@ -107,15 +107,15 @@ public:
       ChainableMockMethodKey* rhs = \
           new ChainableMockMethodNameKey("method");
 
-      __TESTNGPP_DO
+      __DO__
 
       TS_ASSERT(key->equals(rhs));
 
-      __TESTNGPP_CLEANUP
+      __CLEANUP__
 
       delete rhs;
 
-      __TESTNGPP_DONE
+      __DONE__
    }
 
    // @test
@@ -124,15 +124,15 @@ public:
       ChainableMockMethodKey* rhs = \
           new ChainableMockMethodNameKey("method1");
 
-      __TESTNGPP_DO
+      __DO__
 
       TS_ASSERT(!key->equals(rhs));
 
-      __TESTNGPP_CLEANUP
+      __CLEANUP__
 
       delete rhs;
 
-      __TESTNGPP_DONE
+      __DONE__
    }
 };
 

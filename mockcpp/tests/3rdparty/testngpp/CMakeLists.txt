@@ -26,9 +26,13 @@ ELSE(MSVC)
 ENDIF(MSVC)
 
 ADD_SUBDIRECTORY(src)
+ADD_SUBDIRECTORY(src/utils)
+ADD_SUBDIRECTORY(src/except)
+ADD_SUBDIRECTORY(src/mem_checker)
 ADD_SUBDIRECTORY(src/listeners)
 ADD_SUBDIRECTORY(src/runner)
 ADD_SUBDIRECTORY(scripts)
+#ADD_SUBDIRECTORY(samples)
 
 ########################################################
 INSTALL(DIRECTORY include/testngpp DESTINATION include
@@ -36,7 +40,13 @@ INSTALL(DIRECTORY include/testngpp DESTINATION include
           PATTERN "comm" EXCLUDE
           PATTERN "runner" EXCLUDE
           PATTERN "win32" EXCLUDE)
-
+		  
+INSTALL(FILES include/testngpp/runner/loaders/ModuleLoader.h 
+		  DESTINATION include/testngpp/runner/loaders)
+		  
+INSTALL(DIRECTORY 3rdparty/mem_checker DESTINATION 3rdparty
+          PATTERN ".svn" EXCLUDE)		  
+		  
 IF(MSVC)
 INSTALL(DIRECTORY 3rdparty/boost DESTINATION 3rdparty
           PATTERN ".svn" EXCLUDE)
