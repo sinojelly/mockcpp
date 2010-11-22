@@ -1,7 +1,7 @@
 
 #include <iostream>
 
-#include <testngpp/ExceptionKeywords.h>
+#include <testngpp/comm/ExceptionKeywords.h>
 
 #include <testngpp/utils/InternalError.h>
 
@@ -147,8 +147,9 @@ endTest(unsigned int secs, unsigned int usecs)
 bool
 SimpleTestResultManager::hasFailure() const
 {
-   return This->reporter->getNumberOfUnsuccessfulTestCases() > 0 ||
-          This->reporter->getNumberOfUnloadableSuites() > 0;
+   return This->reporter->getNumberOfUnsuccessfulTestCases() > 0
+       || This->reporter->getNumberOfUnloadableSuites() > 0 
+       || This->reporter->getNumberOfErrorFixtures() > 0 ;
 }
 ///////////////////////////////////////////////////////
 TestResultCollector*

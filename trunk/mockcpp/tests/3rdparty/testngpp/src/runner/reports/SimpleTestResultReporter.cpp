@@ -18,6 +18,8 @@ struct SimpleTestResultReporterImpl
    unsigned int numberOfFailedCases;
    unsigned int numberOfLoadedSuites;
    unsigned int numberOfUnloadableSuites;
+   unsigned int numberOfErrorFixtures;
+   
    TestSuiteResultReporter* suiteResultReporter;
 
    unsigned int getNumberOfUnsuccessfulCases() const;
@@ -33,6 +35,7 @@ struct SimpleTestResultReporterImpl
       , numberOfSuccessfulCases(0)
       , numberOfLoadedSuites(0)
       , numberOfUnloadableSuites(0)
+      , numberOfErrorFixtures(0)
       , suiteResultReporter(suiteReporter)
       , round(0)
    {}
@@ -117,6 +120,7 @@ endTestFixture(TestFixtureInfoReader*)
 void SimpleTestResultReporter::
 addFixtureError(TestFixtureInfoReader*, const std::string& msg)
 {
+    This->numberOfErrorFixtures++;
 }
 
 ///////////////////////////////////////////////////////////
@@ -260,6 +264,14 @@ getNumberOfLoadedSuites() const
 {
    return This->numberOfLoadedSuites;
 }
+
+unsigned int
+SimpleTestResultReporter::
+getNumberOfErrorFixtures() const
+{
+   return This->numberOfErrorFixtures;
+}
+
 
 ///////////////////////////////////////////////////////////
 

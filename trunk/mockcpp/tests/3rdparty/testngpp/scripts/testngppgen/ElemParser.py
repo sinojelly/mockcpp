@@ -2,6 +2,7 @@
 
 from PreprocessScope import PreprocessScope
 from PreprocessScopeParser import PreprocessScopeParser
+from Useless import Useless
 
 from Phase1Result import *
 
@@ -19,51 +20,61 @@ class ElemParser:
       self.container = container
 
    #######################################################
-   def __handle_tag(self, tag):
-      self.parser.handle_tag(tag)
+   def __handle_tag(self, line):
+      if isinstance(line, Tag):
+         self.parser.handle_tag(line)
+         return None
+
+      return True
 
    #######################################################
-   def __handle_scope(self, scope):
-      if self.parser.verify_scope(scope):
-         self.sub_scopes.append(scope)
+   def __handle_scope(self, line):
+      if isinstance(line, PreprocessScope):
+         if self.parser.verify_scope(line):
+            self.sub_scopes.append(line)
+         return None
+
+      return True
 
    #######################################################
-   def __create_elem_parser(self, elem_name, line):
-      elem_parser = self.parser.create_elem_parser(elem_name,\
-                       self.container.get_scope(), \
-                       self.file, \
-                       line.get_line_number())
+   def __handle_sub_elem(self, line):
+      elem_parser = \
+           self.parser.get_elem_parser( \
+              self.container, \
+              self.file, \
+              line);
+      if elem_parser == None:
+         return True
 
-      return ElemParser(self.file, elem_parser, elem_parser.get_container())
-   
+      if not self.__handle_elem_result(elem_parser.is_done()):
+         self.elem_parser = ElemParser(self.file, elem_parser, elem_parser.get_container())
+
+      return None
+
    #######################################################
    def __parse_normal_line(self, line):
       return self.parser.parse_line(line)
 
    #######################################################
    def __parse_by_myself(self, line):
-      if isinstance(line, Tag):
-         self.__handle_tag(line)
-         return None
+      return self.__handle_tag(line) and \
+             self.__handle_scope(line) and \
+             self.__handle_sub_elem(line) and \
+             self.__parse_normal_line(line)
 
-      if isinstance(line, PreprocessScope):
-         self.__handle_scope(line)
-         return None
+   #######################################################
+   def __handle_elem_result(self, elem):
+      if elem:
+         if not isinstance(elem, Useless):
+            self.container.add_elem(elem)
+         self.elem_parser = None
+         return True
 
-      elem_name = self.parser.is_elem_def(line.get_content())
-      if elem_name:
-         self.elem_parser = self.__create_elem_parser(elem_name, line)
-         return None
-
-      return self.__parse_normal_line(line)
+      return None
 
    #######################################################
    def __parse_elem(self, line):
-      elem = self.elem_parser.parse_line(line)
-      if elem:
-         self.container.add_elem(elem)
-         self.elem_parser = None
-
+      self.__handle_elem_result(self.elem_parser.parse_line(line))
       return None
 
    #######################################################
@@ -81,7 +92,7 @@ class ElemParser:
    #######################################################
    def parse_line(self, line):
       if self.done:
-         fatal(self.file, line, "internal error")
+         fatal(self.file, line, "testngpp generator internal error, please report bug to arthur.ii.yuan@gmail.com")
 
       self.last_line = line
 
@@ -89,7 +100,7 @@ class ElemParser:
          return self.__parse_elem(line)
 
       self.done = self.__parse_by_myself(line)
-      if self.done:
+      if self.done and self.parser.should_parse_sub_scopes():
          self.__handle_sub_scopes() 
 
       return self.done

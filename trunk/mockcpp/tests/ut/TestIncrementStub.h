@@ -17,7 +17,7 @@
 ***/
 
 #include <testcpp/testcpp.hpp>
-
+#include <testngpp/runner/ResourceCheckPoint.h>
 #include <mockcpp/IncrementStub.h>
 #include <mockcpp/types/AnyCast.h>
 

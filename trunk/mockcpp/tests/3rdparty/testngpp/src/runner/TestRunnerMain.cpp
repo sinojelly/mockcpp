@@ -6,8 +6,8 @@
 #include <testngpp/runner/TestRunner.h>
 #include <testngpp/utils/OptionList.h>
 #include <testngpp/utils/StringList.h>
-#include <testngpp/ResourceCheckPoint.h>
-#include <testngpp/ExceptionKeywords.h>
+#include <testngpp/runner/ResourceCheckPoint.h>
+#include <testngpp/comm/ExceptionKeywords.h>
 
 USING_TESTNGPP_NS
 
@@ -189,10 +189,11 @@ int main(int argc, char* argv[])
 {
    TESTNGPP_RCP rcp = TESTNGPP_SET_RESOURCE_CHECK_POINT();
 
-   int code = real_main(argc, argv);
+   int code = 0;
 
    try
    {
+     code = real_main(argc, argv);
      TESTNGPP_VERIFY_RESOURCE_CHECK_POINT(rcp);
    }
    catch(std::exception& error)

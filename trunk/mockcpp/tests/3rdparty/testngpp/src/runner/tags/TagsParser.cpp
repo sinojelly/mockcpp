@@ -371,7 +371,6 @@ TagsParser::parse( const std::string& tagsSpec )
       throw;
    }
    
-   
    return tagsFilters;
 }
 

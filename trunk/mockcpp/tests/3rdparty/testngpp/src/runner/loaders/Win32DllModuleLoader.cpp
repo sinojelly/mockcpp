@@ -4,7 +4,7 @@
 #include <iostream>
 
 #include <testngpp/internal/Error.h>
-#include <testngpp/ExceptionKeywords.h>
+#include <testngpp/comm/ExceptionKeywords.h>
 
 #include <testngpp/utils/StringList.h>
 #include <testngpp/runner/loaders/Win32DllModuleLoader.h>
@@ -64,7 +64,7 @@ namespace
 
    void* openModule(const std::string& modulePath, const std::string& suffix)
    {
-      std::string module = modulePath + "." + suffix;
+      std::string module = modulePath + suffix;
       return ::LoadLibrary(module.c_str());
 	 
    }
@@ -73,11 +73,11 @@ namespace
 
    void* openModule(const std::string& modulePath)
    {
-      std::string module = modulePath + ".dll";
       void* handle = 0;
 
-	  ___(openModule(modulePath, "dll"));
-	  ___(openModule(modulePath, "so"));
+	  ___(openModule(modulePath, ".dll"));
+	  ___(openModule(modulePath, ".so"));
+	  ___(openModule(modulePath, "")); // support use name as : module.dll
 	
 	  return handle;
    }

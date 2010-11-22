@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <sstream>
 
 #include <testngpp/internal/Error.h>
 #include <testngpp/internal/AssertionFailure.h>
@@ -121,6 +122,16 @@ namespace
       std::string suite;
       StateTitle result;
    };
+
+   std::string getFileName(std::string file)
+   {
+       if (file == "")
+       {
+          return "NULL";
+       }
+   
+       return file.substr(file.find_last_of("/\\")  + 1);
+   }
 }
 
 ///////////////////////////////////////////////////////////
@@ -132,6 +143,7 @@ struct StdoutTestListener : public TestListener
       , bool
       , bool
       , bool
+      , unsigned int
       , TestResultReporter*
       , TestSuiteResultReporter*
       , TestCaseResultReporter* );
@@ -166,8 +178,13 @@ struct StdoutTestListener : public TestListener
 
 private:
    
+   void showFixtureName(const TestCaseInfoReader*);
+   void showSuiteName(const TestCaseInfoReader*);
+   void showTagsSpec();
+
    void reportSuitesResult();
    void reportCasesResult();
+   void reportFixturesResult();
 
    template <typename State>
    void reportNumber
@@ -180,6 +197,7 @@ private:
          ( const TestCaseInfoReader* testcase
          , const State& state
          , StateTitle result
+         , const std::string& file
          , unsigned int line
          , const std::string& msg);
 
@@ -198,6 +216,7 @@ private:
    void reportCaseFailure
             ( const TestCaseInfoReader* testcase
             , StateTitle title
+            , const std::string& file
             , unsigned int line
             , const std::string& msg);
 
@@ -236,8 +255,14 @@ private:
    bool showFixture;
    bool showTags;
    bool verbose;
+
+   bool newFixture;
+   bool newSuite;
+   bool newTags;
    
    bool isSuccess;
+
+   unsigned int level;
 
    TestResultReporter*        bookKeeper;      // X
    TestSuiteResultReporter*   suiteBookKeeper; // X
@@ -247,6 +272,8 @@ private:
    std::vector<TestCaseResult> errorTests;
    std::vector<TestCaseResult> crashedTests;
    std::vector<TestCaseResult> skippedTests;
+
+   std::string tags;
 };
 
 namespace
@@ -285,6 +312,7 @@ StdoutTestListener
       , bool shouldShowFixture
       , bool shouldShowTags
       , bool isTest
+      , unsigned int reportLevel
       , TestResultReporter* reporter
       , TestSuiteResultReporter* suiteReporter 
       , TestCaseResultReporter* caseReporter)
@@ -298,7 +326,11 @@ StdoutTestListener
 , showFixture(shouldShowFixture)
 , showTags(shouldShowTags)
 , verbose(isTest)
+, newFixture(false)
+, newSuite(false)
+, newTags(false)
 , isSuccess(false)
+, level(reportLevel)
 , bookKeeper(reporter)
 , suiteBookKeeper(suiteReporter)
 , caseBookKeeper(caseReporter)
@@ -338,6 +370,7 @@ reportCaseMessage
       ( const TestCaseInfoReader* testcase
       , const State& state
       , StateTitle title
+      , const std::string& file
       , unsigned int line
       , const std::string& msg)
 {
@@ -362,14 +395,13 @@ reportCaseMessage
 
    if(msg.size() > 0)
    {
-
       if(!verbose)
       {
          std::cout << " - ";
       }
 
       std::cout
-         << testcase->getFileName()
+         << getFileName(file)  //testcase->getFileName()
          << ":"
          << line
          << ": "
@@ -392,6 +424,7 @@ outputCaseState
          ( testcase
          , state
          , title
+         , ""
          , 0
          , "");
 }
@@ -430,7 +463,7 @@ reportCaseMessage
       , StateTitle title
       , const std::string& msg)
 {
-   reportCaseMessage(testcase, state, title, testcase->getLineOfFile(), msg);
+   reportCaseMessage(testcase, state, title, testcase->getFileName(), testcase->getLineOfFile(), msg);
 }
 
 ///////////////////////////////////////////////////////////
@@ -450,6 +483,7 @@ StdoutTestListener::
 reportCaseFailure
       ( const TestCaseInfoReader* testcase
       , StateTitle title
+      , const std::string& file
       , unsigned int line
       , const std::string& msg)
 {
@@ -457,6 +491,7 @@ reportCaseFailure
          ( testcase
          , fail
          , title
+         , file
          , line
          , msg);
 }
@@ -476,6 +511,8 @@ void
 StdoutTestListener::
 addCaseSkipped(const TestCaseInfoReader* testcase)
 {
+   if(level > 2) return;
+
    reportCaseMessage
       ( testcase 
       , warn
@@ -506,6 +543,7 @@ addCaseFailure
    reportCaseFailure
       ( testcase
       , ST_FAILED
+      , failure.getFileName()
       , failure.getLineOfFile()
       , failure.what());
 }
@@ -516,10 +554,13 @@ void
 StdoutTestListener::
 addCaseWarning(const TestCaseInfoReader* testcase, const Warning& warning)
 {
+   if(level > 1) return;
+
    reportCaseMessage
       ( testcase
       , warn
       , ST_WARNING
+      , warning.getFileName()
       , warning.getLineOfFile()
       , warning.what());
 }
@@ -530,10 +571,13 @@ void
 StdoutTestListener::
 addCaseInfo(const TestCaseInfoReader* testcase, const Info& msg)
 {
+   if(level > 0) return;
+
    reportCaseMessage
       ( testcase
       , debug
       , ST_INFO
+      , msg.getFileName()
       , msg.getLineOfFile()
       , msg.what());
 }
@@ -543,6 +587,24 @@ void
 StdoutTestListener::
 startTestCase(const TestCaseInfoReader* testcase)
 {
+   if(newTags)
+   {
+      showTagsSpec();
+      newTags = false;
+   }
+
+   if(newSuite)
+   {
+      showSuiteName(testcase);
+      newSuite = false;
+   }
+
+   if(newFixture)
+   {
+     showFixtureName(testcase);
+     newFixture = false;
+   }
+
    if(!verbose) return;
 
    std::cout << succ << getTitle(ST_RUN) << normal
@@ -602,13 +664,23 @@ void
 StdoutTestListener::
 startTestFixture(TestFixtureInfoReader* fixture)
 {
+    newFixture = true;
+}
+
+///////////////////////////////////////////////////////////
+void
+StdoutTestListener::
+showFixtureName(const TestCaseInfoReader* testcase)
+{
    if(!showFixture) return;
    
    if(!verbose && isSuccess) std::cout << std::endl;
 
    std::cout << std::endl;
-   std::cout << info << "(" << fixture->getName() << ")" << normal;
+   std::cout << info << "(" << testcase->getNameOfFixture() << ")" << normal;
    std::cout << std::endl;
+
+   isSuccess = false;
 }
 
 ///////////////////////////////////////////////////////////
@@ -621,8 +693,11 @@ endTestFixture(TestFixtureInfoReader*)
 ///////////////////////////////////////////////////////////
 void
 StdoutTestListener::
-addFixtureError(TestFixtureInfoReader*, const std::string&)
+addFixtureError(TestFixtureInfoReader *fixture, const std::string &msg)
 {
+    std::ostringstream oss;
+    oss << msg << " in file (" << fixture->getFileName() << ") fixture (" << fixture->getName() << ").";
+    addError(oss.str());
 }
 
 ///////////////////////////////////////////////////////////
@@ -637,14 +712,24 @@ void
 StdoutTestListener::
 startTestSuite(TestSuiteInfoReader* suite)
 {
+   newSuite = true;
+}
+
+///////////////////////////////////////////////////////////
+void
+StdoutTestListener::
+showSuiteName(const TestCaseInfoReader* testcase)
+{
    if(!showSuite) return;
    
    std::cout << std::endl;
    std::cout
       << info 
-      << formatTitle("SUITE: " + suite->getName(), '-', maxLenOfLine)
+      << formatTitle("SUITE: " + testcase->getNameOfSuite(), '-', maxLenOfLine)
       << normal
       << std::endl;
+
+   isSuccess = false;
 }
 
 ///////////////////////////////////////////////////////////
@@ -666,12 +751,21 @@ void
 StdoutTestListener::
 startTagsFiltering(const TagsFilterRule* filter)
 {
+   tags = filter->toString();
+   newTags = true;
+}
+
+///////////////////////////////////////////////////////////
+void
+StdoutTestListener::
+showTagsSpec()
+{
    if(!showTags) return;
 
    std::cout << std::endl;
    std::cout
       << info 
-      << formatTitle("TAGS: {" + filter->toString() + "}",'=', maxLenOfLine)
+      << formatTitle("TAGS: {" + tags + "}",'=', maxLenOfLine)
       << normal 
       << std::endl;
 }
@@ -764,6 +858,24 @@ reportSuitesResult()
       << normal
       << std::endl;     
 }
+
+void
+StdoutTestListener::     
+reportFixturesResult()
+{
+   if(bookKeeper->getNumberOfErrorFixtures() == 0)
+   {
+      return;
+   }
+
+   std::cout 
+      << " error fixtures: " 
+      << fail
+      << bookKeeper->getNumberOfErrorFixtures()
+      << normal
+      << std::endl;   
+}
+
      
 void
 StdoutTestListener::
@@ -808,7 +920,8 @@ endTest(unsigned int secs, unsigned int usecs)
    reportAllUnsuccessfulTests();
 
    if( ( bookKeeper->getNumberOfUnloadableSuites() 
-       + bookKeeper->getNumberOfUnsuccessfulTestCases()) == 0)
+       + bookKeeper->getNumberOfUnsuccessfulTestCases()
+       + bookKeeper->getNumberOfErrorFixtures()) == 0)
    {
       std::cout
          << succ
@@ -824,6 +937,8 @@ endTest(unsigned int secs, unsigned int usecs)
    }
      
    reportSuitesResult();
+
+   reportFixturesResult();
 
    reportCasesResult();
 
@@ -865,7 +980,10 @@ LISTENER(create_instance)
 {
    OptionList options;
    
-   options.parse(argc, argv, "cvsft");
+   options.parse(argc, argv, "cvsftl:");
+
+   unsigned int level = options.getSingleUnsignedOption("l", 0);
+   if(level > 3) level = 3;
    
    return new StdoutTestListener
          ( options.hasOption("c")
@@ -873,6 +991,7 @@ LISTENER(create_instance)
          , options.hasOption("f")
          , options.hasOption("t")
          , options.hasOption("v")
+         , level
          , resultReporter
          , suiteReporter
          , caseResultReporter);

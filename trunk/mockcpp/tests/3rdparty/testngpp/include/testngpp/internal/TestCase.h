@@ -24,6 +24,7 @@
 
 #include <testngpp/internal/TestCaseInfoReader.h>
 #include <testngpp/TestFixture.h>
+#include <testngpp/runner/loaders/ModuleLoader.h>
 
 TESTNGPP_NS_START
 
@@ -42,9 +43,10 @@ struct TestCase
       , depends(testcase)
       , fileName(file)
       , lineOfFile(line)
+      , fixtureCloneAsReporter(0)
    {}
 
-	virtual ~TestCase() {}
+	virtual ~TestCase() { delete fixtureCloneAsReporter; }
 
 	const std::string& getName() const
 	{ return name; }
@@ -70,14 +72,16 @@ struct TestCase
 
    void setUp()
    {
-      getFixture()->setUp();
+       startMemChecker();
+       getFixture()->setUp();
    }
 
    void tearDown()
    {
       TestFixture * fixture = getFixture();
-      fixture->tearDown();
+      fixture->tearDown(); 
       delete fixture;
+      verifyMemChecker();      
    }
 
    void run()
@@ -94,6 +98,21 @@ struct TestCase
    {
      static const char* tags[1] = {0};
      return tags;
+   }
+   
+   void setModuleLoader(ModuleLoader* _loader)
+   {
+       loader = _loader;
+   }
+
+private:
+   void startMemChecker();   
+public:
+   void verifyMemChecker()
+   {    
+     	typedef void (*verify_t)(void);    
+    	verify_t verifier = (verify_t)loader->findSymbol("verifyMemChecker");    
+    	verifier(); 
    }
 
 private:
@@ -114,6 +133,8 @@ private:
    TESTNGPP_NS::TestCase* depends;
    std::string fileName;
 	unsigned int lineOfFile;
+	ModuleLoader* loader;
+    TestFixture *fixtureCloneAsReporter;
 };
 
 TESTNGPP_NS_END

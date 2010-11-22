@@ -1,7 +1,7 @@
 
 #include <iostream>
 
-#include <testngpp/ExceptionKeywords.h>
+#include <testngpp/comm/ExceptionKeywords.h>
 
 #include <testngpp/internal/Error.h>
 #include <testngpp/utils/InternalError.h>

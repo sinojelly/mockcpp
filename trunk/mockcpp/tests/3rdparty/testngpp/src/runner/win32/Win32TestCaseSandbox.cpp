@@ -1,6 +1,6 @@
 
 #include <testngpp/internal/Error.h>
-#include <testngpp/ExceptionKeywords.h>
+#include <testngpp/comm/ExceptionKeywords.h>
 
 #include <testngpp/comm/Win32PipeReadableChannel.h>
 

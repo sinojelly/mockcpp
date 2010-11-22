@@ -38,7 +38,7 @@ fetch()
    Filters::iterator i = filters.begin();
    if(i == filters.end())
    {
-      return ValueType(0, false);
+      return ValueType((const testngpp::TaggableObjFilter *)0, false);
    }
 
    ValueType result = (*i);

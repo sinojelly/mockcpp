@@ -45,6 +45,7 @@ SET(UT_CASES
   TestApiHook.h
   TestStaticMethodMocker.h
   TestNonvirtualMethodMocker.h
+  TestMockcppSample.h
 )
 
 IF(UNIX)

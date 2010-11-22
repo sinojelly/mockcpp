@@ -7,6 +7,10 @@
 
 #include <testngpp/runner/TestSuiteDescEntryNameGetter.h>
 
+#include <testngpp/internal/TestSuiteDesc.h>
+#include <testngpp/internal/TestFixtureDesc.h>
+#include <testngpp/internal/TestCase.h>
+
 TESTNGPP_NS_START
 
 struct ModuleTestSuiteLoaderImpl
@@ -75,6 +79,19 @@ load( const StringList& searchingPaths
    if(desc == 0)
    {
       throw Error("Invalid test suite shared object");
+   }
+
+   //set loader to testcase
+   unsigned int testFixtureNumInSuite = desc->getNumberOfTestFixtures();
+   for (unsigned int indexOfFixture = 0; indexOfFixture < testFixtureNumInSuite; indexOfFixture++)
+   {
+      TestFixtureDesc* fixture = desc->getTestFixture(indexOfFixture);
+      unsigned int testCaseNumInFixture = fixture->getNumberOfTestCases();
+      for (unsigned int indexOfTestCase = 0; indexOfTestCase < testCaseNumInFixture; indexOfTestCase++)
+      {
+          TestCase* testcase = fixture->getTestCase(indexOfTestCase);
+          testcase->setModuleLoader(loader);
+      }
    }
 
    return desc;

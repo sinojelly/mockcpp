@@ -90,16 +90,16 @@ public:
    {
       MOCKCPP_NS::ChainableMockMethodContainer container;
 
-      __TESTNGPP_DO
+      __DO__
 
       TS_ASSERT(0 == container.getMethod(key));
 
-      __TESTNGPP_CLEANUP
+      __CLEANUP__
 
       delete key;
-		delete method;
+	  delete method;
 
-      __TESTNGPP_DONE
+      __DONE__
    }
 
    // @test

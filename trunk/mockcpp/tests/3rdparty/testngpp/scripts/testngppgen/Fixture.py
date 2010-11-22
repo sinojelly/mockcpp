@@ -11,16 +11,25 @@ from Name import *
 ###########################################
 class Fixture:
    ########################################
-   def __init__(self, name, file, line, tag):
-      self.id   = name[0]
-      self.name = name[1]
+   def __init__(self, name, file, line, annotations):
+      self.prefix = name[0]
+      self.id   = name[1]
+      self.name = name[2]
       if self.name != None:
          self.name = escape_name(self.name)
       self.scope = TestScope("::", None, None)
       self.file = file
       self.line = line
-      self.annotations = AnnotationParser(tag, {"tags":[]}).parse()
+      annotation = None
+      if len(annotations) > 0 :
+         annotation = annotations[0]
+
+      self.annotations = AnnotationParser(annotation, {"tags":[]}).parse()
       self.annotations['tags'] = TagsParser(self.annotations['tags']).parse()
+
+   ########################################
+   def find_data_provider(self, name):
+      return self.scope.find_data_provider(name)
 
    ########################################
    def get_tags(self):
@@ -38,7 +47,7 @@ class Fixture:
 
    ########################################
    def get_id(self):
-      return self.id
+      return self.prefix + self.id
 
    ########################################
    def get_name(self):

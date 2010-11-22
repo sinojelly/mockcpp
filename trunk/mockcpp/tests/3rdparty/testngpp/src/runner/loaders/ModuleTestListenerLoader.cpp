@@ -4,7 +4,7 @@
 #include <sstream>
 #include <iostream>
 
-#include <testngpp/ExceptionKeywords.h>
+#include <testngpp/comm/ExceptionKeywords.h>
 #include <testngpp/utils/StringToOptions.h>
 
 #include <testngpp/internal/Error.h>
@@ -162,7 +162,15 @@ namespace
    std::string getCreaterSymbolName(const std::string& name)
    {
       std::stringstream ss;
-      ss << name << "_create_instance";
+      std::string module = name;
+
+      size_t pos = module.find(".dll");
+      if (pos != std::string::npos)
+      {
+          module = module.substr(0, pos);
+      }
+      
+      ss << module << "_create_instance";
       return ss.str();
    }
 }

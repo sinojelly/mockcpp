@@ -3,54 +3,27 @@ IF(MSVC)
   ADD_DEFINITIONS( -D_CRT_SECURE_NO_WARNINGS )
 ENDIF(MSVC)
 
-
-IF(NOT DEFINED TESTNGPP_DISABLE_RC)
-  SET(TESTNGPP_DISABLE_RC FALSE)
-ENDIF(NOT DEFINED TESTNGPP_DISABLE_RC)
-
-IF(NOT DEFINED TESTNGPP_DISABLE_SANDBOX)
-  SET(TESTNGPP_DISABLE_SANDBOX FALSE)
-ENDIF(NOT DEFINED TESTNGPP_DISABLE_SANDBOX)
-
-IF(TESTNGPP_DISABLE_SANDBOX)
-  ADD_DEFINITIONS(-DTESTNGPP_DISABLE_SANDBOX=1)
-ELSE(TESTNGPP_DISABLE_SANDBOX)
-  ADD_DEFINITIONS(-DTESTNGPP_DISABLE_SANDBOX=0)
-ENDIF(TESTNGPP_DISABLE_SANDBOX)
-
-IF(TESTNGPP_DISABLE_RC)
-  ADD_DEFINITIONS(-DTESTNGPP_DISABLE_RC=1)
-ELSE(TESTNGPP_DISABLE_RC)
-  ADD_DEFINITIONS(-DTESTNGPP_DISABLE_RC=0)
-ENDIF(TESTNGPP_DISABLE_RC)
-
-SET(TESTNGPP_RC_SRCS
-  ResourceCheckPoint.cpp 
-)
-
 SET(TESTNGPP_SRCS
-  Exception.cpp
-  AssertionFailure.cpp 
+  except/Exception.cpp
+  except/AssertionFailure.cpp 
   TestFixture.cpp
   TestSuiteDesc.cpp 
   TypeString.cpp 
   Formatter.cpp 
-  OptionList.cpp 
-  StringToOptions.cpp
-  ConsoleState.cpp
-  StupidTimer.cpp
+  TestCase.cpp
+  mem_checker/bool_array.cpp       
+  mem_checker/mem_pool_base.cpp
+  mem_checker/debug_new.cpp        
+  mem_checker/static_mem_pool.cpp
+  mem_checker/interface_4xunit.cpp
+  mem_checker/reporter.cpp
+  mem_checker/check_status.cpp
+  mem_checker/NoThrowsReporter.cpp
 )
 
-IF(NOT TESTNGPP_DISABLE_RC)
-  SET(TESTNGPP_SRCS
-     ${TESTNGPP_SRCS}
-     ${TESTNGPP_RC_SRCS}
-  )
-ENDIF(NOT TESTNGPP_DISABLE_RC)
-
+# include debug info in testngpp.lib
 IF(MSVC)
-  INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src)
-  SET(TESTNGPP_SRCS ${TESTNGPP_SRCS} GetOpt.c)
+	ADD_DEFINITIONS( /Z7 )
 ENDIF(MSVC)
 
 IF(MSVC)
@@ -59,8 +32,17 @@ ELSE(MSVC)
   ADD_LIBRARY(testngpp SHARED ${TESTNGPP_SRCS})
 ENDIF(MSVC)
 
-INCLUDE_DIRECTORIES(BEFORE ${CMAKE_SOURCE_DIR}/include)
+IF(UNIX)
+ADD_DEFINITIONS(
+    -g -ggdb
+)
+ENDIF(UNIX)
 
+# can not link to other lib in cmake 
+#TARGET_LINK_LIBRARIES(mem-checker)
+#LINK_DIRECTORIES(${CMAKE_BINARY_DIR}/src/mem_checker)
+
+INCLUDE_DIRECTORIES(BEFORE ${CMAKE_SOURCE_DIR}/include ${CMAKE_SOURCE_DIR}/3rdparty)
 
 IF(MSVC)
   INSTALL(

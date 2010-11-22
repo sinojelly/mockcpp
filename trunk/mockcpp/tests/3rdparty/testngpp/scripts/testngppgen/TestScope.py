@@ -1,6 +1,9 @@
 
 import sys
 
+from TestCase import TestCase
+from DataProvider import DataProvider
+
 ############################################
 class TestScope:
    #########################################
@@ -13,10 +16,18 @@ class TestScope:
       self.parent = parent
 
    #########################################
+   def find_data_provider(self, name):
+      for elem in self.elements:
+         if isinstance(elem, DataProvider) and elem.get_name() == name:
+            return elem
+
+      return None
+
+   #########################################
    def find_testcase_with_id(self, id):
-      for testcase in self.elements:
-        if testcase.matches_id(id):
-            return testcase
+      for elem in self.elements:
+        if isinstance(elem, TestCase) and elem.matches_id(id):
+            return elem
 
       if self.parent:
          return self.parent.find_testcase_with_id(id)
