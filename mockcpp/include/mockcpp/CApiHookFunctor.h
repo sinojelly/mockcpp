@@ -35,6 +35,20 @@ struct CApiHookFunctor;
 
 const std::string empty_caller("");
 ////////////////////////////////////////////
+#ifdef _MSC_VER
+#define CAPIHOOK_FUNCTOR_DEF(n) \
+template <typename R DECL_TEMPLATE_ARGS(n)> \
+struct CApiHookFunctor<R(DECL_ARGS(n))> \
+{ \
+    static R hook(const void* address, const void* const unused1, const void* const unused2 \
+                  DECL_REST_ARG_DECL(n)) \
+    { \
+        return GlobalMockObject::instance.invoke<R>(address) \
+                                (empty_caller DECL_REST_PARAMS(n)); \
+    } \
+}
+
+#else
 #define CAPIHOOK_FUNCTOR_DEF(n) \
 template <typename R DECL_TEMPLATE_ARGS(n)> \
 struct CApiHookFunctor<R(DECL_ARGS(n))> \
@@ -69,6 +83,7 @@ struct CApiHookFunctor<R(DECL_ARGS(n))> \
         return R(); \
     } \
 }
+#endif
 
 CAPIHOOK_FUNCTOR_DEF(0);
 CAPIHOOK_FUNCTOR_DEF(1);
