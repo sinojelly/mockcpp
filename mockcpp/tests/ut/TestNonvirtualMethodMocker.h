@@ -30,9 +30,8 @@
 //USING_TESTNGPP_NS
 USING_MOCKCPP_NS
 
-#ifdef _MSC_VER
-#define __cdecl __cdecl
-#else
+// for linux define __cdecl to null
+#if !defined(_MSC_VER) && !defined(__cdecl)
 #define __cdecl
 #endif
 
