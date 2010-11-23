@@ -15,5 +15,9 @@ build ../build_testngpp ../mockcpp/mockcpp/tests/3rdparty/testngpp
 build ../build_tests ../mockcpp/mockcpp/tests
 
 cd ut
-../../build_testngpp/src/runner/testngpp-runner $(ls *.so) -L"../../build_testngpp/src/listeners" -l"testngppstdoutlistener -c -f" -s
 
+if [ "$OSTYPE" = "cygwin" ]; then
+    ../../build_testngpp/src/runner/testngpp-runner $(ls *.dll) -L"../../build_testngpp/src/listeners" -l"testngppstdoutlistener -c -f"
+else
+    ../../build_testngpp/src/runner/testngpp-runner $(ls *.so) -L"../../build_testngpp/src/listeners" -l"testngppstdoutlistener -c -f" -s
+fi

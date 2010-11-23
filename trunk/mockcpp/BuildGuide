@@ -1,8 +1,12 @@
 
-as a user
+as an user
 =========
-	Linux
+	Linux(cygwin included)
 	------
+	One way:
+	run build_install.sh . (maybe you need to modify some variable in the script first)
+	
+	The other way:
 	sudo make install 
 	and then use /usr/local/include/mockcpp and /usr/local/lib/libmockcpp.a.
 	if the test framework you use is not testngpp, such as cpputest, gtest etc. , you should enter a build dir, and then run these commands:
@@ -14,6 +18,10 @@ as a user
 	
 	Windows
 	-------
+	One way:
+	run build_install.ps1 . (maybe you need to modify some variable in the script first)
+	
+	The other way:
 	Run cmake-gui.exe, choose the mockcpp root dir as source dir, and any other (nonexist) dir as binaries dir.
 	Then hit configure button, it will show you some variables that should be set, you can modify them or let it be default, hit configure again.
 	And then hit the generate button.
@@ -22,10 +30,14 @@ as a user
 	you must modify MOCKCPP_XUNIT's value, hit configure, and then specify the test framework home path, hit configure again, at last hit the generate button.
 
 	
-as a mockcpp maintainer
+as a mockcpp developer
 =======================
-	Linux
+	Linux(cygwin included)
 	------
+	One way:
+	run build.sh .
+	
+	The other way:
 	make all
 	it will make mockcpp and it's tests, and then run the tests.(build.sh do the same thing, and much faster.) 
 	
