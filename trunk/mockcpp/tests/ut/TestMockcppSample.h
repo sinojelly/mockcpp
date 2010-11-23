@@ -14,7 +14,7 @@ int func_stub()
     return 1000;
 }
 
-FIXTURE(mockcpp_sample, test no mem leak)
+FIXTURE(mockcpp_sample, mockcpp samples)
 {
     TEST(test_method_mocker)
     {
