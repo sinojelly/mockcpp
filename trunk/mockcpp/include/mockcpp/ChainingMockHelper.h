@@ -34,6 +34,7 @@
 #include <mockcpp/ThrowExceptionStub.h>
 #include <mockcpp/TypelessStubAdapter.h>
 #include <mockcpp/types/Any.h>
+#include <mockcpp/ProcStub.h>
 
 MOCKCPP_NS_START
 
