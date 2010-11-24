@@ -29,10 +29,10 @@ MOCKCPP_NS_START
 
 
 /////////////////////////////////////////////////////////////////
-CApiHook::CApiHook(ApiHook::Address pfnOld, ApiHook::Address pfnNew)
+CApiHook::CApiHook(ApiHook::Address pfnOld, ApiHook::Address pfnNew, bool isStdcall)
    : allocator(new Linux32ProtectPageAllocator(new Linux32PageAllocator)), hooker(new Arch32ApiHook(allocator, new Linux32CodeModifier(allocator)))
 {
-	hooker->hook(pfnOld, pfnNew);
+	hooker->hook(pfnOld, pfnNew, isStdcall);
 }
 
 /////////////////////////////////////////////////////////////////

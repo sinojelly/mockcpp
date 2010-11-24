@@ -34,7 +34,7 @@ struct Arch32ApiHook : public ApiHook
 	Arch32ApiHook(PageAllocator *pageAllocator, CodeModifier *codeModifier);
 	~Arch32ApiHook();
 
-	void hook(ApiHook::Address pfnOld, ApiHook::Address pfnNew);
+	void hook(ApiHook::Address pfnOld, ApiHook::Address pfnNew, bool isStdcall);
 
 private:
 	Arch32ApiHookImpl * This;

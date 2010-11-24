@@ -32,10 +32,10 @@ MOCKCPP_NS_START
 
 
 /////////////////////////////////////////////////////////////////
-CApiHook::CApiHook(ApiHook::Address pfnOld, ApiHook::Address pfnNew)
+CApiHook::CApiHook(ApiHook::Address pfnOld, ApiHook::Address pfnNew, bool isStdcall)
    : allocator(new Win32ProtectPageAllocator(new Win32PageAllocator)), hooker(new Arch32ApiHook(allocator, new Win32CodeModifier))
 {
-	hooker->hook(pfnOld, pfnNew);
+	hooker->hook(pfnOld, pfnNew, isStdcall);
 }
 
 /////////////////////////////////////////////////////////////////

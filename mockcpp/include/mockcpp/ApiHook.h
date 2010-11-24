@@ -30,7 +30,7 @@ struct ApiHook
 {
 	typedef void * Address;
 
-	virtual void hook(Address pfnOld, Address pfnNew) = 0;
+	virtual void hook(Address pfnOld, Address pfnNew, bool isStdcall) = 0;
 	
 	virtual ~ApiHook(){}
 };
