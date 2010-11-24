@@ -455,7 +455,7 @@ const char * get_file_name(const char * file, unsigned int line)
    }
    const char * p = strrchr(file, '\\');
    const char * q = strrchr(file, '/');
-   unsigned int max_ptr = ((unsigned int)p) > ((unsigned int)q) ? (unsigned int)p : (unsigned int)q;
+   unsigned long max_ptr = ((unsigned long)p) > ((unsigned long)q) ? (unsigned long)p : (unsigned long)q;
 
    if (max_ptr > 0)
    {
@@ -555,7 +555,7 @@ static bool check_tail(new_ptr_list_t* ptr)
     {
         fast_mutex_autolock lock(new_output_lock);
         fprintf(new_output_fp,
-                "new%s: allocated %p (size %u, ",
+                "new%s: allocated %p (size %lu, ",
                 is_array ? "[]" : "",
                 pointer, size);
         if (line != 0)
@@ -661,7 +661,7 @@ static bool check_tail(new_ptr_list_t* ptr)
     {
         fast_mutex_autolock lock(new_output_lock);
         fprintf(new_output_fp,
-                "delete%s: freed %p (size %u, %u bytes still allocated)\n",
+                "delete%s: freed %p (size %lu, %lu bytes still allocated)\n",
                 is_array ? "[]" : "",
                 (char*)ptr + ALIGNED_LIST_ITEM_SIZE,
                 ptr->size, total_mem_alloc);
@@ -806,7 +806,7 @@ int check_mem_corruption()
         {
 #endif
             fprintf(new_output_fp,
-                    "Heap data corrupt near %p (size %u, ",
+                    "Heap data corrupt near %p (size %lu, ",
                     pointer,
                     ptr->size);
 #if _DEBUG_NEW_TAILCHECK
@@ -814,7 +814,7 @@ int check_mem_corruption()
         else
         {
             fprintf(new_output_fp,
-                    "Overwritten past end of object at %p (size %u, ",
+                    "Overwritten past end of object at %p (size %lu, ",
                     pointer,
                     ptr->size);
         }
