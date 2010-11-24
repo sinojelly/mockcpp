@@ -29,7 +29,7 @@
 			" 0x"  \
             << std::hex << std::setiosflags(std::ios::uppercase)  \
             << std::setw(8) << std::setfill('0') \
-            << (unsigned int)(pointer)  \
+            << (unsigned long)(pointer)  \
             << std::dec << std::resetiosflags(std::ios::uppercase) 
 
 #define FILE_LINE(file, line) \
@@ -76,7 +76,7 @@ struct SrcAddr
 	        file = last_info;
 	        if (!print_position_from_addr(_instruction, line, last_info, sizeof(last_info))) // fail to get source location
 	        {
-	        	sprintf(last_info, "instruction 0x%08X", (unsigned int)_instruction);
+	        	sprintf(last_info, "instruction 0x%016lX", (unsigned long)_instruction);
 	        }
 	    }
 	}

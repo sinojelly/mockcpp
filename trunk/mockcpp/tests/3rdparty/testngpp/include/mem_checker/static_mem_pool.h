@@ -111,6 +111,7 @@ private:
 template <size_t _Sz, int _Gid = -1>
 class static_mem_pool : public mem_pool_base
 {
+	typedef struct mem_pool_base::_Block_list _Block_list;
     typedef typename class_level_lock<static_mem_pool<_Sz, _Gid>, (_Gid < 0)>
             ::lock lock;
 public:
@@ -173,9 +174,9 @@ public:
     {
         assert(__ptr != NULL);
         lock __guard;
-        _Block_list* __block = reinterpret_cast<_Block_list*>(__ptr);
-        __block->_M_next = _S_memory_block_p;
-        _S_memory_block_p = __block;
+        _Block_list* block = reinterpret_cast<_Block_list*>(__ptr);
+        block->_M_next = _S_memory_block_p;
+        _S_memory_block_p = block;
     }
     virtual void recycle();
 
@@ -239,15 +240,15 @@ void static_mem_pool<_Sz, _Gid>::recycle()
     // before the pool-specific lock.  However, no race conditions are
     // found so far.
     lock __guard;
-    _Block_list* __block = _S_memory_block_p;
-    while (__block)
+    _Block_list* block = _S_memory_block_p;
+    while (block)
     {
-        if (_Block_list* __temp = __block->_M_next)
+        if (_Block_list* __temp = block->_M_next)
         {
             _Block_list* __next = __temp->_M_next;
-            __block->_M_next = __next;
+            block->_M_next = __next;
             dealloc_sys(__temp);
-            __block = __next;
+            block = __next;
         }
         else
         {

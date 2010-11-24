@@ -34,7 +34,7 @@ struct PageAllocator : public MemAllocator
 
 	void * align(void *addr)
 	{
-		return (void *)(((int)addr) & ~(pageSize() - 1));
+		return (void *)(((size_t)addr) & ~(pageSize() - 1));
 	}
 };
 
