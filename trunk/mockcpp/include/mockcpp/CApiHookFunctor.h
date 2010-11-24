@@ -67,5 +67,7 @@ CAPIHOOK_FUNCTOR_DEF(12);
 
 MOCKCPP_NS_END
 
+#include <mockcpp/CApiHookFunctorStdcall.h>
+
 #endif
 

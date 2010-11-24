@@ -24,6 +24,7 @@
 #include <mockcpp/Arch32ApiHook.h>
 #include <mockcpp/AllocatorContainer.h>
 
+
 MOCKCPP_NS_START
 
 namespace {
@@ -79,6 +80,51 @@ const unsigned char thunkCodeTemplate[]  =
 	0xC3        // ret
 };
 
+
+/*   __stdcall
+
+		|   frame pointer   |<-- ebp
+		|   local vars      |
+		|   parameters      | para1, para2, ...
+		|   ret addr		| call func_to_be_mocked(para1,para2, ...)
+
+					|         func_to_be_mocked: jmp to thunk   
+					V
+	 |->|   frame pointer   | 
+	 |  |   local vars      |
+	 |  |   parameters      |   
+	 |  |   old addr        | thunk begin, pop ret addr, push old addr, push ret addr => make ret addr at stack top  
+	 |--|   ret addr        | and then jmp hook(old_addr, para1, para2, ...)
+		| new frame pointer | hook begin
+		|-------------------| <- ebp
+		|   local vars      |
+		|					| 
+		|					| 
+
+    
+    mov eax, [new_addr]
+    mov ecx, [old_addr]     
+    pop edx   ; pop ret addr
+    push ecx
+    push edx
+    jmp eax
+
+    hook function is:
+    hook(unsigned int old_addr, ...)
+*/
+
+
+const unsigned char thunkCodeTemplateStdcall[]  =  
+{ 
+	0xB8, 0x00, 0x00, 0x00, 0x00, // mov eax, [new_addr]
+	0xB9, 0x00, 0x00, 0x00, 0x00, // mov ecx, [old_addr]
+    0x5A,           // pop edx
+    0x51,           // push ecx
+    0x52,           // push edx
+	0xFF, 0xE0      // jmp eax
+};
+
+
 // E9 :  jmp near
 const unsigned char jmpCodeTemplate[]  =  
 { 
@@ -89,7 +135,7 @@ struct ThunkAllocator
 {
     static void *alloc()
     {
-        return allocatorContainer.alloc(sizeof( thunkCodeTemplate ));
+        return allocatorContainer.alloc(maxThunkCodeSize);
     }
     
     static void free(void *p)
@@ -104,12 +150,14 @@ struct ThunkAllocator
         if (firstRun)
         {
             firstRun = false;
-            allocatorContainer.initialize(sizeof( thunkCodeTemplate ), pageAllocator);
+            allocatorContainer.initialize(maxThunkCodeSize, pageAllocator);
         }
     }
     
 private:
     static AllocatorContainer allocatorContainer;
+    #define max(a, b) ((a) > (b) ? (a) : (b))
+    static const size_t maxThunkCodeSize = max(sizeof( thunkCodeTemplate ), sizeof( thunkCodeTemplateStdcall ));
 };
 
 AllocatorContainer ThunkAllocator::allocatorContainer;
@@ -138,7 +186,7 @@ private:
 	bool allocThunk();
 	void freeThunk();
 	void initHook(ApiHook::Address pfnOld, ApiHook::Address pfnNew );
-	void initThunk(ApiHook::Address pfnOld, ApiHook::Address pfnNew );
+	void initThunk(ApiHook::Address pfnOld, ApiHook::Address pfnNew, bool isStdcall);
 	void startHook();
 	void stopHook();
 };
@@ -164,11 +212,20 @@ void Arch32ApiHookImpl::freeThunk()
 }
 
 /////////////////////////////////////////////////////////////////
-void Arch32ApiHookImpl::initThunk(ApiHook::Address pfnOld, ApiHook::Address pfnNew )
+void Arch32ApiHookImpl::initThunk(ApiHook::Address pfnOld, ApiHook::Address pfnNew, bool isStdcall)
 {
-	memcpy( m_thunk, thunkCodeTemplate, sizeof( thunkCodeTemplate ) );  
-	*(unsigned long*)(m_thunk + 4) = (unsigned long)pfnNew;
-	*(unsigned long*)(m_thunk + 9) = (unsigned long)pfnOld;
+    if (isStdcall)
+    {
+    	memcpy( m_thunk, thunkCodeTemplateStdcall, sizeof( thunkCodeTemplateStdcall ) );  
+    	*(unsigned long*)(m_thunk + 1) = (unsigned long)pfnNew;
+    	*(unsigned long*)(m_thunk + 6) = (unsigned long)pfnOld;
+    }
+    else
+    {
+    	memcpy( m_thunk, thunkCodeTemplate, sizeof( thunkCodeTemplate ) );  
+    	*(unsigned long*)(m_thunk + 4) = (unsigned long)pfnNew;
+    	*(unsigned long*)(m_thunk + 9) = (unsigned long)pfnOld;
+    }
 }
 
 /////////////////////////////////////////////////////////////////
@@ -211,7 +268,7 @@ void Arch32ApiHookImpl::hook(ApiHook::Address pfnOld, ApiHook::Address pfnNew, b
 	}
 
     initHook(pfnOld, pfnNew);
-	initThunk(pfnOld, pfnNew);
+	initThunk(pfnOld, pfnNew, isStdcall);
 
 	startHook();
 }
