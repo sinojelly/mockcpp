@@ -56,6 +56,13 @@ IF(UNIX)
   )
 ENDIF(UNIX)
 
+IF(MSVC)
+  SET(UT_CASES
+  ${UT_CASES}
+  TestApiHookStdcall.h
+  )
+ENDIF(MSVC)
+
 LINK_DIRECTORIES(
 	${PROJECT_HOME}/../../build_mockcpp/src/Debug
 	${PROJECT_HOME}/../../build_testngpp/src/Debug
