@@ -34,7 +34,7 @@ struct HookMockObject : public ChainableMockObjectBase
 	~HookMockObject();
 	
     // Building-invocation-mocker interface -- Used in test case
-    InvocationMockBuilderGetter method(const std::string& name, const void* api, const void* stub);
+    InvocationMockBuilderGetter method(const std::string& name, const void* api, const void* stub, bool isStdcall);
 
     // Invoking interface --  Used in Functor
     template <typename RT>

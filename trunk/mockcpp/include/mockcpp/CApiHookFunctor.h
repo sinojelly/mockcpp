@@ -46,6 +46,8 @@ struct CApiHookFunctor<R(DECL_ARGS(n))> \
         return GlobalMockObject::instance.invoke<R>(address) \
                                 (empty_caller DECL_REST_PARAMS(n)); \
     } \
+    \
+    static const bool isStdcall = false; \
 }
 
 #else
@@ -82,6 +84,8 @@ struct CApiHookFunctor<R(DECL_ARGS(n))> \
         } \
         return R(); \
     } \
+    \
+    static const bool isStdcall = false; \
 }
 #endif
 

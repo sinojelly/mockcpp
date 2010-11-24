@@ -119,7 +119,7 @@ AllocatorContainer ThunkAllocator::allocatorContainer;
 
 struct Arch32ApiHookImpl
 {
-	void hook(ApiHook::Address pfnOld, ApiHook::Address pfnNew );
+	void hook(ApiHook::Address pfnOld, ApiHook::Address pfnNew, bool isStdcall );
 
 	Arch32ApiHookImpl(PageAllocator *pageAllocator, CodeModifier *codeModifier);
 	~Arch32ApiHookImpl();
@@ -203,7 +203,7 @@ void Arch32ApiHookImpl::stopHook()
 }
 
 /////////////////////////////////////////////////////////////////
-void Arch32ApiHookImpl::hook(ApiHook::Address pfnOld, ApiHook::Address pfnNew )
+void Arch32ApiHookImpl::hook(ApiHook::Address pfnOld, ApiHook::Address pfnNew, bool isStdcall)
 {
 	if (!allocThunk())
 	{
@@ -239,9 +239,9 @@ Arch32ApiHook::~Arch32ApiHook()
 }
 
 /////////////////////////////////////////////////////////////////
-void Arch32ApiHook::hook(ApiHook::Address pfnOld, ApiHook::Address pfnNew )
+void Arch32ApiHook::hook(ApiHook::Address pfnOld, ApiHook::Address pfnNew, bool isStdcall )
 {
-	This->hook(pfnOld, pfnNew);
+	This->hook(pfnOld, pfnNew, isStdcall);
 }
 
 /////////////////////////////////////////////////////////////////

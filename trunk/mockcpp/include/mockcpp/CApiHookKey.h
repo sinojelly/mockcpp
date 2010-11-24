@@ -29,7 +29,7 @@ MOCKCPP_NS_START
 struct CApiHookKey
     : public ChainableMockMethodKey
 {
-   CApiHookKey(const void* api, const void* stub);
+   CApiHookKey(const void* api, const void* stub, bool isStdcall);
    CApiHookKey(const void* api);
 
    ~CApiHookKey();

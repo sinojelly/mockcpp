@@ -36,7 +36,7 @@ struct HookMockObjectImpl
 
    ChainableMockMethodCore*
    getMethod(const std::string& name, const void* api, 
-         const void* stub, InvocationMockerNamespace* ns);
+         const void* stub, bool isStdcall, InvocationMockerNamespace* ns);
    
    ChainableMockMethodCore*
    getMethod(const void* api);
@@ -51,6 +51,7 @@ private:
    addMethod(const std::string& name, 
        const void* api, 
 	   const void* stub,
+       bool isStdcall,
 	   InvocationMockerNamespace* ns); 
 
 };
@@ -68,9 +69,10 @@ HookMockObjectImpl::
 addMethod(const std::string& name, 
     const void* api, 
 	const void* stub,
+    bool isStdcall,
 	InvocationMockerNamespace* ns) 
 {
-    CApiHookKey* key = new CApiHookKey(api, stub);
+    CApiHookKey* key = new CApiHookKey(api, stub, isStdcall);
     ChainableMockMethodCore* method = new ChainableMockMethodCore(name, ns);
 
     container->addMethod(key, method);
@@ -80,8 +82,10 @@ addMethod(const std::string& name,
 //////////////////////////////////////////////////////////////
 ChainableMockMethodCore*
 HookMockObjectImpl::
-getMethod(const std::string& name, const void* api, 
-         const void* stub, InvocationMockerNamespace* ns)
+getMethod(const std::string& name, const void* api
+         , const void* stub
+         , bool isStdcall
+         , InvocationMockerNamespace* ns)
 {
     ChainableMockMethodCore* method = getMethod(api);
     if (method != 0)
@@ -89,7 +93,7 @@ getMethod(const std::string& name, const void* api,
       return method;
     }
 
-    return addMethod(name, api, stub, ns);
+    return addMethod(name, api, stub, isStdcall, ns);
 }
 
 //////////////////////////////////////////////////////////////
@@ -116,9 +120,9 @@ HookMockObject::~HookMockObject()
 
 //////////////////////////////////////////////////////////////
 InvocationMockBuilderGetter
-HookMockObject::method(const std::string& name, const void* api, const void* stub)
+HookMockObject::method(const std::string& name, const void* api, const void* stub, bool isStdcall)
 {
-    ChainableMockMethodCore* core = This->getMethod(name, api, stub, this);
+    ChainableMockMethodCore* core = This->getMethod(name, api, stub, isStdcall, this);
     return InvocationMockBuilderGetter(core, core);
 }
 

@@ -34,7 +34,8 @@
              instance.method \
                  ( #function \
                  , (const void *)function \
-                 , (const void *)CApiHookFunctor<BOOST_TYPEOF(function)>::hook)
+                 , (const void *)CApiHookFunctor<BOOST_TYPEOF(function)>::hook \
+                 , CApiHookFunctor<BOOST_TYPEOF(function)>::isStdcall)
 #  endif
 
 USING_MOCKCPP_NS
