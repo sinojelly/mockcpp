@@ -65,7 +65,7 @@ FIXTURE(TestNonvirtualMemberMocker, mock nonvirtual nonstatic member method)
         GlobalMockObject::instance.method
             ( "CUT::normal_method"
             , getAddrOfMethod(&CUT::normal_method)
-            , (const void *)CApiHookFunctor<BOOST_TYPEOF(CUT::static_method)>::hook)
+            , (const void *)CApiHookFunctor<BOOST_TYPEOF(CUT::static_method)>::hook, false)
             .stubs()
             .will(returnValue(100));
         CUT cut;
@@ -80,7 +80,7 @@ FIXTURE(TestNonvirtualMemberMocker, mock nonvirtual nonstatic member method)
         GlobalMockObject::instance.method
             ( "CUT::normal_method_1"
             , getAddrOfMethod(&CUT::normal_method_1)
-            , (const void *)CApiHookFunctor<BOOST_TYPEOF(CUT::static_method_2)>::hook) 
+            , (const void *)CApiHookFunctor<BOOST_TYPEOF(CUT::static_method_2)>::hook, false) 
             .stubs()
             .with(any(), eq(2))
             .will(returnValue(101));
