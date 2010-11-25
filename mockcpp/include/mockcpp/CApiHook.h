@@ -7,7 +7,7 @@
 
 MOCKCPP_NS_START
 
-struct Arch32ApiHook;
+struct ArchApiHook;
 struct PageAllocator;
 
 struct CApiHook
@@ -17,7 +17,7 @@ struct CApiHook
 
 private:
     PageAllocator *allocator;
-	Arch32ApiHook* hooker;
+	ArchApiHook* hooker;
 };
 
 MOCKCPP_NS_END

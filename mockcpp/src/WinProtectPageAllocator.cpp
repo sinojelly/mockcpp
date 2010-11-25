@@ -20,57 +20,72 @@
 #ifdef _MSC_VER
 
 #include <Windows.h>
-#include <mockcpp/Win32PageAllocator.h>
+#include <mockcpp/WinProtectPageAllocator.h>
 #include <new>
 
 MOCKCPP_NS_START
 
-#define PAGE_SIZE    ( 64 * 1024)
-
-Win32PageAllocator::Win32PageAllocator()
-	: sizeOfPage(PAGE_SIZE), cloneObject(0)
+WinProtectPageAllocator::WinProtectPageAllocator(PageAllocator *pageAllocator)
+	: allocator(pageAllocator), cloneObject(0)
 {
 }
 
-Win32PageAllocator::~Win32PageAllocator()
+WinProtectPageAllocator::~WinProtectPageAllocator()
 {
+    delete allocator;
 }
 
-void* Win32PageAllocator::alloc(size_t size)
+void* WinProtectPageAllocator::alloc(size_t size)
 {
-    // now we always specify size 0 to allocate a page in BlockAllocator. and so i fix it to be PAGESIZE, or else may be some error in clone.
-	//sizeOfPage = (size <= PAGE_SIZE) ? PAGE_SIZE : size;
-	//sizeOfPage = PAGE_SIZE;
-	return ::VirtualAlloc(NULL, sizeOfPage, MEM_RESERVE | MEM_COMMIT, PAGE_EXECUTE_READWRITE );
+
+	LPVOID pages = allocator->alloc(size);
+
+	if (pages == NULL)
+	{
+		return NULL;
+	}
+
+	DWORD oldProtect;
+	if (VirtualProtect( pages, pageSize(), PAGE_EXECUTE_READWRITE, &oldProtect) == 0)
+	{
+		allocator->free(pages);
+		return NULL;
+	}
+
+	return pages;
 }
 
-void Win32PageAllocator::free(void* ptr)
+void WinProtectPageAllocator::free(void* ptr)
 {
-	::VirtualFree(ptr, 0, MEM_RELEASE | MEM_DECOMMIT);
+	// TODO: should i VirtualProtect here?
+	allocator->free(ptr);
 }
 
-size_t Win32PageAllocator::pageSize()
+size_t WinProtectPageAllocator::pageSize()
 {
-	return sizeOfPage;
+	return allocator->pageSize();
 }
 
-PageAllocator *Win32PageAllocator::clone()
+PageAllocator *WinProtectPageAllocator::clone()
 {
-    void *addr = malloc(sizeof(Win32PageAllocator));
-    Win32PageAllocator *object = new (addr) Win32PageAllocator;
+    void *addr = ::malloc(sizeof(WinProtectPageAllocator));
+    WinProtectPageAllocator *object = new (addr) WinProtectPageAllocator(allocator->clone());
     object->cloneObject = object; // save for destorying
     return object;
 }
 
-void Win32PageAllocator::destoryClone()
+void WinProtectPageAllocator::destoryClone()
 {
     if (cloneObject != 0)
     {
+        allocator->destoryClone(); // allocator must be cloned too, and this alway ok, because in clone, it called allocator->clone().
         ::free(cloneObject);
         cloneObject = 0;
     }
 }
 
+
 MOCKCPP_NS_END
 
 #endif
+

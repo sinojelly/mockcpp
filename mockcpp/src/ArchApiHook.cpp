@@ -21,7 +21,7 @@
 #include <mockcpp/PageAllocator.h>
 #include <mockcpp/BlockAllocator.h>
 #include <mockcpp/CodeModifier.h>
-#include <mockcpp/Arch32ApiHook.h>
+#include <mockcpp/ArchApiHook.h>
 #include <mockcpp/AllocatorContainer.h>
 
 
@@ -165,12 +165,12 @@ AllocatorContainer ThunkAllocator::allocatorContainer;
 }
 
 
-struct Arch32ApiHookImpl
+struct ArchApiHookImpl
 {
 	void hook(ApiHook::Address pfnOld, ApiHook::Address pfnNew, bool isStdcall );
 
-	Arch32ApiHookImpl(PageAllocator *pageAllocator, CodeModifier *codeModifier);
-	~Arch32ApiHookImpl();
+	ArchApiHookImpl(PageAllocator *pageAllocator, CodeModifier *codeModifier);
+	~ArchApiHookImpl();
 
 private:
 	ApiHook::Address  m_pfnOld; // save old func addr.
@@ -192,27 +192,27 @@ private:
 };
 
 /////////////////////////////////////////////////////////////////
-Arch32ApiHookImpl::Arch32ApiHookImpl(PageAllocator *pageAllocator, CodeModifier *codeModifier)
+ArchApiHookImpl::ArchApiHookImpl(PageAllocator *pageAllocator, CodeModifier *codeModifier)
 	: allocator(pageAllocator), modifier(codeModifier)
 {
     ThunkAllocator::initialize(pageAllocator);
 }
 
 /////////////////////////////////////////////////////////////////
-bool Arch32ApiHookImpl::allocThunk()
+bool ArchApiHookImpl::allocThunk()
 {
 	m_thunk = (char *)ThunkAllocator::alloc();
 	return m_thunk != 0;
 }
 
 /////////////////////////////////////////////////////////////////
-void Arch32ApiHookImpl::freeThunk()
+void ArchApiHookImpl::freeThunk()
 {
 	ThunkAllocator::free(m_thunk);
 }
 
 /////////////////////////////////////////////////////////////////
-void Arch32ApiHookImpl::initThunk(ApiHook::Address pfnOld, ApiHook::Address pfnNew, bool isStdcall)
+void ArchApiHookImpl::initThunk(ApiHook::Address pfnOld, ApiHook::Address pfnNew, bool isStdcall)
 {
     if (isStdcall)
     {
@@ -229,7 +229,7 @@ void Arch32ApiHookImpl::initThunk(ApiHook::Address pfnOld, ApiHook::Address pfnN
 }
 
 /////////////////////////////////////////////////////////////////
-void Arch32ApiHookImpl::initHook(ApiHook::Address pfnOld, ApiHook::Address pfnNew )
+void ArchApiHookImpl::initHook(ApiHook::Address pfnOld, ApiHook::Address pfnNew )
 {
     memcpy( m_byNew, jmpCodeTemplate, sizeof( jmpCodeTemplate ) );  
 
@@ -242,25 +242,25 @@ void Arch32ApiHookImpl::initHook(ApiHook::Address pfnOld, ApiHook::Address pfnNe
 }
 
 /////////////////////////////////////////////////////////////////
-bool Arch32ApiHookImpl::changeCode(char* code)
+bool ArchApiHookImpl::changeCode(char* code)
 {
 	return modifier->modify((void *)m_pfnOld, code,sizeof(jmpCodeTemplate));
 }
 
 /////////////////////////////////////////////////////////////////
-void Arch32ApiHookImpl::startHook()
+void ArchApiHookImpl::startHook()
 {
-	Arch32ApiHookImpl::changeCode((char*)m_byNew);
+	ArchApiHookImpl::changeCode((char*)m_byNew);
 }
 
 /////////////////////////////////////////////////////////////////
-void Arch32ApiHookImpl::stopHook()
+void ArchApiHookImpl::stopHook()
 {
-	Arch32ApiHookImpl::changeCode((char*)m_byOld);
+	ArchApiHookImpl::changeCode((char*)m_byOld);
 }
 
 /////////////////////////////////////////////////////////////////
-void Arch32ApiHookImpl::hook(ApiHook::Address pfnOld, ApiHook::Address pfnNew, bool isStdcall)
+void ArchApiHookImpl::hook(ApiHook::Address pfnOld, ApiHook::Address pfnNew, bool isStdcall)
 {
 	if (!allocThunk())
 	{
@@ -274,7 +274,7 @@ void Arch32ApiHookImpl::hook(ApiHook::Address pfnOld, ApiHook::Address pfnNew, b
 }
 
 /////////////////////////////////////////////////////////////////
-Arch32ApiHookImpl::~Arch32ApiHookImpl()
+ArchApiHookImpl::~ArchApiHookImpl()
 {
 	stopHook();
 	freeThunk(); // TODO: it must call dtor before destroying the members.
@@ -284,19 +284,19 @@ Arch32ApiHookImpl::~Arch32ApiHookImpl()
 }
 
 /////////////////////////////////////////////////////////////////
-Arch32ApiHook::Arch32ApiHook(PageAllocator *pageAllocator, CodeModifier *codeModifier)
-	: This(new Arch32ApiHookImpl(pageAllocator, codeModifier))
+ArchApiHook::ArchApiHook(PageAllocator *pageAllocator, CodeModifier *codeModifier)
+	: This(new ArchApiHookImpl(pageAllocator, codeModifier))
 {
 }
 
 /////////////////////////////////////////////////////////////////
-Arch32ApiHook::~Arch32ApiHook()
+ArchApiHook::~ArchApiHook()
 {
 	delete This;
 }
 
 /////////////////////////////////////////////////////////////////
-void Arch32ApiHook::hook(ApiHook::Address pfnOld, ApiHook::Address pfnNew, bool isStdcall )
+void ArchApiHook::hook(ApiHook::Address pfnOld, ApiHook::Address pfnNew, bool isStdcall )
 {
 	This->hook(pfnOld, pfnNew, isStdcall);
 }

@@ -17,54 +17,52 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#include <stdlib.h>
-#include <mockcpp/Linux32PageAllocator.h>
-#include <new>
+#ifdef _MSC_VER
 
-#include <limits.h>
-#ifndef PAGESIZE
-#define PAGESIZE   4096
-#endif
+#include <Windows.h>
+#include <mockcpp/WinPageAllocator.h>
+#include <new>
 
 MOCKCPP_NS_START
 
+#define PAGE_SIZE    ( 64 * 1024)
 
-Linux32PageAllocator::Linux32PageAllocator()
-	: sizeOfPage(PAGESIZE), cloneObject(0)
+WinPageAllocator::WinPageAllocator()
+	: sizeOfPage(PAGE_SIZE), cloneObject(0)
 {
 }
 
-Linux32PageAllocator::~Linux32PageAllocator()
+WinPageAllocator::~WinPageAllocator()
 {
 }
 
-void* Linux32PageAllocator::alloc(size_t size)
+void* WinPageAllocator::alloc(size_t size)
 {
     // now we always specify size 0 to allocate a page in BlockAllocator. and so i fix it to be PAGESIZE, or else may be some error in clone.
-	//sizeOfPage = (size <= PAGESIZE) ? PAGESIZE : size;
-	//sizeOfPage = PAGESIZE;
-	return ::malloc(sizeOfPage);
+	//sizeOfPage = (size <= PAGE_SIZE) ? PAGE_SIZE : size;
+	//sizeOfPage = PAGE_SIZE;
+	return ::VirtualAlloc(NULL, sizeOfPage, MEM_RESERVE | MEM_COMMIT, PAGE_EXECUTE_READWRITE );
 }
 
-void Linux32PageAllocator::free(void* ptr)
+void WinPageAllocator::free(void* ptr)
 {
-	::free(ptr);
+	::VirtualFree(ptr, 0, MEM_RELEASE | MEM_DECOMMIT);
 }
 
-size_t Linux32PageAllocator::pageSize()
+size_t WinPageAllocator::pageSize()
 {
 	return sizeOfPage;
 }
 
-PageAllocator *Linux32PageAllocator::clone()
+PageAllocator *WinPageAllocator::clone()
 {
-    void *addr = ::malloc(sizeof(Linux32PageAllocator));
-    Linux32PageAllocator *object = new (addr) Linux32PageAllocator();
+    void *addr = malloc(sizeof(WinPageAllocator));
+    WinPageAllocator *object = new (addr) WinPageAllocator;
     object->cloneObject = object; // save for destorying
     return object;
 }
 
-void Linux32PageAllocator::destoryClone()
+void WinPageAllocator::destoryClone()
 {
     if (cloneObject != 0)
     {
@@ -73,7 +71,6 @@ void Linux32PageAllocator::destoryClone()
     }
 }
 
-
 MOCKCPP_NS_END
 
-
+#endif

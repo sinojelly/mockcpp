@@ -17,14 +17,14 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#ifndef __MOCKCPP_WIN32CODEMODIFIER_H__
-#define __MOCKCPP_WIN32CODEMODIFIER_H__
+#ifndef __MOCKCPP_WINCODEMODIFIER_H__
+#define __MOCKCPP_WINCODEMODIFIER_H__
 
 #include <mockcpp/CodeModifier.h>
 
 MOCKCPP_NS_START
 
-struct Win32CodeModifier : public CodeModifier
+struct WinCodeModifier : public CodeModifier
 {
 	bool modify(void *dest, void *src, size_t size);
 };

@@ -1,7 +1,7 @@
 /***
     mockcpp is a generic C/C++ mock framework.
     Copyright (C) <2010>  <Darwin Yuan: darwin.yuan@gmail.com>
-	                      <Chen Guodong: sinojelly@gmail.com>
+                                   <Chen Guodong: sinojelly@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -17,26 +17,31 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#ifndef __MOCKCPP_LINUX32CODEMODIFIER_H__
-#define __MOCKCPP_LINUX32CODEMODIFIER_H__
+#ifndef __MOCKCPP_WINPAGEALLOCATOR_H__
+#define __MOCKCPP_WINPAGEALLOCATOR_H__
 
-#include <mockcpp/CodeModifier.h>
+
+#include <mockcpp/PageAllocator.h>
 
 MOCKCPP_NS_START
 
-struct PageAllocator;
-
-struct Linux32CodeModifier : public CodeModifier
+struct WinPageAllocator : public PageAllocator
 {
-	Linux32CodeModifier(PageAllocator *pageAllocator);
-    ~Linux32CodeModifier();
-	bool modify(void *dest, void *src, size_t size);
+    WinPageAllocator();
+    ~WinPageAllocator();
+    void* alloc(size_t size = 0);
+    void free(void* ptr);
+    size_t pageSize();
+    PageAllocator *clone();
+    void destoryClone();
 
 private:
-	PageAllocator *page;
+    const size_t sizeOfPage;
+    WinPageAllocator *cloneObject;
 };
-
 
 MOCKCPP_NS_END
 
 #endif
+
+
