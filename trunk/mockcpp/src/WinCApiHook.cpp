@@ -17,31 +17,35 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#ifndef __MOCKCPP_LINUX32PROTECTEDPAGEALLOCATOR_H__
-#define __MOCKCPP_LINUX32PROTECTEDPAGEALLOCATOR_H__
+#ifdef _MSC_VER
 
-
-#include <mockcpp/PageAllocator.h>
+#include <windows.h>
+#include <mockcpp/CApiHook.h>
+#include <mockcpp/Asserter.h>
+#include <mockcpp/WinPageAllocator.h>
+#include <mockcpp/WinProtectPageAllocator.h>
+#include <mockcpp/BlockAllocator.h>
+#include <mockcpp/WinCodeModifier.h>
+#include <mockcpp/ArchApiHook.h>
 
 MOCKCPP_NS_START
 
-struct Linux32ProtectPageAllocator : public PageAllocator
-{
-	Linux32ProtectPageAllocator(PageAllocator *pageAllocator);
-	~Linux32ProtectPageAllocator();
-	void* alloc(size_t size);
-	void free(void* ptr);
-	size_t pageSize();
-    PageAllocator *clone();
-    void destoryClone();
 
-private:
-	PageAllocator *allocator;
-    Linux32ProtectPageAllocator *cloneObject;
-};
+/////////////////////////////////////////////////////////////////
+CApiHook::CApiHook(ApiHook::Address pfnOld, ApiHook::Address pfnNew, bool isStdcall)
+   : allocator(new WinProtectPageAllocator(new WinPageAllocator)), hooker(new ArchApiHook(allocator, new WinCodeModifier))
+{
+	hooker->hook(pfnOld, pfnNew, isStdcall);
+}
+
+/////////////////////////////////////////////////////////////////
+CApiHook::~CApiHook()
+{
+	delete hooker;
+}
+
+/////////////////////////////////////////////////////////////////
 
 MOCKCPP_NS_END
 
 #endif
-
-

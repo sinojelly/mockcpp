@@ -149,7 +149,7 @@ SET(MOCKCPP_SRCS
     CApiHookKey.cpp
     GlobalMockObject.cpp
     BlockAllocator.cpp
-    Arch32ApiHook.cpp
+    ArchApiHook.cpp
 	AllocatorContainer.cpp
 )
 
@@ -214,18 +214,18 @@ ENDIF()
 IF(MSVC)
    SET(MOCKCPP_SRCS 
 	   ${MOCKCPP_SRCS} 
-	   Win32CApiHook.cpp 
-	   Win32PageAllocator.cpp 
-	   Win32ProtectPageAllocator.cpp 
-	   Win32CodeModifier.cpp
+	   WinCApiHook.cpp 
+	   WinPageAllocator.cpp 
+	   WinProtectPageAllocator.cpp 
+	   WinCodeModifier.cpp
    ) 
 ELSE(MSVC)
    SET(MOCKCPP_SRCS 
        ${MOCKCPP_SRCS} 
-       Linux32ApiHook.cpp
-       Linux32PageAllocator.cpp
-       Linux32ProtectPageAllocator.cpp
-       Linux32CodeModifier.cpp
+       LinuxApiHook.cpp
+       LinuxPageAllocator.cpp
+       LinuxProtectPageAllocator.cpp
+       LinuxCodeModifier.cpp
    )
 ENDIF(MSVC)
 ######################################################

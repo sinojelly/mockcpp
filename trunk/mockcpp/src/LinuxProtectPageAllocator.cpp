@@ -17,36 +17,34 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#ifdef _MSC_VER
-
-#include <Windows.h>
-#include <mockcpp/Win32ProtectPageAllocator.h>
+#include <stdlib.h>
+#include <mockcpp/LinuxProtectPageAllocator.h>
+#include <string.h>
+#include <sys/mman.h>
 #include <new>
 
 MOCKCPP_NS_START
 
-Win32ProtectPageAllocator::Win32ProtectPageAllocator(PageAllocator *pageAllocator)
+LinuxProtectPageAllocator::LinuxProtectPageAllocator(PageAllocator *pageAllocator)
 	: allocator(pageAllocator), cloneObject(0)
 {
 }
 
-Win32ProtectPageAllocator::~Win32ProtectPageAllocator()
+LinuxProtectPageAllocator::~LinuxProtectPageAllocator()
 {
     delete allocator;
 }
 
-void* Win32ProtectPageAllocator::alloc(size_t size)
+void* LinuxProtectPageAllocator::alloc(size_t size)
 {
-
-	LPVOID pages = allocator->alloc(size);
+	void *pages = allocator->alloc(size);
 
 	if (pages == NULL)
 	{
 		return NULL;
 	}
 
-	DWORD oldProtect;
-	if (VirtualProtect( pages, pageSize(), PAGE_EXECUTE_READWRITE, &oldProtect) == 0)
+	if (mprotect(allocator->align(pages) , 2 * pageSize(), PROT_EXEC|PROT_WRITE|PROT_READ) != 0)
 	{
 		allocator->free(pages);
 		return NULL;
@@ -55,30 +53,29 @@ void* Win32ProtectPageAllocator::alloc(size_t size)
 	return pages;
 }
 
-void Win32ProtectPageAllocator::free(void* ptr)
+void LinuxProtectPageAllocator::free(void* ptr)
 {
-	// TODO: should i VirtualProtect here?
 	allocator->free(ptr);
 }
 
-size_t Win32ProtectPageAllocator::pageSize()
+size_t LinuxProtectPageAllocator::pageSize()
 {
 	return allocator->pageSize();
 }
 
-PageAllocator *Win32ProtectPageAllocator::clone()
+PageAllocator *LinuxProtectPageAllocator::clone()
 {
-    void *addr = ::malloc(sizeof(Win32ProtectPageAllocator));
-    Win32ProtectPageAllocator *object = new (addr) Win32ProtectPageAllocator(allocator->clone());
+    void *addr = ::malloc(sizeof(LinuxProtectPageAllocator));
+    LinuxProtectPageAllocator *object = new (addr) LinuxProtectPageAllocator(allocator->clone());
     object->cloneObject = object; // save for destorying
     return object;
 }
 
-void Win32ProtectPageAllocator::destoryClone()
+void LinuxProtectPageAllocator::destoryClone()
 {
     if (cloneObject != 0)
     {
-        allocator->destoryClone(); // allocator must be cloned too, and this alway ok, because in clone, it called allocator->clone().
+        allocator->destoryClone(); // allocator must be cloned too, and this alway ok, because in clone, it called allocator->clone().    
         ::free(cloneObject);
         cloneObject = 0;
     }
@@ -86,6 +83,4 @@ void Win32ProtectPageAllocator::destoryClone()
 
 
 MOCKCPP_NS_END
-
-#endif
 

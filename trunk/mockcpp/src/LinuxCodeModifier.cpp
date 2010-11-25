@@ -17,35 +17,40 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#ifdef _MSC_VER
+#include <string.h>
+#include <sys/mman.h>
+#include <mockcpp/LinuxCodeModifier.h>
+#include <mockcpp/PageAllocator.h>
 
-#include <windows.h>
-#include <mockcpp/CApiHook.h>
-#include <mockcpp/Asserter.h>
-#include <mockcpp/Win32PageAllocator.h>
-#include <mockcpp/Win32ProtectPageAllocator.h>
-#include <mockcpp/BlockAllocator.h>
-#include <mockcpp/Win32CodeModifier.h>
-#include <mockcpp/Arch32ApiHook.h>
 
 MOCKCPP_NS_START
 
 
-/////////////////////////////////////////////////////////////////
-CApiHook::CApiHook(ApiHook::Address pfnOld, ApiHook::Address pfnNew, bool isStdcall)
-   : allocator(new Win32ProtectPageAllocator(new Win32PageAllocator)), hooker(new Arch32ApiHook(allocator, new Win32CodeModifier))
+LinuxCodeModifier::LinuxCodeModifier(PageAllocator *pageAllocator)
+	: page(pageAllocator->clone())
 {
-	hooker->hook(pfnOld, pfnNew, isStdcall);
 }
 
-/////////////////////////////////////////////////////////////////
-CApiHook::~CApiHook()
+LinuxCodeModifier::~LinuxCodeModifier()
 {
-	delete hooker;
+    page->destoryClone();
 }
 
-/////////////////////////////////////////////////////////////////
+bool LinuxCodeModifier::modify(void *dest, void *src, size_t size)
+{
+	if (mprotect(page->align(dest) , 2 * page->pageSize(), PROT_EXEC|PROT_WRITE|PROT_READ) != 0)
+	{
+		return false;
+	}
+
+	//(void)memcpy(dest, src, size); // something wrong on linux: after memcpy(or 5 single byte copy),  the 4 bytes following jmp, src is 0x07c951b0, but dest is 0x07b851b0. so use unsigned int *, it works ok.
+	*((unsigned char *)dest) = *((unsigned char *)src);
+	*((unsigned long*)((unsigned long)dest + 1)) = *((unsigned long*)((unsigned long)src + 1));
+
+	return true;
+}
+
 
 MOCKCPP_NS_END
 
-#endif
+

@@ -20,11 +20,11 @@
 #ifdef _MSC_VER
 
 #include <Windows.h>
-#include <mockcpp/Win32CodeModifier.h>
+#include <mockcpp/WinCodeModifier.h>
 
 MOCKCPP_NS_START
 
-bool Win32CodeModifier::modify(void *dest, void *src, size_t size)
+bool WinCodeModifier::modify(void *dest, void *src, size_t size)
 {
 	DWORD  dwOldProtect(0);
 	DWORD  dwReadWrite(PAGE_EXECUTE_READWRITE); // modify code segment must use PAGE_EXECUTE_READWRITE.

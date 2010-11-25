@@ -17,31 +17,26 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#include <mockcpp/CApiHook.h>
-#include <mockcpp/Asserter.h>
-#include <mockcpp/Linux32PageAllocator.h>
-#include <mockcpp/Linux32ProtectPageAllocator.h>
-#include <mockcpp/Linux32CodeModifier.h>
-#include <mockcpp/BlockAllocator.h>
-#include <mockcpp/Arch32ApiHook.h>
+#ifndef __MOCKCPP_LINUXCODEMODIFIER_H__
+#define __MOCKCPP_LINUXCODEMODIFIER_H__
+
+#include <mockcpp/CodeModifier.h>
 
 MOCKCPP_NS_START
 
+struct PageAllocator;
 
-/////////////////////////////////////////////////////////////////
-CApiHook::CApiHook(ApiHook::Address pfnOld, ApiHook::Address pfnNew, bool isStdcall)
-   : allocator(new Linux32ProtectPageAllocator(new Linux32PageAllocator)), hooker(new Arch32ApiHook(allocator, new Linux32CodeModifier(allocator)))
+struct LinuxCodeModifier : public CodeModifier
 {
-	hooker->hook(pfnOld, pfnNew, isStdcall);
-}
+    LinuxCodeModifier(PageAllocator *pageAllocator);
+    ~LinuxCodeModifier();
+    bool modify(void *dest, void *src, size_t size);
 
-/////////////////////////////////////////////////////////////////
-CApiHook::~CApiHook()
-{
-	delete hooker;
-}
+private:
+    PageAllocator *page;
+};
 
-/////////////////////////////////////////////////////////////////
 
 MOCKCPP_NS_END
 
+#endif
