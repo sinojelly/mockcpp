@@ -16,11 +16,11 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#if BUILD_FOR_X86
+#if BUILD_FOR_X64
 
 
-#ifndef __MOCKCPP_CODE_PROVIDER_X86_H
-#define __MOCKCPP_CODE_PROVIDER_X86_H
+#ifndef __MOCKCPP_CODE_PROVIDER_X64_H
+#define __MOCKCPP_CODE_PROVIDER_X64_H
 
 #include <mockcpp/mockcpp.h>
 
@@ -30,9 +30,8 @@
 #include <mockcpp/CApiHook.h>
 #include <mockcpp/ArgumentsMacroHelpers.h>
 
-#include <mockcpp/JmpCodeX86.h>
-#include <mockcpp/ThunkCodeX86.h>
-#include <mockcpp/ThunkCodeX86Stdcall.h>
+#include <mockcpp/JmpCodeX64.h>
+#include <mockcpp/ThunkCodeX64.h>
 
 
 MOCKCPP_NS_START
