@@ -51,7 +51,7 @@ struct ThunkCodeProvider<R(DECL_ARGS(n))> \
 { \
     ThunkCode *operator ()() \
     { \
-        static const ThunkCodeTemplate<typename R(DECL_ARGS(n))> thunkTemplate; \
+        static const ThunkCodeTemplate<R(DECL_ARGS(n))> thunkTemplate; \
         return (ThunkCode *)&thunkTemplate; \
     } \
 }
@@ -83,7 +83,7 @@ struct JmpCodeProvider<R(DECL_ARGS(n))> \
 { \
     JmpCode *operator ()() \
     { \
-        static const JmpCodeTemplate<typename R(DECL_ARGS(n))> jmpTemplate; \
+        static const JmpCodeTemplate<R(DECL_ARGS(n))> jmpTemplate; \
         return (JmpCode *)&jmpTemplate; \
     } \
 }

@@ -28,8 +28,6 @@
 #    define MOCKER(function) MOCKCPP_NS::GlobalMockObject::instance.method(#function)
 #  else
 #    include <mockcpp/CApiHookFunctor.h>
-#    include <mockcpp/ThunkCode.h>
-#    include <mockcpp/JmpCode.h>
 #    include <boost/typeof/typeof.hpp>
 #    define MOCKER(function) \
          MOCKCPP_NS::GlobalMockObject:: \
