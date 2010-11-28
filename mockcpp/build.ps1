@@ -11,9 +11,11 @@ $env:path=$env:path+";D:\Tools\CMD\cmake-2.8.1-win32-x86\bin"
 
 # specify the Visual Studio Version, not set to use default
 $VC_VER="-G `"Visual Studio 9 2008`""
+#$VC_VER="-G `"Visual Studio 9 2008 Win64`""   # build for X64
 
 # build Debug only
 $env:VCBUILD_DEFAULT_CFG="Debug|Win32"
+#$env:VCBUILD_DEFAULT_CFG="Debug|x64"     # build for x64
 
 function build($build_dir, $src_dir) { 
 	if (!(test-path $build_dir)) { mkdir $build_dir }
