@@ -16,13 +16,19 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
+
 #ifdef _MSC_VER
+
+
+#if BUILD_FOR_X86
+
 
 #ifndef __MOCKCPP_C_API_HOOK_FUNCTOR_STDCALL_H
 #define __MOCKCPP_C_API_HOOK_FUNCTOR_STDCALL_H
 
 
 MOCKCPP_NS_START
+
 
 ////////////////////////////////////////////
 #define CAPIHOOK_FUNCTOR_STDCALL_DEF(n) \
@@ -34,8 +40,6 @@ struct CApiHookFunctor<R __stdcall (DECL_ARGS(n))> \
         return GlobalMockObject::instance.invoke<R>(address) \
                                 (empty_caller DECL_REST_PARAMS(n)); \
     } \
-    \
-    static const bool isStdcall = true; \
 }
 
 
@@ -55,6 +59,8 @@ CAPIHOOK_FUNCTOR_STDCALL_DEF(12);
 
 
 MOCKCPP_NS_END
+
+#endif
 
 #endif
 

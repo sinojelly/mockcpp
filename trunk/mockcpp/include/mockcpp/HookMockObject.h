@@ -27,14 +27,16 @@
 MOCKCPP_NS_START
 
 struct HookMockObjectImpl;
+struct ThunkCode;
+struct JmpCode;
 
 struct HookMockObject : public ChainableMockObjectBase
 {
     HookMockObject(const std::string& name);
-	~HookMockObject();
-	
+    ~HookMockObject();
+
     // Building-invocation-mocker interface -- Used in test case
-    InvocationMockBuilderGetter method(const std::string& name, const void* api, const void* stub, bool isStdcall);
+    InvocationMockBuilderGetter method(const std::string& name, const void* api, const void* stub, ThunkCode *thunkTemplate, JmpCode *jmpTemplate);
 
     // Invoking interface --  Used in Functor
     template <typename RT>

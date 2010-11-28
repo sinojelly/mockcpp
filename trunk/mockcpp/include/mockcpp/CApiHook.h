@@ -12,12 +12,12 @@ struct PageAllocator;
 
 struct CApiHook
 {
-	CApiHook(ApiHook::Address pfnOld, ApiHook::Address pfnNew, bool isStdcall);
-	~CApiHook();
+    CApiHook(ApiHook::Address pfnOld, ApiHook::Address pfnNew, ThunkCode *thunkTemplate, JmpCode *jmpTemplate);
+    ~CApiHook();
 
 private:
     PageAllocator *allocator;
-	ArchApiHook* hooker;
+    ArchApiHook* hooker;
 };
 
 MOCKCPP_NS_END

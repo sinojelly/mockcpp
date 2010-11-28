@@ -1,7 +1,7 @@
 /***
     mockcpp is a generic C/C++ mock framework.
     Copyright (C) <2010>  <Darwin Yuan: darwin.yuan@gmail.com>
-	                      <Chen Guodong: sinojelly@gmail.com>
+                                   <Chen Guodong: sinojelly@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -25,17 +25,20 @@
 
 MOCKCPP_NS_START
 
+struct ThunkCode;
+struct JmpCode;
 
 struct ApiHook
 {
-	typedef void * Address;
+    typedef void * Address;
 
-	virtual void hook(Address pfnOld, Address pfnNew, bool isStdcall) = 0;
-	
-	virtual ~ApiHook(){}
+    virtual void hook(Address pfnOld, Address pfnNew, ThunkCode *thunkTemplate, JmpCode *jmpTemplate) = 0;
+
+    virtual ~ApiHook(){}
 };
 
 
 MOCKCPP_NS_END
 
 #endif
+

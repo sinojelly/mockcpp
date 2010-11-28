@@ -149,8 +149,8 @@ SET(MOCKCPP_SRCS
     CApiHookKey.cpp
     GlobalMockObject.cpp
     BlockAllocator.cpp
-    ArchApiHook.cpp
 	AllocatorContainer.cpp
+	ArchApiHook.cpp
 )
 
 IF(${MOCKCPP_XUNIT} STREQUAL "GTEST" OR ${MOCKCPP_XUNIT} STREQUAL "gtest")

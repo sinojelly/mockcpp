@@ -1,7 +1,7 @@
 /***
     mockcpp is a generic C/C++ mock framework.
     Copyright (C) <2010>  <Darwin Yuan: darwin.yuan@gmail.com>
-	                      <Chen Guodong: sinojelly@gmail.com>
+	                            <Chen Guodong: sinojelly@gmail.com>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -23,113 +23,14 @@
 #include <mockcpp/CodeModifier.h>
 #include <mockcpp/ArchApiHook.h>
 #include <mockcpp/AllocatorContainer.h>
+#include <mockcpp/ThunkCode.h>
+#include <mockcpp/JmpCode.h>
 
 
 MOCKCPP_NS_START
 
+
 namespace {
-
-/*   
-		|   frame pointer   |<-- ebp
-		|   local vars      |
-		|   parameters      | para1, para2, ...
-		|   ret addr		| call func_to_be_mocked(para1,para2, ...)
-
-					|         func_to_be_mocked: jmp to thunk   
-					V
-	 |->|   frame pointer   | 
-	 |  |   local vars      |
-	 |  |   parameters      |   
-	 |  |   ret addr        |   
-	 |--|   frame pointer   | thunk begin
-	    |   old addr        |   
-		|   ret addr        | call hook(old_addr, unused, unused, para1, para2, ...)
-		| new frame pointer | hook begin
-		|-------------------| <- ebp
-		|   local vars      |
-		|					| 
-		|					| 
-
-    
-    push ebp
-    mov ebp, esp
-    mov eax, [new_addr]
-    mov ecx, [old_addr]     
-    push ecx
-    call eax
-    leave 
-    ret 
-
-    note: leave equals to 
-	mov  esp,ebp 
-	pop  ebp
-
-	hook function is:
-    hook(unsigned int old_addr, void* unused1, void* unused2, ...)
-*/
-
-const unsigned char thunkCodeTemplate[]  =  
-{ 
-	0x55,       // push ebp
-	0x8B, 0xEC, // mov ebp, esp
-	0xB8, 0x00, 0x00, 0x00, 0x00, // mov eax, [new_addr]
-	0xB9, 0x00, 0x00, 0x00, 0x00, // mov ecx, [old_addr]
-	0x51,       // push ecx
-	0xFF, 0xD0, // call eax
-	0xC9,       // leave
-	0xC3        // ret
-};
-
-
-/*   __stdcall
-
-		|   frame pointer   |<-- ebp
-		|   local vars      |
-		|   parameters      | para1, para2, ...
-		|   ret addr		| call func_to_be_mocked(para1,para2, ...)
-
-					|         func_to_be_mocked: jmp to thunk   
-					V
-	 |->|   frame pointer   | 
-	 |  |   local vars      |
-	 |  |   parameters      |   
-	 |  |   old addr        | thunk begin, pop ret addr, push old addr, push ret addr => make ret addr at stack top  
-	 |--|   ret addr        | and then jmp hook(old_addr, para1, para2, ...)
-		| new frame pointer | hook begin
-		|-------------------| <- ebp
-		|   local vars      |
-		|					| 
-		|					| 
-
-    
-    mov eax, [new_addr]
-    mov ecx, [old_addr]     
-    pop edx   ; pop ret addr
-    push ecx
-    push edx
-    jmp eax
-
-    hook function is:
-    hook(unsigned int old_addr, ...)
-*/
-
-
-const unsigned char thunkCodeTemplateStdcall[]  =  
-{ 
-	0xB8, 0x00, 0x00, 0x00, 0x00, // mov eax, [new_addr]
-	0xB9, 0x00, 0x00, 0x00, 0x00, // mov ecx, [old_addr]
-    0x5A,           // pop edx
-    0x51,           // push ecx
-    0x52,           // push edx
-	0xFF, 0xE0      // jmp eax
-};
-
-
-// E9 :  jmp near
-const unsigned char jmpCodeTemplate[]  =  
-{ 
-	0xE9, 0x00, 0x00, 0x00, 0x00  // jmp thunk
-};
 
 struct ThunkAllocator 
 {
@@ -156,8 +57,7 @@ struct ThunkAllocator
     
 private:
     static AllocatorContainer allocatorContainer;
-    #define max(a, b) ((a) > (b) ? (a) : (b))
-    static const size_t maxThunkCodeSize = max(sizeof( thunkCodeTemplate ), sizeof( thunkCodeTemplateStdcall ));
+    static const size_t maxThunkCodeSize = 100;
 };
 
 AllocatorContainer ThunkAllocator::allocatorContainer;
@@ -167,33 +67,36 @@ AllocatorContainer ThunkAllocator::allocatorContainer;
 
 struct ArchApiHookImpl
 {
-	void hook(ApiHook::Address pfnOld, ApiHook::Address pfnNew, bool isStdcall );
+	void hook(ApiHook::Address pfnOld, ApiHook::Address pfnNew, ThunkCode *thunkTemplate, JmpCode *jmpTemplate);
 
 	ArchApiHookImpl(PageAllocator *pageAllocator, CodeModifier *codeModifier);
 	~ArchApiHookImpl();
 
 private:
+    static const size_t MAX_JMP_CODE_TEMPLATE_SIZE = 16; 
 	ApiHook::Address  m_pfnOld; // save old func addr.
 	
-    char m_byNew[sizeof(jmpCodeTemplate)];  //jmp to thunk
-	char m_byOld[sizeof(jmpCodeTemplate)];  //save old func content which will be covered with jmp to thunk code, so as to recover it when unhook.
+    char m_byNew[MAX_JMP_CODE_TEMPLATE_SIZE];  //jmp to thunk
+	char m_byOld[MAX_JMP_CODE_TEMPLATE_SIZE];  //save old func content which will be covered with jmp to thunk code, so as to recover it when unhook.
 	char *m_thunk; //thunk code, for jumping to mock func(CApiHookFunctor<BOOST_TYPEOF(function)>::hook) and pass old func addr as parameter.
 
     PageAllocator *allocator;
 	CodeModifier *modifier;
 
-	bool changeCode(char* code);
+    JmpCode *jmpCodeTemplate;
+
+	bool changeCode(char* code, JmpCode *jmpTemplate);
 	bool allocThunk();
 	void freeThunk();
-	void initHook(ApiHook::Address pfnOld, ApiHook::Address pfnNew );
-	void initThunk(ApiHook::Address pfnOld, ApiHook::Address pfnNew, bool isStdcall);
-	void startHook();
+	void initHook(ApiHook::Address pfnOld, ApiHook::Address pfnNew, JmpCode *jmpTemplate );
+	void initThunk(ApiHook::Address pfnOld, ApiHook::Address pfnNew, ThunkCode *thunkTemplate);
+	void startHook(JmpCode *jmpTemplate);
 	void stopHook();
 };
 
 /////////////////////////////////////////////////////////////////
 ArchApiHookImpl::ArchApiHookImpl(PageAllocator *pageAllocator, CodeModifier *codeModifier)
-	: allocator(pageAllocator), modifier(codeModifier)
+	: allocator(pageAllocator), modifier(codeModifier), jmpCodeTemplate(0)
 {
     ThunkAllocator::initialize(pageAllocator);
 }
@@ -212,65 +115,60 @@ void ArchApiHookImpl::freeThunk()
 }
 
 /////////////////////////////////////////////////////////////////
-void ArchApiHookImpl::initThunk(ApiHook::Address pfnOld, ApiHook::Address pfnNew, bool isStdcall)
+void ArchApiHookImpl::initThunk(ApiHook::Address pfnOld, ApiHook::Address pfnNew, ThunkCode *thunkTemplate)
 {
-    if (isStdcall)
-    {
-    	memcpy( m_thunk, thunkCodeTemplateStdcall, sizeof( thunkCodeTemplateStdcall ) );  
-    	*(unsigned long*)(m_thunk + 1) = (unsigned long)pfnNew;
-    	*(unsigned long*)(m_thunk + 6) = (unsigned long)pfnOld;
-    }
-    else
-    {
-    	memcpy( m_thunk, thunkCodeTemplate, sizeof( thunkCodeTemplate ) );  
-    	*(unsigned long*)(m_thunk + 4) = (unsigned long)pfnNew;
-    	*(unsigned long*)(m_thunk + 9) = (unsigned long)pfnOld;
-    }
+	memcpy( m_thunk, thunkTemplate->thunkCodeStart(), thunkTemplate->thunkCodeLength());  
+	*(unsigned long*)(m_thunk + thunkTemplate->newAddrOffset()) = (unsigned long)pfnNew;
+	*(unsigned long*)(m_thunk + thunkTemplate->oldAddrOffset()) = (unsigned long)pfnOld;
 }
 
 /////////////////////////////////////////////////////////////////
-void ArchApiHookImpl::initHook(ApiHook::Address pfnOld, ApiHook::Address pfnNew )
+void ArchApiHookImpl::initHook(ApiHook::Address pfnOld, ApiHook::Address pfnNew, JmpCode *jmpTemplate)
 {
-    memcpy( m_byNew, jmpCodeTemplate, sizeof( jmpCodeTemplate ) );  
+    memcpy( m_byNew, jmpTemplate->jmpCodeStart(), jmpTemplate->jmpCodeLength());  
 
-    *(unsigned long*)(m_byNew + 1) = 
-		(unsigned long)m_thunk - (unsigned long)pfnOld - sizeof(jmpCodeTemplate);
+    *(unsigned long*)(m_byNew + jmpTemplate->jmpAddrOffset()) = 
+		(unsigned long)m_thunk - (unsigned long)pfnOld - jmpTemplate->jmpCodeLength();
 
     m_pfnOld  =  pfnOld;
 
-    memcpy((void*)m_byOld, (void*)m_pfnOld, sizeof(jmpCodeTemplate));
+    memcpy((void*)m_byOld, (void*)m_pfnOld, jmpTemplate->jmpCodeLength());
 }
 
 /////////////////////////////////////////////////////////////////
-bool ArchApiHookImpl::changeCode(char* code)
+bool ArchApiHookImpl::changeCode(char* code, JmpCode *jmpTemplate)
 {
-	return modifier->modify((void *)m_pfnOld, code,sizeof(jmpCodeTemplate));
+	return modifier->modify((void *)m_pfnOld, code, jmpTemplate->jmpCodeLength());
 }
 
 /////////////////////////////////////////////////////////////////
-void ArchApiHookImpl::startHook()
+void ArchApiHookImpl::startHook(JmpCode *jmpTemplate)
 {
-	ArchApiHookImpl::changeCode((char*)m_byNew);
+	ArchApiHookImpl::changeCode((char*)m_byNew, jmpTemplate);
+    jmpCodeTemplate = jmpTemplate;
 }
 
 /////////////////////////////////////////////////////////////////
 void ArchApiHookImpl::stopHook()
 {
-	ArchApiHookImpl::changeCode((char*)m_byOld);
+    if (jmpCodeTemplate)
+    {
+	    ArchApiHookImpl::changeCode((char*)m_byOld, jmpCodeTemplate );
+    }
 }
 
 /////////////////////////////////////////////////////////////////
-void ArchApiHookImpl::hook(ApiHook::Address pfnOld, ApiHook::Address pfnNew, bool isStdcall)
+void ArchApiHookImpl::hook(ApiHook::Address pfnOld, ApiHook::Address pfnNew, ThunkCode *thunkTemplate, JmpCode *jmpTemplate)
 {
 	if (!allocThunk())
 	{
 		return;
 	}
 
-    initHook(pfnOld, pfnNew);
-	initThunk(pfnOld, pfnNew, isStdcall);
+    initHook(pfnOld, pfnNew, jmpTemplate);
+	initThunk(pfnOld, pfnNew, thunkTemplate);
 
-	startHook();
+	startHook(jmpTemplate);
 }
 
 /////////////////////////////////////////////////////////////////
@@ -296,9 +194,9 @@ ArchApiHook::~ArchApiHook()
 }
 
 /////////////////////////////////////////////////////////////////
-void ArchApiHook::hook(ApiHook::Address pfnOld, ApiHook::Address pfnNew, bool isStdcall )
+void ArchApiHook::hook(ApiHook::Address pfnOld, ApiHook::Address pfnNew, ThunkCode *thunkTemplate, JmpCode *jmpTemplate)
 {
-	This->hook(pfnOld, pfnNew, isStdcall);
+	This->hook(pfnOld, pfnNew, thunkTemplate, jmpTemplate);
 }
 
 /////////////////////////////////////////////////////////////////

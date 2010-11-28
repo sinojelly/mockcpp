@@ -22,10 +22,10 @@
 MOCKCPP_NS_START
 
 ///////////////////////////////////////////////////////////
-CApiHookKey::CApiHookKey(const void* api, const void* stub, bool isStdcall)
+CApiHookKey::CApiHookKey(const void* api, const void* stub, ThunkCode *thunkTemplate, JmpCode *jmpTemplate)
    : apiAddress(api)
 {
-   hook = new CApiHook((ApiHook::Address)api, (ApiHook::Address)stub, isStdcall);
+   hook = new CApiHook((ApiHook::Address)api, (ApiHook::Address)stub, thunkTemplate, jmpTemplate);
 }
 
 ///////////////////////////////////////////////////////////

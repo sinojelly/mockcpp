@@ -27,11 +27,23 @@
 #include <mockcpp/CApiHook.h>
 #include <mockcpp/ArgumentsMacroHelpers.h>
 
+#include <mockcpp/JmpCode.h>
+#include <mockcpp/JmpCodeX86.h>
+
+#include <mockcpp/ThunkCode.h>
+#include <mockcpp/ThunkCodeX86.h>
+#include <mockcpp/ThunkCodeX86Stdcall.h>
+
+#include <mockcpp/CodeProviderX86.h>
+#include <mockcpp/CodeProviderX86Stdcall.h>
+
+
 MOCKCPP_NS_START
 
 ////////////////////////////////////////////
 template <typename F>
 struct CApiHookFunctor;
+
 
 const std::string empty_caller("");
 ////////////////////////////////////////////
@@ -46,9 +58,7 @@ struct CApiHookFunctor<R(DECL_ARGS(n))> \
                                 (empty_caller DECL_REST_PARAMS(n)); \
     } \
     \
-    static const bool isStdcall = false; \
 }
-
 
 CAPIHOOK_FUNCTOR_DEF(0);
 CAPIHOOK_FUNCTOR_DEF(1);
