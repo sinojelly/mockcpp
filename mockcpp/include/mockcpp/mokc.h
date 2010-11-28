@@ -28,6 +28,8 @@
 #    define MOCKER(function) MOCKCPP_NS::GlobalMockObject::instance.method(#function)
 #  else
 #    include <mockcpp/CApiHookFunctor.h>
+#    include <mockcpp/ThunkCode.h>
+#    include <mockcpp/JmpCode.h>
 #    include <boost/typeof/typeof.hpp>
 #    define MOCKER(function) \
          MOCKCPP_NS::GlobalMockObject:: \
@@ -35,7 +37,8 @@
                  ( #function \
                  , (const void *)function \
                  , (const void *)CApiHookFunctor<BOOST_TYPEOF(function)>::hook \
-                 , CApiHookFunctor<BOOST_TYPEOF(function)>::isStdcall)
+                 , ThunkCodeProvider<BOOST_TYPEOF(function)>()() \
+                 , JmpCodeProvider<BOOST_TYPEOF(function)>()())
 #  endif
 
 USING_MOCKCPP_NS
