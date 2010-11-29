@@ -27,12 +27,11 @@
 MOCKCPP_NS_START
 
 struct ThunkCode;
-struct JmpCode;
 
 struct CApiHookKey
     : public ChainableMockMethodKey
 {
-   CApiHookKey(const void* api, const void* stub, ThunkCode *thunkTemplate, JmpCode *jmpTemplate);
+   CApiHookKey(const void* api, const void* stub, ThunkCode *thunkTemplate);
    CApiHookKey(const void* api);
 
    ~CApiHookKey();

@@ -26,13 +26,12 @@
 MOCKCPP_NS_START
 
 struct ThunkCode;
-struct JmpCode;
 
 struct ApiHook
 {
     typedef void * Address;
 
-    virtual void hook(Address pfnOld, Address pfnNew, ThunkCode *thunkTemplate, JmpCode *jmpTemplate) = 0;
+    virtual void hook(Address pfnOld, Address pfnNew, ThunkCode *thunkTemplate) = 0;
 
     virtual ~ApiHook(){}
 };

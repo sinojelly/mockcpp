@@ -68,7 +68,7 @@ MOCKCPP_NS_START
 */
 
 
-static const unsigned char thunkCodeTemplateStdcall[]  =  
+static const unsigned char thunkCodeTemplateX86Stdcall[]  =  
 { 
     0xB8, 0x00, 0x00, 0x00, 0x00, // mov eax, [new_addr]
     0xB9, 0x00, 0x00, 0x00, 0x00, // mov ecx, [old_addr]
@@ -82,16 +82,11 @@ static const unsigned char thunkCodeTemplateStdcall[]  =
 template<typename R DECL_TEMPLATE_ARGS(n)> \
 struct ThunkCodeTemplate<R __stdcall (DECL_ARGS(n))> : public ThunkCode \
 { \
-    const void *thunkCodeStart() const \
+    ThunkCodeTemplate<R __stdcall (DECL_ARGS(n))>() \
     { \
-        return thunkCodeTemplateStdcall; \
+        thunkCodeTemplate = thunkCodeTemplateX86Stdcall; \
+        thunkCodeTemplateSize = sizeof(thunkCodeTemplateX86Stdcall); \
     } \
-    \
-    size_t thunkCodeLength() const \
-    { \
-        return sizeof(thunkCodeTemplateStdcall); \
-    } \
-    \
     size_t oldAddrOffset() const \
     { \
         return 6; \

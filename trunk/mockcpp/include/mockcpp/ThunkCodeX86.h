@@ -69,7 +69,7 @@ MOCKCPP_NS_START
 */
 
 
-static const unsigned char thunkCodeTemplate[]  =  
+static const unsigned char thunkCodeTemplateX86[]  =  
 { 
     0x55,       // push ebp
     0x8B, 0xEC, // mov ebp, esp
@@ -88,16 +88,11 @@ struct ThunkCodeTemplate;
 template<typename R DECL_TEMPLATE_ARGS(n)> \
 struct ThunkCodeTemplate<R(DECL_ARGS(n))> : public ThunkCode \
 { \
-    const void *thunkCodeStart() const \
+    ThunkCodeTemplate<R(DECL_ARGS(n))>() \
     { \
-        return thunkCodeTemplate; \
+        thunkCodeTemplate = thunkCodeTemplateX86; \
+        thunkCodeTemplateSize = sizeof(thunkCodeTemplateX86); \
     } \
-    \
-    size_t thunkCodeLength() const \
-    { \
-        return sizeof(thunkCodeTemplate); \
-    } \
-    \
     size_t oldAddrOffset() const \
     { \
         return 9; \

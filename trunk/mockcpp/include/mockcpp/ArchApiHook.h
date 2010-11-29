@@ -28,14 +28,14 @@ MOCKCPP_NS_START
 struct CodeModifier;
 struct ArchApiHookImpl;
 struct ThunkCode;
-struct JmpCode;
+
 
 struct ArchApiHook : public ApiHook
 {
     ArchApiHook(PageAllocator *pageAllocator, CodeModifier *codeModifier);
     ~ArchApiHook();
 
-    void hook(ApiHook::Address pfnOld, ApiHook::Address pfnNew, ThunkCode *thunkTemplate, JmpCode *jmpTemplate);
+    void hook(ApiHook::Address pfnOld, ApiHook::Address pfnNew, ThunkCode *thunkTemplate);
 
 private:
     ArchApiHookImpl * This;

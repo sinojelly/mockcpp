@@ -12,7 +12,7 @@ struct PageAllocator;
 
 struct CApiHook
 {
-    CApiHook(ApiHook::Address pfnOld, ApiHook::Address pfnNew, ThunkCode *thunkTemplate, JmpCode *jmpTemplate);
+    CApiHook(ApiHook::Address pfnOld, ApiHook::Address pfnNew, ThunkCode *thunkTemplate);
     ~CApiHook();
 
 private:

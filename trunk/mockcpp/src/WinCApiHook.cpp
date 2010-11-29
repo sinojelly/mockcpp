@@ -32,10 +32,10 @@ MOCKCPP_NS_START
 
 
 /////////////////////////////////////////////////////////////////
-CApiHook::CApiHook(ApiHook::Address pfnOld, ApiHook::Address pfnNew, ThunkCode *thunkTemplate, JmpCode *jmpTemplate)
+CApiHook::CApiHook(ApiHook::Address pfnOld, ApiHook::Address pfnNew, ThunkCode *thunkTemplate)
    : allocator(new WinProtectPageAllocator(new WinPageAllocator)), hooker(new ArchApiHook(allocator, new WinCodeModifier))
 {
-	hooker->hook(pfnOld, pfnNew, thunkTemplate, jmpTemplate);
+	hooker->hook(pfnOld, pfnNew, thunkTemplate);
 }
 
 /////////////////////////////////////////////////////////////////

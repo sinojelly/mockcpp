@@ -27,17 +27,33 @@
 MOCKCPP_NS_START
 
 
-struct JmpCode
-{
-    virtual const void *jmpCodeStart() const = 0;
-    virtual size_t jmpCodeLength() const = 0;
-    virtual size_t jmpAddrOffset() const = 0;
-
-    virtual ~JmpCode(){}
+// E9 :  jmp near
+static const unsigned char jmpCodeTemplate[]  =  
+{     
+    0xE9, 0x00, 0x00, 0x00, 0x00  // jmp thunk
 };
 
 
+struct JmpCode
+{
+    const void *jmpCodeStart() const
+    {
+        return jmpCodeTemplate;
+    }
+    
+    size_t jmpCodeLength() const
+    {
+        return sizeof(jmpCodeTemplate);
+    }
+    
+    size_t jmpAddrOffset() const
+    {
+        return 1;
+    }
+};
 
+static const JmpCode jmpCodeProvider;
+static const size_t JMP_CODE_TEMPLATE_SIZE = sizeof(jmpCodeTemplate); 
 
 MOCKCPP_NS_END
 

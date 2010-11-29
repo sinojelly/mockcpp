@@ -36,7 +36,7 @@ struct HookMockObjectImpl
 
    ChainableMockMethodCore*
    getMethod(const std::string& name, const void* api, 
-         const void* stub, ThunkCode *thunkTemplate, JmpCode *jmpTemplate, InvocationMockerNamespace* ns);
+         const void* stub, ThunkCode *thunkTemplate, InvocationMockerNamespace* ns);
    
    ChainableMockMethodCore*
    getMethod(const void* api);
@@ -52,7 +52,6 @@ private:
        const void* api, 
 	   const void* stub,
        ThunkCode *thunkTemplate, 
-       JmpCode *jmpTemplate, 
 	   InvocationMockerNamespace* ns); 
 
 };
@@ -71,10 +70,9 @@ addMethod(const std::string& name,
     const void* api, 
 	const void* stub,
     ThunkCode *thunkTemplate, 
-    JmpCode *jmpTemplate, 
 	InvocationMockerNamespace* ns) 
 {
-    CApiHookKey* key = new CApiHookKey(api, stub, thunkTemplate, jmpTemplate);
+    CApiHookKey* key = new CApiHookKey(api, stub, thunkTemplate);
     ChainableMockMethodCore* method = new ChainableMockMethodCore(name, ns);
 
     container->addMethod(key, method);
@@ -87,7 +85,6 @@ HookMockObjectImpl::
 getMethod(const std::string& name, const void* api
          , const void* stub
          , ThunkCode *thunkTemplate
-         , JmpCode *jmpTemplate
          , InvocationMockerNamespace* ns)
 {
     ChainableMockMethodCore* method = getMethod(api);
@@ -96,7 +93,7 @@ getMethod(const std::string& name, const void* api
       return method;
     }
 
-    return addMethod(name, api, stub, thunkTemplate, jmpTemplate, ns);
+    return addMethod(name, api, stub, thunkTemplate, ns);
 }
 
 //////////////////////////////////////////////////////////////
@@ -123,9 +120,9 @@ HookMockObject::~HookMockObject()
 
 //////////////////////////////////////////////////////////////
 InvocationMockBuilderGetter
-HookMockObject::method(const std::string& name, const void* api, const void* stub, ThunkCode *thunkTemplate, JmpCode *jmpTemplate)
+HookMockObject::method(const std::string& name, const void* api, const void* stub, ThunkCode *thunkTemplate)
 {
-    ChainableMockMethodCore* core = This->getMethod(name, api, stub, thunkTemplate, jmpTemplate, this);
+    ChainableMockMethodCore* core = This->getMethod(name, api, stub, thunkTemplate, this);
     return InvocationMockBuilderGetter(core, core);
 }
 

@@ -66,8 +66,7 @@ FIXTURE(TestNonvirtualMemberMocker, mock nonvirtual nonstatic member method)
             ( "CUT::normal_method"
             , getAddrOfMethod(&CUT::normal_method)
             , (const void *)CApiHookFunctor<BOOST_TYPEOF(CUT::static_method)>::hook
-    		, ThunkCodeProvider<BOOST_TYPEOF(CUT::static_method)>()() 
-			, JmpCodeProvider<BOOST_TYPEOF(CUT::static_method)>()())
+    		, ThunkCodeProvider<BOOST_TYPEOF(CUT::static_method)>()())
             .stubs()
             .will(returnValue(100));
         CUT cut;
@@ -83,8 +82,7 @@ FIXTURE(TestNonvirtualMemberMocker, mock nonvirtual nonstatic member method)
             ( "CUT::normal_method_1"
             , getAddrOfMethod(&CUT::normal_method_1)
             , (const void *)CApiHookFunctor<BOOST_TYPEOF(CUT::static_method_2)>::hook
-    		, ThunkCodeProvider<BOOST_TYPEOF(CUT::static_method_2)>()() 
-			, JmpCodeProvider<BOOST_TYPEOF(CUT::static_method_2)>()())
+    		, ThunkCodeProvider<BOOST_TYPEOF(CUT::static_method_2)>()())
             .stubs()
             .with(any(), eq(2))
             .will(returnValue(101));

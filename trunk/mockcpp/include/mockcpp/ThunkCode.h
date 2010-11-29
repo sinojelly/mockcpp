@@ -29,13 +29,27 @@ MOCKCPP_NS_START
 
 struct ThunkCode
 {
-    virtual const void *thunkCodeStart() const = 0;
-    virtual size_t thunkCodeLength() const = 0;    
+    virtual const void *thunkCodeStart() const
+    {
+        return thunkCodeTemplate;
+    }
+    
+    virtual size_t thunkCodeLength() const
+    {
+        return thunkCodeTemplateSize;
+    }
+
     virtual size_t oldAddrOffset() const = 0;
     virtual size_t newAddrOffset() const = 0;
 
     virtual ~ThunkCode(){}
+
+protected:
+    const void *thunkCodeTemplate;
+    size_t thunkCodeTemplateSize;
 };
+
+static const size_t MAX_THUNK_CODE_SIZE = 200;
 
 
 MOCKCPP_NS_END
