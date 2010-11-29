@@ -82,6 +82,7 @@ private:
     PageAllocator *allocator;
 	CodeModifier *modifier;
 
+    JmpCode jmpCode;
     const JmpCode * const jmpCodeTemplate;
 
 	bool changeCode(char* code);
@@ -95,7 +96,7 @@ private:
 
 /////////////////////////////////////////////////////////////////
 ArchApiHookImpl::ArchApiHookImpl(PageAllocator *pageAllocator, CodeModifier *codeModifier)
-	: allocator(pageAllocator), modifier(codeModifier), jmpCodeTemplate(&jmpCodeProvider)
+	: allocator(pageAllocator), modifier(codeModifier), jmpCodeTemplate(&jmpCode)
 {
     ThunkAllocator::initialize(pageAllocator);
 }

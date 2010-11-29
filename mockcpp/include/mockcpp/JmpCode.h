@@ -50,9 +50,10 @@ struct JmpCode
     {
         return 1;
     }
+
+
 };
 
-static const JmpCode jmpCodeProvider;
 static const size_t JMP_CODE_TEMPLATE_SIZE = sizeof(jmpCodeTemplate); 
 
 MOCKCPP_NS_END
