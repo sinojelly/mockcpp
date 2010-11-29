@@ -52,6 +52,7 @@ inline std::string getFileName(std::string file)
        { \
 		   throw; \
        }
+
 	   
 MOCKCPP_NS_END
 

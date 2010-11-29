@@ -16,6 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
+#if BUILD_FOR_X86
+
 #ifndef __MOCKCPP_C_API_HOOK_FUNCTOR_H
 #define __MOCKCPP_C_API_HOOK_FUNCTOR_H
 
@@ -26,9 +28,6 @@
 #include <mockcpp/GlobalMockObject.h>
 #include <mockcpp/CApiHook.h>
 #include <mockcpp/ArgumentsMacroHelpers.h>
-
-#include <mockcpp/JmpCode.h>
-#include <mockcpp/JmpCodeX86.h>
 
 #include <mockcpp/ThunkCode.h>
 #include <mockcpp/ThunkCodeX86.h>
@@ -78,6 +77,8 @@ CAPIHOOK_FUNCTOR_DEF(12);
 MOCKCPP_NS_END
 
 #include <mockcpp/CApiHookFunctorStdcall.h>
+
+#endif
 
 #endif
 

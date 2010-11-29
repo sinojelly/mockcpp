@@ -30,7 +30,6 @@
 #include <mockcpp/CApiHook.h>
 #include <mockcpp/ArgumentsMacroHelpers.h>
 
-#include <mockcpp/JmpCodeX64.h>
 #include <mockcpp/ThunkCodeX64.h>
 
 
@@ -65,38 +64,6 @@ THUNK_CODE_PROVIDER_DEF(9);
 THUNK_CODE_PROVIDER_DEF(10);
 THUNK_CODE_PROVIDER_DEF(11);
 THUNK_CODE_PROVIDER_DEF(12);
-
-
-
-
-////////////////////////////////////////////
-template <typename F>
-struct JmpCodeProvider;
-
-#define JMP_CODE_PROVIDER_DEF(n) \
-template <typename R DECL_TEMPLATE_ARGS(n)> \
-struct JmpCodeProvider<R(DECL_ARGS(n))> \
-{ \
-    JmpCode *operator ()() \
-    { \
-        static const JmpCodeTemplate<R(DECL_ARGS(n))> jmpTemplate; \
-        return (JmpCode *)&jmpTemplate; \
-    } \
-}
-
-JMP_CODE_PROVIDER_DEF(0);
-JMP_CODE_PROVIDER_DEF(1);
-JMP_CODE_PROVIDER_DEF(2);
-JMP_CODE_PROVIDER_DEF(3);
-JMP_CODE_PROVIDER_DEF(4);
-JMP_CODE_PROVIDER_DEF(5);
-JMP_CODE_PROVIDER_DEF(6);
-JMP_CODE_PROVIDER_DEF(7);
-JMP_CODE_PROVIDER_DEF(8);
-JMP_CODE_PROVIDER_DEF(9);
-JMP_CODE_PROVIDER_DEF(10);
-JMP_CODE_PROVIDER_DEF(11);
-JMP_CODE_PROVIDER_DEF(12);
 
 
 

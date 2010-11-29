@@ -46,6 +46,7 @@ SET(UT_CASES
   TestStaticMethodMocker.h
   TestNonvirtualMethodMocker.h
   TestMockcppSample.h
+  TestApiHookBase.h
 )
 
 IF(UNIX)
@@ -62,6 +63,10 @@ IF(MSVC)
   TestApiHookStdcall.h
   )
 ENDIF(MSVC)
+
+IF(CMAKE_CL_64)
+    ADD_DEFINITIONS(-DWIN64)
+ENDIF(CMAKE_CL_64)
 
 LINK_DIRECTORIES(
 	${PROJECT_HOME}/../../build_mockcpp/src/Debug

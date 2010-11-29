@@ -29,10 +29,10 @@ MOCKCPP_NS_START
 
 
 /////////////////////////////////////////////////////////////////
-CApiHook::CApiHook(ApiHook::Address pfnOld, ApiHook::Address pfnNew, ThunkCode *thunkTemplate, JmpCode *jmpTemplate)
+CApiHook::CApiHook(ApiHook::Address pfnOld, ApiHook::Address pfnNew, ThunkCode *thunkTemplate)
    : allocator(new LinuxProtectPageAllocator(new LinuxPageAllocator)), hooker(new ArchApiHook(allocator, new LinuxCodeModifier(allocator)))
 {
-	hooker->hook(pfnOld, pfnNew, thunkTemplate, jmpTemplate);
+	hooker->hook(pfnOld, pfnNew, thunkTemplate);
 }
 
 /////////////////////////////////////////////////////////////////

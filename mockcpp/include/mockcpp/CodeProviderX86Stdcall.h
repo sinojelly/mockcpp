@@ -56,36 +56,6 @@ THUNK_CODE_PROVIDER_STDCALL_DEF(11);
 THUNK_CODE_PROVIDER_STDCALL_DEF(12);
 
 
-
-
-////////////////////////////////////////////
-#define JMP_CODE_PROVIDER_STDCALL_DEF(n) \
-template <typename R DECL_TEMPLATE_ARGS(n)> \
-struct JmpCodeProvider<R __stdcall (DECL_ARGS(n))> \
-{ \
-    JmpCode *operator ()() \
-    { \
-        static const JmpCodeTemplate<typename R(DECL_ARGS(n))> jmpTemplate; /*the same as __cdecl*/ \
-        return (JmpCode *)&jmpTemplate; \
-    } \
-}
-
-JMP_CODE_PROVIDER_STDCALL_DEF(0);
-JMP_CODE_PROVIDER_STDCALL_DEF(1);
-JMP_CODE_PROVIDER_STDCALL_DEF(2);
-JMP_CODE_PROVIDER_STDCALL_DEF(3);
-JMP_CODE_PROVIDER_STDCALL_DEF(4);
-JMP_CODE_PROVIDER_STDCALL_DEF(5);
-JMP_CODE_PROVIDER_STDCALL_DEF(6);
-JMP_CODE_PROVIDER_STDCALL_DEF(7);
-JMP_CODE_PROVIDER_STDCALL_DEF(8);
-JMP_CODE_PROVIDER_STDCALL_DEF(9);
-JMP_CODE_PROVIDER_STDCALL_DEF(10);
-JMP_CODE_PROVIDER_STDCALL_DEF(11);
-JMP_CODE_PROVIDER_STDCALL_DEF(12);
-
-
-
 MOCKCPP_NS_END
 
 #endif
