@@ -35,9 +35,7 @@ x64 use    rcx, rdx, r8, r9 as parameter register, the others are on the stack
       it also ok reserve more bytes in stack, so we assume return value always exists.
       so at most reserve 70h bytes in stack.(>=(12+1+1)*8, max 12 param, 1 return value, 1 old_addr)
       and , reserve (n + 2) * 8 bytes
-
 */    
-
 
 template<typename F> 
 struct ThunkCodeTemplate;
@@ -51,8 +49,8 @@ struct ThunkCodeTemplate<R(DECL_ARGS(0))> : public ThunkCode
         const static unsigned char thunkCode[] =
         {
             0x40, 0x57, // push rdi
+            0x48, 0x8b, 0xfc,  // mov rdi,rsp
             0x48, 0x83, 0xec, 0x10, // sub rsp, 10h 
-            0x48, 0x8b, 0xfc,  // mov rdi,rsp			
             0x48, 0xB8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // mov rax, [new_addr]
             0x48, 0xB9, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // mov rcx, [old_addr]    -- first parameter to hook
             0xFF, 0xD0, // call rax
@@ -86,8 +84,8 @@ struct ThunkCodeTemplate<R(DECL_ARGS(1))> : public ThunkCode
         const static unsigned char thunkCode[] =
         {
             0x40, 0x57, // push rdi
-            0x48, 0x83, 0xec, 0x18, // sub rsp, 18h 
             0x48, 0x8b, 0xfc,  // mov rdi,rsp
+            0x48, 0x83, 0xec, 0x18, // sub rsp, 18h 
             0x48, 0x89, 0xca,  // mov rdx, rcx,   param1 is in rcx, move it to rdx, then put old_addr in rcx
             0x48, 0xB8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // mov rax, [new_addr]
             0x48, 0xB9, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // mov rcx, [old_addr]    -- first parameter to hook
@@ -121,8 +119,8 @@ struct ThunkCodeTemplate<R(DECL_ARGS(2))> : public ThunkCode
         const static unsigned char thunkCode[] =
         {
             0x40, 0x57, // push rdi
-            0x48, 0x83, 0xec, 0x20, // sub rsp, 20h 
             0x48, 0x8b, 0xfc,  // mov rdi,rsp
+            0x48, 0x83, 0xec, 0x20, // sub rsp, 20h 
             0x49, 0x89, 0xd0,  // mov r8, rdx
             0x48, 0x89, 0xca,  // mov rdx, rcx,   param1 is in rcx, move it to rdx, then put old_addr in rcx
             0x48, 0xB8, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // mov rax, [new_addr]
@@ -158,8 +156,8 @@ struct ThunkCodeTemplate<R(DECL_ARGS(3))> : public ThunkCode
         const static unsigned char thunkCode[] =
         {
             0x40, 0x57, // push rdi
-            0x48, 0x83, 0xec, 0x28, // sub rsp, 28h 
             0x48, 0x8b, 0xfc,  // mov rdi,rsp
+            0x48, 0x83, 0xec, 0x28, // sub rsp, 28h 
             0x4d, 0x89, 0xc1,  // mov r9, r8
             0x49, 0x89, 0xd0,  // mov r8, rdx
             0x48, 0x89, 0xca,  // mov rdx, rcx,   param1 is in rcx, move it to rdx, then put old_addr in rcx
@@ -195,8 +193,8 @@ struct ThunkCodeTemplate<R(DECL_ARGS(4))> : public ThunkCode
         const static unsigned char thunkCode[] =
         {
             0x40, 0x57, // push rdi
-            0x48, 0x83, 0xec, 0x30, // sub rsp, 30h 
             0x48, 0x8b, 0xfc,  // mov rdi,rsp
+            0x48, 0x83, 0xec, 0x30, // sub rsp, 30h 
             0x4c, 0x89, 0x4c, 0x24, 0x20,  // mov qword [rsp+20h], r9
             0x4d, 0x89, 0xc1,  // mov r9, r8
             0x49, 0x89, 0xd0,  // mov r8, rdx
