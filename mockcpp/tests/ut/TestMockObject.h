@@ -115,8 +115,13 @@ public:
        TS_ASSERT_EQUALS(5, mock->base00());
    }
 
+   //void testShouldBeAbleReturnValueRepeatedly()
+   //void testShouldThrowExceptionAfterRepeatingSpecifiedTimesAndNoSubsequentStubSpecified()
+   //void testShouldBeAbleReturnValueIncrementallyWithinAScope()
+
    // repeat()
-   void testShouldBeAbleReturnValueRepeatedly()
+   TEST(repeat(num, times)在重复返回num达到指定次数times之后，如果有指定的后续行为，则执行后续行为)
+
    {
        MockObject<Interface> mock;
 
@@ -128,7 +133,7 @@ public:
    }
 
    // repeat()
-   void testShouldThrowExceptionAfterRepeatingSpecifiedTimesAndNoSubsequentStubSpecified()
+   TEST(repeat(num, times)在重复返回num达到指定的次数times之后，如果无指定后续行为，再次调用将抛出异常)
    {
        MockObject<Interface> mock;
 
@@ -141,7 +146,7 @@ public:
    }
 
    // increase()
-   void testShouldBeAbleReturnValueIncrementallyWithinAScope()
+   TEST(increase(num, times)在重复返回num+invoke times-1达到指定次数times之后，如果有指定的后续行为，则执行后续行为)
    {
        MockObject<Interface> mock;
 
