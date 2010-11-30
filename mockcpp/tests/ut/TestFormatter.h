@@ -84,7 +84,11 @@ public:
    {
       A* p = 0;	
 #ifdef _MSC_VER
+#ifdef WIN64
+      std::string expected = "(" + getDemangledName(typeid(A)) + " * __ptr64)NULL";
+#else
 	  std::string expected = "(" + getDemangledName(typeid(A)) + " *)NULL";
+#endif
 #else
       std::string expected = "(" + getDemangledName(typeid(A)) + "*)NULL";
 #endif
@@ -95,7 +99,11 @@ public:
    {
       A* p = (A*)0x12ab;	
 #ifdef _MSC_VER
-	  std::string expected = "(" + getDemangledName(typeid(A)) + " *)0x000012ab";
+#ifdef WIN64
+      std::string expected = "(" + getDemangledName(typeid(A)) + " * __ptr64)0x000012ab";
+#else
+      std::string expected = "(" + getDemangledName(typeid(A)) + " *)0x000012ab";
+#endif	  
 #else
       std::string expected = "(" + getDemangledName(typeid(A)) + "*)0x000012ab";
 #endif
@@ -106,7 +114,12 @@ public:
    {
       const A* p = (const A*)0x12ab;	
 #ifdef _MSC_VER
-	  std::string expected = std::string("(") + getDemangledName(typeid(A)) + " const *)0x000012ab";
+#ifdef WIN64
+      std::string expected = std::string("(") + getDemangledName(typeid(A)) + " const * __ptr64)0x000012ab";
+#else
+      std::string expected = std::string("(") + getDemangledName(typeid(A)) + " const *)0x000012ab";
+#endif
+
 #else
       std::string expected = std::string("(") + getDemangledName(typeid(A)) + " const*)0x000012ab";
 #endif
@@ -125,7 +138,11 @@ public:
       char* s = (char*)"abc";
       oss_t oss;
 #ifdef _MSC_VER
+#ifdef WIN64
+      oss << "(char * __ptr64)" << (void*)s ;
+#else
       oss << "(char *)" << (void*)s ;
+#endif
 #else
 	  oss << "(char*)" << (void*)s ;
 #endif
@@ -137,7 +154,11 @@ public:
       const char* s = "abc";
       oss_t oss;
 #ifdef _MSC_VER
+#ifdef WIN64
+      oss << "(char const * __ptr64)" << (void*)s ;
+#else
       oss << "(char const *)" << (void*)s ;
+#endif
 #else
 	  oss << "(char const*)" << (void*)s ;
 #endif
@@ -148,7 +169,11 @@ public:
    {
       char* s = 0;
 #ifdef _MSC_VER
+#ifdef WIN64
+      std::string expected("(char * __ptr64)NULL");
+#else
       std::string expected("(char *)NULL");
+#endif
 #else
 	  std::string expected("(char*)NULL");
 #endif
@@ -159,7 +184,11 @@ public:
    {
       const char* s = 0;
 #ifdef _MSC_VER
+#ifdef WIN64
+      std::string expected("(char const * __ptr64)NULL");
+#else
       std::string expected("(char const *)NULL");
+#endif
 #else
 	  std::string expected("(char const*)NULL");
 #endif
