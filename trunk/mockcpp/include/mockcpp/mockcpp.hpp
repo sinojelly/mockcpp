@@ -22,6 +22,7 @@
 #include <mockcpp/mockcpp.h>
 #include <mockcpp/ChainingMockHelper.h>
 #include <mockcpp/MockObjectHelper.h>
+#include <mockcpp/mokc.h>
 
 #endif
 
