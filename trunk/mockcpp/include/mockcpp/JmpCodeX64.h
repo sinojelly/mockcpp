@@ -17,46 +17,49 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
+#if BUILD_FOR_X64
 
-#ifndef __MOCKCPP_JMP_CODE_H__
-#define __MOCKCPP_JMP_CODE_H__
+#ifndef __MOCKCPP_JMP_CODE_X64_H__
+#define __MOCKCPP_JMP_CODE_X64_H__
 
 #include <mockcpp/mockcpp.h>
-#include <mockcpp/ArgumentsMacroHelpers.h>
 
 MOCKCPP_NS_START
 
 
-// E9 :  jmp near
+// FF 25 : JMP /4   jmp absolute indirect
+// bytes 2 ~ 5 : operand of jmp, relative to the memory that recorded the thunk addr. it should be zero.
+// bytes 6 ~ 13 : the absolute addr of thunk.
 static const unsigned char jmpCodeTemplate[]  =  
 {     
-    0xE9, 0x00, 0x00, 0x00, 0x00  // jmp thunk
+    0xFF, 0x25, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00  // jmp thunk
 };
 
-
-struct JmpCode
-{
-    const void *jmpCodeStart() const
-    {
-        return jmpCodeTemplate;
-    }
-    
-    size_t jmpCodeLength() const
-    {
-        return sizeof(jmpCodeTemplate);
-    }
-    
-    size_t jmpAddrOffset() const
-    {
-        return 1;
-    }
-
-
-};
 
 static const size_t JMP_CODE_TEMPLATE_SIZE = sizeof(jmpCodeTemplate); 
 
+struct JmpCode
+{
+    JmpCode(void *from, void *to)
+    {    
+        code[0] = jmpCodeTemplate[0];
+        code[1] = jmpCodeTemplate[1];        
+        *(unsigned int *)(code + 2) = 0;  // warning: it must be 4bytes of zero!!
+        *(uintptr_t *)(code + 6) = (uintptr_t)to; // warning: can not use long as substitute of __int64, because on windows 64, long is still 32 bits.
+    }
+
+    void copy(void *dest)
+    {
+        memcpy(dest, code, sizeof(code));
+    }
+
+private:
+    unsigned char code[JMP_CODE_TEMPLATE_SIZE];
+};
+
 MOCKCPP_NS_END
+
+#endif
 
 #endif
 

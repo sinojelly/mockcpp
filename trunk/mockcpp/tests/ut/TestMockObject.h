@@ -120,7 +120,7 @@ public:
    //void testShouldBeAbleReturnValueIncrementallyWithinAScope()
 
    // repeat()
-   TEST(repeat(num, times)åœ¨é‡å¤è¿”å›numè¾¾åˆ°æŒ‡å®šæ¬¡æ•°timesä¹‹åï¼Œå¦‚æœæœ‰æŒ‡å®šçš„åç»­è¡Œä¸ºï¼Œåˆ™æ‰§è¡Œåç»­è¡Œä¸º)
+   TEST(repeat(num, times)ÔÚÖØ¸´·µ»Ønum´ïµ½Ö¸¶¨´ÎÊıtimesÖ®ºó£¬Èç¹ûÓĞÖ¸¶¨µÄºóĞøĞĞÎª£¬ÔòÖ´ĞĞºóĞøĞĞÎª)
 
    {
        MockObject<Interface> mock;
@@ -133,7 +133,7 @@ public:
    }
 
    // repeat()
-   TEST(repeat(num, times)åœ¨é‡å¤è¿”å›numè¾¾åˆ°æŒ‡å®šçš„æ¬¡æ•°timesä¹‹åï¼Œå¦‚æœæ— æŒ‡å®šåç»­è¡Œä¸ºï¼Œå†æ¬¡è°ƒç”¨å°†æŠ›å‡ºå¼‚å¸¸)
+   TEST(repeat(num, times)ÔÚÖØ¸´·µ»Ønum´ïµ½Ö¸¶¨µÄ´ÎÊıtimesÖ®ºó£¬Èç¹ûÎŞÖ¸¶¨ºóĞøĞĞÎª£¬ÔÙ´Îµ÷ÓÃ½«Å×³öÒì³£)
    {
        MockObject<Interface> mock;
 
@@ -146,7 +146,7 @@ public:
    }
 
    // increase()
-   TEST(increase(num, times)åœ¨é‡å¤è¿”å›num+invoke times-1è¾¾åˆ°æŒ‡å®šæ¬¡æ•°timesä¹‹åï¼Œå¦‚æœæœ‰æŒ‡å®šçš„åç»­è¡Œä¸ºï¼Œåˆ™æ‰§è¡Œåç»­è¡Œä¸º)
+   TEST(increase(num, times)ÔÚÖØ¸´·µ»Ønum+invoke times-1´ïµ½Ö¸¶¨´ÎÊıtimesÖ®ºó£¬Èç¹ûÓĞÖ¸¶¨µÄºóĞøĞĞÎª£¬ÔòÖ´ĞĞºóĞøĞĞÎª)
    {
        MockObject<Interface> mock;
 

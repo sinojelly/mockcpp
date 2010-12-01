@@ -10,6 +10,7 @@ function export_subdir($subdir)
 	svn export $subdir $dest_dir\$subdir --force	
 }
 
+export_subdir 3rdparty\msinttypes
 export_subdir include
 export_subdir src
 export_subdir tests
