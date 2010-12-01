@@ -67,7 +67,6 @@ void WinPageAllocator::destoryClone()
     if (cloneObject != 0)
     {
         ::free(cloneObject);
-        cloneObject = 0;
     }
 }
 

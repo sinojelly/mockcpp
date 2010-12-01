@@ -77,7 +77,6 @@ void LinuxProtectPageAllocator::destoryClone()
     {
         allocator->destoryClone(); // allocator must be cloned too, and this alway ok, because in clone, it called allocator->clone().    
         ::free(cloneObject);
-        cloneObject = 0;
     }
 }
 

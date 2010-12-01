@@ -68,8 +68,7 @@ void LinuxPageAllocator::destoryClone()
 {
     if (cloneObject != 0)
     {
-        ::free(cloneObject);
-        cloneObject = 0;
+        ::free(cloneObject); 
     }
 }
 
