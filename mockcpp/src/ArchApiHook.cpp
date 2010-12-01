@@ -18,13 +18,15 @@
 ***/
 
 #include <string.h>
+#include <inttypes.h>
 #include <mockcpp/PageAllocator.h>
 #include <mockcpp/BlockAllocator.h>
 #include <mockcpp/CodeModifier.h>
 #include <mockcpp/ArchApiHook.h>
 #include <mockcpp/AllocatorContainer.h>
 #include <mockcpp/ThunkCode.h>
-#include <mockcpp/JmpCode.h>
+#include <mockcpp/JmpCodeX86.h>
+#include <mockcpp/JmpCodeX64.h>
 
 
 MOCKCPP_NS_START
@@ -82,9 +84,6 @@ private:
     PageAllocator *allocator;
 	CodeModifier *modifier;
 
-    JmpCode jmpCode;
-    const JmpCode * const jmpCodeTemplate;
-
 	bool changeCode(char* code);
 	bool allocThunk();
 	void freeThunk();
@@ -96,7 +95,7 @@ private:
 
 /////////////////////////////////////////////////////////////////
 ArchApiHookImpl::ArchApiHookImpl(PageAllocator *pageAllocator, CodeModifier *codeModifier)
-	: allocator(pageAllocator), modifier(codeModifier), jmpCodeTemplate(&jmpCode)
+	: allocator(pageAllocator), modifier(codeModifier)
 {
     ThunkAllocator::initialize(pageAllocator);
 }
@@ -118,27 +117,26 @@ void ArchApiHookImpl::freeThunk()
 void ArchApiHookImpl::initThunk(ApiHook::Address pfnOld, ApiHook::Address pfnNew, ThunkCode *thunkTemplate)
 {
 	memcpy( m_thunk, thunkTemplate->thunkCodeStart(), thunkTemplate->thunkCodeLength());  
-	*(unsigned long*)(m_thunk + thunkTemplate->newAddrOffset()) = (unsigned long)pfnNew;
-	*(unsigned long*)(m_thunk + thunkTemplate->oldAddrOffset()) = (unsigned long)pfnOld;
+	*(uintptr_t*)(m_thunk + thunkTemplate->newAddrOffset()) = (uintptr_t)pfnNew;
+	*(uintptr_t*)(m_thunk + thunkTemplate->oldAddrOffset()) = (uintptr_t)pfnOld;
 }
 
 /////////////////////////////////////////////////////////////////
 void ArchApiHookImpl::initHook(ApiHook::Address pfnOld, ApiHook::Address pfnNew)
 {
-    memcpy( m_byNew, jmpCodeTemplate->jmpCodeStart(), jmpCodeTemplate->jmpCodeLength());  
+    JmpCode jmpCode((void *)pfnOld, (void *)m_thunk);
 
-    *(unsigned long*)(m_byNew + jmpCodeTemplate->jmpAddrOffset()) = 
-		(unsigned long)m_thunk - (unsigned long)pfnOld - jmpCodeTemplate->jmpCodeLength();
-
+    jmpCode.copy((void *)m_byNew);
+    
     m_pfnOld  =  pfnOld;
 
-    memcpy((void*)m_byOld, (void*)m_pfnOld, jmpCodeTemplate->jmpCodeLength());
+    memcpy((void*)m_byOld, (void*)m_pfnOld, JMP_CODE_TEMPLATE_SIZE);
 }
 
 /////////////////////////////////////////////////////////////////
 bool ArchApiHookImpl::changeCode(char* code)
 {
-	return modifier->modify((void *)m_pfnOld, code, jmpCodeTemplate->jmpCodeLength());
+	return modifier->modify((void *)m_pfnOld, code, JMP_CODE_TEMPLATE_SIZE);
 }
 
 /////////////////////////////////////////////////////////////////
