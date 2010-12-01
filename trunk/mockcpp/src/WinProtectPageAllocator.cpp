@@ -79,8 +79,7 @@ void WinProtectPageAllocator::destoryClone()
     if (cloneObject != 0)
     {
         allocator->destoryClone(); // allocator must be cloned too, and this alway ok, because in clone, it called allocator->clone().
-        ::free(cloneObject);
-        cloneObject = 0;
+        ::free(cloneObject); // should not set clone Object to zero, because maybe run it's self, and it has been destroyed by free.
     }
 }
 
