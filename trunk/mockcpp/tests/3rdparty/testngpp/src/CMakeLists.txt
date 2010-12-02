@@ -39,6 +39,12 @@ ADD_DEFINITIONS(
 )
 ENDIF(UNIX)
 
+IF(UNIX)
+ADD_DEFINITIONS(
+    -fPIC
+)
+ENDIF(UNIX)
+
 # can not link to other lib in cmake 
 #TARGET_LINK_LIBRARIES(mem-checker)
 #LINK_DIRECTORIES(${CMAKE_BINARY_DIR}/src/mem_checker)
