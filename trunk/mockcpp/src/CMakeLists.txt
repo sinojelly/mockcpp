@@ -68,6 +68,7 @@ IF(MSVC)
 ENDIF(MSVC)
 
 IF(UNIX)
+MESSAGE("UNIX")
 ADD_DEFINITIONS(
     -g -ggdb
 )

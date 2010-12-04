@@ -25,6 +25,8 @@
 #include <mockcpp/CApiHookKey.h>
 #include <mockcpp/ReportFailure.h>
 
+#include <iostream>
+
 MOCKCPP_NS_START
 
 //////////////////////////////////////////////////////////////
@@ -133,7 +135,7 @@ HookMockObject::getInvokable(const void* api)
 {
    ChainableMockMethodCore* method = This->getMethod(api);
    MOCKCPP_ASSERT_TRUE(
-	   "mockcpp internal error",
+	   "mockcpp internal error (3001): not able to get api pointer",
 	   method != 0);
    return method;
 }
