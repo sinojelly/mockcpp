@@ -42,9 +42,19 @@ int func1(int a)
     return 0;
 }
 
+double ffunc1(double a)
+{
+	return a;
+}
+
 int func2(int a, int b)
 {
     return 0;
+}
+
+double ffunc2(int a, double b)
+{
+	return b;
 }
 
 int func3(int a, int b, int c)
@@ -161,7 +171,7 @@ FIXTURE(ApiHookBase)
         vfunc1(a);
     }
 
-    TEST(can mock C function with return and one parameter)
+    TEST(can mock C function with 1 parameter (int) & return (int))
     {
         MOCKER(func1)
             .expects(once())
@@ -170,6 +180,16 @@ FIXTURE(ApiHookBase)
 
         ASSERT_EQ(ret, func1(a));
     }
+
+	TEST(can mock c function with 1 parameter (double) & return (double))
+	{
+        MOCKER(ffunc1)
+            .expects(once())
+            .with(eq((double)1.0))
+            .will(returnValue((double)1.0));
+
+		ASSERT_EQ((double)1.0, ffunc1((double)1.0));
+	}
 
     TEST(can mock C function with return and two parameters)
     {
@@ -180,6 +200,16 @@ FIXTURE(ApiHookBase)
 
         ASSERT_EQ(ret, func2(a, b));
     }
+
+	TEST(can mock c function with 2 parameter2 (double) & return (double))
+	{
+        MOCKER(ffunc2)
+            .expects(once())
+            .with(eq((int)2), eq((double)1.1))
+            .will(returnValue((double)1.9));
+
+		ASSERT_EQ((double)1.9, ffunc2(2, 1.1));
+	}
 
     TEST(can mock C function with return and 3 parameters)
     {
@@ -210,6 +240,7 @@ FIXTURE(ApiHookBase)
 
         ASSERT_EQ(ret, func5(a, b, c, d, e));
     }
+
 
     TEST(can mock C function with return and 6 parameters)
     {
