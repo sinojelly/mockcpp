@@ -22,10 +22,10 @@
 MOCKCPP_NS_START
 
 ///////////////////////////////////////////////////////////
-CApiHookKey::CApiHookKey(const void* api, const void* stub, ThunkCode *thunkTemplate)
+CApiHookKey::CApiHookKey(const void* api, const void* stub)
    : apiAddress(api)
 {
-   hook = new CApiHook((ApiHook::Address)api, (ApiHook::Address)stub, thunkTemplate);
+   hook = new CApiHook((ApiHook::Address)api, (ApiHook::Address)stub);
 }
 
 ///////////////////////////////////////////////////////////
@@ -33,11 +33,11 @@ CApiHookKey::CApiHookKey(const void* api)
    : apiAddress(api), hook(0)
 {
 }
+
 ////////////////////////////////////////////////////////////
 CApiHookKey::~CApiHookKey()
 {
-   if(hook != 0)
-      delete hook;
+   if(hook != 0) delete hook;
 }   
 
 ////////////////////////////////////////////////////////////
@@ -59,16 +59,10 @@ bool CApiHookKey::equals(
              (const_cast<ChainableMockMethodKey*>(rhs));
     if(key == 0)
     {
-       return 0;
+       return false;
     }
      
-    return key->getApiAddress() == this->getApiAddress();
-}
-
-///////////////////////////////////////////////////////////
-const void* CApiHookKey::getApiAddress() const
-{
-   return apiAddress;
+    return key->apiAddress == this->apiAddress;
 }
 
 MOCKCPP_NS_END
