@@ -41,6 +41,7 @@ bool CodeModifier::modify(void *dest, const void *src, size_t size)
 
     ::memcpy(dest, src, size);
 
+
 #if 0
 	#if BUILD_FOR_X86
 	//(void)memcpy(dest, src, size); // something wrong on linux: after memcpy(or 5 single byte copy),  the 4 bytes following jmp, src is 0x07c951b0, but dest is 0x07b851b0. so use unsigned int *, it works ok.
