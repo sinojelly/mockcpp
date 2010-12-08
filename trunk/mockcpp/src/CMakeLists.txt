@@ -158,11 +158,12 @@ SET(MOCKCPP_SRCS
     VoidResultHandlerFactory.cpp
     WillStub.cpp
     HookMockObject.cpp
-    CApiHookKey.cpp
+    ApiHookKey.cpp
     GlobalMockObject.cpp
-    BlockAllocator.cpp
-	AllocatorContainer.cpp
-	ArchApiHook.cpp
+    JmpOnlyApiHook.cpp
+    JmpCode.cpp
+    ApiHook.cpp
+
 )
 
 IF(${MOCKCPP_XUNIT} STREQUAL "GTEST" OR ${MOCKCPP_XUNIT} STREQUAL "gtest")
@@ -234,10 +235,8 @@ IF(MSVC)
 ELSE(MSVC)
    SET(MOCKCPP_SRCS 
        ${MOCKCPP_SRCS} 
-       LinuxApiHook.cpp
-       LinuxPageAllocator.cpp
-       LinuxProtectPageAllocator.cpp
-       LinuxCodeModifier.cpp
+       UnixCodeModifier.cpp
+       UnixPageAllocator.cpp
    )
 ENDIF(MSVC)
 ######################################################

@@ -31,7 +31,6 @@ MOCKCPP_NS_START
 struct PageAllocator;
 struct BlockAllocator;
 
-
 struct AllocatorContainer : public MemAllocator
 {
     AllocatorContainer(){}

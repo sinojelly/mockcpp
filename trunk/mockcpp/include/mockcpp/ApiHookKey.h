@@ -16,30 +16,29 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#ifndef __MOCKCPP_CHAINABLE_MOCK_METHOD_NAME_KEY_H
-#define __MOCKCPP_CHAINABLE_MOCK_METHOD_NAME_KEY_H
+#ifndef __MOCKCPP_API_HOOK_KEY_H__
+#define __MOCKCPP_API_HOOK_KEY_H__
 
 #include <mockcpp/mockcpp.h>
 
 #include <mockcpp/ChainableMockMethodKey.h>
-#include <mockcpp/CApiHook.h>
 
 MOCKCPP_NS_START
 
-struct ThunkCode;
+struct ApiHook;
 
-struct CApiHookKey
+struct ApiHookKey
     : public ChainableMockMethodKey
 {
-   CApiHookKey(const void* api, const void* stub);
-   CApiHookKey(const void* api);
+   ApiHookKey(const void* api, const void* stub, const void* converter, const void* realStub);
+   ApiHookKey(const void* api);
 
-   ~CApiHookKey();
+   ~ApiHookKey();
    
    bool equals(const ChainableMockMethodKey * const rhs) const;
 
 private:
-   CApiHook* hook;
+   ApiHook* hook;
    const void* apiAddress;
 };
 

@@ -8,7 +8,7 @@
 const unsigned char jmpCodeTemplate[]  =
    { 0xFF, 0x25, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00 };
 #define SET_JMP_CODE(base, from, to) do { \
-       *(uintptr_t *)(base + 6) = (uintptr_t)to;
+       *(uintptr_t *)(base + 6) = (uintptr_t)to; \
    } while(0)
 
 #endif

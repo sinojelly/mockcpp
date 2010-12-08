@@ -21,8 +21,6 @@
 #include <mockcpp/Asserter.h>
 #include <mockcpp/Formatter.h>
 
-#include <iostream>
-
 MOCKCPP_NS_START
 
 InvokedAtMost::InvokedAtMost(const unsigned int times)

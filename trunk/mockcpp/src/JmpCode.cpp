@@ -16,6 +16,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
+#include <inttypes.h>
+#include <string.h>
+
 #include <mockcpp/JmpCode.h>
 #include "JmpCodeArch.h"
 
@@ -26,9 +29,9 @@ MOCKCPP_NS_START
 struct JmpCodeImpl
 {
    ////////////////////////////////////////////////
-   JmpCodeImpl(void* from, void* to)
+   JmpCodeImpl(const void* from, const void* to)
    {
-      memcpy(m_code, jmpCodeTemplate, JMP_CODE_SIZE);
+      ::memcpy(m_code, jmpCodeTemplate, JMP_CODE_SIZE);
       SET_JMP_CODE(m_code, from, to);
    }
 
@@ -50,7 +53,7 @@ struct JmpCodeImpl
 };
 
 ///////////////////////////////////////////////////
-JmpCode::JmpCode(void* from, void* to)
+JmpCode::JmpCode(const void* from, const void* to)
    : This(new JmpCodeImpl(from, to))
 {
 }

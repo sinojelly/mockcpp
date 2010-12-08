@@ -41,10 +41,9 @@ SET(UT_CASES
   TestStringConstraint.h
   TestStubContainter.h
   TestCheck.h
-  TestBlockAllocator.h
   TestApiHook.h
   TestStaticMethodMocker.h
-  TestNonvirtualMethodMocker.h
+  #TestNonvirtualMethodMocker.h
   TestMockcppSample.h
   TestApiHookBase.h
 )
