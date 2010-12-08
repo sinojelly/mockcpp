@@ -17,9 +17,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-
-
-
 #ifndef __MOCKCPP_THUNK_CODE_X64_SYS_V_H__
 #define __MOCKCPP_THUNK_CODE_X64_SYS_V_H__
 
@@ -135,7 +132,6 @@ struct ThunkCodeTemplate<R(DECL_ARGS(6))> : public ThunkCode
             0xC3         // ret 
         };
 
-
         thunkCodeTemplate = thunkCode;
         thunkCodeTemplateSize = sizeof(thunkCode);
     }
@@ -150,8 +146,6 @@ struct ThunkCodeTemplate<R(DECL_ARGS(6))> : public ThunkCode
         return 43; 
     }
 };
-
-
 
 template<typename R DECL_TEMPLATE_ARGS(7)>
 struct ThunkCodeTemplate<R(DECL_ARGS(7))> : public ThunkCode 

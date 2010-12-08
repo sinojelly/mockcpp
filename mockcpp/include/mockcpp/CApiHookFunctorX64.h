@@ -48,7 +48,12 @@ const std::string empty_caller("");
 template <typename R DECL_TEMPLATE_ARGS(n)> \
 struct CApiHookFunctor<R(DECL_ARGS(n))> \
 { \
-    static R hook(const void* address DECL_REST_ARG_DECL(n)) \
+	static R hook(DECL_PARAMS_LIST(n)) \
+	{ \
+        return real_hook(0 DECL_REST_PARAMS(n)); \
+	} \
+	\
+    static R real_hook(const void* address DECL_REST_ARG_DECL(n)) \
     { \
         return GlobalMockObject::instance.invoke<R>(address) \
                                 (empty_caller DECL_REST_PARAMS(n)); \
