@@ -17,47 +17,32 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#if BUILD_FOR_X86
-
-
 #ifndef __MOCKCPP_JMP_CODE_X86_H__
 #define __MOCKCPP_JMP_CODE_X86_H__
 
 #include <mockcpp/mockcpp.h>
+#include <mockcpp/JmpCode.h>
 
 MOCKCPP_NS_START
 
+struct JmpCodeX86Impl;
 
-// E9 :  jmp near
-static const unsigned char jmpCodeTemplate[]  =  
-{     
-    0xE9, 0x00, 0x00, 0x00, 0x00  // jmp thunk
-};
-
-
-static const size_t JMP_CODE_TEMPLATE_SIZE = sizeof(jmpCodeTemplate); 
-
-struct JmpCode
+struct JmpCodeX86 : public JmpCode
 {
-    JmpCode(void *from, void *to)
-    {    
-        code[0] = jmpCodeTemplate[0];
-        *(unsigned long*)(code + 1) = 
-		    (unsigned long)to - (unsigned long)from - JMP_CODE_TEMPLATE_SIZE;
-    }
+	JmpCodeX86();
+    ~JmpCodeX86();
 
-    void copy(void *dest)
-    {
-        memcpy(dest, code, sizeof(code));
-    }
+    void setJmpAddress(void* from, void* to);
+
+    void*  getCodeData() const;
+    size_t getCodeSize() const;
 
 private:
-    char code[JMP_CODE_TEMPLATE_SIZE];
+    JmpCodeX86Impl* This;
 };
 
 MOCKCPP_NS_END
 
-#endif
 
 #endif
 

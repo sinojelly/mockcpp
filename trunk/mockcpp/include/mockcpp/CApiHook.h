@@ -10,10 +10,10 @@ MOCKCPP_NS_START
 struct ArchApiHook;
 struct PageAllocator;
 
-struct CApiHook
+struct ApiHook
 {
-    CApiHook(ApiHook::Address pfnOld, ApiHook::Address pfnNew, ThunkCode *thunkTemplate);
-    ~CApiHook();
+    ApiHook(void* pfnOld, void* pfnNew);
+    ~ApiHook();
 
 private:
     PageAllocator *allocator;

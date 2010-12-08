@@ -35,7 +35,7 @@ struct ArchApiHook : public ApiHook
     ArchApiHook(PageAllocator *pageAllocator, CodeModifier *codeModifier);
     ~ArchApiHook();
 
-    void hook(ApiHook::Address pfnOld, ApiHook::Address pfnNew, ThunkCode *thunkTemplate);
+    void hook(ApiHook::Address pfnOld, ApiHook::Address pfnNew);
 
 private:
     ArchApiHookImpl * This;
