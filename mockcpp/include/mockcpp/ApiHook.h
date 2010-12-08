@@ -6,11 +6,17 @@
 
 MOCKCPP_NS_START
 
+struct JmpCode;
+struct CodeModifier;
 struct ApiHookImpl;
 
 struct ApiHook
 {
-    ApiHook(void* pfnOld, void* pfnNew);
+    ApiHook ( void* apiAddress
+            , void* stubAddress
+            , JmpCode* jmpCode
+            , CodeModifier* codeModifier);
+
     ~ApiHook();
 
 private:

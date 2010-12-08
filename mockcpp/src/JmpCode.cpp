@@ -16,23 +16,20 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#include <mockcpp/JmpCodeX86.h>
+#include <mockcpp/JmpCode.h>
+#include "JmpCodeArch.h"
 
 MOCKCPP_NS_START
 
-struct JmpCodeX86Impl
+#define JMP_CODE_SIZE sizeof(jmpCodeTemplate)
+
+struct JmpCodeImpl
 {
    ////////////////////////////////////////////////
-   JmpCodeX86Impl()
+   JmpCodeImpl(void* from, void* to)
    {
-      memcpy(m_code, jmpCodeTemplate, sizeof(jmpCodeTemplate));
-   }
-
-   ////////////////////////////////////////////////
-   void setJmpAddress(void* from, void* to)
-   {
-        *(unsigned long*)(code + 1) = 
-		    (unsigned long)to - (unsigned long)from - sizeof(jmpCodeTemplate);
+      memcpy(m_code, jmpCodeTemplate, JMP_CODE_SIZE);
+      SET_JMP_CODE(m_code, from, to);
    }
 
    ////////////////////////////////////////////////
@@ -44,45 +41,36 @@ struct JmpCodeX86Impl
    ////////////////////////////////////////////////
    size_t getCodeSize() const
    {
-      return sizeof(jmpCodeTemplate);
+      return JMP_CODE_SIZE;
    }
 
    ////////////////////////////////////////////////
-   static const unsigned char jmpCodeTemplate[]  =  
-   { 0xE9, 0x00, 0x00, 0x00, 0x00 };
 
-   unsigned char m_code[sizeof(jmpCodeTemplate)];
+   unsigned char m_code[JMP_CODE_SIZE];
 };
 
 ///////////////////////////////////////////////////
-JmpCodeX86::JmpCodeX86()
-   : This(new JmpCodeX86Impl())
+JmpCode::JmpCode(void* from, void* to)
+   : This(new JmpCodeImpl(from, to))
 {
 }
 
 ///////////////////////////////////////////////////
-JmpCodeX86::~JmpCodeX86()
+JmpCode::~JmpCode()
 {
    delete This;
 }
 
 ///////////////////////////////////////////////////
-void
-JmpCodeX86::setJmpAddress(void* from, void* to)
-{
-   This->setJmpAddress(from, to);
-}
-
-///////////////////////////////////////////////////
 void*
-JmpCodeX86::getCodeData() const
+JmpCode::getCodeData() const
 {
    return This->getCodeData();
 }
 
 ///////////////////////////////////////////////////
 size_t
-JmpCodeX86::getCodeSize() const
+JmpCode::getCodeSize() const
 {
    return This->getCodeSize();
 }
