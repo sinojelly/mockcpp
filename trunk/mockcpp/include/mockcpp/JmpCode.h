@@ -23,13 +23,17 @@
 
 MOCKCPP_NS_START
 
+struct JmpCodeImpl;
+
 struct JmpCode
 {
-    virtual void setJmpAddress(void* from, void* to) = 0;
-    virtual void*  getCodeData() const = 0;
-    virtual size_t getCodeSize() const = 0;
-
-    virtual ~JmpCode() {}
+    JmpCode(void* from, void* to);
+    ~JmpCode();
+    
+    void*  getCodeData() const;
+    size_t getCodeSize() const;
+private:
+	JmpCodeImpl* This;
 };
 
 MOCKCPP_NS_END
