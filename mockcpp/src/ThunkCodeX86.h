@@ -10,8 +10,8 @@ MOCKCPP_NS_START
 
 const unsigned char thunkTemplate[] =
 {
-    58, // pop eax
-    59, // pop ecx
+    0x58, // pop eax
+    0x59, // pop ecx
     0xB9, ZERO_ADDR, // mov ecx, api
     0x51, // push ecx
     0x50, // push eax
