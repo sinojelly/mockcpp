@@ -4,9 +4,9 @@
 
 #include <mockcpp/mockcpp.h>
 
-#if defined(BUILD_FOR_X64)
+#if BUILD_FOR_X64
 # include "JmpCodeX64.h"
-#elif !defined(BUILD_FOR_X86)
+#elif BUILD_FOR_X86
 # include "JmpCodeX86.h"
 #endif
 

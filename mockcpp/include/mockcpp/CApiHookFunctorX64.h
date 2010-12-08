@@ -16,8 +16,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#if BUILD_FOR_X64
-
 #ifndef __MOCKCPP_C_API_HOOK_FUNCTOR_X64_H
 #define __MOCKCPP_C_API_HOOK_FUNCTOR_X64_H
 
@@ -26,13 +24,7 @@
 #include <string>
 
 #include <mockcpp/GlobalMockObject.h>
-#include <mockcpp/CApiHook.h>
 #include <mockcpp/ArgumentsMacroHelpers.h>
-
-#include <mockcpp/ThunkCode.h>
-#include <mockcpp/ThunkCodeX64.h>
-
-#include <mockcpp/CodeProviderX64.h>
 
 
 MOCKCPP_NS_START
@@ -50,9 +42,12 @@ struct CApiHookFunctor<R(DECL_ARGS(n))> \
 { \
 	static R hook(DECL_PARAMS_LIST(n)) \
 	{ \
-        return real_hook(0 DECL_REST_PARAMS(n)); \
+        return dummy_hook(0 DECL_REST_PARAMS(n)); \
 	} \
-	\
+    static R dummy_hook(const void* address DECL_REST_ARG_DECL(n)) \
+    { \
+        return real_hook(address DECL_REST_PARAMS(n)); \
+    } \
     static R real_hook(const void* address DECL_REST_ARG_DECL(n)) \
     { \
         return GlobalMockObject::instance.invoke<R>(address) \
@@ -75,12 +70,7 @@ CAPIHOOK_FUNCTOR_DEF(10);
 CAPIHOOK_FUNCTOR_DEF(11);
 CAPIHOOK_FUNCTOR_DEF(12);
 
-
 MOCKCPP_NS_END
-
-//#include <mockcpp/CApiHookFunctorStdcall.h>
-
-#endif
 
 #endif
 

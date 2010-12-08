@@ -26,11 +26,10 @@ MOCKCPP_NS_START
 
 struct CodeModifier
 {
-	virtual bool modify(void *dest, void *src, size_t size) = 0;
-	virtual ~CodeModifier(){}
+	static bool modify(void *dest, const void *src, size_t size);
 };
-
 
 MOCKCPP_NS_END
 
 #endif
+

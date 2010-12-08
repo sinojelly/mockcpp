@@ -22,7 +22,7 @@
 #include <mockcpp/ChainableMockMethodCore.h>
 #include <mockcpp/InvocationMockBuilderGetter.h>
 #include <mockcpp/InvocationMockerNamespace.h>
-#include <mockcpp/CApiHookKey.h>
+#include <mockcpp/ApiHookKey.h>
 #include <mockcpp/ReportFailure.h>
 
 #include <iostream>
@@ -38,7 +38,7 @@ struct HookMockObjectImpl
 
    ChainableMockMethodCore*
    getMethod(const std::string& name, const void* api, 
-         const void* stub, ThunkCode *thunkTemplate, InvocationMockerNamespace* ns);
+         const void* stub, const void*, const void*, InvocationMockerNamespace* ns);
    
    ChainableMockMethodCore*
    getMethod(const void* api);
@@ -53,7 +53,8 @@ private:
    addMethod(const std::string& name, 
        const void* api, 
 	   const void* stub,
-       ThunkCode *thunkTemplate, 
+       const void*,
+       const void*,
 	   InvocationMockerNamespace* ns); 
 
 };
@@ -71,10 +72,11 @@ HookMockObjectImpl::
 addMethod(const std::string& name, 
     const void* api, 
 	const void* stub,
-    ThunkCode *thunkTemplate, 
+    const void* converter,
+    const void* realStub,
 	InvocationMockerNamespace* ns) 
 {
-    CApiHookKey* key = new CApiHookKey(api, stub, thunkTemplate);
+    ApiHookKey* key = new ApiHookKey(api, stub, converter, realStub);
     ChainableMockMethodCore* method = new ChainableMockMethodCore(name, ns);
 
     container->addMethod(key, method);
@@ -86,7 +88,8 @@ ChainableMockMethodCore*
 HookMockObjectImpl::
 getMethod(const std::string& name, const void* api
          , const void* stub
-         , ThunkCode *thunkTemplate
+         , const void* converter
+         , const void* realStub
          , InvocationMockerNamespace* ns)
 {
     ChainableMockMethodCore* method = getMethod(api);
@@ -95,7 +98,7 @@ getMethod(const std::string& name, const void* api
       return method;
     }
 
-    return addMethod(name, api, stub, thunkTemplate, ns);
+    return addMethod(name, api, stub, converter, realStub, ns);
 }
 
 //////////////////////////////////////////////////////////////
@@ -103,7 +106,7 @@ ChainableMockMethodCore*
 HookMockObjectImpl::
 getMethod(const void* api) 
 {
-    CApiHookKey key(api);
+    ApiHookKey key(api);
     return container->getMethod(&key);
 }
 
@@ -122,9 +125,9 @@ HookMockObject::~HookMockObject()
 
 //////////////////////////////////////////////////////////////
 InvocationMockBuilderGetter
-HookMockObject::method(const std::string& name, const void* api, const void* stub, ThunkCode *thunkTemplate)
+HookMockObject::method(const std::string& name, const void* api, const void* stub, const void* converter, const void* realStub)
 {
-    ChainableMockMethodCore* core = This->getMethod(name, api, stub, thunkTemplate, this);
+    ChainableMockMethodCore* core = This->getMethod(name, api, stub, converter, realStub, this);
     return InvocationMockBuilderGetter(core, core);
 }
 
@@ -133,9 +136,10 @@ HookMockObject::method(const std::string& name, const void* api, const void* stu
 Invokable*
 HookMockObject::getInvokable(const void* api) 
 {
+   std::cout << "api : " << api << std::endl;
    ChainableMockMethodCore* method = This->getMethod(api);
    MOCKCPP_ASSERT_TRUE(
-	   "mockcpp internal error (3001): not able to get api pointer",
+	   "mockcpp internal error (3001): unable to get api pointer",
 	   method != 0);
    return method;
 }

@@ -17,55 +17,45 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#include <mockcpp/ApiHook.h>
+#include <string.h>
+
+#include "JmpOnlyApiHook.h"
+#include <mockcpp/JmpCode.h>
 #include <mockcpp/CodeModifier.h>
 
 MOCKCPP_NS_START
 
-struct JmpCode
-{
-    virtual void setJmpAddress(void* address) = 0;
-    virtual void*  getCodeData() const = 0;
-	virtual size_t getCodeSize() const = 0;
-
-    virtual ~JmpCode() {}
-};
-
 ////////////////////////////////////////////////////////
-struct ApiHookImpl
+struct JmpOnlyApiHookImpl
 {
    /////////////////////////////////////////////////////
-   ApiHookImpl( void* functionAddress
-              , void* stubAddress 
-              , void* jmpCode
-              , CodeModifier* codeModifier)
-        : m_originalData(0)
-        , m_functionAddress(functionAddress)
-		, m_jmpCode(jmpCode)
-        , m_codeModifier(codeModifier)
+   JmpOnlyApiHookImpl
+              ( const void* api
+              , const void* stub)
+		: m_jmpCode(api, stub)
+        , m_originalData(0)
+        , m_api(api)
    {
-      jmpCode->setJmpAddress(stubAddress);
-      saveOriginalData();
       startHook();
    }
 
    /////////////////////////////////////////////////////
-   ~ApiHookImpl()
+   ~JmpOnlyApiHookImpl()
    {
-      delete m_jmpCode;
-      delete m_orignalData;
+      delete m_originalData;
    }
 
    /////////////////////////////////////////////////////
    void saveOriginalData()
    {
-      m_orignalData = new char[m_jmpCode.getCodeSize()];
-      ::memcpy(m_originalData, m_functionAddress, m_jmpCode.getCodeSize());
+      m_originalData = new char[m_jmpCode.getCodeSize()];
+      ::memcpy(m_originalData, m_api, m_jmpCode.getCodeSize());
    }
 
    /////////////////////////////////////////////////////
    void startHook()
    {
+      saveOriginalData();
       changeCode(m_jmpCode.getCodeData());
    }
 
@@ -76,26 +66,27 @@ struct ApiHookImpl
    }
 
    /////////////////////////////////////////////////////
-   void changeCode(void* data)
+   void changeCode(const void* data)
    {
-      m_codeModifier->modify(m_functionAddress, data, m_jmpCode.getCodeSize());
+      CodeModifier::modify(const_cast<void*>(m_api), data, m_jmpCode.getCodeSize());
    }
 
    /////////////////////////////////////////////////////
-   JmpCode* m_jmpCode;
-   char* m_orignalData;
-   void* m_functionAddress;
-   CodeModifier* m_codeModifier;
+   JmpCode m_jmpCode;
+   char* m_originalData;
+   const void* m_api;
 };
 
 /////////////////////////////////////////////////////////////////
-ApiHook::ApiHook(void* functionAddress, void* stubAddress)
-	: This(new ApiHookImpl(functionAddress, stubAddress))
+JmpOnlyApiHook::JmpOnlyApiHook 
+              ( const void* api 
+              , const void* stub )
+	: This(new JmpOnlyApiHookImpl(api, stub))
 {
 }
 
 /////////////////////////////////////////////////////////////////
-ApiHook::~ApiHook()
+JmpOnlyApiHook::~JmpOnlyApiHook()
 {
 	delete This;
 }

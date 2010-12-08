@@ -6,14 +6,14 @@
 
 MOCKCPP_NS_START
 
-struct CodeModifier;
 struct ApiHookImpl;
 
 struct ApiHook
 {
-    ApiHook ( void* apiAddress
-            , void* stubAddress
-            , CodeModifier* codeModifier);
+    ApiHook ( const void* api
+            , const void* stub
+            , const void* stubConverter
+            , const void* realStub);
 
     ~ApiHook();
 

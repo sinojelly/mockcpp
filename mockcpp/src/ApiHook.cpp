@@ -17,9 +17,9 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
+#include "JmpOnlyApiHook.h"
 #include <mockcpp/ApiHook.h>
 #include <mockcpp/JmpCode.h>
-#include <mockcpp/CodeModifier.h>
 
 MOCKCPP_NS_START
 
@@ -27,62 +27,32 @@ MOCKCPP_NS_START
 struct ApiHookImpl
 {
    /////////////////////////////////////////////////////
-   ApiHookImpl( void* api
-              , void* stub
-              , CodeModifier* codeModifier)
-		: m_jmpCode(api, stub)
-        , m_originalData(0)
-        , m_api(api)
-        , m_codeModifier(codeModifier)
+   ApiHookImpl( const void* api
+              , const void* stub
+              , const void* stubConverter
+              , const void* realStub)
+      : stubHook(api, stub)
+      , converterHook(stubConverter, realStub)
    {
-      startHook();
    }
 
    /////////////////////////////////////////////////////
    ~ApiHookImpl()
    {
-      delete m_orignalData;
    }
 
    /////////////////////////////////////////////////////
-   void saveOriginalData()
-   {
-      m_orignalData = new char[m_jmpCode.getCodeSize()];
-      ::memcpy(m_originalData, m_api, m_jmpCode.getCodeSize());
-   }
-
-   /////////////////////////////////////////////////////
-   void startHook()
-   {
-      saveOriginalData();
-      changeCode(m_jmpCode.getCodeData());
-   }
-
-   /////////////////////////////////////////////////////
-   void stopHook()
-   {
-      changeCode(m_originalData);
-   }
-
-   /////////////////////////////////////////////////////
-   void changeCode(void* data)
-   {
-      m_codeModifier->modify(m_api, data, m_jmpCode.getCodeSize());
-   }
-
-   /////////////////////////////////////////////////////
-   JmpCode m_jmpCode;
-   char* m_orignalData;
-   void* m_api;
-   CodeModifier* m_codeModifier;
+   JmpOnlyApiHook stubHook;
+   JmpOnlyApiHook converterHook;
 };
 
 /////////////////////////////////////////////////////////////////
 ApiHook::ApiHook 
-              ( void* api 
-              , void* stub
-              , CodeModifier* codeModifier)
-	: This(new ApiHookImpl(api, stub, codeModifier))
+              ( const void* api 
+              , const void* stub
+              , const void* stubConverter
+              , const void* realStub)
+	: This(new ApiHookImpl(api, stub, stubConverter, realStub))
 {
 }
 

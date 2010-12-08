@@ -16,32 +16,32 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#include <mockcpp/CApiHookKey.h>
+#include <mockcpp/ApiHookKey.h>
 #include <mockcpp/ApiHook.h>
 
 MOCKCPP_NS_START
 
 ///////////////////////////////////////////////////////////
-CApiHookKey::CApiHookKey(const void* api, const void* stub)
+ApiHookKey::ApiHookKey(const void* api, const void* stub, const void* converter, const void* realStub)
    : apiAddress(api)
 {
-   hook = new CApiHook((ApiHook::Address)api, (ApiHook::Address)stub);
+   hook = new ApiHook(api, stub, converter, realStub);
 }
 
 ///////////////////////////////////////////////////////////
-CApiHookKey::CApiHookKey(const void* api)
+ApiHookKey::ApiHookKey(const void* api)
    : apiAddress(api), hook(0)
 {
 }
 
 ////////////////////////////////////////////////////////////
-CApiHookKey::~CApiHookKey()
+ApiHookKey::~ApiHookKey()
 {
    if(hook != 0) delete hook;
 }   
 
 ////////////////////////////////////////////////////////////
-bool CApiHookKey::equals(
+bool ApiHookKey::equals(
       const ChainableMockMethodKey* const rhs) const
 {
     if(rhs == 0)
@@ -54,8 +54,8 @@ bool CApiHookKey::equals(
        return true;
     }
 
-    CApiHookKey* key = \
-          dynamic_cast<CApiHookKey*> \
+    ApiHookKey* key = \
+          dynamic_cast<ApiHookKey*> \
              (const_cast<ChainableMockMethodKey*>(rhs));
     if(key == 0)
     {
