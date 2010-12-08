@@ -136,11 +136,11 @@ HookMockObject::method(const std::string& name, const void* api, const void* stu
 Invokable*
 HookMockObject::getInvokable(const void* api) 
 {
-   std::cout << "api : " << api << std::endl;
    ChainableMockMethodCore* method = This->getMethod(api);
    MOCKCPP_ASSERT_TRUE(
 	   "mockcpp internal error (3001): unable to get api pointer",
 	   method != 0);
+   std::cout << "api : " << api << std::endl;
    return method;
 }
 
