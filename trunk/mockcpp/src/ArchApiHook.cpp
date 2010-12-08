@@ -32,6 +32,7 @@
 MOCKCPP_NS_START
 
 
+#if 0
 namespace {
 
 struct ThunkAllocator 
@@ -65,32 +66,35 @@ private:
 AllocatorContainer ThunkAllocator::allocatorContainer;
 
 }
+#endif
 
-
+/////////////////////////////////////////////////////////////////////////////
 struct ArchApiHookImpl
 {
-	void hook(ApiHook::Address pfnOld, ApiHook::Address pfnNew, ThunkCode *thunkTemplate);
+	void hook(void* pfnOld, void* pfnNew);
 
 	ArchApiHookImpl(PageAllocator *pageAllocator, CodeModifier *codeModifier);
 	~ArchApiHookImpl();
 
-private:    
-	ApiHook::Address  m_pfnOld; // save old func addr.
-	
-    char m_byNew[JMP_CODE_TEMPLATE_SIZE];  //jmp to thunk
-	char m_byOld[JMP_CODE_TEMPLATE_SIZE];  //save old func content which will be covered with jmp to thunk code, so as to recover it when unhook.
-	char *m_thunk; //thunk code, for jumping to mock func(CApiHookFunctor<BOOST_TYPEOF(function)>::hook) and pass old func addr as parameter.
-
-    PageAllocator *allocator;
-	CodeModifier *modifier;
-
+    ////////////////////////////////////////////
 	bool changeCode(char* code);
 	bool allocThunk();
 	void freeThunk();
-	void initHook(ApiHook::Address pfnOld, ApiHook::Address pfnNew);
-	void initThunk(ApiHook::Address pfnOld, ApiHook::Address pfnNew, ThunkCode *thunkTemplate);
+	void initHook(void* pfnOld, void* pfnNew);
+	void initThunk(void* pfnOld, void* pfnNew);
 	void startHook();
 	void stopHook();
+
+    /////////////////////////////////////////////////
+	void* m_pfnOld; // original function address.
+	
+    char m_byNew[JMP_CODE_TEMPLATE_SIZE];  
+	char m_byOld[JMP_CODE_TEMPLATE_SIZE];  
+
+	char *m_thunk; 
+
+    PageAllocator *allocator;
+	CodeModifier *modifier;
 };
 
 /////////////////////////////////////////////////////////////////
@@ -114,7 +118,7 @@ void ArchApiHookImpl::freeThunk()
 }
 
 /////////////////////////////////////////////////////////////////
-void ArchApiHookImpl::initThunk(ApiHook::Address pfnOld, ApiHook::Address pfnNew, ThunkCode *thunkTemplate)
+void ArchApiHookImpl::initThunk(ApiHook::Address pfnOld, ApiHook::Address pfnNew)
 {
 	memcpy( m_thunk, thunkTemplate->thunkCodeStart(), thunkTemplate->thunkCodeLength());  
 	*(uintptr_t*)(m_thunk + thunkTemplate->newAddrOffset()) = (uintptr_t)pfnNew;
@@ -122,11 +126,11 @@ void ArchApiHookImpl::initThunk(ApiHook::Address pfnOld, ApiHook::Address pfnNew
 }
 
 /////////////////////////////////////////////////////////////////
-void ArchApiHookImpl::initHook(ApiHook::Address pfnOld, ApiHook::Address pfnNew)
+void ArchApiHookImpl::initHook(void* pfnOld, void* pfnNew)
 {
     JmpCode jmpCode((void *)pfnOld, (void *)m_thunk);
 
-    jmpCode.copy((void *)m_byNew);
+    jmpCode.copyTo((void *)m_byNew);
     
     m_pfnOld  =  pfnOld;
 
@@ -134,25 +138,28 @@ void ArchApiHookImpl::initHook(ApiHook::Address pfnOld, ApiHook::Address pfnNew)
 }
 
 /////////////////////////////////////////////////////////////////
-bool ArchApiHookImpl::changeCode(char* code)
+bool ArchApiHookImpl::changeCode(char* code, size_t size)
 {
-	return modifier->modify((void *)m_pfnOld, code, JMP_CODE_TEMPLATE_SIZE);
+	return modifier->modify((void *)m_pfnOld, code, size);
 }
 
 /////////////////////////////////////////////////////////////////
 void ArchApiHookImpl::startHook()
 {
-	ArchApiHookImpl::changeCode((char*)m_byNew);
+	changeCode((char*)m_byNew, sizeof(m_byNew));
 }
 
 /////////////////////////////////////////////////////////////////
 void ArchApiHookImpl::stopHook()
 {
-    ArchApiHookImpl::changeCode((char*)m_byOld);
+    changeCode((char*)m_byOld, sizeof(m_byOld));
 }
 
 /////////////////////////////////////////////////////////////////
-void ArchApiHookImpl::hook(ApiHook::Address pfnOld, ApiHook::Address pfnNew, ThunkCode *thunkTemplate)
+void
+ArchApiHookImpl::hook
+	( void* pfnOld
+    , void* pfnNew )
 {
 	if (!allocThunk())
 	{
@@ -160,7 +167,7 @@ void ArchApiHookImpl::hook(ApiHook::Address pfnOld, ApiHook::Address pfnNew, Thu
 	}
 
     initHook(pfnOld, pfnNew);
-	initThunk(pfnOld, pfnNew, thunkTemplate);
+	initThunk(pfnOld, pfnNew);
 
 	startHook();
 }
@@ -176,7 +183,11 @@ ArchApiHookImpl::~ArchApiHookImpl()
 }
 
 /////////////////////////////////////////////////////////////////
-ArchApiHook::ArchApiHook(PageAllocator *pageAllocator, CodeModifier *codeModifier)
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+ArchApiHook::ArchApiHook
+    ( PageAllocator *pageAllocator
+    , CodeModifier *codeModifier)
 	: This(new ArchApiHookImpl(pageAllocator, codeModifier))
 {
 }
@@ -188,9 +199,9 @@ ArchApiHook::~ArchApiHook()
 }
 
 /////////////////////////////////////////////////////////////////
-void ArchApiHook::hook(ApiHook::Address pfnOld, ApiHook::Address pfnNew, ThunkCode *thunkTemplate)
+void ArchApiHook::hook(void* functionAddress, void* stubAddress)
 {
-	This->hook(pfnOld, pfnNew, thunkTemplate);
+	This->hook(functionAddress, stubAddress);
 }
 
 /////////////////////////////////////////////////////////////////

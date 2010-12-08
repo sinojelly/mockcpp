@@ -17,28 +17,87 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#include <mockcpp/CApiHook.h>
-#include <mockcpp/Asserter.h>
-#include <mockcpp/LinuxPageAllocator.h>
-#include <mockcpp/LinuxProtectPageAllocator.h>
-#include <mockcpp/LinuxCodeModifier.h>
-#include <mockcpp/BlockAllocator.h>
-#include <mockcpp/ArchApiHook.h>
+#include <mockcpp/ApiHook.h>
+#include <mockcpp/CodeModifier.h>
 
 MOCKCPP_NS_START
 
+struct JmpCode
+{
+    virtual void setJmpAddress(void* address) = 0;
+    virtual void*  getCodeData() const = 0;
+	virtual size_t getCodeSize() const = 0;
+
+    virtual ~JmpCode() {}
+};
+
+////////////////////////////////////////////////////////
+struct ApiHookImpl
+{
+   /////////////////////////////////////////////////////
+   ApiHookImpl( void* functionAddress
+              , void* stubAddress 
+              , void* jmpCode
+              , CodeModifier* codeModifier)
+        : m_originalData(0)
+        , m_functionAddress(functionAddress)
+		, m_jmpCode(jmpCode)
+        , m_codeModifier(codeModifier)
+   {
+      jmpCode->setJmpAddress(stubAddress);
+      saveOriginalData();
+      startHook();
+   }
+
+   /////////////////////////////////////////////////////
+   ~ApiHookImpl()
+   {
+      delete m_jmpCode;
+      delete m_orignalData;
+   }
+
+   /////////////////////////////////////////////////////
+   void saveOriginalData()
+   {
+      m_orignalData = new char[m_jmpCode.getCodeSize()];
+      ::memcpy(m_originalData, m_functionAddress, m_jmpCode.getCodeSize());
+   }
+
+   /////////////////////////////////////////////////////
+   void startHook()
+   {
+      changeCode(m_jmpCode.getCodeData());
+   }
+
+   /////////////////////////////////////////////////////
+   void stopHook()
+   {
+      changeCode(m_originalData);
+   }
+
+   /////////////////////////////////////////////////////
+   void changeCode(void* data)
+   {
+      m_codeModifier->modify(m_functionAddress, data, m_jmpCode.getCodeSize());
+   }
+
+   /////////////////////////////////////////////////////
+   JmpCode* m_jmpCode;
+   char* m_orignalData;
+   void* m_functionAddress;
+   CodeModifier* m_codeModifier;
+};
 
 /////////////////////////////////////////////////////////////////
-CApiHook::CApiHook(ApiHook::Address pfnOld, ApiHook::Address pfnNew, ThunkCode *thunkTemplate)
-   : allocator(new LinuxProtectPageAllocator(new LinuxPageAllocator)), hooker(new ArchApiHook(allocator, new LinuxCodeModifier(allocator)))
+ApiHook::ApiHook(void* functionAddress, void* stubAddress)
+	: This(new ApiHookImpl(functionAddress, stubAddress))
 {
-	hooker->hook(pfnOld, pfnNew, thunkTemplate);
 }
 
 /////////////////////////////////////////////////////////////////
-CApiHook::~CApiHook()
+ApiHook::~ApiHook()
 {
-	delete hooker;
+	delete This;
 }
 
 /////////////////////////////////////////////////////////////////
