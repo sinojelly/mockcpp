@@ -19,5 +19,5 @@ cd ut
 if [ "$OSTYPE" = "cygwin" ]; then
     ../../build_testngpp/src/runner/testngpp-runner $(ls *.dll) -L"../../build_testngpp/src/listeners" -l"testngppstdoutlistener -c -f"
 else
-    ../../build_testngpp/src/runner/testngpp-runner $(ls *.so) -L"../../build_testngpp/src/listeners" -l"testngppstdoutlistener -c -f -v" -s
+    ../../build_testngpp/src/runner/testngpp-runner $(ls *.so) -L"../../build_testngpp/src/listeners" -l"testngppstdoutlistener -c -f " -s
 fi

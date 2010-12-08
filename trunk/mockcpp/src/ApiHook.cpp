@@ -25,6 +25,7 @@
 #include <mockcpp/ApiHook.h>
 #include <mockcpp/JmpCode.h>
 #include <mockcpp/PageAllocator.h>
+#include <mockcpp/Asserter.h>
 
 MOCKCPP_NS_START
 
@@ -36,11 +37,15 @@ struct ApiHookImpl
               , const void* stub
               , const void* stubConverter
               , const void* realStub)
-      : stubHook(api, stub)
    {
        thunk = PageAllocator::alloc(ThunkCode::size(), thunkSize);
+       MOCKCPP_ASSERT_FALSE_MESSAGE
+              ( "allocate memory for thunk code failed"
+              , thunk == 0);
+
        ThunkCode::copyTo(thunk, api, realStub);
        converterHook = new JmpOnlyApiHook(stubConverter, thunk);
+       stubHook = new JmpOnlyApiHook(api, stub);
    }
 
    /////////////////////////////////////////////////////
@@ -48,10 +53,11 @@ struct ApiHookImpl
    {
        PageAllocator::free(thunk, thunkSize);
        delete converterHook;
+       delete stubHook;
    }
 
    /////////////////////////////////////////////////////
-   JmpOnlyApiHook stubHook;
+   JmpOnlyApiHook* stubHook;
    JmpOnlyApiHook* converterHook;
    size_t  thunkSize;
    void*   thunk;

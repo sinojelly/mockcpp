@@ -8,7 +8,7 @@
 
 #else
 
-#include "ThunkCodeX32.h"
+#include "ThunkCodeX86.h"
 
 #endif
 
