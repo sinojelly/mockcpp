@@ -17,6 +17,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
+#include <iostream>
 #include <string.h>
 
 #include "JmpOnlyApiHook.h"
@@ -42,7 +43,7 @@ struct JmpOnlyApiHookImpl
    /////////////////////////////////////////////////////
    ~JmpOnlyApiHookImpl()
    {
-      delete m_originalData;
+      stopHook();
    }
 
    /////////////////////////////////////////////////////
@@ -63,6 +64,7 @@ struct JmpOnlyApiHookImpl
    void stopHook()
    {
       changeCode(m_originalData);
+      delete [] m_originalData;
    }
 
    /////////////////////////////////////////////////////
