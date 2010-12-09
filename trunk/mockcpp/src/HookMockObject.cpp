@@ -25,8 +25,6 @@
 #include <mockcpp/ApiHookKey.h>
 #include <mockcpp/ReportFailure.h>
 
-#include <iostream>
-
 MOCKCPP_NS_START
 
 //////////////////////////////////////////////////////////////
@@ -140,7 +138,6 @@ HookMockObject::getInvokable(const void* api)
    MOCKCPP_ASSERT_TRUE(
 	   "mockcpp internal error (3001): unable to get api pointer",
 	   method != 0);
-   std::cout << "api : " << api << std::endl;
    return method;
 }
 
