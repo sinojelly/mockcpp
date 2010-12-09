@@ -26,12 +26,17 @@ USING_TESTNGPP_NS
 
 int func(int a, int b)
 {
-	return 0;
+    return 0;
+}
+
+int foo(int a, int b)
+{
+    return 0;
 }
 
 int func2(int a)
 {
-	return 0;
+    return 0;
 }
 
 FIXTURE(ApiHook)
@@ -49,6 +54,7 @@ FIXTURE(ApiHook)
 			.expects(once())
 			.with(eq(a), eq(b))
 			.will(returnValue(ret));
+
 	}
 
 	TEARDOWN()
@@ -83,4 +89,11 @@ FIXTURE(ApiHook)
 		ASSERT_EQ(ret, func(a, b));
 		ASSERT_EQ(20, func2(500));
 	}
+
+        TEST(can mock 2 functions which has same prototype)
+        {
+               MOCKER(foo).stubs().will(returnValue(20));
+               ASSERT_EQ(ret, func(a, b));
+               ASSERT_EQ(20,  foo(a, b));
+        }
 };
