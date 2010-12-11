@@ -1,0 +1,47 @@
+/***
+    mockcpp is a generic C/C++ mock framework.
+    Copyright (C) <2009>  <Darwin Yuan: darwin.yuan@gmail.com>
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+***/
+
+#ifndef __MOCKCPP_MOKC_H
+#define __MOCKCPP_MOKC_H
+
+#ifdef __cplusplus
+#  include <mockcpp/ChainingMockHelper.h>
+#  include <mockcpp/ProcStub.h>
+
+#  if defined(MOCKCPP_USE_MOCKABLE) 
+#    include <mockcpp/Functor.h>
+#    define MOCKER(function) MOCKCPP_NS::GlobalMockObject::instance.method(#function)
+#  else
+#    include <mockcpp/CApiHookFunctor.h>
+#    include <mockcpp/CApiHookFunctorX64.h>
+#    include <boost/typeof/typeof.hpp>
+#    define MOCKER(function) \
+         MOCKCPP_NS::GlobalMockObject:: \
+             instance.method \
+                 ( #function \
+                 , (const void *)function \
+                 , (const void *)CApiHookFunctor<BOOST_TYPEOF(function)>::hook \
+                 , ThunkCodeProvider<BOOST_TYPEOF(function)>()())
+#  endif
+
+USING_MOCKCPP_NS
+
+#endif
+
+#endif
+
