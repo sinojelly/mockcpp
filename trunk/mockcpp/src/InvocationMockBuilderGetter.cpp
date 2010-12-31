@@ -43,7 +43,7 @@ InvocationMockBuilderGetter::~InvocationMockBuilderGetter()
 }
 
 //////////////////////////////////////////////////////////
-WorkingBuilder InvocationMockBuilderGetter::stubs()
+StubsBuilder InvocationMockBuilderGetter::stubs()
 {
     InvocationMocker* mocker = new InvocationMocker(method);
     mocker->addMatcher(new StubsMatcher);
@@ -51,11 +51,11 @@ WorkingBuilder InvocationMockBuilderGetter::stubs()
 
     invocationMockerContainer->addInvocationMocker(mocker);
 
-    return WorkingBuilder(mocker);
+    return StubsBuilder(mocker);
 }
 
 //////////////////////////////////////////////////////////
-WorkingBuilder InvocationMockBuilderGetter::expects(Matcher* matcher)
+MockBuilder InvocationMockBuilderGetter::expects(Matcher* matcher)
 {
     InvocationMocker* mocker = new InvocationMocker(method);
 
@@ -71,7 +71,7 @@ WorkingBuilder InvocationMockBuilderGetter::expects(Matcher* matcher)
 
     invocationMockerContainer->addInvocationMocker(mocker);
 
-    return WorkingBuilder(mocker);
+    return MockBuilder(mocker);
 }
 
 //////////////////////////////////////////////////////////
