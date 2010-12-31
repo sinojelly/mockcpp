@@ -228,15 +228,12 @@ IF(MSVC)
    SET(MOCKCPP_SRCS 
 	   ${MOCKCPP_SRCS} 
 	   WinCApiHook.cpp 
-	   WinPageAllocator.cpp 
-	   WinProtectPageAllocator.cpp 
 	   WinCodeModifier.cpp
    ) 
 ELSE(MSVC)
    SET(MOCKCPP_SRCS 
        ${MOCKCPP_SRCS} 
        UnixCodeModifier.cpp
-       UnixPageAllocator.cpp
    )
 ENDIF(MSVC)
 ######################################################
