@@ -17,14 +17,11 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#include <string.h>
 #include <inttypes.h>
 
 #include "JmpOnlyApiHook.h"
-#include "ThunkCode.h"
 #include <mockcpp/ApiHook.h>
 #include <mockcpp/JmpCode.h>
-#include <mockcpp/PageAllocator.h>
 #include <mockcpp/Asserter.h>
 
 MOCKCPP_NS_START
