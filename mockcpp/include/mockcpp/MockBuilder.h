@@ -16,36 +16,38 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#ifndef __MOCKCPP_INVOCATION_MOCK_BUILDER_GETTER_H
-#define __MOCKCPP_INVOCATION_MOCK_BUILDER_GETTER_H
+#ifndef __MOCKCPP_MOCK_BUILDER_H
+#define __MOCKCPP_MOCK_BUILDER_H
 
 #include <mockcpp/mockcpp.h>
 
-#include <mockcpp/MockBuilder.h>
-#include <mockcpp/StubsBuilder.h>
-#include <mockcpp/DefaultBuilder.h>
+#include <mockcpp/InvocationMockBuilder.h>
+#include <mockcpp/CallerMatchBuilder.h>
+#include <mockcpp/BeforeMatchBuilder.h>
+#include <mockcpp/ArgumentsMatchBuilder.h>
+#include <mockcpp/AfterMatchBuilder.h>
+#include <mockcpp/StubBuilder.h>
+#include <mockcpp/MoreStubBuilder.h>
+#include <mockcpp/IdentityBuilder.h>
 
 MOCKCPP_NS_START
 
 ///////////////////////////////////////////////
-struct Matcher;
-struct InvocationMockerContainer;
-struct Method;
-
-///////////////////////////////////////////////
-struct InvocationMockBuilderGetter
-{
-    InvocationMockBuilderGetter(InvocationMockerContainer* container, Method* method);
-    ~InvocationMockBuilderGetter();
-
-    StubsBuilder stubs(); 
-    MockBuilder expects(Matcher* matcher); 
-    DefaultBuilder defaults();
-
-private:
-    InvocationMockerContainer* invocationMockerContainer;
-    Method* method;
-};
+typedef InvocationMockBuilder<
+          CallerMatchBuilder<
+           BeforeMatchBuilder<
+            ArgumentsMatchBuilder<
+             AfterMatchBuilder<
+              StubBuilder< 
+               MoreStubBuilder<
+                IdentityBuilder
+               >
+              >
+             >
+            >
+           >
+          >
+         > MockBuilder;
 
 ///////////////////////////////////////////////
 
