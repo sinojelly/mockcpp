@@ -227,7 +227,6 @@ ENDIF()
 IF(MSVC)
    SET(MOCKCPP_SRCS 
 	   ${MOCKCPP_SRCS} 
-	   WinCApiHook.cpp 
 	   WinCodeModifier.cpp
    ) 
 ELSE(MSVC)
