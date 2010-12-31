@@ -33,7 +33,7 @@ std::string toBufferString(void* buf, size_t size);
 
 ///////////////////////////////////////////////////////
 template <typename T>
-std::string toString(T val)
+std::string toString(const T& val)
 {
    return MOCKCPP_NS::toBufferString((void*)&val, sizeof(val));
 }

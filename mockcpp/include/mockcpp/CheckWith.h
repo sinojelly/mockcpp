@@ -16,8 +16,8 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#ifndef __MOCKCPP_FOLLOW_H
-#define __MOCKCPP_FOLLOW_H
+#ifndef __MOCKCPP_CHECK_WITH_H
+#define __MOCKCPP_CHECK_WITH_H
 
 #include <mockcpp/types/AnyCast.h>
 #include <mockcpp/Constraint.h>
@@ -26,10 +26,10 @@
 MOCKCPP_NS_START
 
 template <typename T, typename Predict>
-class Check : public Constraint
+class CheckWith : public Constraint
 {
 public:
-    Check(Predict pred)
+    CheckWith(Predict pred)
       : predict(pred)
     {}    
 
