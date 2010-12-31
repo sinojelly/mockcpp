@@ -34,42 +34,20 @@ struct ApiHookImpl
 {
    /////////////////////////////////////////////////////
    ApiHookImpl( const void* api
-              , const void* stub
-              , const void* stubConverter
-              , const void* realStub)
+              , const void* stub )
+       : stubHook(api, stub)
    {
-       thunk = PageAllocator::alloc(ThunkCode::size(), thunkSize);
-       MOCKCPP_ASSERT_FALSE_MESSAGE
-              ( "allocate memory for thunk code failed"
-              , thunk == 0);
-
-       ThunkCode::copyTo(thunk, api, realStub);
-       converterHook = new JmpOnlyApiHook(stubConverter, thunk);
-       stubHook = new JmpOnlyApiHook(api, stub);
    }
 
    /////////////////////////////////////////////////////
-   ~ApiHookImpl()
-   {
-       PageAllocator::free(thunk, thunkSize);
-       delete converterHook;
-       delete stubHook;
-   }
-
-   /////////////////////////////////////////////////////
-   JmpOnlyApiHook* stubHook;
-   JmpOnlyApiHook* converterHook;
-   size_t  thunkSize;
-   void*   thunk;
+   JmpOnlyApiHook stubHook;
 };
 
 /////////////////////////////////////////////////////////////////
 ApiHook::ApiHook 
               ( const void* api 
-              , const void* stub
-              , const void* stubConverter
-              , const void* realStub)
-	: This(new ApiHookImpl(api, stub, stubConverter, realStub))
+              , const void* stub )
+	: This(new ApiHookImpl(api, stub))
 {
 }
 

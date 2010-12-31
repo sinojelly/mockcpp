@@ -17,7 +17,6 @@
 ***/
 
 #include <typeinfo>
-#include <iostream>
 
 #include <mockcpp/VirtualTable.h>
 #include <mockcpp/ReportFailure.h>

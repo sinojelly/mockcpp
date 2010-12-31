@@ -76,7 +76,7 @@ FIXTURE(Check)
 	{
 		MOCK_METHOD(mocker, method)
 			.expects(once())
-			.with(check(is_the_second_member_2));
+			.with(checkWith(is_the_second_member_2));
 		
 		client(mocker, &input);
 	
@@ -90,7 +90,7 @@ FIXTURE(Check)
 
 		//MOCK_METHOD(mocker, method)
 		//	.expects(once())
-		//	.with(check(is_the_second_member_2));
+		//	.with(checkWith(is_the_second_member_2));
 
 		//ASSERT_THROWS_ANYTHING(client(mocker, &input));
 
@@ -123,7 +123,7 @@ FIXTURE(Check)
 	{
 		MOCK_METHOD(mocker, method)
 			.expects(once())
-			.with(check(the_second_member_checker(2)));
+			.with(checkWith(the_second_member_checker(2)));
 
 		client(mocker, &input);
 	}
@@ -133,7 +133,7 @@ FIXTURE(Check)
 	{
 		MOCK_METHOD(mocker, method)
 			.expects(once())
-			.with(check(modify_the_first_member_to_10));
+			.with(checkWith(modify_the_first_member_to_10));
 
 		client(mocker, &input);
 
