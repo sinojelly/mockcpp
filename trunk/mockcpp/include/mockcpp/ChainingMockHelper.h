@@ -27,7 +27,8 @@
 #include <mockcpp/IsLessThan.h>
 #include <mockcpp/IsMirror.h>
 #include <mockcpp/Spy.h>
-#include <mockcpp/Check.h>
+#include <mockcpp/CheckWith.h>
+#include <mockcpp/ProcessWith.h>
 #include <mockcpp/OutBound.h>
 #include <mockcpp/OutBoundPointer.h>
 #include <mockcpp/IncrementStub.h>
@@ -97,20 +98,32 @@ struct PredictTypeTraits<bool (Predict::*)(T)>
 };
 
 template <typename Predict>
-Constraint* check(Predict pred)
+Constraint* checkWith(Predict pred)
 {
-#ifdef _MSC_VER
-    typedef typename PredictTypeTraits<BOOST_TYPEOF(&Predict::operator())>::ParaType T; //GCC: error: '&' cannot appear in a constant-expression
-#else
-    typedef typename PredictTypeTraits<typeof(&Predict::operator())>::ParaType T;
-#endif
-    return new Check<T, Predict>(pred);
+    typedef typename PredictTypeTraits<BOOST_TYPEOF(&Predict::operator())>::ParaType T; 
+    return new CheckWith<T, Predict>(pred);
 }
 
+////////////////////////////////////////////////////////////////
 template <typename T>
-Constraint* check(bool (*pred)(T))
+Constraint* checkWith(bool (*pred)(T))
 {
-    return new Check<T, bool (*)(T)>(pred);
+    return new CheckWith<T, bool (*)(T)>(pred);
+}
+
+////////////////////////////////////////////////////////////////
+template <typename Proc>
+Constraint* processWith(Proc proc)
+{
+    typedef typename PredictTypeTraits<BOOST_TYPEOF(&Proc::operator())>::ParaType T; 
+    return new ProcessWith<T, Proc>(proc);
+}
+
+////////////////////////////////////////////////////////////////
+template <typename T>
+Constraint* processWith(void (*proc)(T))
+{
+    return new ProcessWith<T, void (*)(T)>(proc);
 }
 
 ////////////////////////////////////////////////////////////////

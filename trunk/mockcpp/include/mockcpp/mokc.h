@@ -28,8 +28,7 @@
 #    define MOCKER(api) MOCKCPP_NS::GlobalMockObject::instance.method(#api)
 #  else
 #    include <mockcpp/ApiHookMocker.h>
-#    include <boost/typeof/typeof.hpp>
-#    define MOCKER(api) ApiHookMocker<BOOST_TYPEOF(api)>::mock(#api, (const void*)api)
+#    define MOCKER(api) MOCKCPP_NS::mockAPI(#api, api)
 #  endif
 
 USING_MOCKCPP_NS

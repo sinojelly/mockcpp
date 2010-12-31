@@ -19,6 +19,7 @@
 #ifndef __MOCKCPP_REPORT_FAILURE_H
 #define __MOCKCPP_REPORT_FAILURE_H
 
+#include <string>
 #include <mockcpp/mockcpp.h>
 
 MOCKCPP_NS_START

@@ -17,8 +17,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#if BUILD_FOR_X86
-
 #ifndef __MOCKCPP_THUNK_CODE_X86_H__
 #define __MOCKCPP_THUNK_CODE_X86_H__
 
@@ -119,12 +117,7 @@ THUNK_CODE_TEMPLATE_DEF(11);
 THUNK_CODE_TEMPLATE_DEF(12);
 
 
-
-
-
 MOCKCPP_NS_END
-
-#endif
 
 #endif
 

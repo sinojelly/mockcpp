@@ -11,9 +11,7 @@ struct ApiHookImpl;
 struct ApiHook
 {
     ApiHook ( const void* api
-            , const void* stub
-            , const void* stubConverter
-            , const void* realStub);
+            , const void* stub );
 
     ~ApiHook();
 
