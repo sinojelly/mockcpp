@@ -17,14 +17,12 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
-#ifdef _MSC_VER
-
 #include <Windows.h>
-#include <mockcpp/WinCodeModifier.h>
+#include <mockcpp/CodeModifier.h>
 
 MOCKCPP_NS_START
 
-bool WinCodeModifier::modify(void *dest, void *src, size_t size)
+bool CodeModifier::modify(void *dest, void *src, size_t size)
 {
 	DWORD  dwOldProtect(0);
 	DWORD  dwReadWrite(PAGE_EXECUTE_READWRITE); // modify code segment must use PAGE_EXECUTE_READWRITE.
@@ -41,4 +39,3 @@ bool WinCodeModifier::modify(void *dest, void *src, size_t size)
 
 MOCKCPP_NS_END
 
-#endif
