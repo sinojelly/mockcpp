@@ -40,7 +40,7 @@ namespace
    }
 }
 ///////////////////////////////////////////////////////////
-class InvocationMockerImpl
+struct InvocationMockerImpl
 {
 public:
     typedef std::list<Matcher*>  List;

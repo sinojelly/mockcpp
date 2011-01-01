@@ -22,10 +22,9 @@
 MOCKCPP_NS_START
 
 //////////////////////////////////////////////////////////////////////////
-class TypelessConstraintAdapterImpl
+struct TypelessConstraintAdapterImpl
 {
-public:
-	TypelessConstraint* typelessConstraint;
+   TypelessConstraint* typelessConstraint;
 
    TypelessConstraintAdapterImpl(TypelessConstraint* c)
 		: typelessConstraint(c)

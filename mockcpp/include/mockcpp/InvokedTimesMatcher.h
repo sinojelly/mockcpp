@@ -25,12 +25,10 @@
 MOCKCPP_NS_START
 
 struct InvokedTimesRecorder;
-class Invocation;
+struct Invocation;
 
-class InvokedTimesMatcher : public Matcher
+struct InvokedTimesMatcher : public Matcher
 {
-public:
-
     InvokedTimesMatcher(InvokedTimesRecorder* recorder);
 
     ~InvokedTimesMatcher();

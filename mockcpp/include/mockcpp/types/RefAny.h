@@ -24,10 +24,8 @@
 
 MOCKCPP_NS_START
 
-class RefAny : public AnyBase
+struct RefAny : public AnyBase
 {
-public: 
-
    RefAny();
 
    template <typename ValueType>

@@ -24,7 +24,7 @@
 
 MOCKCPP_NS_START
 
-class RefAny;
+struct RefAny;
 
 template <typename T>
 struct Spy : public Constraint

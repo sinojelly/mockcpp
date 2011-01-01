@@ -27,7 +27,7 @@
 
 MOCKCPP_NS_START
 
-class SelfDescribe;
+struct SelfDescribe;
 struct InvocationMockerNamespace;
 
 /////////////////////////////////////////////

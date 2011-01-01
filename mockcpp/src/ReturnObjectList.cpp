@@ -24,9 +24,8 @@
 
 MOCKCPP_NS_START
 
-class ReturnObjectListImpl
+struct ReturnObjectListImpl
 {
-public:
     typedef std::vector<Any> Objects;
 
     unsigned int firstUnused;

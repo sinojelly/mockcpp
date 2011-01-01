@@ -24,9 +24,8 @@
 
 MOCKCPP_NS_START
 
-class IgnoreReturnStub : public TypelessStub
+struct IgnoreReturnStub : public TypelessStub
 {
-public:
     IgnoreReturnStub();
     
     bool isCompleted(void) const;

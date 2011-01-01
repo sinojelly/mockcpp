@@ -24,14 +24,12 @@
 
 MOCKCPP_NS_START
 
-class RefAny;
-class TypelessConstraint;
-class TypelessConstraintAdapterImpl;
+struct RefAny;
+struct TypelessConstraint;
+struct TypelessConstraintAdapterImpl;
 
-class TypelessConstraintAdapter : public Constraint
+struct TypelessConstraintAdapter : public Constraint
 {
-public:
-
     TypelessConstraintAdapter(TypelessConstraint* tc);
     ~TypelessConstraintAdapter();
 

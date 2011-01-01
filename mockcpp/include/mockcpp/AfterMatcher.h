@@ -27,18 +27,17 @@
 MOCKCPP_NS_START
 
 struct InvocationMocker;
-class Invocation;
+struct Invocation;
 
-class AfterMatcher : public OrderingMatcher
+struct AfterMatcher : public OrderingMatcher
 {
-public:
    AfterMatcher();
 
-	bool matches(const Invocation& inv) const;
+   bool matches(const Invocation& inv) const;
 
    void increaseInvoked(const Invocation& inv);
 
-	std::string toString() const;
+   std::string toString() const;
    
    void verify(void);
 

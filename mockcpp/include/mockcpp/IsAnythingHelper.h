@@ -23,7 +23,7 @@
 
 MOCKCPP_NS_START
 
-class Constraint;
+struct Constraint;
 
 Constraint* any();
 

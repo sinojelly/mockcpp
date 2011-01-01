@@ -24,8 +24,8 @@
 
 MOCKCPP_NS_START
 
-class TypelessStub;
-class Invocation;
+struct TypelessStub;
+struct Invocation;
 
 struct TypelessStubAdapter : public Stub
 {

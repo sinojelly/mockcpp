@@ -31,10 +31,8 @@
 MOCKCPP_NS_START
 
 template<typename ValueType>
-class ValueHolder : public Holder<ValueType>
+struct ValueHolder : public Holder<ValueType>
 {
-public:
-
     ValueHolder(const ValueType& value)
       : held(value)
     {

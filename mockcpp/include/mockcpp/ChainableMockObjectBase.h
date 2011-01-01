@@ -28,11 +28,11 @@
 
 MOCKCPP_NS_START
 
-class ChainableMockObjectBaseImpl;
+struct ChainableMockObjectBaseImpl;
 struct InvocationMocker;
 
 
-class ChainableMockObjectBase 
+struct ChainableMockObjectBase 
       : public InvocationMockerNamespace
 {
 public:

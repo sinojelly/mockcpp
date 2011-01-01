@@ -24,10 +24,8 @@
 
 MOCKCPP_NS_START
 
-class TestFailureMatcher : public Matcher
+struct TestFailureMatcher : public Matcher
 {
-public:
-
     TestFailureMatcher(const std::string& msg
                       ,const std::string& str);
 

@@ -24,12 +24,10 @@
 
 MOCKCPP_NS_START
 
-class Any;
+struct Any;
 
-class IgnoreResultHandler : public ResultHandler
+struct IgnoreResultHandler : public ResultHandler
 {
-public:
-
     bool matches(const Any& result) const;
 
     const Any& getResult(const Any& result) const;

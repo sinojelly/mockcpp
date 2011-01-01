@@ -23,9 +23,8 @@
 
 MOCKCPP_NS_START
 
-class InvokedTimesReader
+struct InvokedTimesReader
 {
-public:
     virtual ~InvokedTimesReader() {}
 
     virtual unsigned int getInvokedTimes() const = 0;

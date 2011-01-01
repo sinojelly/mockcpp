@@ -24,13 +24,11 @@
 
 MOCKCPP_NS_START
 
-class Any;
-class SelfDescribe;
+struct Any;
+struct SelfDescribe;
 
-class MismatchResultHandler: public ResultHandler
+struct MismatchResultHandler: public ResultHandler
 {
-public:
-
     MismatchResultHandler( bool castable
                          , const std::type_info& expectedTypeInfo
                          , const std::string& expectedTypeString

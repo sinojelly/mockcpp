@@ -32,7 +32,7 @@ MOCKCPP_NS_START
 struct ChainableMockObjectImpl;
 struct Invokable;
 
-class ChainableMockObject 
+struct ChainableMockObject 
       : public ChainableMockObjectBase
 {
 public:

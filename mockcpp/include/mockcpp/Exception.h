@@ -27,20 +27,18 @@
 
 MOCKCPP_NS_START
 
-class Exception
+struct Exception
     : public std::exception
 {
-public:
+   Exception (unsigned srcline, const char* srcfile, const std::string &message);
 
-	Exception (unsigned srcline, const char* srcfile, const std::string &message);
-
-	virtual ~Exception() throw();
+   virtual ~Exception() throw();
 
    virtual std::string getMessage() const;
 
-	unsigned getSrcLine() const;
+   unsigned getSrcLine() const;
 
-	std::string getSrcFile() const;
+   std::string getSrcFile() const;
 
    virtual const char *what() const throw();
 

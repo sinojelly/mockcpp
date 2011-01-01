@@ -26,9 +26,8 @@
 MOCKCPP_NS_START
 
 template <typename RT>
-class InvocationWithReturnType : public Invocation
+struct InvocationWithReturnType : public Invocation
 {
-public:
 	InvocationWithReturnType(
                const RefAny& p1 = RefAny()
              , const RefAny& p2 = RefAny()

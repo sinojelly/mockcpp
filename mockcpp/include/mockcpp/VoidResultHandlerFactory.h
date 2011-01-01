@@ -24,10 +24,10 @@
 
 MOCKCPP_NS_START
 
-class ResultHandler;
+struct ResultHandler;
 
 ///////////////////////////////////////////////////////////
-class VoidResultHandlerFactory
+struct VoidResultHandlerFactory
    : public ResultHandlerFactory
 {
 public:

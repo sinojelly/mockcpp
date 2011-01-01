@@ -24,13 +24,11 @@
 
 MOCKCPP_NS_START
 
-class InvokedTimesReader;
-class Invocation;
+struct InvokedTimesReader;
+struct Invocation;
 
-class InvocationTimesMatcher : public Matcher
+struct InvocationTimesMatcher : public Matcher
 {
-public:
-
     InvocationTimesMatcher();
     ~InvocationTimesMatcher();
 

@@ -26,10 +26,8 @@ MOCKCPP_NS_START
 
 struct InvocationMocker;
 
-class IdentityBuilder
+struct IdentityBuilder
 {
-public:
-
     void id(const std::string& id);
 
     virtual ~IdentityBuilder() {}

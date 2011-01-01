@@ -28,10 +28,8 @@
 MOCKCPP_NS_START
 
 template <typename T>
-class IncrementStub : public TypelessStub
+struct IncrementStub : public TypelessStub
 {
-public:
-
     IncrementStub(T startValue, T endValue)
        : from(startValue), to(endValue), current(startValue), hasEnd(true)
     {}

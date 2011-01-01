@@ -24,7 +24,7 @@
 
 MOCKCPP_NS_START
 
-class Invocation;
+struct Invocation;
 
 struct DefaultMatcher : public Matcher
 {

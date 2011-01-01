@@ -21,9 +21,8 @@
 MOCKCPP_NS_START
 
 ///////////////////////////////////////////////////////////////
-class ProcStubBaseImpl
+struct ProcStubBaseImpl
 {
-public:
     ProcStubBaseImpl(const std::string& name, void* addr)
        : procName(name), address(addr)
     {}

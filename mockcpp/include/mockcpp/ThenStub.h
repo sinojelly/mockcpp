@@ -24,8 +24,8 @@
 
 MOCKCPP_NS_START
 
-class Any;
-class Invocation;
+struct Any;
+struct Invocation;
 
 struct ThenStub : public Stub
 {

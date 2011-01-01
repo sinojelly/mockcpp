@@ -32,12 +32,10 @@ MOCKCPP_NS_START
 template <typename F>
 struct ProcStub;
 
-class ProcStubBaseImpl;
+struct ProcStubBaseImpl;
 
-class ProcStubBase : public Stub
+struct ProcStubBase : public Stub
 {
-public:
-
     ProcStubBase(const std::string& name, void* addr);
 
     ~ProcStubBase();

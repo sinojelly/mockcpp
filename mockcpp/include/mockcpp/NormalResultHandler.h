@@ -24,12 +24,10 @@
 
 MOCKCPP_NS_START
 
-class Any;
+struct Any;
 
-class NormalResultHandler : public ResultHandler
+struct NormalResultHandler : public ResultHandler
 {
-public:
-
     NormalResultHandler(bool castable);
 
     bool matches(const Any& result) const;

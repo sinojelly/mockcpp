@@ -26,9 +26,8 @@ MOCKCPP_NS_START
 
 struct InvocationMocker;
 
-class OrderingMatcher : public Matcher
+struct OrderingMatcher : public Matcher
 {
-public:
    virtual ~OrderingMatcher() {}
    virtual bool isCompleted(void) const = 0;
    virtual void setOrderingInvocationMocker(InvocationMocker* mocker) = 0;

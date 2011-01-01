@@ -25,7 +25,7 @@
 
 MOCKCPP_NS_START
 
-template <class T>
+template <typename T>
 bool isEqualComparison(const T &left, const T &right)
 {
   return left == right;

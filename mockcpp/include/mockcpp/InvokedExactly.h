@@ -24,10 +24,8 @@
 
 MOCKCPP_NS_START
 
-class InvokedExactly : public InvocationTimesMatcher
+struct InvokedExactly : public InvocationTimesMatcher
 {
-public:
-
     InvokedExactly(const unsigned int times);
 
     bool matches(const Invocation& inv) const;

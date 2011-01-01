@@ -28,11 +28,9 @@ MOCKCPP_NS_START
 struct InvocationMockerNamespace;
 struct InvocationMocker;
 
-template <class Builder = DummyBuilder>
-class AfterMatchBuilder : public Builder
+template <typename Builder = DummyBuilder>
+struct AfterMatchBuilder : public Builder
 {
-public:
-    
     AfterMatchBuilder&
     after(const InvocationMockerNamespace& ns, const std::string& name);
 

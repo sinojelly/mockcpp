@@ -24,11 +24,9 @@
 
 MOCKCPP_NS_START
 
-class SimpleInvocationRecorder
+struct SimpleInvocationRecorder
       : public InvokedTimesRecorder
 {
-public:
-
     SimpleInvocationRecorder();
 
     unsigned int getInvokedTimes() const;

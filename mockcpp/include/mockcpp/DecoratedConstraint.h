@@ -25,10 +25,8 @@
 MOCKCPP_NS_START
 
 
-class DecoratedConstraint : public Constraint
+struct DecoratedConstraint : public Constraint
 {
-public:
-
     DecoratedConstraint(Constraint* constraint);
 
     ~DecoratedConstraint();

@@ -24,9 +24,9 @@
 
 MOCKCPP_NS_START
 
-class Any;
-class SelfDescribe;
-class ResultImpl;
+struct Any;
+struct SelfDescribe;
+struct ResultImpl;
 
 struct Result
 {

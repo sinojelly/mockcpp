@@ -67,7 +67,7 @@ void* getAddrOfMethod(Method input)
 }
 
 ///////////////////////////////////////////////////////////
-template <class C, typename Method>
+template <typename C, typename Method>
 GnuMethodDescription getGnuDescOfVirtualMethod(Method input)
 {
    typedef typename MethodTypeTraits<C, Method>::MethodType ExpectedMethodType; 
@@ -86,14 +86,14 @@ GnuMethodDescription getGnuDescOfVirtualMethod(Method input)
 }
 
 ///////////////////////////////////////////////////////////
-template <class C, typename Method>
+template <typename C, typename Method>
 unsigned int getIndexOfMethod(Method method)
 {
    return (getGnuDescOfVirtualMethod<C, Method>(method).u.index - 1)/sizeof(void*);
 }
 
 ///////////////////////////////////////////////////////////
-template <class C, typename Method>
+template <typename C, typename Method>
 unsigned int getDeltaOfMethod(Method method)
 {
    return getGnuDescOfVirtualMethod<C, Method>(method).delta/sizeof(void*);

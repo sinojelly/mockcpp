@@ -26,13 +26,11 @@
 MOCKCPP_NS_START
 
 struct InvocationMocker;
-class Constraint;
+struct Constraint;
 
-template <class Builder = DummyBuilder >
-class ArgumentsMatchBuilder : public Builder
+template <typename Builder = DummyBuilder >
+struct ArgumentsMatchBuilder : public Builder
 {
-public:
-
     Builder& with( Constraint* c01 = any()
                  , Constraint* c02 = any()
                  , Constraint* c03 = any()

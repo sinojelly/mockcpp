@@ -24,22 +24,18 @@
 
 MOCKCPP_NS_START
 
-class Matcher;
+struct Matcher;
 struct InvocationMocker;
 
 template <typename Builder = DummyBuilder>
-class InvocationMockBuilder : public Builder
+struct InvocationMockBuilder : public Builder
 {
-public:
-
    InvocationMockBuilder(InvocationMocker* mocker);
 
 private:
-
    virtual InvocationMocker* getMocker() const;
 
 private:
-
    InvocationMocker* invocationMocker;
 };
 

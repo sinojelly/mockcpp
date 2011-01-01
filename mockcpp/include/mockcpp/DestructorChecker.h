@@ -29,7 +29,7 @@
 MOCKCPP_NS_START
 
 ///////////////////////////////////////////////
-template <class Interface, class Original>
+template <typename Interface, typename Original>
 std::pair<unsigned int, unsigned int> getIndexOfDestructor()
 {
    MethodIndiceChecker* checker = createMethodIndiceChecker(typeid(Original));

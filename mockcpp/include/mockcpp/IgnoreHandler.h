@@ -25,7 +25,7 @@
 
 MOCKCPP_NS_START
 
-class Any;
+struct Any;
 
 struct IgnoreHandler : public ResultHandler
 {

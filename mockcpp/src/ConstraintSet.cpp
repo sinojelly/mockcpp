@@ -24,17 +24,11 @@
 
 MOCKCPP_NS_START
 
-class ConstraintSetImpl
+struct ConstraintSetImpl
 {
-public:
-
     typedef std::vector<Constraint*> Vector;
 
-public:
-
     Vector constraints;
-
-public:
 
     ~ConstraintSetImpl();
 

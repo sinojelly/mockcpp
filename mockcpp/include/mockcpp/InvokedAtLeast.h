@@ -24,10 +24,8 @@
 
 MOCKCPP_NS_START
 
-class InvokedAtLeast : public InvocationTimesMatcher
+struct InvokedAtLeast : public InvocationTimesMatcher
 {
-public:
-
     InvokedAtLeast(const unsigned int times);
 
     bool matches(const Invocation& inv) const;
