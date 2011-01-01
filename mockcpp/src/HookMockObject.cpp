@@ -90,6 +90,7 @@ getMethod(const std::string& name, const void* api
     ChainableMockMethodCore* method = getMethod(api);
     if (method != 0)
     {
+      delete hookHolder;
       return method;
     }
 
