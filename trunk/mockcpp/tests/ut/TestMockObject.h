@@ -401,13 +401,13 @@ public:
        MockObject<Interface> mock;
 
        mock.method(&Interface::base01)
-           .stubs()
+           .expects(atLeast(1))
            .before("1")
            .with(eq(12))
            .will(returnValue(true));
 
        mock.method(&Interface::base01)
-           .stubs()
+           .expects(atLeast(1))
            .with(eq(21))
            .will(returnValue(false))
            .id("1");
@@ -425,13 +425,13 @@ public:
        MockObject<Interface> mock;
 
        mock.method(&Interface::base01)
-           .stubs()
+           .expects(atLeast(1))
            .before("1")
            .with(eq(12))
            .will(returnValue(true));
 
        mock.method(&Interface::base01)
-           .stubs()
+           .expects(atLeast(1))
            .with(eq(21))
            .will(returnValue(false))
            .id("1");
@@ -448,13 +448,13 @@ public:
        MockObject<Interface> mock1;
 
        mock0.method(&Interface::base01)
-           .stubs()
+           .expects(atLeast(1))
            .before(mock1, "1")
            .with(eq(12))
            .will(returnValue(true));
 
        mock1.method(&Interface::base01)
-           .stubs()
+           .expects(atLeast(1))
            .with(eq(12))
            .will(returnValue(false))
            .id("1");
@@ -470,13 +470,13 @@ public:
        MockObject<Interface> mock1;
 
        mock0.method(&Interface::base01)
-           .stubs()
+           .expects(atLeast(1))
            .before(mock1, "1")
            .with(eq(12))
            .will(returnValue(true));
 
        mock1.method(&Interface::base01)
-           .stubs()
+           .expects(atLeast(1))
            .with(eq(12))
            .will(returnValue(false))
            .id("1");
@@ -493,20 +493,20 @@ public:
        MockObject<Interface> mock2;
 
        mock0.method(&Interface::base01)
-           .stubs()
+           .expects(atLeast(1))
            .before(mock1, "1")
            .before(mock2, "1")
            .with(eq(12))
            .will(returnValue(true));
 
        mock1.method(&Interface::base01)
-           .stubs()
+           .expects(atLeast(1))
            .with(eq(12))
            .will(returnValue(false))
            .id("1");
 
        mock2.method(&Interface::base01)
-           .stubs()
+           .expects(atLeast(1))
            .with(eq(12))
            .will(returnValue(false))
            .id("1");
@@ -524,20 +524,20 @@ public:
        MockObject<Interface> mock2;
 
        mock0.method(&Interface::base01)
-           .stubs()
+           .expects(atLeast(1))
            .before(mock1, "1")
            .before(mock2, "1")
            .with(eq(12))
            .will(returnValue(true));
 
        mock1.method(&Interface::base01)
-           .stubs()
+           .expects(atLeast(1))
            .with(eq(12))
            .will(returnValue(false))
            .id("1");
 
        mock2.method(&Interface::base01)
-           .stubs()
+           .expects(atLeast(1))
            .with(eq(12))
            .will(returnValue(false))
            .id("1");
@@ -554,20 +554,20 @@ public:
        MockObject<Interface> mock2;
 
        mock0.method(&Interface::base01)
-           .stubs()
+           .expects(atLeast(1))
            .before(mock1, "1")
            .before(mock2, "1")
            .with(eq(12))
            .will(returnValue(true));
 
        mock1.method(&Interface::base01)
-           .stubs()
+           .expects(atLeast(1))
            .with(eq(12))
            .will(returnValue(false))
            .id("1");
 
        mock2.method(&Interface::base01)
-           .stubs()
+           .expects(atLeast(1))
            .with(eq(12))
            .will(returnValue(false))
            .id("1");
@@ -582,13 +582,13 @@ public:
        MockObject<Interface> mock;
 
        mock.method(&Interface::base01)
-           .stubs()
+           .expects(atLeast(1))
            .with(eq(12))
            .after("1")
            .will(returnValue(true));
 
        mock.method(&Interface::base01)
-           .stubs()
+           .expects(atLeast(1))
            .with(eq(21))
            .will(returnValue(false))
            .id("1");
@@ -606,13 +606,13 @@ public:
        MockObject<Interface> mock;
 
        mock.method(&Interface::base01)
-           .stubs()
+           .expects(atLeast(1))
            .with(eq(12))
            .after("1")
            .will(returnValue(true));
 
        mock.method(&Interface::base01)
-           .stubs()
+           .expects(atLeast(1))
            .with(eq(21))
            .will(returnValue(false))
            .id("1");
@@ -627,13 +627,13 @@ public:
        MockObject<Interface> mock1;
 
        mock0.method(&Interface::base01)
-           .stubs()
+           .expects(atLeast(1))
            .with(eq(12))
            .after(mock1, "1")
            .will(returnValue(true));
 
        mock1.method(&Interface::base01)
-           .stubs()
+           .expects(atLeast(1))
            .with(eq(12))
            .will(returnValue(false))
            .id("1");
@@ -649,13 +649,13 @@ public:
        MockObject<Interface> mock1;
 
        mock0.method(&Interface::base01)
-           .stubs()
+           .expects(atLeast(1))
            .with(eq(12))
            .after(mock1, "1")
            .will(returnValue(true));
 
        mock1.method(&Interface::base01)
-           .stubs()
+           .expects(atLeast(1))
            .with(eq(12))
            .will(returnValue(false))
            .id("1");
@@ -671,20 +671,20 @@ public:
        MockObject<Interface> mock2;
 
        mock0.method(&Interface::base01)
-           .stubs()
+           .expects(atLeast(1))
            .with(eq(12))
            .after(mock1, "1")
            .after(mock2, "1")
            .will(returnValue(true));
 
        mock1.method(&Interface::base01)
-           .stubs()
+           .expects(atLeast(1))
            .with(eq(12))
            .will(returnValue(false))
            .id("1");
 
        mock2.method(&Interface::base01)
-           .stubs()
+           .expects(atLeast(1))
            .with(eq(12))
            .will(returnValue(false))
            .id("1");
@@ -702,20 +702,20 @@ public:
        MockObject<Interface> mock2;
 
        mock0.method(&Interface::base01)
-           .stubs()
+           .expects(atLeast(1))
            .with(eq(12))
            .after(mock1, "1")
            .after(mock2, "1")
            .will(returnValue(true));
 
        mock1.method(&Interface::base01)
-           .stubs()
+           .expects(atLeast(1))
            .with(eq(12))
            .will(returnValue(false))
            .id("1");
 
        mock2.method(&Interface::base01)
-           .stubs()
+           .expects(atLeast(1))
            .with(eq(12))
            .will(returnValue(false))
            .id("1");
@@ -732,20 +732,20 @@ public:
        MockObject<Interface> mock2;
 
        mock0.method(&Interface::base01)
-           .stubs()
+           .expects(atLeast(1))
            .with(eq(12))
            .after(mock1, "1")
            .after(mock2, "1")
            .will(returnValue(true));
 
        mock1.method(&Interface::base01)
-           .stubs()
+           .expects(atLeast(1))
            .with(eq(12))
            .will(returnValue(false))
            .id("1");
 
        mock2.method(&Interface::base01)
-           .stubs()
+           .expects(atLeast(1))
            .with(eq(12))
            .will(returnValue(false))
            .id("1");
