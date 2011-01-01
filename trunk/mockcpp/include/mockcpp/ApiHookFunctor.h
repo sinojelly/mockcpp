@@ -29,35 +29,45 @@ private: \
                                 (empty_caller DECL_REST_PARAMS(n)); \
    } \
  \
-   static bool applied(F* api) \
+   static bool appliedBy(F* api) \
    { return apiAddress == reinterpret_cast<void*>(api); } \
  \
    static void* getHook() \
    { return reinterpret_cast<void*>(hook); } \
  \
+   static void free() \
+   { if(--refCount == 0) apiAddress = 0; } \
 public: \
  \
    static void* getApiHook(F* api) \
-   { return applied(api) ? getHook() : 0; } \
+   { \
+      if(!appliedBy(api)) return 0; \
+      ++refCount; \
+      return getHook(); \
+   } \
  \
    static void* applyApiHook(F* api) \
    { \
       if(apiAddress != 0) return 0; \
       apiAddress = reinterpret_cast<void*>(api); \
+      refCount = 1; \
       return getHook(); \
    } \
  \
    static bool freeApiHook(void* hook) \
    { \
        if(getHook() != hook) return false; \
-       apiAddress = 0; \
+       free(); \
        return true; \
    } \
 private: \
    static void* apiAddress; \
+   static unsigned int refCount; \
 }; \
 template <typename R DECL_TEMPLATE_ARGS(n), unsigned int Seq> \
-void* ApiHookFunctor<R(DECL_ARGS(n)), Seq>::apiAddress = 0 
+void* ApiHookFunctor<R(DECL_ARGS(n)), Seq>::apiAddress = 0; \
+template <typename R DECL_TEMPLATE_ARGS(n), unsigned int Seq> \
+unsigned int ApiHookFunctor<R(DECL_ARGS(n)), Seq>::refCount = 0 
 
 MOCKCPP_API_HOOK_FUNCTOR_DEF(0);
 MOCKCPP_API_HOOK_FUNCTOR_DEF(1);
