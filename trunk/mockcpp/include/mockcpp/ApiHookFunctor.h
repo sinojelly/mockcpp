@@ -16,9 +16,9 @@ struct ApiHookFunctor
 };
 
 const std::string empty_caller("");
-#define MOCKCPP_API_HOOK_FUNCTOR_DEF(n) \
+#define __MOCKCPP_API_HOOK_FUNCTOR_DEF(n, CallConvention) \
 template <typename R DECL_TEMPLATE_ARGS(n), unsigned int Seq> \
-struct ApiHookFunctor<R(DECL_ARGS(n)), Seq> \
+struct ApiHookFunctor<CallConvention R(DECL_ARGS(n)), Seq> \
 { \
 private: \
    typedef R F (DECL_ARGS(n)); \
@@ -68,6 +68,15 @@ template <typename R DECL_TEMPLATE_ARGS(n), unsigned int Seq> \
 void* ApiHookFunctor<R(DECL_ARGS(n)), Seq>::apiAddress = 0; \
 template <typename R DECL_TEMPLATE_ARGS(n), unsigned int Seq> \
 unsigned int ApiHookFunctor<R(DECL_ARGS(n)), Seq>::refCount = 0 
+
+#if defined(_MSC_VER)
+#define MOCKCPP_API_HOOK_FUNCTOR_DEF(n) \
+__MOCKCPP_API_HOOK_FUNCTOR_DEF(n, ); \
+__MOCKCPP_API_HOOK_FUNCTOR_DEF(n, __stdcall) 
+#else
+#define MOCKCPP_API_HOOK_FUNCTOR_DEF(n) \
+__MOCKCPP_API_HOOK_FUNCTOR_DEF(n, )
+#endif
 
 MOCKCPP_API_HOOK_FUNCTOR_DEF(0);
 MOCKCPP_API_HOOK_FUNCTOR_DEF(1);
