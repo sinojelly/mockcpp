@@ -226,8 +226,8 @@ ENDIF()
 
 IF(MSVC)
    SET(MOCKCPP_SRCS 
-	   ${MOCKCPP_SRCS} 
-	   WinCodeModifier.cpp
+       ${MOCKCPP_SRCS} 
+       WinCodeModifier.cpp
    ) 
 ELSE(MSVC)
    SET(MOCKCPP_SRCS 
