@@ -26,7 +26,7 @@
 MOCKCPP_NS_START
 
 template <typename T>
-class IsGreaterThan : public Constraint
+struct IsGreaterThan : public Constraint
 {
 public:
     IsGreaterThan(const T& expected)

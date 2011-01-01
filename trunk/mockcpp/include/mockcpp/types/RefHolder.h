@@ -24,10 +24,8 @@
 MOCKCPP_NS_START
 
 template<typename ValueType>
-class RefHolder : public Holder<ValueType>
+struct RefHolder : public Holder<ValueType>
 {
-public:
-
     RefHolder(const ValueType& value)
       : ref(value)
     {

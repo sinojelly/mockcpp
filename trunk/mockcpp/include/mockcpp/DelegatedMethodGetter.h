@@ -61,7 +61,7 @@ case N: \
 
 void maxInheritanceTooBigError(unsigned int index);
 
-template <class C, typename Method>
+template <typename C, typename Method>
 void* getDelegatedFunction(unsigned int vptrIndex, unsigned int vtblIndex, Method m)
 {
    typedef typename MethodTypeTraits<C, Method>::MethodArgumentsList MethodArgumentsList; 

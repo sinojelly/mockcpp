@@ -29,9 +29,8 @@
 MOCKCPP_NS_START
 
 /////////////////////////////////////////////
-class BaseFunctor
+struct BaseFunctor
 {
-public:
    BaseFunctor(const std::string& fName, const char* cName)
       : name(fName), nameOfCaller(cName) {}
 

@@ -24,11 +24,10 @@
 
 MOCKCPP_NS_START
 
-class Any;
+struct Any;
 
-class ResultHandler
+struct ResultHandler
 {
-public:
     virtual ~ResultHandler() {}
 
     virtual bool matches(const Any& val) const = 0;

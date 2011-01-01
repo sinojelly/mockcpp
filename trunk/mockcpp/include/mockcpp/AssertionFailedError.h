@@ -25,10 +25,8 @@
 
 MOCKCPP_NS_START
 
-class AssertionFailedError : public Exception
+struct AssertionFailedError : public Exception
 {
-  public:
-
     AssertionFailedError (unsigned srcline, const char* srcfile,
                           const std::string& message);
 

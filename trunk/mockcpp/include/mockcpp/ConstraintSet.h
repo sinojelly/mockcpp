@@ -25,13 +25,12 @@
 
 MOCKCPP_NS_START
 
-class Invocation;
-class Constraint;
-class ConstraintSetImpl;
+struct Invocation;
+struct Constraint;
+struct ConstraintSetImpl;
 
-class ConstraintSet: public StatelessMatcher
+struct ConstraintSet: public StatelessMatcher
 {
-public:
     ConstraintSet( Constraint* p01 = any()
                  , Constraint* p02 = any()
                  , Constraint* p03 = any()

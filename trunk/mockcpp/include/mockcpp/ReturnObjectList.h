@@ -24,9 +24,9 @@
 
 MOCKCPP_NS_START
 
-class ReturnObjectListImpl;
+struct ReturnObjectListImpl;
 
-class ReturnObjectList : public TypelessStub
+struct ReturnObjectList : public TypelessStub
 {
 public:
 

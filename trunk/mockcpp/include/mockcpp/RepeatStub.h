@@ -24,10 +24,8 @@
 
 MOCKCPP_NS_START
 
-class RepeatStub : public TypelessStub
+struct RepeatStub : public TypelessStub
 {
-public:
-
     RepeatStub(const Any& value, unsigned int times);
 
     bool isCompleted() const;

@@ -26,9 +26,8 @@
 MOCKCPP_NS_START
 
 template <typename T, typename Proc>
-class ProcessWith: public Constraint
+struct ProcessWith: public Constraint
 {
-public:
     ProcessWith(Proc proc)
       : proc(proc)
     {}    

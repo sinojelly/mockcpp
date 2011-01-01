@@ -24,10 +24,8 @@
 
 MOCKCPP_NS_START
 
-class InvokedOnce : public InvocationTimesMatcher
+struct InvokedOnce : public InvocationTimesMatcher
 {
-public:
-
     InvokedOnce();
 
     bool matches(const Invocation& inv) const;

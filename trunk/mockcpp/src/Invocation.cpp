@@ -32,9 +32,8 @@ namespace
 };
 
 ////////////////////////////////////////////////////////////////
-class InvocationImpl
+struct InvocationImpl
 {
-public:
     std::vector<RefAny> parameters;
     std::string nameOfCaller;
 

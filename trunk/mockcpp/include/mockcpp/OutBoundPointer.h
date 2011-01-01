@@ -30,13 +30,13 @@ void OutBoundPointerCheckConst(const std::string& typeString, bool isConst);
 
 ///////////////////////////////////////////////////////
 template <typename T>
-class OutBoundPointerBase
+struct OutBoundPointerBase
 {
 };
 
 ///////////////////////////////////////////////////////
 template <typename T>
-class OutBoundPointerBase<T*>: public DecoratedConstraint
+struct OutBoundPointerBase<T*>: public DecoratedConstraint
 {
 public:
     OutBoundPointerBase(T* p, size_t size, Constraint* constraint)
@@ -98,13 +98,13 @@ private:
 
 //////////////////////////////////////////////////////////////////////
 template <typename T>
-class OutBoundPointer 
+struct OutBoundPointer 
 {
 };
 
 //////////////////////////////////////////////////////////////////////
 template <typename T>
-class OutBoundPointer<T*> : public OutBoundPointerBase<T*>
+struct OutBoundPointer<T*> : public OutBoundPointerBase<T*>
 {
 public:
 
@@ -116,7 +116,7 @@ public:
 
 //////////////////////////////////////////////////////////////////////
 template <>
-class OutBoundPointer<void*>: public OutBoundPointerBase<void*>
+struct OutBoundPointer<void*>: public OutBoundPointerBase<void*>
 {
 public:
 

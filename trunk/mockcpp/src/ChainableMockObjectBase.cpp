@@ -27,9 +27,8 @@
 MOCKCPP_NS_START
 
 //////////////////////////////////////////////////////////////
-class ChainableMockObjectBaseImpl
+struct ChainableMockObjectBaseImpl
 {
-public:
     ChainableMockObjectBaseImpl(const std::string& name);
 
     ChainableMockMethodContainer container;

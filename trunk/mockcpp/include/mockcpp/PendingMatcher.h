@@ -26,15 +26,13 @@
 
 MOCKCPP_NS_START
 
-class Invocation;
-class OrderingMatcher;
+struct Invocation;
+struct OrderingMatcher;
 struct InvocationMockerNamespace;
 struct InvocationMocker;
 
-class PendingMatcher : public Matcher
+struct PendingMatcher : public Matcher
 {
-public:
-
    PendingMatcher(OrderingMatcher* orderingMatcher
                  , InvocationMockerNamespace* ns
                  , const std::string& identity

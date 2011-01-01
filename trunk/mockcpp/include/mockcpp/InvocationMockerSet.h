@@ -27,13 +27,14 @@
 MOCKCPP_NS_START
 
 struct InvocationMocker;
-class Invocation;
-class SelfDescribe;
-class Any;
+struct Invocation;
+struct SelfDescribe;
+struct Any;
 
 //////////////////////////////////////////////////////////
-class InvocationMockerSet
+struct InvocationMockerSet
 {
+private:
     typedef std::list<InvocationMocker*> List;
     typedef List::iterator Iterator;
     typedef List::const_iterator ConstIterator;

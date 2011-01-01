@@ -26,11 +26,11 @@
 
 MOCKCPP_NS_START
 
-template <class C, typename Method>
+template <typename C, typename Method>
 struct MethodTypeTraits;
 
 #define MOCKCPP_METHOD_TYPE_TRAITS_DEF(n) \
-template <class C, class C1, typename R DECL_TEMPLATE_ARGS(n)> \
+template <typename C, typename C1, typename R DECL_TEMPLATE_ARGS(n)> \
 struct MethodTypeTraits<C, R (C1::*) (DECL_ARGS(n))> \
 { \
    typedef C1 OrignalClass; \
@@ -40,7 +40,7 @@ struct MethodTypeTraits<C, R (C1::*) (DECL_ARGS(n))> \
 }
 
 #define MOCKCPP_CONST_METHOD_TYPE_TRAITS_DEF(n) \
-template <class C, class C1, typename R DECL_TEMPLATE_ARGS(n)> \
+template <typename C, typename C1, typename R DECL_TEMPLATE_ARGS(n)> \
 struct MethodTypeTraits<C, R (C1::*) (DECL_ARGS(n)) const> \
 { \
    typedef C1 OrignalClass; \

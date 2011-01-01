@@ -28,11 +28,10 @@
 MOCKCPP_NS_START
 
 struct Stub;
-class InvocationImpl;
+struct InvocationImpl;
 
-class Invocation
+struct Invocation
 {
-public:
     Invocation(const std::string nameOfCaller
              , const RefAny& p01 = RefAny()
              , const RefAny& p02 = RefAny()

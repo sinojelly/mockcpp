@@ -27,11 +27,9 @@ MOCKCPP_NS_START
 struct InvocationMocker;
 struct Stub;
 
-template <class Builder = DummyBuilder >
-class StubBuilder : public Builder
+template <typename Builder = DummyBuilder >
+struct StubBuilder : public Builder
 {
-public:
-
     Builder& will(Stub* stub);
 
     virtual ~StubBuilder() {}

@@ -24,10 +24,8 @@
 
 MOCKCPP_NS_START
 
-class ReturnStub : public TypelessStub
+struct ReturnStub : public TypelessStub
 {
-public:
-
     ReturnStub(const Any& value);
 
     bool isCompleted() const;

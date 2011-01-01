@@ -27,10 +27,8 @@
 MOCKCPP_NS_START
 
 template <typename T>
-class ThrowExceptionStub : public TypelessStub
+struct ThrowExceptionStub : public TypelessStub
 {
-public:
-
     ThrowExceptionStub(T ex)
        : excep(ex), hasBeenInvoked(false)
     {}

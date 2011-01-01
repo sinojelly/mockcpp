@@ -25,12 +25,10 @@
 
 MOCKCPP_NS_START
 
-class Invocation;
+struct Invocation;
 
-class CallerMatcher : public Matcher
+struct CallerMatcher : public Matcher
 {
-public:
-
 	CallerMatcher(const std::string& name);
 
 	bool matches(const Invocation& inv) const;    

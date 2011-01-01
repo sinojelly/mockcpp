@@ -26,17 +26,15 @@
 MOCKCPP_NS_START
 
 struct Method;
-class Matcher;
+struct Matcher;
 struct Stub;
-class InvocationMockerImpl;
-class Invocation;
-class InvocationId;
-class Any;
+struct InvocationMockerImpl;
+struct Invocation;
+struct InvocationId;
+struct Any;
 
 struct InvocationMocker : public SelfDescribe
 {
-public:
-
     InvocationMocker(Method* core);
     ~InvocationMocker();
 

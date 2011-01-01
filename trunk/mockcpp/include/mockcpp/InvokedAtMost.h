@@ -24,11 +24,9 @@
 
 MOCKCPP_NS_START
 
-class InvokedAtMost
+struct InvokedAtMost
     : public InvocationTimesMatcher
 {
-public:
-
     InvokedAtMost(const unsigned int times);
 
     bool matches(const Invocation& inv) const;

@@ -26,7 +26,7 @@
 
 MOCKCPP_NS_START
 
-template <class MockObjectClass>
+template <typename MockObjectClass>
 struct MockObjectTraits
 {
    typedef typename MockObjectClass::MockedInterface TYPE;

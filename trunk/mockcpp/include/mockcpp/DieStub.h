@@ -24,9 +24,8 @@
 
 MOCKCPP_NS_START
 
-class DieStub : public TypelessStub
+struct DieStub : public TypelessStub
 {
-public:
     DieStub(int exitCode = 0);
 
     bool isCompleted() const;

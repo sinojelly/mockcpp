@@ -24,14 +24,13 @@
 
 MOCKCPP_NS_START
 
-class Any;
-class SelfDescribe;
-class ResultHandler;
-class ResultImpl;
+struct Any;
+struct SelfDescribe;
+struct ResultHandler;
+struct ResultImpl;
 
-class ResultHandlerFactory
+struct ResultHandlerFactory
 {
-public:
     virtual ResultHandler* create(
             bool isCastable
           , const std::type_info& expectedTypeInfo

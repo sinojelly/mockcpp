@@ -24,8 +24,8 @@
 
 MOCKCPP_NS_START
 
-class Invocation;
-class Matcher;
+struct Invocation;
+struct Matcher;
 
 struct ExpectsMatcher : public Matcher
 {

@@ -27,14 +27,12 @@
 
 MOCKCPP_NS_START
 
-class Any;
-class SelfDescribe;
+struct Any;
+struct SelfDescribe;
 
 ///////////////////////////////////////////////////////////
-class VoidResultHandler: public ResultHandler
+struct VoidResultHandler: public ResultHandler
 {
-public:
-
     VoidResultHandler( const std::type_info& typeInfo
                      , const std::string& expectedTypeString
                      , const SelfDescribe* resultProvider);

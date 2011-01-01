@@ -30,12 +30,11 @@
 
 MOCKCPP_NS_START
 
-class SelfDescribe;
+struct SelfDescribe;
 
 template <typename RT>
-class ChainableMockMethodBase
+struct ChainableMockMethodBase
 {
-public:
     ChainableMockMethodBase(Invokable* invokable_)
 		: invokable(invokable_)
     {}
@@ -87,7 +86,7 @@ private:
 
 //////////////////////////////////////////////////////////////////
 template <typename RT>
-class ChainableMockMethod : public ChainableMockMethodBase<RT>
+struct ChainableMockMethod : public ChainableMockMethodBase<RT>
 {
     RT getResult(const Any& anyResult, SelfDescribe* resultProvider)
     {
@@ -113,7 +112,7 @@ public:
 
 //////////////////////////////////////////////////////////////////
 template <>
-class ChainableMockMethod<void> : public ChainableMockMethodBase<void>
+struct ChainableMockMethod<void> : public ChainableMockMethodBase<void>
 {
     void getResult(const Any& result, SelfDescribe*)
     {

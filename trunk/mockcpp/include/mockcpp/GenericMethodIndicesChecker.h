@@ -27,7 +27,7 @@ MOCKCPP_NS_START
 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////
-template <class Interface, typename Method>
+template <typename Interface, typename Method>
 std::pair<unsigned int, unsigned int>
 getIndicesOfMethod(Method m)
 {

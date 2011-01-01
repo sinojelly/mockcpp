@@ -35,9 +35,8 @@
 MOCKCPP_NS_START
 
 //////////////////////////////////////////////////////////
-class ChainableMockMethodCoreImpl
+struct ChainableMockMethodCoreImpl
 {
-public:
     std::string methodName;
     /////////////////////////////////////////////////////
     InvocationMockerSet mockers;

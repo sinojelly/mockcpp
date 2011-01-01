@@ -27,13 +27,13 @@ MOCKCPP_NS_START
 
 ///////////////////////////////////////////////////////
 template <typename T>
-class IsMirrorBase
+struct IsMirrorBase
 {
 };
 
 ///////////////////////////////////////////////////////
 template <typename T>
-class IsMirrorBase<T*>: public Constraint
+struct IsMirrorBase<T*>: public Constraint
 {
 public:
 
@@ -93,7 +93,7 @@ private:
 
 //////////////////////////////////////////////////////////////////////
 template <typename T>
-class IsMirror : public Constraint
+struct IsMirror : public Constraint
 {
 
 #if defined(__GNUC__) && (__GNUC__ > 3)
@@ -135,7 +135,7 @@ private:
 
 //////////////////////////////////////////////////////////////////////
 template <typename T>
-class IsMirror<T*> : public IsMirrorBase<T*>
+struct IsMirror<T*> : public IsMirrorBase<T*>
 {
 public:
 
@@ -147,7 +147,7 @@ public:
 
 //////////////////////////////////////////////////////////////////////
 template <>
-class IsMirror<void*> : public IsMirrorBase<void*>
+struct IsMirror<void*> : public IsMirrorBase<void*>
 {
 public:
 

@@ -29,17 +29,16 @@ MOCKCPP_NS_START
 
 struct InvocationMocker;
 
-template <class Builder = DummyBuilder >
-class CallerMatchBuilder : public Builder
+template <typename Builder = DummyBuilder >
+struct CallerMatchBuilder : public Builder
 {
-public:
-	Builder& caller(const std::string& nameOfCaller);
+   Builder& caller(const std::string& nameOfCaller);
 
    virtual ~CallerMatchBuilder() {}
 
 private:
 
-    virtual InvocationMocker* getMocker() const = 0;
+   virtual InvocationMocker* getMocker() const = 0;
 };
 
 MOCKCPP_NS_END

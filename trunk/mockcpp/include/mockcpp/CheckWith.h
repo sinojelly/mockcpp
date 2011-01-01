@@ -26,9 +26,8 @@
 MOCKCPP_NS_START
 
 template <typename T, typename Predict>
-class CheckWith : public Constraint
+struct CheckWith : public Constraint
 {
-public:
     CheckWith(Predict pred)
       : predict(pred)
     {}    

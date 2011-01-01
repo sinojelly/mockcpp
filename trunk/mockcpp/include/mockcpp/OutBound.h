@@ -28,9 +28,8 @@
 MOCKCPP_NS_START
 
 template <typename T>
-class OutBound : public DecoratedConstraint
+struct OutBound : public DecoratedConstraint
 {
-public:
     OutBound(const T& val, Constraint* constraint = 0)
       : ref(val), DecoratedConstraint(constraint)
     {}

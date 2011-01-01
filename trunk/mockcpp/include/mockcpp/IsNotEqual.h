@@ -26,9 +26,8 @@
 MOCKCPP_NS_START
 
 template <typename T>
-class IsNotEqual : public Constraint
+struct IsNotEqual : public Constraint
 {
-public:
     IsNotEqual(const T& expected)
       : expectedValue(expected)
     {}
