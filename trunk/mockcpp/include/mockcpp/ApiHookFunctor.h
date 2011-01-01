@@ -21,9 +21,9 @@ template <typename R DECL_TEMPLATE_ARGS(n), unsigned int Seq> \
 struct ApiHookFunctor<CallConvention R(DECL_ARGS(n)), Seq> \
 { \
 private: \
-   typedef R F (DECL_ARGS(n)); \
+   typedef CallConvention R F (DECL_ARGS(n)); \
  \
-   static R hook(DECL_PARAMS_LIST(n)) \
+   static CallConvention R hook(DECL_PARAMS_LIST(n)) \
    { \
       return GlobalMockObject::instance.invoke<R>(apiAddress) \
                                 (empty_caller DECL_REST_PARAMS(n)); \
@@ -65,9 +65,9 @@ private: \
    static unsigned int refCount; \
 }; \
 template <typename R DECL_TEMPLATE_ARGS(n), unsigned int Seq> \
-void* ApiHookFunctor<R(DECL_ARGS(n)), Seq>::apiAddress = 0; \
+void* ApiHookFunctor<CallConvention R(DECL_ARGS(n)), Seq>::apiAddress = 0; \
 template <typename R DECL_TEMPLATE_ARGS(n), unsigned int Seq> \
-unsigned int ApiHookFunctor<R(DECL_ARGS(n)), Seq>::refCount = 0 
+unsigned int ApiHookFunctor<CallConvention R(DECL_ARGS(n)), Seq>::refCount = 0 
 
 #if defined(_MSC_VER)
 #define MOCKCPP_API_HOOK_FUNCTOR_DEF(n) \
