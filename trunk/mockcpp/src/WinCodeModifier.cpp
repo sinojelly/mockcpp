@@ -18,11 +18,12 @@
 ***/
 
 #include <Windows.h>
+
 #include <mockcpp/CodeModifier.h>
 
 MOCKCPP_NS_START
 
-bool CodeModifier::modify(void *dest, void *src, size_t size)
+bool CodeModifier::modify(void *dest, const void *src, size_t size)
 {
 	DWORD  dwOldProtect(0);
 	DWORD  dwReadWrite(PAGE_EXECUTE_READWRITE); // modify code segment must use PAGE_EXECUTE_READWRITE.
