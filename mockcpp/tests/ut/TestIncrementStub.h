@@ -17,27 +17,13 @@
 ***/
 
 #include <testcpp/testcpp.hpp>
-#include <testngpp/runner/ResourceCheckPoint.h>
 #include <mockcpp/IncrementStub.h>
 #include <mockcpp/types/AnyCast.h>
 
 USING_MOCKCPP_NS
 
-class TestIncrementStub: public TESTCPP_NS::TestFixture
+struct TestIncrementStub: public TESTCPP_NS::TestFixture
 {
-private:
-   TESTNGPP_RCP checkpoint;
-
-public:
-   void setUp()
-   {
-      checkpoint = TESTNGPP_SET_RESOURCE_CHECK_POINT();
-   }
-   void tearDown()
-   {
-      TESTNGPP_VERIFY_RESOURCE_CHECK_POINT(checkpoint);
-   }
-
    void testShouldBeAbleIncreaseFromStartValue()
    {
       IncrementStub<int> stub(5);
