@@ -7,8 +7,6 @@
 
 MOCKCPP_NS_START
 
-//      return GlobalMockObject::instance.invoke<R>(apiAddress) \
-                                (empty_caller DECL_REST_PARAMS(n)); \
 /////////////////////////////////////////////////////
 template <typename F, unsigned int Seq>
 struct ApiHookFunctor

@@ -49,7 +49,19 @@ struct ApiHookGenerator<F, 0>
     { return 0; }
 
     static void* appyApiHook(F* api)
-    { return 0; }
+    { 
+        oss_t oss;
+        
+        oss << "Did you define too many mockers in a testcase? "
+            << "Probably you should refine your design, "
+            << "or you can reconfig ParameterizedApiHookHolder::maxSeq bigger, "
+            << "it's the number of mockers in a testcase that with the same function prototype, "
+            << "the bigger it is, the slower compiling is.";
+
+        MOCKCPP_REPORT_FAILURE(oss.str());
+   
+        return 0; 
+    }
 
     static bool freeApiHook(void* hook)
     { return true; }
