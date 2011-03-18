@@ -33,7 +33,7 @@ private: \
    static void* getHook() \
    { return reinterpret_cast<void*>(hook); } \
  \
-   static void free() \
+   static void freeHook() \
    { if(--refCount == 0) apiAddress = 0; } \
 public: \
  \
@@ -55,7 +55,7 @@ public: \
    static bool freeApiHook(void* hook) \
    { \
        if(getHook() != hook) return false; \
-       free(); \
+       freeHook(); \
        return true; \
    } \
 private: \
