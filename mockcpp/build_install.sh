@@ -1,7 +1,7 @@
 #!/bin/bash
 # build and install
 
-install_dir=/home/jelly/Programming/cpp-ut-project/cpp-ut-project/premake_version/tools/mockcpp
+install_dir=/home/jelly/Programming/cpp-ut-project/cpp-ut-project/tools/mockcpp
 
 function build() {
 	mkdir $1 2>/dev/null
