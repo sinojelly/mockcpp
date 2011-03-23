@@ -134,8 +134,7 @@
  * Windows command prompt.
  */
 #ifndef _DEBUG_NEW_PROGNAME
-//#define _DEBUG_NEW_PROGNAME NULL
-#define _DEBUG_NEW_PROGNAME "../../build_testngpp/src/runner/testngpp-runner"
+#define _DEBUG_NEW_PROGNAME NULL
 #endif
 
 /**
@@ -307,6 +306,24 @@ void file_output_func(const char * file, unsigned int line, const char* message)
     fprintf(new_output_fp, "%s(%u) : %s\n", file, line, message);
 }
 
+const char * get_file_name(const char * file, unsigned int line)
+{
+   if ((0 == file) || (0 == line))
+   {
+       return "NULL";
+   }
+   const char * p = strrchr(file, '\\');
+   const char * q = strrchr(file, '/');
+   unsigned long max_ptr = ((unsigned long)p) > ((unsigned long)q) ? (unsigned long)p : (unsigned long)q;
+
+   if (max_ptr > 0)
+   {
+       return (const char *)(max_ptr + 1);
+   }
+
+   return file;
+}
+
 
 #if _DEBUG_NEW_USE_ADDR2LINE
 /**
@@ -447,26 +464,6 @@ static void print_position(const void* ptr, int line)
     }
 }
 
-const char * get_file_name(const char * file, unsigned int line)
-{
-   if ((0 == file) || (0 == line))
-   {
-       return "NULL";
-   }
-   const char * p = strrchr(file, '\\');
-   const char * q = strrchr(file, '/');
-   unsigned long max_ptr = ((unsigned long)p) > ((unsigned long)q) ? (unsigned long)p : (unsigned long)q;
-
-   if (max_ptr > 0)
-   {
-       return (const char *)(max_ptr + 1);
-   }
-   
-   print_position(file, line);
-
-   return file;
-}
-
 #if _DEBUG_NEW_TAILCHECK
 /**
  * Checks whether the padding bytes at the end of a memory block is
@@ -557,7 +554,7 @@ static bool check_tail(new_ptr_list_t* ptr)
         fprintf(new_output_fp,
                 "new%s: allocated %p (size %lu, ",
                 is_array ? "[]" : "",
-                pointer, size);
+                pointer, (unsigned long)size);
         if (line != 0)
             print_position(ptr->file, ptr->line);
         else
@@ -664,7 +661,7 @@ static bool check_tail(new_ptr_list_t* ptr)
                 "delete%s: freed %p (size %lu, %lu bytes still allocated)\n",
                 is_array ? "[]" : "",
                 (char*)ptr + ALIGNED_LIST_ITEM_SIZE,
-                ptr->size, total_mem_alloc);
+                (unsigned long)ptr->size, (unsigned long)total_mem_alloc);
     }
     free(ptr);
     return;
@@ -808,7 +805,7 @@ int check_mem_corruption()
             fprintf(new_output_fp,
                     "Heap data corrupt near %p (size %lu, ",
                     pointer,
-                    ptr->size);
+                    (unsigned long)ptr->size);
 #if _DEBUG_NEW_TAILCHECK
         }
         else
