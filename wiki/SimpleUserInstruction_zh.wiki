@@ -40,9 +40,9 @@ method(add)
 
 C＋＋强类型检查，也是为了提高程序安全性，有些问题通过类型检查在编译期可以发现的，就不需要在运行时再痛苦的定位了。C/C＋＋的强类型检查是优势，我们不用把它抛弃了。
 
-=mockcpp的sample代码=
+==mockcpp的sample代码==
 
-== 一段简单的mockcpp使用sample代码：（带有完整核心关键字）==
+=== 一段简单的mockcpp使用sample代码：（带有完整核心关键字）===
 {{{
 TEST(mockcpp simple sample)
 {
@@ -58,7 +58,7 @@ TEST(mockcpp simple sample)
 }}}
  
 
-== 下面是一段比较详细的mockcpp使用sample代码：（带有完整扩展关键字）==
+=== 下面是一段比较详细的mockcpp使用sample代码：（带有完整扩展关键字）===
 {{{
 TEST(mockcpp detail sample)
 {
@@ -78,7 +78,7 @@ TEST(mockcpp detail sample)
 }}}
 
 
-=== 注 ===
+==== 注 ====
 1、扩展关键字分类：
 expects里面的叫匹配关键字（Matcher）；
 with里面的叫约束关键字（Constraint）；
@@ -103,7 +103,7 @@ will/then里面的叫桩关键字（Stub）。
 10、outBound和outBoundP都可以带一个约束参数，用于对参数进行检查，因为有同时作为in和out的参数。（如：outBound(var_out, eq(3))  ）
 
 
-== 下面是结合上面sample的mockcpp使用说明 ==
+=== 下面是结合上面sample的mockcpp使用说明 ===
 
 1、mock C函数或者类的静态成员方法用MOCKER; 
      mock 类的非静态成员方法需要先用{{{MockObject<MyClass> mocker;}}}声明一个mock对象，再用MOCK_METHOD(mocker, method)来mock指定方法。
