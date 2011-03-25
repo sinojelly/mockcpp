@@ -6,7 +6,9 @@ mock工具的作用是指定函数的行为（模拟函数的行为）。可以�
 
 == 几个相关概念 ==
 (1)mock规范：每个MOCKER(function)开始，跟一系列的.stubs、.with、.will等的内容的整体，称为一个mock规范。
+
 (2)核心关键字：指stubs/defaults/expects/before/with/after/will/then/id等这些直接跟在点后面的关键字。
+
 (3)扩展关键字：指once()/eq()/check()/returnValue()/repeat()等这些作为核心关键字参数的关键字。
  
 下面，请看两段mockcpp的使用规范示例代码，其中带“/”或者“|”的表示在该位置可能有多种选择；带中括号的表示是可选的。
@@ -14,10 +16,15 @@ mock工具的作用是指定函数的行为（模拟函数的行为）。可以�
 == mockcpp的特点 ==
 
 (1) 开源。
+
 (2) mockcpp支持C函数的mock和虚接口的mock。
+
 (3) VC下，mockcpp支持cdecl和stdcall调用约定的函数。（socket/bind/ftp等函数就是stdcall调用约定的）
+
 (4) mockcpp的语法清晰、简单，容易理解（参见下面两个sample）。
+
 (5) mockcpp的错误信息提示非常友好，包含完整的mock规范定义和实际运行情况（参见下面的样例）。
+
 {{{
 Unexpected invocation: the invocation cannot be found in allowed invoking list.
 Invoked: add((int)0x1/1, (int)0x2/2)
@@ -98,7 +105,7 @@ will/then里面的叫桩关键字（Stub）。
 == 下面是结合上面sample的mockcpp使用说明 ==
 
 1、mock C函数或者类的静态成员方法用MOCKER; 
-     mock 类的非静态成员方法需要先用MockObject<MyClass> mocker;声明一个mock对象，再用MOCK_METHOD(mocker, method)来mock指定方法。
+     mock 类的非静态成员方法需要先用{{{MockObject<MyClass> mocker;}}}声明一个mock对象，再用MOCK_METHOD(mocker, method)来mock指定方法。
 
 2、紧跟着MOCKER/MOCK_METHOD之后的是stubs、或者defaults、或者expects，三个必须有一个。（这是与AMOCK不同的地方，在这个层次上确定这三个关键字必须有一个，可以让mock语法更清晰）
    stubs 表示指定函数的行为，不校验次数。
@@ -108,9 +115,11 @@ will/then里面的叫桩关键字（Stub）。
 3、用will指定函数的返回值；
    如果要指定20次调用都返回1，则用.will(repeat(1, 20))；
    要指定第一次返回1，第二次返回2，第三次返回3，就用
+{{{
       .will(returnValue(1))
       .then(returnValue(2))
       .then(returnValue(3))
+}}}
    如果你指定了前三次的返回值依次为1、2、3，那么第四次、第五次调用，都是返回最后的返回值3。
 
 4、用id给一个mock规范指定一个名字，然后可以用after、before来指定多个mock应该的调用顺序。
