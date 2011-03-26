@@ -183,7 +183,8 @@ MOCKER(function)
 
 10、对同一个函数指定多个mock规范，那么这些mock规范一般是应该在输入方面有差异的，否则没必要指定多个。而且，在输入方面无差异的两个mock规范，让mockcpp内部无法判断是否满足规范约束。
 比如，测试函数 void function(int in, int &out)，前面一个是入参，后面一个是出参，希望in为1时，输出out为100，in为2时，输出out为3，那么应该这样写：
-cpp代码
+
+{{{
 int out = 100;
 MOCKER(function)
   .expects(once())
@@ -193,12 +194,15 @@ out = 3;
 MOCKER(function)
   .expects(once())
   .with(eq(2), outBound(out));
+}}}
+
 假设你把eq(1)、eq(2)写为any()，那么mockcpp会判断你的两个调用function(1, out)和function(2, out)都符合第一个mock规范，从而报告与你定义的次数1不匹配。
 
 
 11、有时候需要对同一个函数指定多个mock规范，并且它们是有规律的，那么可以借助循环来简化代码。
 假设要mock的函数是void function(int in)，希望它依次以0、1、2...10为入参被调用，每次都调用一次，那么可以像这样写：
-cpp代码
+
+{{{
 MOCKER(function)
   .expects(once())
   .with(eq(0))
@@ -212,6 +216,7 @@ for (int i = 1; i <= 10; i＋＋)
     .after(string(i - 1))
     .id(string(i));   
 }
+}}}
  
 12、spy约束关键字应用举例。
 spy的作用是监视，下面例子，就是监视test在调用func时，传入的值是多少。有些时候，测试用例需要这样的值，这种方式是很有效的。
