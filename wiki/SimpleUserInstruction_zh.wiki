@@ -42,6 +42,8 @@ C＋＋强类型检查，也是为了提高程序安全性，有些问题通过�
 
 ==mockcpp的sample代码==
 
+下面，请看两段mockcpp的使用规范示例代码，其中带“/”或者“|”的表示在该位置可能有多种选择；带中括号的表示是可选的。
+
 === 一段简单的mockcpp使用sample代码：（带有完整核心关键字）===
 {{{
 TEST(mockcpp simple sample)
@@ -178,8 +180,40 @@ MOCKER(function)
   .stubs()
   .with(outBoundP(&expect, sizeof(expect)));
 }}} 
+
+10、对同一个函数指定多个mock规范，那么这些mock规范一般是应该在输入方面有差异的，否则没必要指定多个。而且，在输入方面无差异的两个mock规范，让mockcpp内部无法判断是否满足规范约束。
+比如，测试函数 void function(int in, int &out)，前面一个是入参，后面一个是出参，希望in为1时，输出out为100，in为2时，输出out为3，那么应该这样写：
+cpp代码
+int out = 100;
+MOCKER(function)
+  .expects(once())
+  .with(eq(1), outBound(out));
+
+out = 3;
+MOCKER(function)
+  .expects(once())
+  .with(eq(2), outBound(out));
+假设你把eq(1)、eq(2)写为any()，那么mockcpp会判断你的两个调用function(1, out)和function(2, out)都符合第一个mock规范，从而报告与你定义的次数1不匹配。
+
+
+11、有时候需要对同一个函数指定多个mock规范，并且它们是有规律的，那么可以借助循环来简化代码。
+假设要mock的函数是void function(int in)，希望它依次以0、1、2...10为入参被调用，每次都调用一次，那么可以像这样写：
+cpp代码
+MOCKER(function)
+  .expects(once())
+  .with(eq(0))
+  .id("0");
+
+for (int i = 1; i <= 10; i＋＋)
+{
+  MOCKER(function)
+    .expects(once())
+    .with(eq(i))
+    .after(string(i - 1))
+    .id(string(i));   
+}
  
-10、spy约束关键字应用举例。
+12、spy约束关键字应用举例。
 spy的作用是监视，下面例子，就是监视test在调用func时，传入的值是多少。有些时候，测试用例需要这样的值，这种方式是很有效的。
 {{{
 void func(int var)
@@ -203,7 +237,7 @@ TEST(sample test)
 }
 }}}
  
-11、check约束关键字的用法。
+13、check约束关键字的用法。
 约束关键字中，有很多都是对入参进行检查的，比如eq、neq、lt、gt等等，但它们都只实现了非常简单的检查。
 如果用户想做一个定制化的检查，那么就可以用check。
 例1：假设用户想检查入参p指向的结构的字段b是不是10，那么可以如下这样写：
@@ -269,7 +303,7 @@ TEST(b should less than 200)
 }
 }}}
  
-12、只要打桩了，那么就不会运行原函数，都是与mock规范匹配，运行桩。
+14、只要打桩了，那么就不会运行原函数，都是与mock规范匹配，运行桩。
 下面例子中，对add的入参为1、2的情况打桩了，如果调用了入参为2、3的情况，则会报告调用在允许的mock规范列表中不存在的错误。
 {{{
 TEST(sample test)
@@ -284,4 +318,4 @@ TEST(sample test)
 }
 }}}
 
-13、带有返回值的函数，MOCKER后面必须有will，否则mockcpp认为无返回值，校验时会发现返回类型不匹配。
+15、带有返回值的函数，MOCKER后面必须有will，否则mockcpp认为无返回值，校验时会发现返回类型不匹配。
