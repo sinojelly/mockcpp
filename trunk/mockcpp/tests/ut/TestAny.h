@@ -26,6 +26,7 @@
 
 USING_MOCKCPP_NS
           
+#if 0
 #define DATA_GROUP(data,...) { data, ##__VA_ARGS__}
 #define DATA_PROVIDER(name, items, data1, ...)\
 const Any getDataProvider##name(unsigned int index, unsigned int item) \
@@ -33,9 +34,11 @@ const Any getDataProvider##name(unsigned int index, unsigned int item) \
    const Any name[][items] = {data1, ##__VA_ARGS__}; \
    return name[index][item]; \
 }
+#endif
 
 struct TestAny: public TESTCPP_NS::TestFixture 
 {
+#if 0
    DATA_PROVIDER
             ( myData, 3
             , DATA_GROUP(1, 1.0, (const char*)"abc")
@@ -55,6 +58,7 @@ struct TestAny: public TESTCPP_NS::TestFixture
       ASSERT_EQ((const char*)"abc", any_cast<const char*>(getDataProvidermyData(0, 2)));
       ASSERT_EQ((const char*)"cde", any_cast<const char*>(getDataProvidermyData(1, 2)));
    }
+#endif
 
    // @test
 	void ShouldBeEmptyIfANewInstanceIsNotInitialized()
