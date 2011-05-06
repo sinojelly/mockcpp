@@ -1,5 +1,5 @@
 
-as an user
+as a user
 =========
 	Linux(cygwin included)
 	------
@@ -9,10 +9,12 @@ as an user
 	The other way:
 	sudo make install 
 	and then use /usr/local/include/mockcpp and /usr/local/lib/libmockcpp.a.
-	if the test framework you use is not testngpp, such as cpputest, gtest etc. , you should enter a build dir, and then run these commands:
-	cmake -DMOCKCPP_XUNIT=cpputest ../mockcpp/mockcpp
+	if the test framework you use is not testngpp, such as cpputest, gtest etc. , you should run these commands: (there is a $xunit_home/include/gtest/gtest.h file)
+	cmake -DMOCKCPP_XUNIT=gtest -DMOCKCPP_XUNIT_HOME=$xunit_home ../mockcpp/mockcpp
 	make
 	make install
+	see also build_install4gtest.sh
+	
 	if you want to specify the install dir, you should run cmake as this:
 	cmake -DCMAKE_INSTALL_PREFIX=/usr/local/somedir ../mockcpp/mockcpp 
 	
