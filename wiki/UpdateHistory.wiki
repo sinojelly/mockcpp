@@ -1,12 +1,12 @@
 = testngpp在2010.7~12月的改进 =
  
- 1、支持多种的xUnit测试框架。
+ 1 支持多种的xUnit测试框架。
 （支持testngpp、gtest、CppUnit、CppUTest）
-
- 2、支持spy约束关键字。
+ 
+ 2 支持spy约束关键字。
 （用于窥探给某个被mock函数传入的入参）
 
- 3、支持check约束关键字。
+ 3 支持check约束关键字。
 （以函数，或者仿函数对象来自定义参数检查规则）
 
  4、支持Windows 7下的ApiHook功能。
@@ -38,6 +38,6 @@
  Release 2.6
 
 changes:
-1. reduce lib file size.
-2. fix compile error when compile for cppunit.
-3. add default mocker for mockable.
+ # reduce lib file size.
+ # fix compile error when compile for cppunit.
+ # add default mocker for mockable.
