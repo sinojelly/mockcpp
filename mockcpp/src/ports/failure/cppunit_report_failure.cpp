@@ -16,6 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 ***/
 
+#include <mockcpp/mockcpp.h>
 #include <cppunit/Exception.h>
 
 MOCKCPP_NS_START
