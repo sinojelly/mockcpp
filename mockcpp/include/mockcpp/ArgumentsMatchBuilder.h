@@ -31,6 +31,21 @@ struct Constraint;
 template <typename Builder = DummyBuilder >
 struct ArgumentsMatchBuilder : public Builder
 {
+
+    Builder& with( const Any& c01 = any()
+                 , const Any& c02 = any()
+                 , const Any& c03 = any()
+                 , const Any& c04 = any()
+                 , const Any& c05 = any()
+                 , const Any& c06 = any()
+                 , const Any& c07 = any()
+                 , const Any& c08 = any()
+                 , const Any& c09 = any()
+                 , const Any& c10 = any()
+                 , const Any& c11 = any()
+                 , const Any& c12 = any()
+    );
+#if 0
     Builder& with( Constraint* c01 = any()
                  , Constraint* c02 = any()
                  , Constraint* c03 = any()
@@ -44,6 +59,7 @@ struct ArgumentsMatchBuilder : public Builder
                  , Constraint* c11 = any()
                  , Constraint* c12 = any()
     );
+#endif
 
     virtual ~ArgumentsMatchBuilder() {}
 

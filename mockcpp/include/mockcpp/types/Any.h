@@ -52,6 +52,8 @@ public:
 
    Any& operator=(const Any & rhs);
 
+   Constraint* getConstraint() const
+   { return getContent()->getConstraint(); }
 };
 
 /////////////////////////////////////////////////////////////////

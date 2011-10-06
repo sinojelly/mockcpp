@@ -29,7 +29,7 @@ getNumberOfVtblsByBaseClassTypeInfo(const __base_class_type_info& info
 
    if(!(info.__offset_flags & __base_class_type_info::__public_mask))
    {
-      MOCKCPP_REPORT_FAILURE("no-public inheritance of interfaces is not" \
+      MOCKCPP_REPORT_FAILURE("non-public inheritance of interfaces is not" \
                   " a good practice, hence, mockcpp does not support it");
    }
 
@@ -91,18 +91,16 @@ getNumberOfBaseClasses(const std::type_info& info)
 unsigned int
 getNumberOfBaseClassesByClassTypeInfo(const __class_type_info* info, unsigned int number)
 {
-   const __vmi_class_type_info* vmi_base_info = \
-      dynamic_cast<const __vmi_class_type_info*>(info);
+   const __vmi_class_type_info* vmi_base_info = dynamic_cast<const __vmi_class_type_info*>(info);
    if(vmi_base_info != 0)
    {
-		return getNumberOfVtblsByVmi(vmi_base_info, number);
+	return getNumberOfVtblsByVmi(vmi_base_info, number);
    }
 
-   const __si_class_type_info* si_base_info = \
-      dynamic_cast<const __si_class_type_info*>(info);
+   const __si_class_type_info* si_base_info = dynamic_cast<const __si_class_type_info*>(info);
    if(si_base_info != 0)
    {
-		return getNumberOfVtblsBySi(si_base_info, number);
+	return getNumberOfVtblsBySi(si_base_info, number);
    }
    
    return number + 1;

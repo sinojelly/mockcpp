@@ -27,11 +27,50 @@
 
 #include <mockcpp/EqualityUtil.h>
 #include <mockcpp/Formatter.h>
+#include <mockcpp/IsEqual.h>
+#include <mockcpp/Void.h>
+#include <mockcpp/IsAnythingHelper.h>
 
 MOCKCPP_NS_START
 
+namespace {
+
+template <typename T>
+Constraint* constraint(const T& value)
+{
+    return new IsEqual<T>(value);
+}
+
+Constraint* constraint(Constraint* c)
+{
+    return c == 0 ? any() : c;
+}
+
+Constraint* constraint(const Constraint* c)
+{
+    return constraint(const_cast<Constraint*>(c));
+}
+
+Constraint* constraint(const Void& v)
+{
+    return any();
+}
+
+}
+
 template<typename ValueType>
-struct ValueHolder : public Holder<ValueType>
+struct ValueHolderBase : public Holder<ValueType>
+{
+    Constraint* getConstraint() const
+    {
+       return constraint(getValue());
+    }
+
+    virtual const ValueType& getValue() const = 0;
+};
+
+template<typename ValueType>
+struct ValueHolder : public ValueHolderBase<ValueType>
 {
     ValueHolder(const ValueType& value)
       : held(value)
@@ -53,7 +92,7 @@ private:
 
 ///////////////////////////////////////////////
 template <typename ValueType>
-struct UnsignedLongHolder : public Holder<ValueType>
+struct UnsignedLongHolder : public ValueHolderBase<ValueType>
 {
 protected:
     union Held{
@@ -152,7 +191,7 @@ struct ValueHolder<unsigned char>
 
 ///////////////////////////////////////////////
 template <typename ValueType>
-struct SignedLongHolder : public Holder<ValueType>
+struct SignedLongHolder : public ValueHolderBase<ValueType>
 {
 protected:
     union Held{
