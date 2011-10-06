@@ -35,7 +35,7 @@ struct PMD
 
 struct RTTIBaseClassDescriptor
 {
-	std::type_info* typeInfo; //type descriptor of the class
+    std::type_info* typeInfo; //type descriptor of the class
     unsigned int numContainedBases; //number of nested classes following in the Base Class Array
     PMD where;        //pointer-to-member displacement info
     unsigned int attributes;        //flags, usually 0
@@ -62,7 +62,8 @@ struct RTTICompleteObjectLocator
 	const std::type_info* typeInfo; //TypeDescriptor of the complete class
     RTTIClassHierarchyDescriptor* pClassDescriptor; //describes inheritance hierarchy
 
-	RTTICompleteObjectLocator(unsigned int index, const std::type_info& info, RTTIClassHierarchyDescriptor* desc)
+    RTTICompleteObjectLocator(unsigned int index
+            , const std::type_info& info, RTTIClassHierarchyDescriptor* desc)
 		: signature(0), offset(index*sizeof(void*)), cdOffset(0)
 		, typeInfo(&info), pClassDescriptor(desc)
 	{}

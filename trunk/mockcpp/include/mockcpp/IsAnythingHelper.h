@@ -27,6 +27,8 @@ struct Constraint;
 
 Constraint* any();
 
+static const Constraint* _ = 0;
+
 bool isAnyConstraint(Constraint* c);
 
 MOCKCPP_NS_END

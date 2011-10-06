@@ -23,8 +23,11 @@
 #include <string>
 
 #include <mockcpp/mockcpp.h>
+#include <mockcpp/IsAnythingHelper.h>
 
 MOCKCPP_NS_START
+
+struct Constraint;
 
 struct PlaceHolder
 {
@@ -34,6 +37,7 @@ struct PlaceHolder
     virtual std::string toString(void) const = 0;
     virtual std::string toTypeString(void) const = 0;
     virtual std::string toTypeAndValueString(void) const = 0;
+    virtual Constraint* getConstraint() const { return 0; }
 };
 
 MOCKCPP_NS_END
