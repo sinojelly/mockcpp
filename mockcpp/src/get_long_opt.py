@@ -26,12 +26,12 @@ def getUsageString(longOpts):
 	return " ".join([i.toUsage() for i in longOpts])
 
 def usage(longOpts):
-	print sys.argv[0], getUsageString(longOpts)
+	print(sys.argv[0], getUsageString(longOpts))
 
 def getOpt(longOpts):
 	try:
 		return getopt.getopt(sys.argv[1:], '', getAssignableOptStrings(longOpts))
-	except getopt.GetoptError, err:
+	except (getopt.GetoptError, err):
 		print >> sys.stderr, str(err)
 		usage(longOpts)
 		sys.exit(2)
