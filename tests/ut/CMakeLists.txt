@@ -68,10 +68,10 @@ IF(CMAKE_CL_64)
 ENDIF(CMAKE_CL_64)
 
 LINK_DIRECTORIES(
-	${PROJECT_HOME}/../../build_mockcpp/src/Debug
-	${PROJECT_HOME}/../../build_testngpp/src/Debug
-    ${PROJECT_HOME}/../../build_mockcpp/src
-    ${PROJECT_HOME}/../../build_testngpp/src)
+	${PROJECT_HOME}/../build_mockcpp/src/Debug
+	${PROJECT_HOME}/../build_mockcpp_testngpp/src/Debug
+    ${PROJECT_HOME}/../build_mockcpp/src
+    ${PROJECT_HOME}/../build_mockcpp_testngpp/src)
 
 INCLUDE_DIRECTORIES(BEFORE 
   .
