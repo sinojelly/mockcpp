@@ -33,7 +33,7 @@ std::string toPointerString(void* p)
    ss << "0x";
    ss.flags (std::ios::hex);
    ss.fill('0'); ss.width(8);
-   ss << reinterpret_cast<unsigned long>(p);
+   ss << reinterpret_cast<unsigned long long>(p);
 
    return ss.str();
 }

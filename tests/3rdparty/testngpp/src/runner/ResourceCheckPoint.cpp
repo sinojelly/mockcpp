@@ -52,7 +52,7 @@ namespace
 
 unsigned int getNumberOfOpenFiles()
 {
-#if defined(_MSC_VER)
+#if defined(_MSC_VER) || defined(__MINGW32__)
     return 0;
 #else
     unsigned int maxNumberOfOpenFiles = ::getdtablesize();
@@ -161,7 +161,7 @@ static void freeMemory(void* p)
    if(header->magic != magicNumber)
    {
       char buf[100];
-      snprintf(buf, sizeof(buf), "memory corruption occurred at %#"PRIxPTR, (uintptr_t) p);
+      snprintf(buf, sizeof(buf), "memory corruption occurred at %#" PRIxPTR, (uintptr_t) p);
       throw Error(buf);
    }
 
