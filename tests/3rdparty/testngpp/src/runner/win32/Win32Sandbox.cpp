@@ -184,8 +184,8 @@ namespace
 		  << " "  << suite 
           << " \""  << escape(fixture) 
           << "\" \""  << escape(testcase) 
-          << "\" "  << (DWORD)hWrite
-          << " "  << (DWORD)hSemphore;
+          << "\" "  << (unsigned long long)hWrite
+          << " "  << (unsigned long long)hSemphore;
       
 	  STARTUPINFO startInfo;
 	  GetStartupInfo(&startInfo);

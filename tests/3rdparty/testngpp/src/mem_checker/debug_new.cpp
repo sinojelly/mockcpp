@@ -314,7 +314,7 @@ const char * get_file_name(const char * file, unsigned int line)
    }
    const char * p = strrchr(file, '\\');
    const char * q = strrchr(file, '/');
-   unsigned long max_ptr = ((unsigned long)p) > ((unsigned long)q) ? (unsigned long)p : (unsigned long)q;
+   unsigned long max_ptr = ((unsigned long long)p) > ((unsigned long long)q) ? (unsigned long long)p : (unsigned long long)q;
 
    if (max_ptr > 0)
    {

@@ -14,3 +14,5 @@ include/mockcpp/MethodTypeTraitsDef.h
 
 # Generated test files
 tests/ut/TestIsStringEndWith.cpp
+tests/ut/TestChainableMockMethod.cpp
+tests/ut/TestChainableMockMethodNameKey.cpp
