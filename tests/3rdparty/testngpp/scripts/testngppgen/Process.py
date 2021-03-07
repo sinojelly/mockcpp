@@ -40,7 +40,7 @@ def processTestFixtureFile(file, encoding):
 def checkFixtureExistence(fixtureFiles):
    for fixtureFile in fixtureFiles:
       if not os.path.exists(fixtureFile):
-         print >> sys.stderr, fixtureFile, "does not exist"
+         print(fixtureFile, "does not exist", file=sys.stderr)
          sys.exit(1)
 
 

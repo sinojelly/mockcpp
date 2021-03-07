@@ -190,6 +190,10 @@ def convert_to_int(file, line, str, base):
      
 ##########################################################
 def is_number(file, line, content):
+   print("is_number: ", file)
+   print("line: ")
+   line.show()
+   print("content: ", content)
    matched = dec_re.match(content)
    if matched:
       return convert_to_int(file, line, matched.group("value"), 10)

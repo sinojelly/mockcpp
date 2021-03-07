@@ -554,7 +554,7 @@ def phase4(fixture_files, target, scopes, encoding, recordFixture = False):
          #file = open(target, "w")
          file = codecs.open(target, mode="w", encoding=encoding)
       except IOError:
-         print >> sys.stderr, "open", target, "failed"
+         print("open", target, "failed", file=sys.stderr)
          sys.exit(1)
 
    global output_encoding
