@@ -224,12 +224,12 @@ ELSE()
    SET(MOCKCPP_SRCS ${MOCKCPP_SRCS} ports/failure/stdexcept_report_failure.cpp)
 ENDIF()
 
-IF(MSVC)
+IF(MSVC OR MINGW)
    SET(MOCKCPP_SRCS 
        ${MOCKCPP_SRCS} 
        WinCodeModifier.cpp
    ) 
-ELSE(MSVC)
+ELSE(MSVC OR MINGW)
    SET(MOCKCPP_SRCS 
        ${MOCKCPP_SRCS} 
        UnixCodeModifier.cpp
