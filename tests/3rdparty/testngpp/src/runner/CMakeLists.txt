@@ -158,11 +158,11 @@ ELSE(TESTNGPP_USE_DLOPEN)
   MESSAGE(FATAL_ERROR "No module loader found")
 ENDIF(TESTNGPP_USE_DLOPEN)
 
-IF(UNIX)
+IF(UNIX OR MINGW)
 ADD_DEFINITIONS(
     -g -ggdb
 )
-ENDIF(UNIX)
+ENDIF(UNIX OR MINGW)
 
 ADD_LIBRARY(testngpp-runner-lib STATIC ${TESTNGRUNNER_LIB_SRCS})
 
@@ -170,13 +170,13 @@ TARGET_LINK_LIBRARIES(testngpp-runner-lib ${TESTNGPP_LIBRARY})
 
 ADD_EXECUTABLE(testngpp-runner TestRunnerMain.cpp) 
 
-IF(MSVC)
+IF(MSVC OR MINGW)
    ADD_EXECUTABLE(testngpp-win32-testcase-runner win32/TestCaseSandboxRunnerMain.cpp)
    TARGET_LINK_LIBRARIES(testngpp-win32-testcase-runner ${TESTNGPP_LIBRARY} testngpp-runner-lib)
 
    INSTALL(TARGETS testngpp-win32-testcase-runner
       RUNTIME DESTINATION bin)
-ENDIF(MSVC)
+ENDIF(MSVC OR MINGW)
 
 # -Wl,--export-dynamic
 ADD_DEPENDENCIES(testngpp-runner testngpp-runner-lib)
