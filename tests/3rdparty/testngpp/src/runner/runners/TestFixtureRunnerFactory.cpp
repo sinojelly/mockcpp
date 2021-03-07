@@ -5,7 +5,7 @@
 #include <testngpp/runner/TestFixtureRunnerFactory.h>
 
 #if !defined(TESTNGPP_DISABLE_SANDBOX) || !TESTNGPP_DISABLE_SANDBOX
-#if defined(_MSC_VER)
+#if defined(_MSC_VER) || defined(__MINGW32__)
 #include <testngpp/win32/Win32TestHierarchySandboxRunner.h>
 #else
 #include <testngpp/runner/TestHierarchySandboxRunner.h>
@@ -27,7 +27,7 @@ namespace
       }
 
       return new TestFixtureRunner( 
-#if defined(_MSC_VER)
+#if defined(_MSC_VER) || defined(__MINGW32__)
 		          new Win32TestHierarchySandboxRunner(
 #else
 		          new TestHierarchySandboxRunner( 
