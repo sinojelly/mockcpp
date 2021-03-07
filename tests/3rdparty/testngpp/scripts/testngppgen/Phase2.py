@@ -190,10 +190,6 @@ def convert_to_int(file, line, str, base):
      
 ##########################################################
 def is_number(file, line, content):
-   print("is_number: ", file)
-   print("line: ")
-   line.show()
-   print("content: ", content)
    matched = dec_re.match(content)
    if matched:
       return convert_to_int(file, line, matched.group("value"), 10)
@@ -232,8 +228,9 @@ class IfScope(ConditionScope):
       self.one = None
 
       value = is_number(file, line, rest)
-      if value == 0:   self.zero = True
-      elif value > 0:  self.one = True
+      if value is not None:
+         if value == 0:   self.zero = True
+         elif value > 0:  self.one = True
 
       ConditionScope.__init__(self, file, line, parent, root, getIfName(isElif), rest)
 
