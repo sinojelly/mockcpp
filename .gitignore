@@ -1,2 +1,13 @@
 .vscode
 build
+__pycache__
+
+# Generated files
+include/mockcpp/ArgumentsListDef.h
+include/mockcpp/DefaultMethodAddrGetterDef.h
+include/mockcpp/DelegatedMethodDef.h
+include/mockcpp/DelegatedMethodGetByVptrDef.h
+include/mockcpp/DelegatedMethodGetDef.h
+include/mockcpp/DestructorAddrGetterDef.h
+include/mockcpp/MethodIndiceCheckerDef.h
+include/mockcpp/MethodTypeTraitsDef.h

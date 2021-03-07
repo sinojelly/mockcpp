@@ -37,21 +37,21 @@ def getUsageString(longOpts):
 def getOpt(longOpts, argv):
    try:
       return getopt.getopt(argv, 'i:e:o:d:', getAssignableOptStrings(longOpts))
-   except getopt.GetoptError, err:
+   except (getopt.GetoptError, err):
       print >> sys.stderr, str(err)
       usage()
       sys.exit(2)
 
 ##########################################################
 def usage():
-   print "Usage:"
-   print "    testngppgen", \
+   print("Usage:")
+   print("    testngppgen", \
       getUsageString(longOpts), \
-      "[-e encoding] -o target testcase1 testcase2 ..."
-   print "    or"
-   print "    testngppgen", \
+      "[-e encoding] -o target testcase1 testcase2 ...")
+   print("    or")
+   print("    testngppgen", \
       getUsageString(longOpts), \
-      "[-e encoding] -d target_dir testcase1 testcase2 ..."
+      "[-e encoding] -d target_dir testcase1 testcase2 ...")
 
 ##########################################################
 longOpts = []
@@ -115,7 +115,7 @@ def generate(argv):
       elif o == "-e":
          encoding = a
       elif o == "-d":
-	     target_dir = a
+         target_dir = a
 
    inputEncoding = encoding
 
