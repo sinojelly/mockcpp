@@ -1,10 +1,10 @@
 #!/usr/bin/python
 
-from Phase1Result import *
-from TestCase import *
-from PreprocessScope import *
+from .Phase1Result import *
+from .TestCase import *
+from .PreprocessScope import *
 
-from Message import *
+from .Message import *
 
 ##########################################################
 class TestCaseParser:

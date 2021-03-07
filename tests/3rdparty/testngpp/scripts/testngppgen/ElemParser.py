@@ -1,12 +1,12 @@
 #!/usr/bin/python
 
-from PreprocessScope import PreprocessScope
-from PreprocessScopeParser import PreprocessScopeParser
-from Useless import Useless
+from .PreprocessScope import PreprocessScope
+from .PreprocessScopeParser import PreprocessScopeParser
+from .Useless import Useless
 
-from Phase1Result import *
+from .Phase1Result import *
 
-from Message import *
+from .Message import *
 
 class ElemParser:
    #######################################################

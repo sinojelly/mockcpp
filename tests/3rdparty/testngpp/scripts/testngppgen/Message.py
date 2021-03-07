@@ -2,7 +2,7 @@
 import sys
 import os
 
-from Phase1Result import *
+from .Phase1Result import *
 
 ####################################################################
 def message(file, line_number, type, msg):

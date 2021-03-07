@@ -3,9 +3,9 @@
 import getopt, sys
 import os
 
-from Process import process
+from .Process import process
 
-import Output
+from .Output import output,output2null,output2file
 
 ##########################################################
 class LongOptString:
@@ -138,9 +138,9 @@ def generate(argv):
          cpp_file_path = processEndFile(target_dir, cpp_file, theEnd)
 
          if newerThan(cpp_file_path, h_file_path) and (not theEnd):
-            Output.output = Output.output2null   # output nothing, but record fixtureDescs.
+            output = output2null   # output nothing, but record fixtureDescs.
          else :
-            Output.output = Output.output2file
+            output = output2file
 
          process(cpp_file_path, absFixtures, inputEncoding, encoding, not theEnd)
       return

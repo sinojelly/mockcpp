@@ -1,8 +1,8 @@
 
 import re
 
-from Message import *
-from Phase1Result import Tag
+from .Message import *
+from .Phase1Result import Tag
 
 blank_re = re.compile( r'^\s*$', re.UNICODE)
 

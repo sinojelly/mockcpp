@@ -5,8 +5,8 @@ import re
 import os
 import codecs
 
-from Phase1Result import *
-from LogicalLine import *
+from .Phase1Result import *
+from .LogicalLine import *
 
 ##########################################################
 blank_slc_re  = re.compile( r'^\s*//.*$', re.UNICODE)

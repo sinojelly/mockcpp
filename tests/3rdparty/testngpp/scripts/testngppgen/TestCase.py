@@ -1,10 +1,10 @@
 
 import re
 
-from Message import *
-from AnnotationParser import AnnotationParser
-from TagsParser import TagsParser
-from Name import *
+from .Message import *
+from .AnnotationParser import AnnotationParser
+from .TagsParser import TagsParser
+from .Name import *
 
 ##########################################
 class TestCase:
@@ -89,7 +89,7 @@ class TestCase:
    ########################################
    def show(self):
        content = "TEST(" + self.get_name() + ")"
-       print content.encode('utf-8')
+       print(content.encode('utf-8'))
 
    ########################################
    def get_name(self):

@@ -2,7 +2,7 @@
 build
 __pycache__
 
-# Generated files
+# Generated mockcpp header files
 include/mockcpp/ArgumentsListDef.h
 include/mockcpp/DefaultMethodAddrGetterDef.h
 include/mockcpp/DelegatedMethodDef.h
@@ -11,3 +11,6 @@ include/mockcpp/DelegatedMethodGetDef.h
 include/mockcpp/DestructorAddrGetterDef.h
 include/mockcpp/MethodIndiceCheckerDef.h
 include/mockcpp/MethodTypeTraitsDef.h
+
+# Generated test files
+tests/ut/TestIsStringEndWith.cpp

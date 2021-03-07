@@ -5,11 +5,11 @@ import re
 import os
 import codecs
 
-from Phase1Result import *
+from .Phase1Result import *
 
-from PreprocessScope import *
+from .PreprocessScope import *
 
-from Message import *
+from .Message import *
 
 cpp_re  = re.compile( r'^\s*#\s*(?P<instruction>\w+)(\s+(?P<rest>.*))?$', re.UNICODE)
 macro_re = re.compile( r'^\s*[A-Za-z_][A-Za-z0-9_]*\s*$', re.UNICODE)
