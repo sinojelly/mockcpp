@@ -10,7 +10,7 @@ function build() {
 	make install
 }
 
-build ../../build_mockcpp_to_install ../mockcpp/mockcpp
+build ../build_mockcpp_to_install ../mockcpp
 
-cd ../mockcpp/mockcpp
+cd ../mockcpp
 

@@ -14,6 +14,6 @@ function build() {
 	make install
 }
 
-build ../../build_mockcpp_to_install4gtest ../mockcpp/mockcpp
+build ../build_mockcpp_to_install4gtest ../mockcpp
 
-cd ../mockcpp/mockcpp
+cd ../mockcpp

@@ -24,19 +24,19 @@ function build($build_dir, $src_dir) {
 	ls *.sln -name | vcbuild
 }
 
-build ..\..\build_mockcpp ..\mockcpp\mockcpp
+build ..\build_mockcpp ..\mockcpp
 
-build ..\build_testngpp ..\mockcpp\mockcpp\tests\3rdparty\testngpp
+build ..\build_mockcpp_testngpp ..\mockcpp\tests\3rdparty\testngpp
 
-build ..\build_tests ..\mockcpp\mockcpp\tests
+build ..\build_mockcpp_tests ..\mockcpp\tests
 
 
 #---------------------------------
 # run all tests
-cd ..\build_tests\ut\Debug
-cp ..\..\..\build_testngpp\src\listeners\Debug\testngppstdoutlistener.dll .
+cd ..\build_mockcpp_tests\ut\Debug
+cp ..\..\..\build_mockcpp_testngpp\src\listeners\Debug\testngppstdoutlistener.dll .
 $ALL_DLL=(ls *.dll -name)-replace ".dll" | where {$_ -ne "testngppstdoutlistener"}
-..\..\..\build_testngpp\src\runner\Debug\testngpp-runner.exe $ALL_DLL -L"..\..\..\build_testngpp\src\listeners\Debug" -l"testngppstdoutlistener -c -f" -s
-cd ..\..\..\mockcpp\mockcpp
+..\..\..\build_mockcpp_testngpp\src\runner\Debug\testngpp-runner.exe $ALL_DLL -L"..\..\..\build_mockcpp_testngpp\src\listeners\Debug" -l"testngppstdoutlistener -c -f" -s
+cd ..\..\..\mockcpp
 
 

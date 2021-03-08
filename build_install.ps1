@@ -26,9 +26,9 @@ function build($build_dir, $src_dir) {
 	vcbuild INSTALL.vcproj
 }
 
-build ..\..\build_mockcpp_to_install ..\mockcpp\mockcpp
+build ..\build_mockcpp_to_install ..\mockcpp
 
-cd ..\mockcpp\mockcpp
+cd ..\mockcpp
 
 
 
