@@ -1,20 +1,3 @@
-/***
-    mockcpp is a generic C/C++ mock framework.
-    Copyright (C) <2009>  <Darwin Yuan: darwin.yuan@gmail.com>
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation, either version 3 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
-***/
 
 #include <mockcpp/InvocationMocker.h>
 #include <mockcpp/Constraint.h>
@@ -53,6 +36,15 @@ with( const Any& c01
                        , c10.getConstraint()
                        , c11.getConstraint()
                        , c12.getConstraint()));
+    return *this;
+}
+
+template <typename Builder>
+Builder&
+ArgumentsMatchBuilder<Builder>::
+which(unsigned int which1, const Any& c)
+{
+    getMocker()->addMatcher(new ConstraintSet(which1, c.getConstraint()));
     return *this;
 }
 

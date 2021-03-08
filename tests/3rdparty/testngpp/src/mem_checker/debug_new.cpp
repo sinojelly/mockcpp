@@ -827,7 +827,7 @@ int check_mem_corruption()
             corrupt_cnt);
     return corrupt_cnt;
 }
-#if defined(__MINGW32__) // close memchecker for MinGW, or else it create on delete.
+#if defined(__MINGW32__) // TODO: temporay close memchecker for MinGW, or else it throws exception on delete.
 #define NOT_USE_MEM_CHECKER
 #endif
 #ifndef NOT_USE_MEM_CHECKER 
