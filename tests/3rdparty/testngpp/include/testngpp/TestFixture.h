@@ -27,10 +27,11 @@ TESTNGPP_NS_START
 
 struct TestCaseInfoReader;
 struct TestCaseResultCollector;
+struct MemChecker;
 
 struct TestFixture
 {
-   TestFixture() : testcase(0), collector(0) {}
+   TestFixture() : testcase(0), collector(0), memLeakCollector(0) {}
 
 	virtual void setUp() {}
 	virtual void tearDown() {}
@@ -43,13 +44,22 @@ struct TestFixture
    void reportFailure(const char* file, unsigned int line, const std::string& failure, bool throwException=true);
 
    //////////////////////////////////////////////
-   void setCurrentTestCase(const TestCaseInfoReader*, TestCaseResultCollector*);
-   TestFixture *clone();
+   void reportMemLeakInfo(const char* file, unsigned int line, const std::string& info);
+   void reportMemLeakFailure(const char* file, unsigned int line, const std::string& failure, bool throwException=true);
+
+   //////////////////////////////////////////////
+   void setCurrentTestCase(const TestCaseInfoReader*, TestCaseResultCollector*, TestCaseResultCollector*, MemChecker*);
+
+   //////////////////////////////////////////////
+   void startMemChecker();
+   void verifyMemChecker();
 
 private:
 
    const TestCaseInfoReader* testcase;
    TestCaseResultCollector* collector;
+   TestCaseResultCollector* memLeakCollector; 
+   MemChecker* memChecker;
 };
 
 TESTNGPP_NS_END

@@ -9,7 +9,11 @@ def output2file(content, file):
       return
 
    lines = content + "\n"
-   file.writelines(lines)
+   try:
+      file.writelines(lines)
+   except:
+      print("Some exception raised, maybe you tried to output some path with chinese or other non-ascii characters.")
+      raise
 
 ################################################
 def output2null(content, file):

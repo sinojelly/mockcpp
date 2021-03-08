@@ -10,6 +10,7 @@ SET(TESTNGPP_SRCS
   TestSuiteDesc.cpp 
   TypeString.cpp 
   Formatter.cpp 
+  MemChecker.cpp
   TestCase.cpp
   runner/ResourceCheckPoint.cpp
   mem_checker/bool_array.cpp       
@@ -23,9 +24,9 @@ SET(TESTNGPP_SRCS
 )
 
 # include debug info in testngpp.lib
-IF(MSVC)
-	ADD_DEFINITIONS( /Z7 )
-ENDIF(MSVC)
+#IF(MSVC)
+#	ADD_DEFINITIONS( /Z7 )
+#ENDIF(MSVC)
 
 IF(WIN32)
   ADD_LIBRARY(testngpp STATIC ${TESTNGPP_SRCS})
@@ -66,6 +67,10 @@ ELSE(WIN32)
    LIBRARY DESTINATION lib)
 ENDIF(WIN32)
 
-   
+IF(MSVC)
+  INSTALL(
+   FILES ${CMAKE_BINARY_DIR}/src/Debug/testngpp.pdb
+   DESTINATION lib)
+ENDIF(MSVC)   
 
 

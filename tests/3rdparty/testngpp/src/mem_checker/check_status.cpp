@@ -31,7 +31,7 @@ unsigned int nullCheckStatus()
 
 void initCheckStatus()
 {
-    srand( time(NULL) ); // use random number to avoid report the mem leaks of  previous testcase.
+    srand( (unsigned int)time(NULL) ); // use random number to avoid report the mem leaks of  previous testcase.
     unsigned int temp = rand();
     check_status = (temp == 0) ? 1 : temp;
 }

@@ -3,6 +3,7 @@
 #include <testngpp/internal/TestCaseInfoReader.h>
 #include <testngpp/internal/Warning.h>
 #include <testngpp/internal/Info.h>
+#include <testngpp/internal/MemChecker.h>
 
 #include <testngpp/listener/TestCaseResultCollector.h>
 
@@ -43,19 +44,53 @@ reportFailure(const char* file, unsigned int line, const std::string& what, bool
 }
 //////////////////////////////////////////////////////////////////////////
 void TestFixture::
-setCurrentTestCase(const TestCaseInfoReader* currentCase, TestCaseResultCollector* resultCollector)
+reportMemLeakInfo
+      ( const char* file
+      , unsigned int line
+      , const std::string& info)
 {
-   testcase = currentCase;
-   collector = resultCollector;
+   if(memLeakCollector == 0 || testcase == 0) return;
+   memLeakCollector->addCaseInfo(testcase, Info(file, line, info));
+}
+
+void TestFixture::
+reportMemLeakFailure(const char* file, unsigned int line, const std::string& what, bool throwException)
+{
+   if(memLeakCollector == 0 || testcase == 0) return;
+
+   AssertionFailure failure(file, line, what);
+
+   memLeakCollector->addCaseFailure(testcase, failure);
+
+   if(throwException) throw failure;
+}
+
+
+
+//////////////////////////////////////////////////////////////////////////
+void TestFixture::
+setCurrentTestCase( const TestCaseInfoReader* currentCase
+	                  , TestCaseResultCollector* resultCollector
+	                  , TestCaseResultCollector* memLeakCollector
+	                  , MemChecker* memChecker)
+{
+   this->testcase = currentCase;
+   this->collector = resultCollector;
+   this->memLeakCollector = memLeakCollector;
+   this->memChecker = memChecker;
 }
 
 //////////////////////////////////////////////////////////////////////////
-TestFixture *TestFixture::
-clone()
+void TestFixture::
+startMemChecker()
 {
-    TestFixture *tempFixture = new TestFixture;
-    tempFixture->setCurrentTestCase(testcase, collector);
-    return tempFixture;
+   memChecker->start();
+}
+
+void TestFixture::
+verifyMemChecker()
+{
+   memChecker->verify();
 }
 
 

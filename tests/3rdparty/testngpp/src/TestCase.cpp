@@ -43,18 +43,18 @@ struct FailureReporter : public Reporter
 
 }
 
-void TestCase::startMemChecker()
-{
-    typedef void (*start_t)(mem_checker::Reporter *, mem_checker::Reporter *);
-    start_t starter = (start_t)loader->findSymbol("startMemChecker");
+// void TestCase::startMemChecker()
+// {
+//     typedef void (*start_t)(mem_checker::Reporter *, mem_checker::Reporter *);
+//     start_t starter = (start_t)loader->findSymbol("startMemChecker");
 
-    if (fixtureCloneAsReporter == 0)
-    {
-        fixtureCloneAsReporter = getFixture()->clone();
-    }
-    starter( mem_checker::createReporter(InfoReporter(fixtureCloneAsReporter))
-           , mem_checker::createReporter(FailureReporter(fixtureCloneAsReporter))); // TODO: Reporter is new in runner.exe, and used in .dll. is this ok?
-}
+//     if (fixtureCloneAsReporter == 0)
+//     {
+//         fixtureCloneAsReporter = getFixture()->clone();
+//     }
+//     starter( mem_checker::createReporter(InfoReporter(fixtureCloneAsReporter))
+//            , mem_checker::createReporter(FailureReporter(fixtureCloneAsReporter))); // TODO: Reporter is new in runner.exe, and used in .dll. is this ok?
+// }
 
 //void TestCase::verifyMemChecker()
 //{

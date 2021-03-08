@@ -9,6 +9,8 @@
 #include <testngpp/runner/ResourceCheckPoint.h>
 #include <testngpp/comm/ExceptionKeywords.h>
 
+#include <testngpp/internal/MemChecker.h>
+
 USING_TESTNGPP_NS
 
 ////////////////////////////////////////////////////////////
@@ -30,6 +32,8 @@ void usage(const char * program)
              << "   -c number        maximum # of concurrent sandboxes"
              << std::endl
              << "   -s               using sandbox runner"
+             << std::endl
+             << "   -m               not checking memory leakage"
              << std::endl
              << std::endl;
    exit(1);
@@ -147,13 +151,20 @@ bool useSandbox(OptionList& options)
    return getFlagOption("s", options);
 }
 
+////////////////////////////////////////////////////////////
+static
+bool useMemChecker(OptionList& options)
+{
+   return !getFlagOption("m", options);
+}
+
 
 ////////////////////////////////////////////////////////////
 int real_main(int argc, char* argv[])
 {
    OptionList options;
 
-   options.parse(argc, argv, "f:L:l:c:t:s");
+   options.parse(argc, argv, "f:L:l:c:t:s:m");
 
    if(options.args.size() == 0)
    {
@@ -169,7 +180,9 @@ int real_main(int argc, char* argv[])
    getSearchingPathsOfListeners(searchingPathsOfListeners, options);   
 
    StringList fixtures;
-	getSpecifiedFixtures(fixtures, options);
+   getSpecifiedFixtures(fixtures, options);
+
+   MemChecker::setGlobalOpen(useMemChecker(options));
 
    bool usesSandbox = useSandbox(options);
    
@@ -207,3 +220,4 @@ int main(int argc, char* argv[])
   
    return code;
 }
+

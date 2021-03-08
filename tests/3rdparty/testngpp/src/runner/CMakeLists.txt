@@ -139,6 +139,16 @@ IF(MSVC OR MINGW)
   )
 ENDIF(MSVC OR MINGW)
 
+IF(CYGWIN)
+SET(TESTNGRUNNER_LIB_SRCS
+     ${TESTNGRUNNER_LIB_SRCS}
+     ../TestSuiteDesc.cpp
+	 ../TestFixture.cpp
+	 ../MemChecker.cpp
+  )
+INCLUDE_DIRECTORIES(BEFORE ${CMAKE_SOURCE_DIR}/3rdparty)
+ENDIF(CYGWIN)
+
 IF(TESTNGPP_USE_DLOPEN)
   SET(TESTNGRUNNER_LIB_SRCS ${TESTNGRUNNER_LIB_SRCS}
       loaders/DLModuleLoader.cpp 
@@ -168,7 +178,13 @@ ADD_LIBRARY(testngpp-runner-lib STATIC ${TESTNGRUNNER_LIB_SRCS})
 
 TARGET_LINK_LIBRARIES(testngpp-runner-lib ${TESTNGPP_LIBRARY})
 
+IF(UNIX)
+ADD_EXECUTABLE(testngpp-runner TestRunnerMain.cpp ../MemChecker.cpp ../TestFixture.cpp) 
+ENDIF(UNIX)
+
+IF(NOT UNIX)
 ADD_EXECUTABLE(testngpp-runner TestRunnerMain.cpp) 
+ENDIF(NOT UNIX)
 
 IF(MSVC OR MINGW)
    ADD_EXECUTABLE(testngpp-win32-testcase-runner win32/TestCaseSandboxRunnerMain.cpp)
@@ -195,3 +211,8 @@ INSTALL(
    TARGETS testngpp-runner
    RUNTIME DESTINATION bin)
 
+IF(MSVC)
+  INSTALL(
+   FILES ${CMAKE_BINARY_DIR}/src/runner/Debug/testngpp-runner.pdb ${CMAKE_BINARY_DIR}/src/runner/Debug/testngpp-win32-testcase-runner.pdb
+   DESTINATION bin)
+ENDIF(MSVC)   

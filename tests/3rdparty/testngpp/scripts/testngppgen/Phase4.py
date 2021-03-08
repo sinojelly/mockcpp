@@ -8,7 +8,7 @@ from .Phase1Result import *
 from .TestCase import TestCase
 from .Fixture import Fixture
 from .Name import *
-
+from .Utils import rm_dup
 from .Output import output, output2file, output2null
 
 
@@ -59,11 +59,24 @@ def get_fixture_id(fixture):
    return fixture.get_id()
 
 def get_testcase_tags(testcase, fixture):
-   tags = list(set(testcase.get_tags()) | set(fixture.get_tags()))
+   #tags = list(set(testcase.get_tags()) | set(fixture.get_tags()))
+   tags = rm_dup(fixture.get_tags() + testcase.get_tags())  # fixture's tags + testcase's tags
    result = ",".join(tags)
    if result == "":
       return "0"
    return result
+
+def get_testcase_memcheck_switch(testcase, fixture):
+   testcase_switch = testcase.get_memcheck_switch()
+   fixture_switch = fixture.get_memcheck_switch()
+
+   if testcase_switch == "on" or testcase_switch == "off" :   # testcase first
+      return testcase_switch
+
+   if fixture_switch == "on" or fixture_switch == "off" :
+      return fixture_switch
+
+   return "none"
 
 ################################################
 testcase_template = '''
@@ -111,6 +124,12 @@ static struct %s
    {
       static const char* tags[] = {%s};
       return tags;
+   }
+
+   const char* getMemCheckSwitch() const
+   {
+      static const char* memCheckSwitch = "%s";
+      return memCheckSwitch;
    }
 
 private:
@@ -163,6 +182,7 @@ class TestCaseDefGenerator:
          test_invocation, \
          len(self.testcase.get_tags() + self.fixture.get_tags()), \
          get_testcase_tags(self.testcase, self.fixture), \
+         get_testcase_memcheck_switch(self.testcase, self.fixture), \
          get_fixture_id(self.fixture), \
          get_testcase_instance_name(self.fixture, self.testcase, name, index) \
       )
@@ -462,12 +482,13 @@ extern "C" DLL_EXPORT TESTNGPP_NS::TestSuiteDesc* %s() {
 ################################################
 class SuiteGenerator:
    #############################################
-   def __init__(self, scopes, file, suite, fixture_files, recordFixture = False):
+   def __init__(self, scopes, file, target, fixture_files, recordFixture = False):
       self.scopes = scopes
-      self.suite = suite
+      self.suite = get_base_name(target)
       self.file = file
       self.fixture_files = fixture_files
       self.recordFixture = recordFixture
+      self.target = target
 
    #############################################
    def generate_fixtures(self):
@@ -526,7 +547,7 @@ class SuiteGenerator:
       self.generate_dep_headers()
 
       for header in self.fixture_files:
-         output("#include <" + header + ">", self.file)
+         output("#include \"" + os.path.relpath(header, os.path.dirname(os.path.abspath(self.target))) + "\"", self.file)
 
    #############################################
    def generate(self):
@@ -560,7 +581,7 @@ def phase4(fixture_files, target, scopes, encoding, recordFixture = False):
    global output_encoding
    output_encoding = encoding
 
-   SuiteGenerator(scopes, file, get_base_name(target), fixture_files, recordFixture).generate()
+   SuiteGenerator(scopes, file, target, fixture_files, recordFixture).generate()
 
    if file != None :
       file.close()

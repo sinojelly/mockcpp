@@ -1,0 +1,9 @@
+#!/bin/bash
+
+@CMAKE_BINARY_DIR@/src/runner/testngpp-runner \
+    @CMAKE_CURRENT_BINARY_DIR@/libsample \
+   -L@CMAKE_BINARY_DIR@/src/listeners \
+   -l"testngppstdoutlistener -c -l0" \
+   -l"testngppxmllistener result.xml" \
+   -t"* > succ > nothing" -c10 $@
+

@@ -24,7 +24,7 @@ class Fixture:
       if len(annotations) > 0 :
          annotation = annotations[0]
 
-      self.annotations = AnnotationParser(annotation, {"tags":[]}).parse()
+      self.annotations = AnnotationParser(annotation, {"memcheck":None, "tags":[]}).parse()
       self.annotations['tags'] = TagsParser(self.annotations['tags']).parse()
 
    ########################################
@@ -34,6 +34,10 @@ class Fixture:
    ########################################
    def get_tags(self):
       return self.annotations['tags']
+
+   ########################################
+   def get_memcheck_switch(self):
+      return self.annotations['memcheck']
 
    ########################################
    def show(self):

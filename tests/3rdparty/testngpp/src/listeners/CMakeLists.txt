@@ -55,3 +55,9 @@ INSTALL(
    TARGETS testngppstdoutlistener testngppxmllistener
    LIBRARY DESTINATION testngpp/listener)
 
+IF(MSVC)
+  INSTALL(
+   FILES ${CMAKE_BINARY_DIR}/src/listeners/Debug/testngppstdoutlistener.pdb ${CMAKE_BINARY_DIR}/src/listeners/Debug/testngppxmllistener.pdb
+   DESTINATION testngpp/listener)
+ENDIF(MSVC)   
+

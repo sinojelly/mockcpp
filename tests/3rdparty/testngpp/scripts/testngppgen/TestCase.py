@@ -14,15 +14,15 @@ class TestCase:
       self.name             = name[1]
       self.p_test           = name[2]
       if self.name != None:
-         self.name = escape_name(self.name)
+         self.name = escape_name(filter(lambda x : x != "\"", self.name))
       self.scope            = scope
       self.file             = file
       self.line             = line
       annotation = None
       if len(annotations) > 0:
         annotation = annotations[0]
-     
-      self.annotations      = AnnotationParser(annotation, {"id":None, "depends":None, "data":None, "tags":[]}).parse()
+
+      self.annotations      = AnnotationParser(annotation, {"id":None, "depends":None, "memcheck":None, "data":None, "tags":[]}).parse()
       if self.p_test and self.annotations["data"] == None:
          raw_fatal(file, line, "parameterized test should have data provider")
 
@@ -42,7 +42,11 @@ class TestCase:
    ########################################
    def get_tags(self):
       return self.annotations['tags']
-      
+
+   ########################################
+   def get_memcheck_switch(self):
+      return self.annotations['memcheck']
+
    ########################################
    def set_scope(self, scope):
       self.scope = scope

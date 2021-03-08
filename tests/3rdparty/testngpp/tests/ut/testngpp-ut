@@ -1,0 +1,12 @@
+#!/bin/bash
+
+TESTNGPPST_ROOT=`pwd`/../3rdparty/testngppst
+
+TESTNGPP_UT_SUITES=`ls libtestngpp-ut-*`
+${TESTNGPPST_ROOT}/src/runner/testngppst-runner \
+   -L${TESTNGPPST_ROOT}/src/listeners \
+   -l"testngppstxmllistener result.xml" \
+   -l"testngppststdoutlistener -c " \
+   -t"*" -c100 $@ \
+   ${TESTNGPP_UT_SUITES}
+

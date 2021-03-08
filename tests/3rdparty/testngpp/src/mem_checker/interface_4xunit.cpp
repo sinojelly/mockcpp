@@ -22,6 +22,8 @@ extern int check_leaks();
 
 static bool report_to_xunit = true; // user can stop/open mem checker reporter to xunit
 
+
+// when stoped mem checker, it will report nothing to xunit, but it outputs to stderr.
 extern "C" void stopMemChecker()
 {
     pauseCheckStatus(); // the following new/malloc info will not be checked in check_leaks

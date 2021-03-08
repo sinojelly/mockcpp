@@ -1,0 +1,6 @@
+@CMAKE_BINARY_DIR@/src/runner/Debug/testngpp-runner ^
+@CMAKE_CURRENT_BINARY_DIR@/Debug/sample ^
+-L@CMAKE_BINARY_DIR@/src/listeners/Debug ^
+-l"testngppstdoutlistener -c -l0" ^
+-l"testngppxmllistener result.xml" ^
+-t"* > succ > nothing" -c10 %1
