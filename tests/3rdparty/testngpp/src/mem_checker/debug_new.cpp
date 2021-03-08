@@ -827,7 +827,9 @@ int check_mem_corruption()
             corrupt_cnt);
     return corrupt_cnt;
 }
-//#define NOT_USE_MEM_CHECKER
+#if defined(__MINGW32__) // close memchecker for MinGW, or else it create on delete.
+#define NOT_USE_MEM_CHECKER
+#endif
 #ifndef NOT_USE_MEM_CHECKER 
 void __debug_new_recorder::_M_process(void* pointer)
 {
