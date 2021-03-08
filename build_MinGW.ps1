@@ -37,5 +37,5 @@ build ..\build_mockcpp_tests ..\mockcpp\tests
 cd ..\build_mockcpp_tests\ut
 cp ..\..\build_mockcpp_testngpp\src\listeners\libtestngppstdoutlistener.dll .
 $ALL_DLL=(ls *.dll -name)-replace ".dll" | where {$_ -ne "libtestngppstdoutlistener"}
-..\..\build_mockcpp_testngpp\src\runner\testngpp-runner.exe $ALL_DLL -L"..\..\build_mockcpp_testngpp\src\listeners" -l"testngppstdoutlistener -c -f" -s -m
+..\..\build_mockcpp_testngpp\src\runner\testngpp-runner.exe $ALL_DLL -L"..\..\build_mockcpp_testngpp\src\listeners" -l"testngppstdoutlistener -c -v" -m  #-s
 cd ..\..\mockcpp

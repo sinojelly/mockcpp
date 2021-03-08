@@ -14,7 +14,7 @@ class TestCase:
       self.name             = name[1]
       self.p_test           = name[2]
       if self.name != None:
-         self.name = escape_name(filter(lambda x : x != "\"", self.name))
+         self.name = escape_name("".join(filter(lambda x : x != "\"", self.name)))
       self.scope            = scope
       self.file             = file
       self.line             = line
