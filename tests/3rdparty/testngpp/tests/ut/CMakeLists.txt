@@ -65,13 +65,13 @@ SET(UT_CASES ${UT_CASES} ${UT_CASES_WITH_MOCK})
 
 LINK_DIRECTORIES(
   ${CMAKE_BINARY_DIR}/3rdparty/mockcpp/src
-  ${CMAKE_BINARY_DIR}/../build_testngppst/src
+  ${CMAKE_BINARY_DIR}/../build_testngpp_testngppst/src
   ${CMAKE_BINARY_DIR}/../build_testngpp/src
   ${CMAKE_BINARY_DIR}/../build_testngpp/src/utils
   ${CMAKE_BINARY_DIR}/../build_testngpp/src/runner
   ${CMAKE_BINARY_DIR}/../build_testngpp/src/listeners
   ${CMAKE_BINARY_DIR}/3rdparty/mockcpp/src/Debug
-  ${CMAKE_BINARY_DIR}/../build_testngppst/src/Debug
+  ${CMAKE_BINARY_DIR}/../build_testngpp_testngppst/src/Debug
   ${CMAKE_BINARY_DIR}/../build_testngpp/src/Debug
   ${CMAKE_BINARY_DIR}/../build_testngpp/src/utils/Debug
   ${CMAKE_BINARY_DIR}/../build_testngpp/src/runner/Debug

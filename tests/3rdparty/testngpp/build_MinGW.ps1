@@ -34,8 +34,8 @@ build ..\build_testngpp_tests ..\mockcpp\tests\3rdparty\testngpp\tests
 #---------------------------------
 # run all tests
 cd ut
-cp ..\..\build_testngpp_testngppst\src\listeners\testngppststdoutlistener.dll .
-$ALL_DLL=(ls *.dll -name)-replace ".dll" | where {$_ -ne "testngppststdoutlistener"}
+cp ..\..\build_testngpp_testngppst\src\listeners\libtestngppststdoutlistener.dll .
+$ALL_DLL=(ls *.dll -name)-replace ".dll" | where {$_ -ne "libtestngppststdoutlistener"}
 ..\..\build_testngpp_testngppst\src\runner\testngppst-runner.exe $ALL_DLL -L"..\..\build_testngpp_testngppst\src\listeners" -l"testngppststdoutlistener -c -v" -m #-s
 cd ..\..\mockcpp\tests\3rdparty\testngpp
 
