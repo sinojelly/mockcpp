@@ -1,18 +1,18 @@
 
-INCLUDE(FindPythonInterp)
+find_package (Python3 COMPONENTS Interpreter)
 
-IF(PYTHONINTERP_FOUND)
-    SET(PYTHON ${PYTHON_EXECUTABLE})
+IF(Python3_FOUND)
+    SET(PYTHON ${Python3_EXECUTABLE})
 ELSE()
     MESSAGE(FATAL_ERROR "No Python interpreter found")
-ENDIF(PYTHONINTERP_FOUND)
+ENDIF(Python3_FOUND)
 
 IF(NOT DEFINED MOCKCPP_ALLOW_MI)
   SET(MOCKCPP_ALLOW_MI TRUE)
 ENDIF(NOT DEFINED MOCKCPP_ALLOW_MI)
 
 SET(MOCKCPP_SRC_ROOT ${CMAKE_SOURCE_DIR}/3rdparty/mockcpp)
-SET(BOOST_ROOT       ${CMAKE_SOURCE_DIR}/../3rdparty)
+SET(BOOST_ROOT       ${CMAKE_SOURCE_DIR}/../../../../3rdparty)
 
 IF(NOT DEFINED MOCKCPP_XUNIT)
    SET(MOCKCPP_XUNIT STDEXCEPT)
@@ -75,11 +75,11 @@ ADD_DEFINITIONS(
 )
 ENDIF(UNIX)
 
-IF(UNIX)
+IF(UNIX AND NOT CYGWIN)
 ADD_DEFINITIONS(
     -fPIC
 )
-ENDIF(UNIX)
+ENDIF(UNIX AND NOT CYGWIN)
 
 IF(CMAKE_CL_64)
     ADD_DEFINITIONS(-DWIN64)
@@ -115,6 +115,7 @@ SET(MOCKCPP_SRCS
     IgnoreResultHandler.cpp
     IgnoreResultHandlerFactory.cpp
     IgnoreReturnStub.cpp
+    Ignore.cpp
     InterfaceInfo.cpp
     Invocation.cpp
     InvocationId.cpp
@@ -225,17 +226,17 @@ ELSE()
    SET(MOCKCPP_SRCS ${MOCKCPP_SRCS} ports/failure/stdexcept_report_failure.cpp)
 ENDIF()
 
-IF(MSVC)
+IF(MSVC OR MINGW)
    SET(MOCKCPP_SRCS 
-	   ${MOCKCPP_SRCS} 
-	   WinCodeModifier.cpp
+       ${MOCKCPP_SRCS} 
+       WinCodeModifier.cpp
    ) 
-ELSE(MSVC)
+ELSE(MSVC OR MINGW)
    SET(MOCKCPP_SRCS 
        ${MOCKCPP_SRCS} 
        UnixCodeModifier.cpp
    )
-ENDIF(MSVC)
+ENDIF(MSVC OR MINGW)
 ######################################################
 SET(MOCKCPP_HEADERS_PATH ${MOCKCPP_SRC_ROOT}/include/mockcpp)
 
@@ -304,3 +305,9 @@ ADD_DEPENDENCIES(mockcpp vtbl_related_headers arg_related_headers)
 INSTALL(
    TARGETS mockcpp
    ARCHIVE DESTINATION lib)
+
+IF(MSVC)   
+INSTALL(
+   FILES ${CMAKE_BINARY_DIR}/src/Debug/mockcpp.pdb
+   DESTINATION lib)
+ENDIF(MSVC)

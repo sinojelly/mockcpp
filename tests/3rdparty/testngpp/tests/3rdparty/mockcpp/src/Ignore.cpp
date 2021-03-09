@@ -15,26 +15,23 @@
    limitations under the License.
 ***/
 
-#ifndef __MOCKCPP_INVOCATION_MOCKER_NAMESPACE_H
-#define __MOCKCPP_INVOCATION_MOCKER_NAMESPACE_H
-
-#include <mockcpp/mockcpp.h>
-
-#include <mockcpp/ObjNameGetter.h>
+#include <mockcpp/Ignore.h>
+#include <mockcpp/types/Any.h>
 
 MOCKCPP_NS_START
 
-struct InvocationMocker;
+///////////////////////////////////////////////
 
-struct InvocationMockerNamespace
-    : public ObjectNameGetter
+const Any ignore = Any(Ignore());
+
+Any& getIgnore()
 {
-   virtual InvocationMocker* getInvocationMocker(const std::string& id) const = 0;
+    return const_cast<Any&>(ignore);
+}
 
-   virtual ~InvocationMockerNamespace() {}
-};
+///////////////////////////////////////////////
 
 MOCKCPP_NS_END
 
-#endif
+
 

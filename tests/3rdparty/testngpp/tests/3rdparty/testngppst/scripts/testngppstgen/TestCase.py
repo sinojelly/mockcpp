@@ -1,10 +1,10 @@
 
 import re
 
-from Message import *
-from AnnotationParser import AnnotationParser
-from TagsParser import TagsParser
-from Name import *
+from .Message import *
+from .AnnotationParser import AnnotationParser
+from .TagsParser import TagsParser
+from .Name import *
 
 ##########################################
 class TestCase:
@@ -14,7 +14,7 @@ class TestCase:
       self.name             = name[1]
       self.p_test           = name[2]
       if self.name != None:
-         self.name = escape_name(self.name)
+         self.name = escape_name("".join(filter(lambda x : x != "\"", self.name)))
       self.scope            = scope
       self.file             = file
       self.line             = line
@@ -93,7 +93,7 @@ class TestCase:
    ########################################
    def show(self):
        content = "TEST(" + self.get_name() + ")"
-       print content.encode('utf-8')
+       print(content.encode('utf-8'))
 
    ########################################
    def get_name(self):

@@ -1,3 +1,19 @@
+/***
+   mockcpp is a C/C++ mock framework.
+   Copyright [2008] [Darwin Yuan <darwin.yuan@gmail.com>]
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+***/
 
 #if defined(__GNUC__)
 
@@ -29,7 +45,7 @@ getNumberOfVtblsByBaseClassTypeInfo(const __base_class_type_info& info
 
    if(!(info.__offset_flags & __base_class_type_info::__public_mask))
    {
-      MOCKCPP_REPORT_FAILURE("no-public inheritance of interfaces is not" \
+      MOCKCPP_REPORT_FAILURE("non-public inheritance of interfaces is not" \
                   " a good practice, hence, mockcpp does not support it");
    }
 
@@ -91,18 +107,16 @@ getNumberOfBaseClasses(const std::type_info& info)
 unsigned int
 getNumberOfBaseClassesByClassTypeInfo(const __class_type_info* info, unsigned int number)
 {
-   const __vmi_class_type_info* vmi_base_info = \
-      dynamic_cast<const __vmi_class_type_info*>(info);
+   const __vmi_class_type_info* vmi_base_info = dynamic_cast<const __vmi_class_type_info*>(info);
    if(vmi_base_info != 0)
    {
-		return getNumberOfVtblsByVmi(vmi_base_info, number);
+	return getNumberOfVtblsByVmi(vmi_base_info, number);
    }
 
-   const __si_class_type_info* si_base_info = \
-      dynamic_cast<const __si_class_type_info*>(info);
+   const __si_class_type_info* si_base_info = dynamic_cast<const __si_class_type_info*>(info);
    if(si_base_info != 0)
    {
-		return getNumberOfVtblsBySi(si_base_info, number);
+	return getNumberOfVtblsBySi(si_base_info, number);
    }
    
    return number + 1;

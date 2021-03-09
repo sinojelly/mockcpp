@@ -3,13 +3,13 @@
 import re
 import codecs
 
-from Phase1Result import *
-from PreprocessScopeParser import *
-from ElemParser import ElemParser
+from .Phase1Result import *
+from .PreprocessScopeParser import *
+from .ElemParser import ElemParser
 
-from FixtureParser import FixtureParser
+from .FixtureParser import FixtureParser
 
-from Message import *
+from .Message import *
 
 fixture_re1  = re.compile( \
    r'''^\s*FIXTURE\s*\(\s*(?P<fixtureId>[A-Za-z_][A-Za-z0-9_]*)\s*(,\s*(?P<fixtureName>.+))?\s*\)\s*''', \

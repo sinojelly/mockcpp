@@ -28,6 +28,23 @@
 #include <mem_checker/interface_4cuser.h>
 #endif
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+
+// when stoped mem checker, it will report nothing to xunit, but it outputs to stderr.
+void stopMemChecker();
+void openMemChecker();
+
+
+#define STOP_MEM_CHECKER()    stopMemChecker()
+#define OPEN_MEM_CHECKER()    openMemChecker()
+
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
 

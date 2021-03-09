@@ -118,26 +118,35 @@ IF(NOT TESTNGPPST_DISABLE_RC)
 ENDIF(NOT TESTNGPPST_DISABLE_RC)
 
 IF(NOT TESTNGPPST_DISABLE_SANDBOX)
-   IF(MSVC)
+   IF(MSVC OR MINGW)
       SET(TESTNGRUNNER_LIB_SRCS
          ${TESTNGRUNNER_LIB_SRCS}
          ${WIN32_SANDBOX_SRCS}
       )
-   ELSE(MSVC)
+   ELSE(MSVC OR MINGW)
       SET(TESTNGRUNNER_LIB_SRCS
          ${TESTNGRUNNER_LIB_SRCS}
          ${SANDBOX_SRCS}
       )
-   ENDIF(MSVC)
+   ENDIF(MSVC OR MINGW)
 ENDIF(NOT TESTNGPPST_DISABLE_SANDBOX)
 
-IF(MSVC)
+IF(MSVC OR MINGW)
   SET(TESTNGRUNNER_LIB_SRCS
      ${TESTNGRUNNER_LIB_SRCS}
      filters/Win32Fnmatch.c
   )
-ENDIF(MSVC)
+ENDIF(MSVC OR MINGW)
 
+IF(CYGWIN)
+SET(TESTNGRUNNER_LIB_SRCS
+     ${TESTNGRUNNER_LIB_SRCS}
+     ../TestSuiteDesc.cpp
+	 ../TestFixture.cpp
+	 ../MemChecker.cpp
+  )
+INCLUDE_DIRECTORIES(BEFORE ${CMAKE_SOURCE_DIR}/3rdparty)
+ENDIF(CYGWIN)
 IF(TESTNGPPST_USE_DLOPEN)
   SET(TESTNGRUNNER_LIB_SRCS ${TESTNGRUNNER_LIB_SRCS}
       loaders/DLModuleLoader.cpp 
@@ -157,25 +166,31 @@ ELSE(TESTNGPPST_USE_DLOPEN)
   MESSAGE(FATAL_ERROR "No module loader found")
 ENDIF(TESTNGPPST_USE_DLOPEN)
 
-IF(UNIX)
+IF(UNIX OR MINGW)
 ADD_DEFINITIONS(
     -g -ggdb
 )
-ENDIF(UNIX)
+ENDIF(UNIX OR MINGW)
 
 ADD_LIBRARY(testngppst-runner-lib STATIC ${TESTNGRUNNER_LIB_SRCS})
 
 TARGET_LINK_LIBRARIES(testngppst-runner-lib ${TESTNGPPST_LIBRARY})
 
-ADD_EXECUTABLE(testngppst-runner TestRunnerMain.cpp) 
+IF(UNIX)
+ADD_EXECUTABLE(testngppst-runner TestRunnerMain.cpp ../MemChecker.cpp ../TestFixture.cpp) 
+ENDIF(UNIX)
 
-IF(MSVC)
+IF(NOT UNIX)
+ADD_EXECUTABLE(testngppst-runner TestRunnerMain.cpp) 
+ENDIF(NOT UNIX)
+
+IF(MSVC OR MINGW)
    ADD_EXECUTABLE(testngppst-win32-testcase-runner win32/TestCaseSandboxRunnerMain.cpp)
    TARGET_LINK_LIBRARIES(testngppst-win32-testcase-runner ${TESTNGPPST_LIBRARY} testngppst-runner-lib)
 
    INSTALL(TARGETS testngppst-win32-testcase-runner
       RUNTIME DESTINATION bin)
-ENDIF(MSVC)
+ENDIF(MSVC OR MINGW)
 
 # -Wl,--export-dynamic
 ADD_DEPENDENCIES(testngppst-runner testngppst-runner-lib)

@@ -44,7 +44,7 @@ struct Win32TestCaseSandboxImpl
 
    void tryToDecodeOnDead() TESTNGPPST_THROW(Error);
 
-   void handleDeadSandbox();
+   void handleDeadSandbox() TESTNGPPST_THROW(Error);
 
    void die()
    {

@@ -1,8 +1,8 @@
 #!/usr/bin/python
 
-from Message import *
-from Phase1Result import *
-from DataProvider import DataProvider
+from .Message import *
+from .Phase1Result import *
+from .DataProvider import DataProvider
 import re
 
 ##########################################################

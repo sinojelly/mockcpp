@@ -42,7 +42,6 @@ reportFailure(const char* file, unsigned int line, const std::string& what, bool
 
    if(throwException) throw failure;
 }
-
 //////////////////////////////////////////////////////////////////////////
 void TestFixture::
 reportMemLeakInfo
@@ -96,6 +95,9 @@ verifyMemChecker()
 
 
 TESTNGPPST_NS_END
+
+
+
 
 
 

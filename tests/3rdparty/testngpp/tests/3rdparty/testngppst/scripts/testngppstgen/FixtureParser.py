@@ -5,17 +5,17 @@ import re
 import os
 import codecs
 
-from Phase1Result import *
+from .Phase1Result import *
 
-from PreprocessScope import *
-from Fixture import Fixture
+from .PreprocessScope import *
+from .Fixture import Fixture
 
-from TestCaseParser import TestCaseParser
-from PreprocessScopeParser import *
-from ClassDeclParser import ClassDeclParser
-from DataProviderParser import DataProviderParser
+from .TestCaseParser import TestCaseParser
+from .PreprocessScopeParser import *
+from .ClassDeclParser import ClassDeclParser
+from .DataProviderParser import DataProviderParser
 
-from Message import *
+from .Message import *
 
 ##########################################################
 

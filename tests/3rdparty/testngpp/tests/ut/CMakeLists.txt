@@ -1,11 +1,13 @@
 
-INCLUDE(FindPythonInterp)
+find_package (Python3 COMPONENTS Interpreter)
 
-IF(PYTHONINTERP_FOUND)
-  SET(PYTHON ${PYTHON_EXECUTABLE})
-ELSE(PYTHONINTERP_FOUND)
-  MESSAGE(FATAL_ERROR "No Python interpreter found")
-ENDIF(PYTHONINTERP_FOUND)
+IF(Python3_FOUND)
+    SET(PYTHON ${Python3_EXECUTABLE})
+ELSE()
+    MESSAGE(FATAL_ERROR "No Python interpreter found")
+ENDIF(Python3_FOUND)
+
+SET(BOOST_ROOT       ${CMAKE_SOURCE_DIR}/../../../../3rdparty)
 
 ADD_DEFINITIONS(
     -DPACKAGE_NAME=${PACKAGE_NAME}
@@ -82,6 +84,7 @@ INCLUDE_DIRECTORIES(BEFORE
   ${PROJECT_HOME}/src
   ${CMAKE_SOURCE_DIR}/3rdparty/testngppst/include
   ${CMAKE_SOURCE_DIR}/3rdparty/mockcpp/include
+  ${BOOST_ROOT}
   )
 
 SET(TEST_GENERATOR ${CMAKE_SOURCE_DIR}/3rdparty/testngppst/scripts/testngppstgen.py)

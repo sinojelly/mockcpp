@@ -2,7 +2,6 @@
 IF(MSVC)
   ADD_DEFINITIONS( -D_CRT_SECURE_NO_WARNINGS )
 ENDIF(MSVC)
-ADD_DEFINITIONS(-D__STDC_FORMAT_MACROS)
 
 SET(TESTNGPPST_SRCS
   except/Exception.cpp
@@ -12,6 +11,8 @@ SET(TESTNGPPST_SRCS
   TypeString.cpp 
   Formatter.cpp 
   MemChecker.cpp
+  TestCase.cpp
+  runner/ResourceCheckPoint.cpp
   mem_checker/bool_array.cpp       
   mem_checker/mem_pool_base.cpp
   mem_checker/debug_new.cpp        
@@ -20,7 +21,6 @@ SET(TESTNGPPST_SRCS
   mem_checker/reporter.cpp
   mem_checker/check_status.cpp
   mem_checker/NoThrowsReporter.cpp
-  runner/ResourceCheckPoint.cpp
 )
 
 # include debug info in testngppst.lib
@@ -34,18 +34,25 @@ ELSE(WIN32)
   ADD_LIBRARY(testngppst SHARED ${TESTNGPPST_SRCS})
 ENDIF(WIN32)
 
-IF(UNIX)
+IF(UNIX OR MINGW)
 ADD_DEFINITIONS(
     -g -ggdb
 )
-ENDIF(UNIX)
+ENDIF(UNIX OR MINGW)
+
+IF(UNIX AND NOT CYGWIN)
+ADD_DEFINITIONS(
+    -fPIC
+)
+ENDIF(UNIX AND NOT CYGWIN)
 
 # can not link to other lib in cmake 
 #TARGET_LINK_LIBRARIES(mem-checker)
 #LINK_DIRECTORIES(${CMAKE_BINARY_DIR}/src/mem_checker)
 
-INCLUDE_DIRECTORIES(BEFORE ${CMAKE_SOURCE_DIR}/include ${CMAKE_SOURCE_DIR}/3rdparty)
+ADD_DEFINITIONS(-D__STDC_FORMAT_MACROS)
 
+INCLUDE_DIRECTORIES(BEFORE ${CMAKE_SOURCE_DIR}/include ${CMAKE_SOURCE_DIR}/3rdparty)
 IF(MSVC)
 INCLUDE_DIRECTORIES(BEFORE ${CMAKE_SOURCE_DIR}/../../../3rdparty/msinttypes)
 ENDIF(MSVC)

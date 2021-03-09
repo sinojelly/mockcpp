@@ -235,7 +235,7 @@ ELSE(MSVC OR MINGW)
        ${MOCKCPP_SRCS} 
        UnixCodeModifier.cpp
    )
-ENDIF(MSVC)
+ENDIF(MSVC OR MINGW)
 ######################################################
 SET(MOCKCPP_HEADERS_PATH ${MOCKCPP_SRC_ROOT}/include/mockcpp)
 

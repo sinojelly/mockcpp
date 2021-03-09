@@ -314,7 +314,7 @@ const char * get_file_name(const char * file, unsigned int line)
    }
    const char * p = strrchr(file, '\\');
    const char * q = strrchr(file, '/');
-   unsigned long max_ptr = ((unsigned long)p) > ((unsigned long)q) ? (unsigned long)p : (unsigned long)q;
+   unsigned long max_ptr = ((unsigned long long)p) > ((unsigned long long)q) ? (unsigned long long)p : (unsigned long long)q;
 
    if (max_ptr > 0)
    {
@@ -827,7 +827,9 @@ int check_mem_corruption()
             corrupt_cnt);
     return corrupt_cnt;
 }
-//#define NOT_USE_MEM_CHECKER
+#if defined(__MINGW32__) // TODO: temporay close memchecker for MinGW, or else it throws exception on delete.
+#define NOT_USE_MEM_CHECKER
+#endif
 #ifndef NOT_USE_MEM_CHECKER 
 void __debug_new_recorder::_M_process(void* pointer)
 {

@@ -5,11 +5,11 @@ import re
 import os
 import codecs
 
-from Phase1Result import *
+from .Phase1Result import *
 
-from PreprocessScope import *
+from .PreprocessScope import *
 
-from Message import *
+from .Message import *
 
 cpp_re  = re.compile( r'^\s*#\s*(?P<instruction>\w+)(\s+(?P<rest>.*))?$', re.UNICODE)
 macro_re = re.compile( r'^\s*[A-Za-z_][A-Za-z0-9_]*\s*$', re.UNICODE)
@@ -228,8 +228,9 @@ class IfScope(ConditionScope):
       self.one = None
 
       value = is_number(file, line, rest)
-      if value == 0:   self.zero = True
-      elif value > 0:  self.one = True
+      if value is not None:
+         if value == 0:   self.zero = True
+         elif value > 0:  self.one = True
 
       ConditionScope.__init__(self, file, line, parent, root, getIfName(isElif), rest)
 

@@ -2,15 +2,14 @@
 import os
 import codecs
 
-from Message import *
+from .Message import *
 
-from Phase1Result import *
-from TestCase import TestCase
-from Fixture import Fixture
-from Name import *
-from Utils import rm_dup
-
-import Output
+from .Phase1Result import *
+from .TestCase import TestCase
+from .Fixture import Fixture
+from .Name import *
+from .Utils import rm_dup
+from .Output import output, output2file, output2null
 
 
 ################################################
@@ -187,7 +186,7 @@ class TestCaseDefGenerator:
          get_fixture_id(self.fixture), \
          get_testcase_instance_name(self.fixture, self.testcase, name, index) \
       )
-      Output.output(testcase_def, self.file)
+      output(testcase_def, self.file)
 
    #############################################
    def __generate_p_tests(self):
@@ -244,7 +243,7 @@ class TestCaseArrayGenerator:
    #############################################
    def __generate(self, name=None, index=None):
       testcase_in_array = '''&%s,''' % (get_testcase_instance_name(self.fixture, self.testcase, name, index))
-      Output.output(testcase_in_array, self.file)
+      output(testcase_in_array, self.file)
 
    #############################################
    def generate(self):
@@ -323,11 +322,11 @@ class FixtureGenerator:
    def generate_testcase_array(self):
       begin = testcase_array_template_begin % (get_testcase_array_var(self.fixture))
 
-      Output.output(begin, self.file)
+      output(begin, self.file)
 
       self.generate_testcase_array_content()
 
-      Output.output(array_template_end, self.file)
+      output(array_template_end, self.file)
 
    #############################################
    def generate(self):
@@ -362,7 +361,7 @@ class FixtureDescGenerator:
           get_testcase_array_var(self.fixture), \
           get_testcase_array_var(self.fixture) )
 
-      Output.output(fixture_desc_def, self.file)
+      output(fixture_desc_def, self.file)
 
       if self.recordFixture :
           global fixtureDescs
@@ -376,7 +375,7 @@ class FixtureDescArrayGenerator:
       self.file = file
 
    def generate(self):
-      Output.output("&" + get_fixture_desc_var(self.fixture) + ",", self.file)
+      output("&" + get_fixture_desc_var(self.fixture) + ",", self.file)
 
 ################################################
 ################################################
@@ -392,12 +391,12 @@ class ScopeGenerator:
    def generate_begin(self):
       inst = self.scope.get_inst()
       if inst != "::":
-         Output.output("#" + inst, self.file)
+         output("#" + inst, self.file)
 
    #############################################
    def generate_end(self):
       if self.scope.is_root_scope():
-         Output.output("#endif // #" + self.scope.get_inst(), self.file)
+         output("#endif // #" + self.scope.get_inst(), self.file)
 
    #############################################
    def generate_scopes(self, scopes):
@@ -511,15 +510,15 @@ class SuiteGenerator:
       global fixtureDescs
       if not self.recordFixture :
           for fixtureDesc in fixtureDescs :
-             Output.output("extern TESTNGPPST_NS::TestFixtureDesc "+fixtureDesc+";", self.file)
+             output("extern TESTNGPPST_NS::TestFixtureDesc "+fixtureDesc+";", self.file)
       fixture_array_def = fixture_array_template_begin % (get_fixture_array_name(self.suite))
-      Output.output(fixture_array_def, self.file)
+      output(fixture_array_def, self.file)
       self.generate_fixture_desc_array()
       if not self.recordFixture :
           # output recorded fixture descs
           for fixtureDesc in fixtureDescs :
-             Output.output("&"+fixtureDesc+",", self.file)
-      Output.output(array_template_end, self.file)
+             output("&"+fixtureDesc+",", self.file)
+      output(array_template_end, self.file)
 
    #############################################
    def generate_suite_desc(self):
@@ -530,25 +529,25 @@ class SuiteGenerator:
          get_fixture_array_name(self.suite), \
          get_fixture_array_name(self.suite) )
 
-      Output.output(suite_def, self.file)
+      output(suite_def, self.file)
 
 
    #############################################
    def generate_suite_getter(self):
       suite_getter = suite_getter_template % ( get_suite_getter_name(), get_suite_desc_name(self.suite))
-      Output.output(suite_getter, self.file)
+      output(suite_getter, self.file)
 
    #############################################
    def generate_dep_headers(self):
       for header in dep_headers:
-         Output.output("#include <testngppst/" + header + ">", self.file)
+         output("#include <testngppst/" + header + ">", self.file)
 
    #############################################
    def generate_headers(self):
       self.generate_dep_headers()
 
       for header in self.fixture_files:
-         Output.output("#include \"" + os.path.relpath(header, os.path.dirname(os.path.abspath(self.target))) + "\"", self.file)
+         output("#include \"" + os.path.relpath(header, os.path.dirname(os.path.abspath(self.target))) + "\"", self.file)
 
    #############################################
    def generate(self):
@@ -571,12 +570,12 @@ def phase4(fixture_files, target, scopes, encoding, recordFixture = False):
 
    file = None
 
-   if Output.output == Output.output2file :
+   if output == output2file :
       try:
          #file = open(target, "w")
          file = codecs.open(target, mode="w", encoding=encoding)
       except IOError:
-         print >> sys.stderr, "open", target, "failed"
+         print("open", target, "failed", file=sys.stderr)
          sys.exit(1)
 
    global output_encoding

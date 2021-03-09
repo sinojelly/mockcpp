@@ -2,10 +2,10 @@
 
 #include <iostream>
 
-#ifndef _MSC_VER
-#include <fnmatch.h>
-#else
+#if defined(_MSC_VER) || defined(__MINGW32__)
 #include "Win32Fnmatch.h"
+#else
+#include <fnmatch.h>
 #endif
 
 #include <testngppst/runner/PosixFNMatcher.h>

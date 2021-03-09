@@ -1,8 +1,8 @@
 #!/usr/bin/python
 
-from Message import *
-from Phase1Result import *
-from Useless import Useless
+from .Message import *
+from .Phase1Result import *
+from .Useless import Useless
 
 ##########################################################
 class ClassDeclParser:
