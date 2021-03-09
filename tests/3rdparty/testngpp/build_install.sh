@@ -12,9 +12,9 @@ function build() {
 	make install
 }
 
-build ../build_testngpp_to_install ../test-ng-pp
+build ../../../../build_testngpp_to_install ../mockcpp/tests/3rdparty/testngpp
 
-cd ../test-ng-pp
+cd ../mockcpp/tests/3rdparty/testngpp
 
 mv -f -u $install_dir/3rdparty $install_dir/..
 
