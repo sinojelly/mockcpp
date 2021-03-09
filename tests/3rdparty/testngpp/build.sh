@@ -8,22 +8,22 @@ function build() {
 	make
 }
 
-build ../build_testngpp ../test-ng-pp
+build ../../../../build_testngpp ../mockcpp/tests/3rdparty/testngpp
 
-build ../build_testngppst ../test-ng-pp/tests/3rdparty/testngppst
+build ../build_testngpp_testngppst ../mockcpp/tests/3rdparty/testngpp/tests/3rdparty/testngppst
 
-build ../build_tests ../test-ng-pp/tests
+build ../build_testngpp_tests ../mockcpp/tests/3rdparty/testngpp/tests
 
 #run samples
-cd ../build_testngpp/samples
-./run-sample 
+#cd ../build_testngpp/samples
+#./run-sample 
 
 #run ut
-cd ../../build_tests/ut
+cd ut
 
 if [ "$OSTYPE" = "cygwin" ]; then
-  ../../build_testngppst/src/runner/testngppst-runner $(ls *.dll) -L"../../build_testngpp/src/listeners" -l"testngppstdoutlistener -c -f"
+  ../../build_testngpp_testngppst/src/runner/testngppst-runner $(ls *.dll) -L"../../build_testngpp_testngppst/src/listeners" -l"testngppstdoutlistener -c -v"
 else
-  ../../build_testngppst/src/runner/testngppst-runner $(ls *.so) -L"../../build_testngpp/src/listeners" -l"testngppstdoutlistener -c -f"
+  ../../build_testngpp_testngppst/src/runner/testngppst-runner $(ls *.so) -L"../../build_testngpp_testngppst/src/listeners" -l"testngppstdoutlistener -c -v"
 fi
 
