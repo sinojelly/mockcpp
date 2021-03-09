@@ -48,7 +48,7 @@ INSTALL(DIRECTORY include/testngpp DESTINATION include
 INSTALL(FILES include/testngpp/runner/loaders/ModuleLoader.h 
 		  DESTINATION include/testngpp/runner/loaders)
 		  
-INSTALL(DIRECTORY 3rdparty/mem_checker DESTINATION 3rdparty
+INSTALL(DIRECTORY include/mem_checker DESTINATION include
           PATTERN ".svn" EXCLUDE)		  
 		  
 IF(MSVC)
