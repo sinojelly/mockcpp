@@ -180,7 +180,7 @@ IF(${MOCKCPP_XUNIT} STREQUAL "GTEST" OR ${MOCKCPP_XUNIT} STREQUAL "gtest")
              NO_CMAKE_PATH 
              NO_SYSTEM_ENVIRONMENT_PATH 
              NO_CMAKE_SYSTEM_PATH)
-   IF(NOT GTEST_HEADER)
+   IF(NOT EXISTS ${GTEST_HEADER})
       MESSAGE(FATAL_ERROR "gtest.h not found in ${MOCKCPP_XUNIT_HOME}/include/gtest, please specify MOCKCPP_XUNIT_HOME as the home path of googletest correctly.")
    ENDIF()
    INCLUDE_DIRECTORIES(BEFORE ${MOCKCPP_XUNIT_HOME}/include)
@@ -199,7 +199,7 @@ ELSEIF(${MOCKCPP_XUNIT} STREQUAL "CppUTest" OR ${MOCKCPP_XUNIT} STREQUAL "cppute
              NO_CMAKE_PATH 
              NO_SYSTEM_ENVIRONMENT_PATH 
              NO_CMAKE_SYSTEM_PATH)
-   IF(NOT CPPUTEST_HEADER)
+   IF(NOT EXISTS ${CPPUTEST_HEADER})
       MESSAGE(FATAL_ERROR "TestHarness.h not found in ${MOCKCPP_XUNIT_HOME}/include/CppUTest, please specify MOCKCPP_XUNIT_HOME as the home path of CppUTest correctly.")
    ENDIF()
    INCLUDE_DIRECTORIES(BEFORE ${MOCKCPP_XUNIT_HOME}/include ${MOCKCPP_XUNIT_HOME}/include/Platforms/VisualCpp)
@@ -216,7 +216,7 @@ ELSEIF(${MOCKCPP_XUNIT} STREQUAL "CPPUNIT" OR ${MOCKCPP_XUNIT} STREQUAL "cppunit
              NO_CMAKE_PATH 
              NO_SYSTEM_ENVIRONMENT_PATH 
              NO_CMAKE_SYSTEM_PATH)
-   IF(NOT ${CPPUNIT_HEADER})
+   IF(NOT EXISTS ${CPPUNIT_HEADER})
       MESSAGE(FATAL_ERROR "Can't find file Exception.h, please specify MOCKCPP_XUNIT_HOME as the home path of cppunit correctly.")
    ENDIF()
    INCLUDE_DIRECTORIES(BEFORE ${MOCKCPP_XUNIT_HOME}/include)
@@ -225,15 +225,16 @@ ELSEIF(${MOCKCPP_XUNIT} STREQUAL "Catch2" OR ${MOCKCPP_XUNIT} STREQUAL "catch2")
    IF(NOT DEFINED MOCKCPP_XUNIT_HOME)
       MESSAGE(FATAL_ERROR "Please specify MOCKCPP_XUNIT_HOME as the home path of catch2")
    ENDIF()
-   FIND_FILE(CATCH2_HEADER catch_test_macros.hpp 
+   FIND_FILE(CATCH2_HEADER
+             catch_test_macros.hpp 
              PATHS ${MOCKCPP_XUNIT_HOME}/catch2
              NO_DEFAULT_PATH 
              NO_CMAKE_ENVIRONMENT_PATH 
              NO_CMAKE_PATH 
              NO_SYSTEM_ENVIRONMENT_PATH 
              NO_CMAKE_SYSTEM_PATH)
-   IF(NOT ${CATCH2_HEADER})
-      #MESSAGE(FATAL_ERROR "Can't find file catch_test_macros.hpp, please specify MOCKCPP_XUNIT_HOME as the home path of catch2 correctly.")
+   IF(NOT EXISTS ${CATCH2_HEADER})
+      MESSAGE(FATAL_ERROR "Can't find file catch_test_macros.hpp, please specify MOCKCPP_XUNIT_HOME as the home path of catch2 correctly.")
    ENDIF()
    INCLUDE_DIRECTORIES(BEFORE ${MOCKCPP_XUNIT_HOME})
    SET(MOCKCPP_SRCS ${MOCKCPP_SRCS} ports/failure/catch2_report_failure.cpp)
