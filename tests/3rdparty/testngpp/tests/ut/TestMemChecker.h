@@ -18,6 +18,7 @@ struct Dummy
     Dummy(){}
 };
 
+// Comment out the below line to see that memchecker can report mem leak
 #define AVOID_MEM_LEAKS
 
 FIXTURE(TestMemChecker)
