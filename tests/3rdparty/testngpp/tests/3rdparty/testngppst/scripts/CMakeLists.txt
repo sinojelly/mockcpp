@@ -1,11 +1,11 @@
 
-INCLUDE(FindPythonInterp)
+find_package (Python3 COMPONENTS Interpreter)
 
-IF(PYTHONINTERP_FOUND)
-  SET(PYTHON ${PYTHON_EXECUTABLE})
-ELSE(PYTHONINTERP_FOUND)
-  MESSAGE(FATAL_ERROR "No Python interpreter found")
-ENDIF(PYTHONINTERP_FOUND)
+IF(Python3_FOUND)
+    SET(PYTHON ${Python3_EXECUTABLE})
+ELSE()
+    MESSAGE(FATAL_ERROR "No Python interpreter found")
+ENDIF(Python3_FOUND)
 
 IF(MSVC)
   SET(RM del)
