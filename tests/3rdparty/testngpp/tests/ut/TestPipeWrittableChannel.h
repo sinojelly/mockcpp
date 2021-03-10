@@ -1,5 +1,6 @@
 
 #include <sys/socket.h>
+#include <unistd.h>
 #include <string.h>
 
 #include <cxxtest/TestSuite.h> 
