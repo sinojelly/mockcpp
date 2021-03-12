@@ -20,6 +20,7 @@
 
 #include <mockcpp/mockcpp.h>
 #include <string>
+#include <typeinfo>
 
 MOCKCPP_NS_START
 

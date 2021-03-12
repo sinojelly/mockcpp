@@ -2,12 +2,13 @@
 # build and install
 
 # Set the xxunit test framework name
-#$test_framework="gtest"
-$test_framework="catch2"
+$test_framework="gtest"
+#$test_framework="catch2"
 
 # gtest: there is a $xunit_home/include/gtest/gtest.h
 # catch2: there is a $xunit_home/catch2/catch_test_macros.hpp
-$xunit_home="D:/Develop/work/Catch2/src"
+$xunit_home="D:/Develop/work/googletest/googletest"
+#$xunit_home="D:/Develop/work/Catch2/src"
 
 $install_dir="D:\Develop\work\mockcpp_install4xxxunit"
 if (!(test-path $install_dir)) { mkdir $install_dir }
