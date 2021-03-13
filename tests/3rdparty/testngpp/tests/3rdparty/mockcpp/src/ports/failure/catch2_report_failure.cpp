@@ -1,6 +1,6 @@
 /***
    mockcpp is a C/C++ mock framework.
-   Copyright [2008] [Darwin Yuan <darwin.yuan@gmail.com>]
+   Copyright [2020] [Chen Guodong <sinojelly@163.com>]
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -15,32 +15,23 @@
    limitations under the License.
 ***/
 
-#ifndef __MOCKCPP_RESULT_HANDLER_FACTORY_H
-#define __MOCKCPP_RESULT_HANDLER_FACTORY_H
-
-#include <mockcpp/mockcpp.h>
-#include <string>
-#include <typeinfo>
+#include <mockcpp/Asserter.h>
+#include <catch2/catch_test_macros.hpp>
 
 MOCKCPP_NS_START
 
-struct Any;
-struct SelfDescribe;
-struct ResultHandler;
-struct ResultImpl;
-
-struct ResultHandlerFactory
+void
+reportFailure(unsigned srcline, const char* srcfile,
+             const std::string& message)
 {
-    virtual ResultHandler* create(
-            bool isCastable
-          , const std::type_info& expectedTypeInfo
-          , const std::string& expectedTypeString
-          , const SelfDescribe* selfDescriber) = 0;
+   Catch::AssertionHandler catchAssertionHandler("MOCKCPP_FAIL", 
+       ::Catch::SourceLineInfo(srcfile, static_cast<std::size_t>(srcline)), 
+       Catch::StringRef(), Catch::ResultDisposition::Normal); 
+   catchAssertionHandler.handleMessage( Catch::ResultWas::ExplicitFailure, message); 
+   INTERNAL_CATCH_REACT( catchAssertionHandler );
+   //FAIL(srcline, srcfile, message);
+}
 
-    virtual ~ResultHandlerFactory() {}
-};
 
 MOCKCPP_NS_END
-
-#endif
 
