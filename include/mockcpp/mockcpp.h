@@ -18,6 +18,7 @@
 #ifndef __MOCKCPP_H
 #define __MOCKCPP_H
 
+#include <fake_boost/fake_boost.h>
 
 #if !defined(MOCKCPP_NO_NAMESPACE) || (MOCKCPP_NO_NAMESPACE == 0)
 # define MOCKCPP_NS mockcpp
@@ -54,15 +55,6 @@
 
 #endif
 
-#if __cplusplus < 201103L
-#if _MSC_VER < 1600   // VS 2010 == VC10 == _MSC_VER 1600 support static_assert
-template <bool condition>
-struct static_assert
-{
-    typedef int static_assert_failure[condition ? 1 : -1];
-};
-#endif
-#endif
 
 #endif // __MOCKCPP_H
 

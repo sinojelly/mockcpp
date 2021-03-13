@@ -18,8 +18,6 @@
 #ifndef __MOCKPP_ANY_CAST_H
 #define __MOCKPP_ANY_CAST_H
 
-#include <boost/type_traits/is_enum.hpp>
-
 #include <mockcpp/mockcpp.h>
 
 #include <mockcpp/types/AnyBase.h>
@@ -102,7 +100,7 @@ struct AnyCast<ValueType, true>
 template <typename ValueType>
 ValueType* any_cast(AnyBase* operand)
 {
-   return AnyCast<ValueType, boost::is_enum<ValueType>::value>::cast(operand);
+   return AnyCast<ValueType, FAKE_BOOST_IS_ENUM<ValueType>::value>::cast(operand);
 }
 
 /////////////////////////////////////////////////////////////////
