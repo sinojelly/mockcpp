@@ -35,7 +35,7 @@ struct static_assert
 };
 
 #if NO_BOOST
-#error "You need boost to make it work, please download boost at url() and put it in mockcpp/3rdparty"
+#error "You need boost to make it work, please download boost at url(https://gitee.com/sinojelly/boost) and put it in mockcpp/3rdparty"
 #else
 #include <boost/type_traits/is_enum.hpp>
 #define FAKE_BOOST_IS_ENUM boost::is_enum
@@ -62,7 +62,7 @@ struct static_assert
 #else
 
 #if NO_BOOST
-#error "You need boost to make it work, please download boost at url() and put it in mockcpp/3rdparty"
+#error "You need boost to make it work, please download boost at url(https://gitee.com/sinojelly/boost) and put it in mockcpp/3rdparty"
 #else
 #include <boost/typeof/typeof.hpp>
 #define FAKE_BOOST_TYPEOF BOOST_TYPEOF
@@ -74,7 +74,7 @@ struct static_assert
 // not GNUC, not Visual Studio
 
 #if NO_BOOST
-#error "You need boost to make it work, please download boost at url() and put it in mockcpp/3rdparty"
+#error "You need boost to make it work, please download boost at url(https://gitee.com/sinojelly/boost) and put it in mockcpp/3rdparty"
 #else
 #include <boost/typeof/typeof.hpp>
 #define FAKE_BOOST_TYPEOF BOOST_TYPEOF
