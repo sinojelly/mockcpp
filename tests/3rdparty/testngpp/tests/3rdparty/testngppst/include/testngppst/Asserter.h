@@ -30,8 +30,8 @@
 #if defined(__GNUC__)
 #define TESTNGPPST_TYPEOF(expr) typeof(expr)
 #else
-#include <boost/typeof/typeof.hpp>
-#define TESTNGPPST_TYPEOF(expr) BOOST_TYPEOF(expr)
+#include <fake_boost/fake_boost.h>
+#define TESTNGPPST_TYPEOF(expr) FAKE_BOOST_TYPEOF(expr)
 #endif
 
 TESTNGPPST_NS_START

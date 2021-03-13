@@ -25,7 +25,6 @@
 #include <testngpp/testngpp.h>
 #include <testngpp/utils/Formatter.h>
 
-
 #if defined(__GNUC__)
 #define TESTNGPP_TYPEOF(expr) typeof(expr)
 #else
