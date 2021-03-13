@@ -84,9 +84,17 @@ template <typename R DECL_TEMPLATE_ARGS(n), unsigned int Seq> \
 unsigned int ApiHookFunctor<R CallingConvention (DECL_ARGS(n)), Seq>::refCount = 0 
 
 #if defined(_MSC_VER)
+// TODO: ApiHook related tests failed on VS2019.
+// [  ERROR   ] TestApiHook.h:66: hardware exception STATUS_ILLEGAL_INSTRUCTION raised in setup or running test
+// [  ERROR   ] TestApiHook.h:66 : hardware exception STATUS_ACCESS_VIOLATION raised in teardown
+#if _MSC_VER >= 1920    // VS 2019 
+#define MOCKCPP_API_HOOK_FUNCTOR_DEF(n) \
+__MOCKCPP_API_HOOK_FUNCTOR_DEF(n, __stdcall)
+#else
 #define MOCKCPP_API_HOOK_FUNCTOR_DEF(n) \
 __MOCKCPP_API_HOOK_FUNCTOR_DEF(n, ); \
 __MOCKCPP_API_HOOK_FUNCTOR_DEF(n, __stdcall) 
+#endif
 #else
 #define MOCKCPP_API_HOOK_FUNCTOR_DEF(n) \
 __MOCKCPP_API_HOOK_FUNCTOR_DEF(n, )

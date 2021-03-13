@@ -29,8 +29,8 @@
 #if defined(__GNUC__)
 #define TESTNGPP_TYPEOF(expr) typeof(expr)
 #else
-#include <boost/typeof/typeof.hpp>
-#define TESTNGPP_TYPEOF(expr) BOOST_TYPEOF(expr)
+#include <fake_boost/fake_boost.h>
+#define TESTNGPP_TYPEOF(expr) FAKE_BOOST_TYPEOF(expr)
 #endif
 
 TESTNGPP_NS_START
