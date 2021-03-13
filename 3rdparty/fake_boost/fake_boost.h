@@ -24,15 +24,12 @@
 */
 
 #define COMPILE_WARNING_STR "You need real boost to make it work, please download boost at url() and put it in mockcpp/3rdparty"
-/*
-#define __not_support_cplusplus_11__ __cplusplus <= 199711L && \
+
+
+#if __cplusplus <= 199711L && \
     (!defined(_MSC_VER) || _MSC_VER < 1600) && \
     (!defined(__GNUC__) || \
       (__GNUC__ * 10000 + __GNUC_MINOR__ * 100 + __GNUC_PATCHLEVEL__ < 40603))
-
-
-#if __not_support_cplusplus_11__
-
 
 template <bool condition>
 struct static_assert
@@ -40,7 +37,7 @@ struct static_assert
     typedef int static_assert_failure[condition ? 1 : -1];
 };
 
-#warning COMPILE_WARNING_STR
+#warning "You need real boost to make it work, please download boost at url() and put it in mockcpp/3rdparty"
 
 #include <boost/type_traits/is_enum.hpp>
 
@@ -53,7 +50,7 @@ struct static_assert
 
 
 #else
-*/
+
 // support static_assert, std::is_enum
 #define FAKE_BOOST_IS_ENUM std::is_enum
 
@@ -69,7 +66,7 @@ struct static_assert
 #define FAKE_BOOST_TYPEOF BOOST_TYPEOF
 #else
 
-#warning COMPILE_WARNING_STR
+#warning "You need real boost to make it work, please download boost at url() and put it in mockcpp/3rdparty"
 
 #include <boost/typeof/typeof.hpp>
 
@@ -77,7 +74,7 @@ struct static_assert
 
 #endif // __GNUC__
 
-//#endif // __not_support_cplusplus_11__
+#endif // not support cplusplus 11
 
 
 #endif // __FAKE_BOOST__
