@@ -22,10 +22,7 @@
 *  This file is used to be compatible with most compilers that support c++ 11 without boost (it's too big).
 *  If you use an old compiler or meet some problem, you can try the real boost.
 */
-
-#define COMPILE_WARNING_STR "You need real boost to make it work, please download boost at url() and put it in mockcpp/3rdparty"
-
-
+// not support c++ 11
 #if __cplusplus <= 199711L && \
     (!defined(_MSC_VER) || _MSC_VER < 1600) && \
     (!defined(__GNUC__) || \
@@ -37,19 +34,17 @@ struct static_assert
     typedef int static_assert_failure[condition ? 1 : -1];
 };
 
-#warning "You need real boost to make it work, please download boost at url() and put it in mockcpp/3rdparty"
-
+#if NO_BOOST
+#error "You need boost to make it work, please download boost at url() and put it in mockcpp/3rdparty"
+#else
 #include <boost/type_traits/is_enum.hpp>
-
 #define FAKE_BOOST_IS_ENUM boost::is_enum
-
 #include <boost/typeof/typeof.hpp>
-
 #define FAKE_BOOST_TYPEOF BOOST_TYPEOF
-
-
+#endif // NO_BOOST
 
 #else
+// support c++ 11
 
 // support static_assert, std::is_enum
 #define FAKE_BOOST_IS_ENUM std::is_enum
@@ -59,18 +54,31 @@ struct static_assert
 #include <type_traits>
 #define FAKE_BOOST_TYPEOF typeof
 #elif defined(_MSC_VER)
-//#include <fake_boost/vc_typeof.h>
-//#include <fake_boost/type/typeof.h>
-//#define FAKE_BOOST_TYPEOF decltype
-#include <boost/typeof/typeof.hpp>
-#define FAKE_BOOST_TYPEOF BOOST_TYPEOF
+
+// maybe work on visual studio before or equal to visual studio 2012 (_MSC_VER<=1700), but not fully test.
+#if _MSC_VER<=1700
+#include <fake_boost/type/typeof.h>
+#define FAKE_BOOST_TYPEOF nx_typeof
 #else
 
-#warning "You need real boost to make it work, please download boost at url() and put it in mockcpp/3rdparty"
-
+#if NO_BOOST
+#error "You need boost to make it work, please download boost at url() and put it in mockcpp/3rdparty"
+#else
 #include <boost/typeof/typeof.hpp>
-
 #define FAKE_BOOST_TYPEOF BOOST_TYPEOF
+#endif // NO_BOOST
+
+#endif // _MSC_VER<=1700
+
+#else
+// not GNUC, not Visual Studio
+
+#if NO_BOOST
+#error "You need boost to make it work, please download boost at url() and put it in mockcpp/3rdparty"
+#else
+#include <boost/typeof/typeof.hpp>
+#define FAKE_BOOST_TYPEOF BOOST_TYPEOF
+#endif // NO_BOOST
 
 #endif // __GNUC__
 
