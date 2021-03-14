@@ -17,7 +17,7 @@ This project provided two tools for C/C++ testing.
 The sample project to use these tools is at :<br> 
 https://gitee.com/sinojelly/testngpp-mockcpp-sample
 
-You can use mockcpp with other C/C++ test framework, such as gtest, Catch2. The sample projects are at:
+You can use mockcpp with other C/C++ test framework, such as gtest, Catch2. The sample projects are at:<br>
 https://gitee.com/sinojelly/gtest-with-mockcpp <br>
 https://gitee.com/sinojelly/catch2-with-mockcpp
 
