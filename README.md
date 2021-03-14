@@ -23,7 +23,7 @@ https://gitee.com/sinojelly/catch2-with-mockcpp
 
 You can use mockcpp testngpp prebuilt libraries and header files, or use their source code.
 
-If you use the prebuilt libraries, be sure they are built on the same os and compiler.
+If you use the prebuilt libraries, be sure they are built on the same os and compiler as your project that is being tested.
 
 ## mockcpp features
 |  OS    | Compiler | Virtual method mock | Global function mock | Overloaded function mock | Non-virtual method mock (Experiment) |
