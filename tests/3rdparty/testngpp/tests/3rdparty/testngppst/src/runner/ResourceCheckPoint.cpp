@@ -160,7 +160,7 @@ static void freeMemory(void* p)
    if(header->magic != magicNumber)
    {
       char buf[100];
-      snprintf(buf, sizeof(buf), "memory corruption occurred at %#"PRIxPTR, (uintptr_t) p);
+      snprintf(buf, sizeof(buf), "memory corruption occurred at %#" PRIxPTR, (uintptr_t) p);
       throw Error(buf);
    }
 
