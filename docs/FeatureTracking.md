@@ -59,6 +59,8 @@
 
 |  项目   |  OS   | 编译环境 | 用例执行(-m) | 用例执行 | 
 |  ----   | ----  | ----  | ----  | ----  |
+| mockcpp | Linux | GCC   | All Pass | All Pass |
+| testngpp| Linux | GCC   | All Pass | All Pass |
 | mockcpp | Win10 | MinGW | All Pass | NA |
 | testngpp| Win10 | MinGW | All Pass | NA |
 | mockcpp | Win10 | VS2019 | Fail 2,Error 23 ① | Exception |

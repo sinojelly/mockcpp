@@ -17,13 +17,13 @@ This project provided two tools for C/C++ testing.
 The sample project to use these tools is at :<br> 
 https://gitee.com/sinojelly/testngpp-mockcpp-sample
 
-You can use mockcpp with other C/C++ test framework, such as gtest, Catch2. The sample projects are at:<br>
+You can use mockcpp with other C/C++ test framework, such as gtest, Catch2, CppUTest etc. The sample projects are at:<br>
 https://gitee.com/sinojelly/gtest-with-mockcpp <br>
 https://gitee.com/sinojelly/catch2-with-mockcpp
 
 You can use mockcpp testngpp prebuilt libraries and header files, or use their source code.
 
-If you use the prebuilt libraries, be sure they are built on the same os and compiler as your project that is being tested.
+If you use the prebuilt libraries, be sure they are built on the same os and compiler as the project that is being tested.
 
 ## mockcpp features
 |  OS    | Compiler | Virtual method mock | Global function mock | Overloaded function mock | Non-virtual method mock (Experiment) |
