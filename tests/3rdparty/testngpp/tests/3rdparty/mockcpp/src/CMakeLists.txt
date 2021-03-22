@@ -62,6 +62,10 @@ ADD_DEFINITIONS(
     -DMOCKCPP_MAX_PARAMETERS=${MOCKCPP_MAX_PARAMETERS}
 )
 
+ADD_DEFINITIONS(
+  -std=c++11
+)
+
 FIND_FILE(BOOST_HEADER
             typeof.hpp 
             PATHS ${BOOST_ROOT}/boost/typeof 

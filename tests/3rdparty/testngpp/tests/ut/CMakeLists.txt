@@ -30,6 +30,10 @@ ADD_DEFINITIONS(
     -DVERSION=${VERSION}
 )
 
+ADD_DEFINITIONS(
+  -std=c++11
+)
+
 SET(UT_CASES
   TestAssertionFailure.h    
   TestPosixFNMatcher.h
