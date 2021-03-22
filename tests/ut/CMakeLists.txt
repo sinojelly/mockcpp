@@ -16,6 +16,11 @@ ADD_DEFINITIONS(
     -DVERSION=${VERSION}
 )
 
+
+ADD_DEFINITIONS(
+  -std=c++11
+)
+
 SET(UT_CASES
   TestAny.h
   TestChainableMockMethod.h

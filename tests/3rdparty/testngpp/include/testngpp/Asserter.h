@@ -26,7 +26,7 @@
 #include <testngpp/utils/Formatter.h>
 
 #if defined(__GNUC__)
-#define TESTNGPP_TYPEOF(expr) typeof(expr)
+#define TESTNGPP_TYPEOF(expr) __typeof(expr)
 #else
 #include <fake_boost/fake_boost.h>
 #define TESTNGPP_TYPEOF(expr) FAKE_BOOST_TYPEOF(expr)

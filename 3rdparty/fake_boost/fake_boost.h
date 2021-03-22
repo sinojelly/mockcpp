@@ -52,7 +52,7 @@ struct static_assert
 // support decltype, but not support typeof on MSVC.
 #if defined(__GNUC__)
 #include <type_traits>
-#define FAKE_BOOST_TYPEOF typeof
+#define FAKE_BOOST_TYPEOF __typeof
 #elif defined(_MSC_VER)
 
 // maybe work on visual studio before or equal to visual studio 2012 (_MSC_VER<=1700), but not fully test.
