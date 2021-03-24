@@ -52,7 +52,7 @@ class TestVirtualTable: public TESTCPP_NS::TestFixture
    {
       virtual int  base00() = 0;
       virtual bool base01(int) const = 0;
-      virtual ~Base0() {}
+      virtual ~Base0() noexcept(false) {}
    };
 
    struct Base1
@@ -60,7 +60,7 @@ class TestVirtualTable: public TESTCPP_NS::TestFixture
       virtual void base10() = 0;
       virtual long base11(bool) const = 0;
 
-      virtual ~Base1() {}
+      virtual ~Base1() noexcept(false) {}
    };
 
    struct Interface: public Base0, public Base1

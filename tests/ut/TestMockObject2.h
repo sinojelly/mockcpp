@@ -32,7 +32,7 @@ class TestMockObject2 : public TESTCPP_NS::TestFixture
    {
       virtual int  base00() = 0;
       virtual bool base01(long) const = 0;
-      virtual ~Base0() {}
+      virtual ~Base0() noexcept(false) {}
    };
 
    struct Base1
@@ -41,7 +41,7 @@ class TestMockObject2 : public TESTCPP_NS::TestFixture
       virtual long base11(const std::string&) const = 0;
       virtual int  base12() const = 0;
 
-      virtual ~Base1() {}
+      virtual ~Base1() noexcept(false) {}
    };
 
    struct Interface: public Base0, public Base1
