@@ -53,29 +53,11 @@ struct static_assert
 #if defined(__GNUC__)
 #include <type_traits>
 #define FAKE_BOOST_TYPEOF __typeof
-#elif defined(_MSC_VER)
-
-// maybe work on visual studio before or equal to visual studio 2012 (_MSC_VER<=1700), but not fully test.
-#if _MSC_VER<=1700
-#include <fake_boost/type/typeof.h>
-#define FAKE_BOOST_TYPEOF nx_typeof
 #else
 
 //The decltype type specifier is supported in Visual Studio 2010 or later versions
 #define __DECLTYPE_TO_TYPEOF(x) std::decay<decltype((x))>::type
 #define FAKE_BOOST_TYPEOF __DECLTYPE_TO_TYPEOF
-
-#endif // _MSC_VER<=1700
-
-#else
-// not GNUC, not Visual Studio
-
-#if NO_BOOST
-#error "You need boost to make it work, please download boost at url(https://gitee.com/sinojelly/boost) and put it in mockcpp/3rdparty"
-#else
-#include <boost/typeof/typeof.hpp>
-#define FAKE_BOOST_TYPEOF BOOST_TYPEOF
-#endif // NO_BOOST
 
 #endif // __GNUC__
 
