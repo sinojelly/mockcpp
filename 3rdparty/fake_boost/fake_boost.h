@@ -61,12 +61,9 @@ struct static_assert
 #define FAKE_BOOST_TYPEOF nx_typeof
 #else
 
-#if NO_BOOST
-#error "You need boost to make it work, please download boost at url(https://gitee.com/sinojelly/boost) and put it in mockcpp/3rdparty"
-#else
-#include <boost/typeof/typeof.hpp>
-#define FAKE_BOOST_TYPEOF BOOST_TYPEOF
-#endif // NO_BOOST
+//The decltype type specifier is supported in Visual Studio 2010 or later versions
+#define __DECLTYPE_TO_TYPEOF(x) std::decay<decltype((x))>::type
+#define FAKE_BOOST_TYPEOF __DECLTYPE_TO_TYPEOF
 
 #endif // _MSC_VER<=1700
 
