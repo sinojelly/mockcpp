@@ -22,6 +22,10 @@ function build($build_dir, $src_dir) {
 	if (!(test-path $build_dir)) { mkdir $build_dir }
 	cd $build_dir
 	Invoke-Expression "cmake $src_dir $VC_VER"
+
+	# should add msbuild.exe path to path enviroment.
+	# such as: C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\MSBuild.exe
+	Invoke-Expression "msbuild ALL_BUILD.vcxproj"
 	#ls *.sln -name | vcbuild   # vcbuild is on VS2008, if you use vs2019, please use VS2019 IDE to open the *.sln and compile.
 }
 
