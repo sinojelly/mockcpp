@@ -29,19 +29,19 @@ function build($build_dir, $src_dir) {
 	#ls *.sln -name | vcbuild   # vcbuild is on VS2008, if you use vs2019, please use VS2019 IDE to open the *.sln and compile.
 }
 
-build ..\build_mockcpp ..\mockcpp
+build build_vc\mockcpp ..\..
+cd ..\..
 
-build ..\build_mockcpp_testngpp ..\mockcpp\tests\3rdparty\testngpp
+build build_vc\mockcpp_testngpp ..\..\tests\3rdparty\testngpp
+cd ..\..
 
-build ..\build_mockcpp_tests ..\mockcpp\tests
-
+build build_vc\mockcpp_tests ..\..\tests
 
 #---------------------------------
 # run all tests
-cd ..\build_mockcpp_tests\ut\Debug
-cp ..\..\..\build_mockcpp_testngpp\src\listeners\Debug\testngppstdoutlistener.dll .
+cd ut\Debug
 $ALL_DLL=(ls *.dll -name)-replace ".dll" | where {$_ -ne "testngppstdoutlistener"}
-..\..\..\build_mockcpp_testngpp\src\runner\Debug\testngpp-runner.exe $ALL_DLL -L"..\..\..\build_mockcpp_testngpp\src\listeners\Debug" -l"testngppstdoutlistener -c -f" -s
-cd ..\..\..\mockcpp
+..\..\..\mockcpp_testngpp\src\runner\Debug\testngpp-runner.exe $ALL_DLL -L"..\..\..\mockcpp_testngpp\src\listeners\Debug" -l"testngppstdoutlistener -c -f" -s
+cd ..\..\..\..
 
 
