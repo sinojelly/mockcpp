@@ -12,23 +12,28 @@ $PARAM_COMPILER_MAJOR_VERSION=$args[1]
 # Assuming MSVC is VS2019 and GNU is MinGW GCC 8
 if ($PARAM_COMPILER_NAME -eq "MSVC") {
     $CMAKE_COMPILER_PARAM="Visual Studio 16 2019"
-	$COMPILER_SCRIPT={ Param($project_dir) 
-        cd $project_dir
-        Invoke-Expression "msbuild ALL_BUILD.vcxproj"
-        cd ..\..  # Assuming two level directory
-    }
 	$MAKE_BUILD_TYPE="Debug"
     if (-not $PARAM_COMPILER_MAJOR_VERSION) {
 	    $PARAM_COMPILER_MAJOR_VERSION="19"
 	}
 } elseif ($PARAM_COMPILER_NAME -eq "GNU") {
     $CMAKE_COMPILER_PARAM="MinGW Makefiles"
-    $COMPILER_SCRIPT={ Param($project_dir) 
-        Invoke-Expression "make -C $project_dir"
-    }
 	$MAKE_BUILD_TYPE="."
     if (-not $PARAM_COMPILER_MAJOR_VERSION) {
 	    $PARAM_COMPILER_MAJOR_VERSION="8"
+	}
+}
+
+function CompileProject {
+	param (
+		$project_dir
+	)
+	if ($PARAM_COMPILER_NAME -eq "MSVC") {
+		cd $project_dir
+        Invoke-Expression "msbuild ALL_BUILD.vcxproj"
+        cd ..\..  # Assuming two level directory
+	} elseif ($PARAM_COMPILER_NAME -eq "GNU") {
+		Invoke-Expression "make -C $project_dir"
 	}
 }
 
@@ -46,9 +51,9 @@ echo "OS_COMPILER: $OS_COMPILER"
 cmake -G $CMAKE_COMPILER_PARAM -S . -B $BUILD_DIR/mockcpp
 cmake -G $CMAKE_COMPILER_PARAM -S tests/3rdparty/testngpp -B $BUILD_DIR/mockcpp_testngpp
 cmake -G $CMAKE_COMPILER_PARAM -S tests -B $BUILD_DIR/mockcpp_tests
-$COMPILER_SCRIPT.Invoke("$BUILD_DIR/mockcpp")
-$COMPILER_SCRIPT.Invoke("$BUILD_DIR/mockcpp_testngpp")
-$COMPILER_SCRIPT.Invoke("$BUILD_DIR/mockcpp_tests")
+CompileProject $BUILD_DIR/mockcpp
+CompileProject $BUILD_DIR/mockcpp_testngpp
+CompileProject $BUILD_DIR/mockcpp_tests
 
 function RunTests {
 	param (
