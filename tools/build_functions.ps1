@@ -58,3 +58,23 @@ function RunTests {
 	Invoke-Expression "$RUNNER_PATH\testngpp-runner.exe  $ALL_DLL -L`"$LISTENER_PATH`" -l`"testngppstdoutlistener -c -v`" -m"
 	cd ..\..\..\$BUILD_TYPE_BACK
 }
+
+function RunTestsFromPrebuiltTools {
+    param (
+        $build_dir,
+		$tested_project,
+		$build_type,
+        $os_compiler
+    )
+    cd $build_dir/$tested_project/$build_type
+    if ($build_type -eq ".") {
+		$BUILD_TYPE_BACK="."
+	} else {
+		$BUILD_TYPE_BACK=".."
+	}
+    $LISTENER_PATH="..\..\$BUILD_TYPE_BACK\tests\testngpp\binary\$os_compiler\testngpp\listener"
+    $RUNNER_PATH="..\..\$BUILD_TYPE_BACK\tests\testngpp\binary\$os_compiler\testngpp\bin"
+    $ALL_DLL=(ls *.dll -name)-replace ".dll"
+    Invoke-Expression "$RUNNER_PATH\testngpp-runner.exe  $ALL_DLL -L`"$LISTENER_PATH`" -l`"testngppstdoutlistener -c -v`" -m"
+    cd ..\..\$BUILD_TYPE_BACK
+}
