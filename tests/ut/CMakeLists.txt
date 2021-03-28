@@ -72,11 +72,15 @@ IF(CMAKE_CL_64)
     ADD_DEFINITIONS(-DWIN64)
 ENDIF(CMAKE_CL_64)
 
+IF(MSVC)
 LINK_DIRECTORIES(
-	${PROJECT_HOME}/../build_mockcpp/src/Debug
-	${PROJECT_HOME}/../build_mockcpp_testngpp/src/Debug
-    ${PROJECT_HOME}/../build_mockcpp/src
-    ${PROJECT_HOME}/../build_mockcpp_testngpp/src)
+	${CMAKE_CURRENT_BINARY_DIR}/../../mockcpp/src/Debug
+	${CMAKE_CURRENT_BINARY_DIR}/../../mockcpp_testngpp/src/Debug)
+ELSE(MSVC)
+LINK_DIRECTORIES(
+  ${CMAKE_CURRENT_BINARY_DIR}/../../build_mockcpp/src
+  ${CMAKE_CURRENT_BINARY_DIR}/../../build_mockcpp_testngpp/src)
+ENDIF(MSVC)
 
 INCLUDE_DIRECTORIES(BEFORE 
   .
