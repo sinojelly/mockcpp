@@ -24,19 +24,18 @@ function build($build_dir, $src_dir) {
 	make
 }
 
-build ..\..\..\..\build_testngpp ..\mockcpp\tests\3rdparty\testngpp
+build ..\..\..\build_mingw\testngpp ..\..\tests\3rdparty\testngpp
 
-build ..\build_testngpp_testngppst ..\mockcpp\tests\3rdparty\testngpp\tests\3rdparty\testngppst
+build ..\testngpp_testngppst ..\..\tests\3rdparty\testngpp\tests\3rdparty\testngppst
 
-build ..\build_testngpp_tests ..\mockcpp\tests\3rdparty\testngpp\tests
+build ..\testngpp_tests ..\..\tests\3rdparty\testngpp\tests
 
 
 #---------------------------------
 # run all tests
 cd ut
-cp ..\..\build_testngpp_testngppst\src\listeners\libtestngppststdoutlistener.dll .
 $ALL_DLL=(ls *.dll -name)-replace ".dll" | where {$_ -ne "libtestngppststdoutlistener"}
-..\..\build_testngpp_testngppst\src\runner\testngppst-runner.exe $ALL_DLL -L"..\..\build_testngpp_testngppst\src\listeners" -l"testngppststdoutlistener -c -v" -m #-s
-cd ..\..\mockcpp\tests\3rdparty\testngpp
+..\..\testngpp_testngppst\src\runner\testngppst-runner.exe $ALL_DLL -L"..\..\testngpp_testngppst\src\listeners" -l"testngppststdoutlistener -c -v" -m #-s
+cd ..\..\..\tests\3rdparty\testngpp
 
 
