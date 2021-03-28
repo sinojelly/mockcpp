@@ -3,45 +3,68 @@
 # If you use powershell the first time, excute this cmd first: set-executionpolicy remotesigned
 # Build mockcpp and it's tests, and at last run all tests.
 
+# $args[0]  --- compiler name  (GNU, MSVC)
+# $args[1]  --- [optional] compiler major version  (The first part of cxx compiler version)
 
-# add vcbuild path  and cmake path
-# It's better to add to your computer's path environment variable, than to modify $env:path below.
-$env:path=$env:path+";C:\Program Files\Microsoft Visual Studio 9.0\VC\vcpackages"
-$env:path=$env:path+";D:\Tools\CMD\cmake-2.8.1-win32-x86\bin"
+$PARAM_COMPILER_NAME=$args[0]
+$PARAM_COMPILER_MAJOR_VERSION=$args[1]
 
-# specify the Visual Studio Version, not set to use default
-#$VC_VER="-G `"Visual Studio 9 2008`""
-#$VC_VER="-G `"Visual Studio 9 2008 Win64`""   # build for X64
-$VC_VER="-G `"Visual Studio 16 2019`"" 
-
-# build Debug only
-$env:VCBUILD_DEFAULT_CFG="Debug|Win32"
-#$env:VCBUILD_DEFAULT_CFG="Debug|x64"     # build for x64
-
-function build($build_dir, $src_dir) { 
-	if (!(test-path $build_dir)) { mkdir $build_dir }
-	cd $build_dir
-	Invoke-Expression "cmake $src_dir $VC_VER"
-
-	# should add msbuild.exe path to path enviroment.
-	# such as: C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Current\Bin\MSBuild.exe
-	Invoke-Expression "msbuild ALL_BUILD.vcxproj"
-	#ls *.sln -name | vcbuild   # vcbuild is on VS2008, if you use vs2019, please use VS2019 IDE to open the *.sln and compile.
+# Assuming MSVC is VS2019 and GNU is MinGW GCC 8
+if ($PARAM_COMPILER_NAME -eq "MSVC") {
+    $CMAKE_COMPILER_PARAM="Visual Studio 16 2019"
+	$COMPILER_SCRIPT={ Param($project_dir) 
+        cd $project_dir
+        Invoke-Expression "msbuild ALL_BUILD.vcxproj"
+        cd ..\..  # Assuming two level directory
+    }
+	$MAKE_BUILD_TYPE="Debug"
+    if (-not $PARAM_COMPILER_MAJOR_VERSION) {
+	    $PARAM_COMPILER_MAJOR_VERSION="19"
+	}
+} elseif ($PARAM_COMPILER_NAME -eq "GNU") {
+    $CMAKE_COMPILER_PARAM="MinGW Makefiles"
+    $COMPILER_SCRIPT={ Param($project_dir) 
+        Invoke-Expression "make -C $project_dir"
+    }
+	$MAKE_BUILD_TYPE="."
+    if (-not $PARAM_COMPILER_MAJOR_VERSION) {
+	    $PARAM_COMPILER_MAJOR_VERSION="8"
+	}
 }
 
-build build_vc\mockcpp ..\..
-cd ..\..
+$BUILD_DIR="build_$PARAM_COMPILER_NAME"
 
-build build_vc\mockcpp_testngpp ..\..\tests\3rdparty\testngpp
-cd ..\..
+# Running Powershell must be Windows
+$MY_OS_NAME="Windows"
+$MY_CXX_COMPILER_NAME=$PARAM_COMPILER_NAME
+$MY_CXX_COMPILER_MAJOR_VERSION=$PARAM_COMPILER_MAJOR_VERSION
 
-build build_vc\mockcpp_tests ..\..\tests
+$OS_COMPILER="$MY_OS_NAME\$MY_CXX_COMPILER_NAME\$MY_CXX_COMPILER_MAJOR_VERSION"
 
-#---------------------------------
-# run all tests
-cd ut\Debug
-$ALL_DLL=(ls *.dll -name)-replace ".dll" | where {$_ -ne "testngppstdoutlistener"}
-..\..\..\mockcpp_testngpp\src\runner\Debug\testngpp-runner.exe $ALL_DLL -L"..\..\..\mockcpp_testngpp\src\listeners\Debug" -l"testngppstdoutlistener -c -f" -s
-cd ..\..\..\..
+echo "OS_COMPILER: $OS_COMPILER"
 
+cmake -G $CMAKE_COMPILER_PARAM -S . -B $BUILD_DIR/mockcpp
+cmake -G $CMAKE_COMPILER_PARAM -S tests/3rdparty/testngpp -B $BUILD_DIR/mockcpp_testngpp
+cmake -G $CMAKE_COMPILER_PARAM -S tests -B $BUILD_DIR/mockcpp_tests
+$COMPILER_SCRIPT.Invoke("$BUILD_DIR/mockcpp")
+$COMPILER_SCRIPT.Invoke("$BUILD_DIR/mockcpp_testngpp")
+$COMPILER_SCRIPT.Invoke("$BUILD_DIR/mockcpp_tests")
 
+function RunTests {
+	param (
+		$build_type
+	)
+	cd $BUILD_DIR/mockcpp_tests/ut/$build_type
+	if ($build_type -eq ".") {
+		$BUILD_TYPE_BACK="."
+	} else {
+		$BUILD_TYPE_BACK=".."
+	}
+	$LISTENER_PATH="..\..\$BUILD_TYPE_BACK\mockcpp_testngpp\src\listeners\$build_type"
+	$RUNNER_PATH="..\..\$BUILD_TYPE_BACK\mockcpp_testngpp\src\runner\$build_type"
+	$ALL_DLL=(ls *.dll -name)-replace ".dll"
+	Invoke-Expression "$RUNNER_PATH\testngpp-runner.exe  $ALL_DLL -L`"$LISTENER_PATH`" -l`"testngppstdoutlistener -c -v`" -m"
+	cd ..\..\..\$BUILD_TYPE_BACK
+}
+
+RunTests $MAKE_BUILD_TYPE
