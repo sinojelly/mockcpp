@@ -29,6 +29,7 @@ build build_mingw\mockcpp ..\..
 cd ..\..
 
 build build_mingw\mockcpp_testngpp ..\..\tests\3rdparty\testngpp
+cd ..\..
 
 build build_mingw\mockcpp_tests ..\..\tests
 

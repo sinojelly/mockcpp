@@ -132,7 +132,7 @@ FOREACH(CASE ${UT_CASES})
   ADD_LIBRARY(${CASE_MODULE} MODULE ${CASE_SRC})
 
   TARGET_LINK_LIBRARIES(${CASE_MODULE}
-    testngpp
+    testngpp-static
     mockcpp)
 
   ADD_CUSTOM_COMMAND(
