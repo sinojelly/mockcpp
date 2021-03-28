@@ -33,7 +33,7 @@ ADD_DEFINITIONS(
 )
 
 IF (MSVC)
-SET(TESTNGPP_LIBRARY testngpp testngpp-utils)
+SET(TESTNGPP_LIBRARY testngpp-static testngpp-utils)
 ELSE (MSVC)
 SET(TESTNGPP_LIBRARY testngpp-static testngpp-utils)
 ENDIF(MSVC)

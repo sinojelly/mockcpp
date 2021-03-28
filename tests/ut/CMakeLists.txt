@@ -78,8 +78,8 @@ LINK_DIRECTORIES(
 	${CMAKE_CURRENT_BINARY_DIR}/../../mockcpp_testngpp/src/Debug)
 ELSE(MSVC)
 LINK_DIRECTORIES(
-  ${CMAKE_CURRENT_BINARY_DIR}/../../build_mockcpp/src
-  ${CMAKE_CURRENT_BINARY_DIR}/../../build_mockcpp_testngpp/src)
+  ${CMAKE_CURRENT_BINARY_DIR}/../../mockcpp/src
+  ${CMAKE_CURRENT_BINARY_DIR}/../../mockcpp_testngpp/src)
 ENDIF(MSVC)
 
 INCLUDE_DIRECTORIES(BEFORE 
