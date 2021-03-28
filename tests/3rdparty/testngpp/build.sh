@@ -2,17 +2,17 @@
 # build mockcpp and it's tests, and at last run all tests.
 
 function build() { 
-	mkdir $1 2>/dev/null
+	mkdir -p $1 2>/dev/null
 	cd $1
 	cmake $2
 	make
 }
 
-build ../../../../build_testngpp ../mockcpp/tests/3rdparty/testngpp
+build ../../../build/testngpp ../../tests/3rdparty/testngpp
 
-build ../build_testngpp_testngppst ../mockcpp/tests/3rdparty/testngpp/tests/3rdparty/testngppst
+build ../testngpp_testngppst ../../tests/3rdparty/testngpp/tests/3rdparty/testngppst
 
-build ../build_testngpp_tests ../mockcpp/tests/3rdparty/testngpp/tests
+build ../testngpp_tests ../../tests/3rdparty/testngpp/tests
 
 #run samples
 #cd ../build_testngpp/samples
@@ -22,8 +22,8 @@ build ../build_testngpp_tests ../mockcpp/tests/3rdparty/testngpp/tests
 cd ut
 
 if [ "$OSTYPE" = "cygwin" ]; then
-  ../../build_testngpp_testngppst/src/runner/testngppst-runner $(ls *.dll) -L"../../build_testngpp_testngppst/src/listeners" -l"testngppststdoutlistener -c -v"
+  ../../testngpp_testngppst/src/runner/testngppst-runner $(ls *.dll) -L"../../testngpp_testngppst/src/listeners" -l"testngppststdoutlistener -c -v"
 else
-  ../../build_testngpp_testngppst/src/runner/testngppst-runner $(ls *.so) -L"../../build_testngpp_testngppst/src/listeners" -l"testngppststdoutlistener -c -v"
+  ../../testngpp_testngppst/src/runner/testngppst-runner $(ls *.so) -L"../../testngpp_testngppst/src/listeners" -l"testngppststdoutlistener -c -v"
 fi
 
