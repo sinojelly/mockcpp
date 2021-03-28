@@ -20,23 +20,23 @@ function build($build_dir, $src_dir) {
 	if (!(test-path $build_dir)) { mkdir $build_dir }
 	cd $build_dir
 	Invoke-Expression "cmake $src_dir $VC_VER"
+	Invoke-Expression "msbuild ALL_BUILD.vcxproj"
 	#ls *.sln -name | vcbuild
 }
 
-build ..\..\..\..\build_testngpp ..\mockcpp\tests\3rdparty\testngpp
+build ..\..\..\build_vc\testngpp ..\..\tests\3rdparty\testngpp
 
-build ..\build_testngpp_testngppst ..\mockcpp\tests\3rdparty\testngpp\tests\3rdparty\testngppst
+build ..\testngpp_testngppst ..\..\tests\3rdparty\testngpp\tests\3rdparty\testngppst
 
-build ..\build_testngpp_tests ..\mockcpp\tests\3rdparty\testngpp\tests
+build ..\testngpp_tests ..\..\tests\3rdparty\testngpp\tests
 
 
 #---------------------------------
 # run all tests
 cd ut\Debug
-cp ..\..\..\build_testngpp_testngppst\src\listeners\Debug\testngppststdoutlistener.dll .
 $ALL_DLL=(ls *.dll -name)-replace ".dll" | where {$_ -ne "testngppststdoutlistener"}
-..\..\..\build_testngpp_testngppst\src\runner\Debug\testngppst-runner.exe $ALL_DLL -L"..\..\..\build_testngpp_testngppst\src\listeners\Debug" -l"testngppststdoutlistener -c -v" -m
-cd ..\..\..\mockcpp\tests\3rdparty\testngpp
+..\..\..\testngpp_testngppst\src\runner\Debug\testngppst-runner.exe $ALL_DLL -L"..\..\..\testngpp_testngppst\src\listeners\Debug" -l"testngppststdoutlistener -c -v" -m
+cd ..\..\..\..\tests\3rdparty\testngpp
 
 # All tests pass on vs2019 with -m option.
 # if run without -m, then TestMemChecker, TestXMLBuilder, TestXMLTestListener report memory leak.
