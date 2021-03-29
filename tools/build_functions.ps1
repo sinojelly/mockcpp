@@ -2,27 +2,20 @@
 function InitEnviroment {
 	param (
 		$compiler_name,
-		$compiler_major_version
+		$compiler_major_version,
+		$cmake_param
 	)
 	# Running Powershell must be Windows
     $global:MY_OS_NAME="Windows"
 
 	$global:MY_CXX_COMPILER_NAME=$compiler_name
 	$global:MY_CXX_COMPILER_MAJOR_VERSION=$compiler_major_version
+	$global:CMAKE_COMPILER_PARAM=$cmake_param
 
-	# Assuming MSVC is VS2019 and GNU is MinGW GCC 8
 	if ($compiler_name -eq "MSVC") {
-		$global:CMAKE_COMPILER_PARAM="-G `"Visual Studio 16 2019`""   # -A Win32
 		$global:MAKE_BUILD_TYPE="Debug"
-		if (-not $compiler_major_version) {
-			$global:MY_CXX_COMPILER_MAJOR_VERSION="19"
-		}
 	} elseif ($compiler_name -eq "GNU") {
-		$global:CMAKE_COMPILER_PARAM="-G `"MinGW Makefiles`""
 		$global:MAKE_BUILD_TYPE="."
-		if (-not $compiler_major_version) {
-			$global:MY_CXX_COMPILER_MAJOR_VERSION="8"
-		}
 	}
 }
 
