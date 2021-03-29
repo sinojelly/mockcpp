@@ -8,6 +8,7 @@ function InitEnviroment {
     $global:MY_OS_NAME="Windows"
 
 	$global:MY_CXX_COMPILER_NAME=$compiler_name
+	$global:MY_CXX_COMPILER_MAJOR_VERSION=$compiler_major_version
 
 	# Assuming MSVC is VS2019 and GNU is MinGW GCC 8
 	if ($compiler_name -eq "MSVC") {
@@ -44,7 +45,8 @@ function RunTests {
 		$build_dir,
 		$tested_project,
 		$build_type,
-		$testing_tool
+		$testing_tool,
+		$st_suffix
 	)
 	cd $build_dir/$tested_project/ut/$build_type
 	if ($build_type -eq ".") {
@@ -55,7 +57,7 @@ function RunTests {
 	$LISTENER_PATH="..\..\$BUILD_TYPE_BACK\$testing_tool\src\listeners\$build_type"
 	$RUNNER_PATH="..\..\$BUILD_TYPE_BACK\$testing_tool\src\runner\$build_type"
 	$ALL_DLL=(ls *.dll -name)-replace ".dll"
-	Invoke-Expression "$RUNNER_PATH\testngpp-runner.exe  $ALL_DLL -L`"$LISTENER_PATH`" -l`"testngppstdoutlistener -c -v`" -m"
+	Invoke-Expression "$RUNNER_PATH\testngpp${st_suffix}-runner.exe  $ALL_DLL -L`"$LISTENER_PATH`" -l`"testngpp${st_suffix}stdoutlistener -c -v`" -m"
 	cd ..\..\..\$BUILD_TYPE_BACK
 }
 

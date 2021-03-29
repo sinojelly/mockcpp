@@ -14,13 +14,16 @@ $global:MY_CXX_COMPILER_MAJOR_VERSION=$null
 $global:CMAKE_COMPILER_PARAM=$null
 $global:MAKE_BUILD_TYPE=$null
 
-InitEnviroment $args[0] $args[1]
+$AUTO_COMPILER="GNU"     #  $args[0]
+$AUTO_CXX_VER="8"        #  $args[1]
+InitEnviroment $AUTO_COMPILER $AUTO_CXX_VER^M
+#InitEnviroment $args[0] $args[1]
 
 $BUILD_DIR="build_$global:MY_CXX_COMPILER_NAME"
 
 $OS_COMPILER="$global:MY_OS_NAME\$global:MY_CXX_COMPILER_NAME\$global:MY_CXX_COMPILER_MAJOR_VERSION"
 
-echo "OS_COMPILER: $OS_COMPILER"
+echo "OS_COMPILER in Powershell : $OS_COMPILER"
 
 Invoke-Expression "cmake $global:CMAKE_COMPILER_PARAM -S . -B $BUILD_DIR/mockcpp"
 Invoke-Expression "cmake $global:CMAKE_COMPILER_PARAM -S tests/3rdparty/testngpp -B $BUILD_DIR/mockcpp_testngpp"

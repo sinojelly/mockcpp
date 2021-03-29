@@ -3,40 +3,33 @@
 # If you use powershell the first time, excute this cmd first: set-executionpolicy remotesigned
 # Build mockcpp and it's tests, and at last run all tests.
 
+# $args[0]  --- compiler name  (GNU, MSVC)
+# $args[1]  --- [optional] compiler major version  (The first part of cxx compiler version)
 
-# add vcbuild path  and cmake path
-# It's better to add to your computer's path environment variable, than to modify $env:path below.
-#$env:path=$env:path+";C:\Program Files\Microsoft Visual Studio 9.0\VC\vcpackages"
-#$env:path=$env:path+";D:\Tools\CMD\cmake-2.8.1-win32-x86\bin"
+. "$PSScriptRoot\..\..\..\tools\build_functions.ps1"
 
-# specify the Visual Studio Version, not set to use default
-#$VC_VER="-G `"Visual Studio 9 2008`""
-$VC_VER="-G `"Visual Studio 16 2019`"" 
+$global:MY_OS_NAME=$null
+$global:MY_CXX_COMPILER_NAME=$null
+$global:MY_CXX_COMPILER_MAJOR_VERSION=$null
+$global:CMAKE_COMPILER_PARAM=$null
+$global:MAKE_BUILD_TYPE=$null
 
-# build Debug only
-$env:VCBUILD_DEFAULT_CFG="Debug|Win32"
+$AUTO_COMPILER="GNU"    #  $args[0]
+$AUTO_CXX_VER="8"       #  $args[1]
+InitEnviroment $AUTO_COMPILER $AUTO_CXX_VER
+#InitEnviroment $args[0] $args[1]
 
-function build($build_dir, $src_dir) { 
-	if (!(test-path $build_dir)) { mkdir $build_dir }
-	cd $build_dir
-	Invoke-Expression "cmake $src_dir $VC_VER"
-	Invoke-Expression "msbuild ALL_BUILD.vcxproj"
-	#ls *.sln -name | vcbuild
-}
+$BUILD_DIR="build_$global:MY_CXX_COMPILER_NAME"
 
-build ..\..\..\build_vc\testngpp ..\..\tests\3rdparty\testngpp
+$OS_COMPILER="$global:MY_OS_NAME\$global:MY_CXX_COMPILER_NAME\$global:MY_CXX_COMPILER_MAJOR_VERSION"
 
-build ..\testngpp_testngppst ..\..\tests\3rdparty\testngpp\tests\3rdparty\testngppst
+echo "OS_COMPILER in Powershell : $OS_COMPILER"
 
-build ..\testngpp_tests ..\..\tests\3rdparty\testngpp\tests
+Invoke-Expression "cmake $global:CMAKE_COMPILER_PARAM -S . -B $BUILD_DIR/testngpp"
+Invoke-Expression "cmake $global:CMAKE_COMPILER_PARAM -S tests/3rdparty/testngppst -B $BUILD_DIR/testngpp_testngppst"
+Invoke-Expression "cmake $global:CMAKE_COMPILER_PARAM -S tests -B $BUILD_DIR/testngpp_tests"
+CompileProject $global:MY_CXX_COMPILER_NAME $BUILD_DIR/testngpp
+CompileProject $global:MY_CXX_COMPILER_NAME $BUILD_DIR/testngpp_testngppst
+CompileProject $global:MY_CXX_COMPILER_NAME $BUILD_DIR/testngpp_tests
 
-
-#---------------------------------
-# run all tests
-cd ut\Debug
-$ALL_DLL=(ls *.dll -name)-replace ".dll" | where {$_ -ne "testngppststdoutlistener"}
-..\..\..\testngpp_testngppst\src\runner\Debug\testngppst-runner.exe $ALL_DLL -L"..\..\..\testngpp_testngppst\src\listeners\Debug" -l"testngppststdoutlistener -c -v" -m
-cd ..\..\..\..\tests\3rdparty\testngpp
-
-# All tests pass on vs2019 with -m option.
-# if run without -m, then TestMemChecker, TestXMLBuilder, TestXMLTestListener report memory leak.
+RunTests $BUILD_DIR testngpp_tests $global:MAKE_BUILD_TYPE testngpp_testngppst st
