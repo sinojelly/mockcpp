@@ -15,8 +15,9 @@ MY_CXX_COMPILER_MAJOR_VERSION=""
 CMAKE_COMPILER_PARAM=""
 MAKE_BUILD_TYPE=""
 
-AUTO_CXX_VER=`gcc -dumpversion | awk -F.  '{print $1}'`
-InitEnviroment $1 $AUTO_CXX_VER
+AUTO_COMPILER="GNU"  #  $1
+AUTO_CXX_VER=`gcc -dumpversion | awk -F.  '{print $1}'`  # $2
+InitEnviroment $AUTO_COMPILER $AUTO_CXX_VER
 
 BUILD_DIR="build_$MY_CXX_COMPILER_NAME"
 
@@ -32,4 +33,4 @@ CompileProject $MY_CXX_COMPILER_NAME $BUILD_DIR/mockcpp
 CompileProject $MY_CXX_COMPILER_NAME $BUILD_DIR/mockcpp_testngpp
 CompileProject $MY_CXX_COMPILER_NAME $BUILD_DIR/mockcpp_tests
 
-RunTestsFromPrebuiltTools $BUILD_DIR ut $MAKE_BUILD_TYPE $OS_COMPILER
+RunTests $BUILD_DIR mockcpp_tests $MAKE_BUILD_TYPE mockcpp_testngpp
