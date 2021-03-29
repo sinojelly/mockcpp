@@ -8,7 +8,7 @@ mock工具的作用是指定函数的行为（模拟函数的行为）。可以�
 
 (2)核心关键字：指stubs/defaults/expects/before/with/after/will/then/id等这些直接跟在点后面的关键字。
 
-(3)扩展关键字：指once()/eq()/check()/returnValue()/repeat()等这些作为核心关键字参数的关键字。
+(3)扩展关键字：指once()/eq()/checkWith()/returnValue()/repeat()等这些作为核心关键字参数的关键字。
 
 下面，请看两段mockcpp的使用规范示例代码，其中带“/”或者“|”的表示在该位置可能有多种选择；带中括号的表示是可选的。
 
@@ -66,7 +66,7 @@ TEST(mockcpp detail sample)
     MOCKER(function) / MOCK_METHOD(mocker, method)
         .stubs() / defaults() / expects(never() | once() | exactly(3) | atLeast(3) | atMost(3) )
         [.before("some-mocker-id")]
-        [.with( any() | eq(3) | neq(3) | gt(3) | lt(3) | spy(var_out) | check(check_func)
+        [.with( any() | eq(3) | neq(3) | gt(3) | lt(3) | spy(var_out) | checkWith(check_func)
                 | outBound(var_out) | outBoundP(var_out_addr, var_size) | mirror(var_in_addr, var_size)
                 | smirror(string) | contains(string) | startWith(string) | endWith(string) )]
         [.after("some-mocker-id")]
@@ -270,7 +270,7 @@ TEST(sample test)
 {
     MOCKER(func)
         .stubs()
-        .with(any(), check(check_func));
+        .with(any(), checkWith(check_func));
     func(in, p);
 }
 ```
@@ -294,7 +294,7 @@ TEST(b should less than 100)
 {
     MOCKER(func)
         .stubs()
-        .with(any(), check(CheckFunctor(100)));
+        .with(any(), checkWith(CheckFunctor(100)));
     func(in, p);
 }
 
@@ -302,7 +302,7 @@ TEST(b should less than 200)
 {
     MOCKER(func)
         .stubs()
-        .with(any(), check(CheckFunctor(200)));
+        .with(any(), checkWith(CheckFunctor(200)));
     func(in, p);
 }
 ```
