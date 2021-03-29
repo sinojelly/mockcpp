@@ -58,6 +58,7 @@ FIXTURE(DataDrivenTest)
 };
 ```
 ## Documents for user
+[New Build System Description](docs/BuildSystemDescription.md)(<font color=red>recommended for user and developers</font>)<br>
 [Mockcpp manual english](docs/EnglishManual.md)<br>
 [Mockcpp manual chinese](docs/ChineseVersionManual.md)<br>
 [Mockcpp simple instruction](docs/SimpleUserInstruction_zh.md) (Chinese, recommended)<br>
