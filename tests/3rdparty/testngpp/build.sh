@@ -1,29 +1,36 @@
 #!/bin/bash
 # build mockcpp and it's tests, and at last run all tests.
 
-function build() { 
-	mkdir -p $1 2>/dev/null
-	cd $1
-	cmake $2
-	make
-}
+# $1  --- compiler name  (GNU)
+# $2  --- [optional] compiler major version  (The first part of cxx compiler version)
 
-build ../../../build/testngpp ../../tests/3rdparty/testngpp
+# fast fail
+set -e
 
-build ../testngpp_testngppst ../../tests/3rdparty/testngpp/tests/3rdparty/testngppst
+. "../../../tools/build_functions.sh"
 
-build ../testngpp_tests ../../tests/3rdparty/testngpp/tests
+MY_OS_NAME=""
+MY_CXX_COMPILER_NAME=""
+MY_CXX_COMPILER_MAJOR_VERSION=""
+CMAKE_COMPILER_PARAM=""
+MAKE_BUILD_TYPE=""
 
-#run samples
-#cd ../build_testngpp/samples
-#./run-sample 
+AUTO_COMPILER="GNU"  #  $1
+AUTO_CXX_VER=`gcc -dumpversion | awk -F.  '{print $1}'`  # $2
+InitEnviroment $AUTO_COMPILER $AUTO_CXX_VER
 
-#run ut
-cd ut
+BUILD_DIR="build_$MY_CXX_COMPILER_NAME"
 
-if [ "$OSTYPE" = "cygwin" ]; then
-  ../../testngpp_testngppst/src/runner/testngppst-runner $(ls *.dll) -L"../../testngpp_testngppst/src/listeners" -l"testngppststdoutlistener -c -v"
-else
-  ../../testngpp_testngppst/src/runner/testngppst-runner $(ls *.so) -L"../../testngpp_testngppst/src/listeners" -l"testngppststdoutlistener -c -v"
-fi
+OS_COMPILER="$MY_OS_NAME/$MY_CXX_COMPILER_NAME/$MY_CXX_COMPILER_MAJOR_VERSION"
 
+echo "OS_COMPILER in Shell : $OS_COMPILER"
+
+cmake  -S . -B $BUILD_DIR/testngpp
+cmake  -S tests/3rdparty/testngppst -B $BUILD_DIR/testngpp_testngppst
+cmake  -S tests -B $BUILD_DIR/testngpp_tests
+
+CompileProject $MY_CXX_COMPILER_NAME $BUILD_DIR/testngpp
+CompileProject $MY_CXX_COMPILER_NAME $BUILD_DIR/testngpp_testngppst
+CompileProject $MY_CXX_COMPILER_NAME $BUILD_DIR/testngpp_tests
+
+RunTests $BUILD_DIR testngpp_tests $MAKE_BUILD_TYPE testngpp_testngppst
