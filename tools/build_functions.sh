@@ -16,7 +16,7 @@ function RunTests() {
 	BUILD_TYPE_BACK="."
 	LISTENER_PATH="../../$BUILD_TYPE_BACK/$4/src/listeners/$3"
 	RUNNER_PATH="../../$BUILD_TYPE_BACK/$4/src/runner/$3"
-	$RUNNER_PATH/testngpp-runner $(ls *.so) -L"$LISTENER_PATH" -l"testngppstdoutlistener -c -v" -m
+	$RUNNER_PATH/testngpp$5-runner $(ls *.so) -L"$LISTENER_PATH" -l"testngpp$5stdoutlistener -c -v" -m
 	cd ../../../$BUILD_TYPE_BACK
 }
 

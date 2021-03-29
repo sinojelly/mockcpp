@@ -33,4 +33,4 @@ CompileProject $MY_CXX_COMPILER_NAME $BUILD_DIR/testngpp
 CompileProject $MY_CXX_COMPILER_NAME $BUILD_DIR/testngpp_testngppst
 CompileProject $MY_CXX_COMPILER_NAME $BUILD_DIR/testngpp_tests
 
-RunTests $BUILD_DIR testngpp_tests $MAKE_BUILD_TYPE testngpp_testngppst
+RunTests $BUILD_DIR testngpp_tests $MAKE_BUILD_TYPE testngpp_testngppst st
