@@ -1,27 +1,35 @@
 #!/bin/bash
 # build mockcpp and it's tests, and at last run all tests.
 
-function build() { 
-	mkdir -p $1 2>/dev/null
-	cd $1
-	cmake $2
-	make
-}
+# $1  --- compiler name  (GNU)
+# $2  --- [optional] compiler major version  (The first part of cxx compiler version)
 
-build build/mockcpp ../..
-cd ../..
+# fast fail
+set -e
 
-build build/mockcpp_testngpp ../../tests/3rdparty/testngpp
-cd ../..
+. "tools/build_functions.sh"
 
-build build/mockcpp_tests ../../tests
+MY_OS_NAME=""
+MY_CXX_COMPILER_NAME=""
+MY_CXX_COMPILER_MAJOR_VERSION=""
+CMAKE_COMPILER_PARAM=""
+MAKE_BUILD_TYPE=""
 
-cd ut
+AUTO_CXX_VER=`gcc -dumpversion | awk -F.  '{print $1}'`
+InitEnviroment $1 $AUTO_CXX_VER
 
-if [ "$OSTYPE" = "cygwin" ]; then
-    ../../mockcpp_testngpp/src/runner/testngpp-runner $(ls *.dll) -L"../../mockcpp_testngpp/src/listeners" -l"testngppstdoutlistener -c -f"
-else
-    ../../mockcpp_testngpp/src/runner/testngpp-runner $(ls *.so) -L"../../mockcpp_testngpp/src/listeners" -l"testngppstdoutlistener -c -f " -s
-fi
+BUILD_DIR="build_$MY_CXX_COMPILER_NAME"
 
-cd ../../..
+OS_COMPILER="$MY_OS_NAME/$MY_CXX_COMPILER_NAME/$MY_CXX_COMPILER_MAJOR_VERSION"
+
+echo "OS_COMPILER in Shell : $OS_COMPILER"
+
+cmake  -S . -B $BUILD_DIR/mockcpp
+cmake  -S tests/3rdparty/testngpp -B $BUILD_DIR/mockcpp_testngpp
+cmake  -S tests -B $BUILD_DIR/mockcpp_tests
+
+CompileProject $MY_CXX_COMPILER_NAME $BUILD_DIR/mockcpp
+CompileProject $MY_CXX_COMPILER_NAME $BUILD_DIR/mockcpp_testngpp
+CompileProject $MY_CXX_COMPILER_NAME $BUILD_DIR/mockcpp_tests
+
+RunTestsFromPrebuiltTools $BUILD_DIR ut $MAKE_BUILD_TYPE $OS_COMPILER
