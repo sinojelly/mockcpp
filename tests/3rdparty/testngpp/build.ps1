@@ -16,8 +16,8 @@ $global:MAKE_BUILD_TYPE=$null
 
 $AUTO_COMPILER="GNU"    #  $args[0]
 $AUTO_CXX_VER="8"       #  $args[1]
-InitEnviroment $AUTO_COMPILER $AUTO_CXX_VER
-#InitEnviroment $args[0] $args[1]
+#InitEnviroment $AUTO_COMPILER $AUTO_CXX_VER
+InitEnviroment $args[0] $args[1]
 
 $BUILD_DIR="build_$global:MY_CXX_COMPILER_NAME"
 
