@@ -22,6 +22,8 @@ the FOR_TEST macro is used to expose more methods.
 
 ##### 2) In the class that should be tested.
 ``` c++
+#include "not_test.h"
+
 class ToBeTested {
     CAN_MOCK void ThisMethodCanBeMockedButNotVirtualInProduction();
 FOR_TEST:
