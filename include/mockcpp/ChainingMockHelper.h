@@ -53,7 +53,7 @@ Constraint* eq(const T& val)
 }
 
 template <typename V, typename D>
-Constraint* eq<std::unique_ptr<V, D> >(const std::unique_ptr<V, D>& val)
+Constraint* eq(const V* val)
 {
 	return new IsEqual<std::unique_ptr<V, D> >(val);
 }

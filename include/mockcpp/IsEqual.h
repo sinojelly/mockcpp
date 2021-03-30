@@ -55,15 +55,15 @@ template <typename V, typename D>
 struct IsEqual<std::unique_ptr<V, D> > : public Constraint
 {
     IsEqual(const V* expected)
-      : expectedValue(expected), typeInfo(typeid(std::unique_ptr<V, D>))
+      : expectedValue(expected) //, typeInfo(typeid(std::unique_ptr<V, D>))
     {}
 
     ~IsEqual() {}
 
     bool eval(const RefAny& val) const
     {
-      if(!any_castable<std::unique_ptr<V, D> >(val)) return false;
-      return (any_cast<std::unique_ptr<V, D> >(val)).get() == expectedValue;
+      if(!any_castable<V*>(val)) return false;
+      return (any_cast<V*>(val)) == expectedValue;
     }
 
     std::string toString() const
@@ -75,8 +75,8 @@ struct IsEqual<std::unique_ptr<V, D> > : public Constraint
 
 private:
 
-    V* expectedValue;
-    std::type_info typeInfo;
+    const V* expectedValue;
+    //std::type_info typeInfo;
 };
 
 MOCKCPP_NS_END

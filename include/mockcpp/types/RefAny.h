@@ -32,6 +32,11 @@ struct RefAny : public AnyBase
       : AnyBase(new RefHolder<ValueType>(value))
    {}
 
+   template <typename V, typename D>
+   RefAny(const std::unique_ptr<V, D>& value)
+      : AnyBase(new RefHolder<V*>(value.get()))
+   {}
+
 
    RefAny(const RefAny & other);
 
