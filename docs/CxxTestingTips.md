@@ -1,5 +1,7 @@
 # C++ testing tips
 
+## mockcpp
+
 #### 1. Only the classes that have virtual method table can use MOCKER.
 We can make the class have a virtual desturctor.
 
@@ -44,4 +46,24 @@ FIXTURE(TestToBeTested) {
 ``` c++
 #define CAN_MOCK virtual
 #define FOR_TEST public
+```
+
+## testngpp
+
+#### 1. Be care that the "{" after FIXTURE(xxx) should be in the new line.
+The test code below in TestXXX.h cause failure in generating TestXXX.cpp file.
+``` c++
+FIXTURE(TestXXX) {
+    TEST(something is wrong) {
+    }
+};
+```
+It should be:
+``` c++
+FIXTURE(TestXXX)
+{ // Must like this, or else generate TestXXX.cpp fail.
+    TEST(something is wrong) 
+    {  // Must be this, or else no testcase
+    }
+};
 ```
