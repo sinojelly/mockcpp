@@ -51,6 +51,34 @@ private:
     T expectedValue;
 };
 
+template <typename V, typename D>
+struct IsEqual<std::unique_ptr<V, D> > : public Constraint
+{
+    IsEqual(const V* expected)
+      : expectedValue(expected), typeInfo(typeid(std::unique_ptr<V, D>))
+    {}
+
+    ~IsEqual() {}
+
+    bool eval(const RefAny& val) const
+    {
+      if(!any_castable<std::unique_ptr<V, D> >(val)) return false;
+      return (any_cast<std::unique_ptr<V, D> >(val)).get() == expectedValue;
+    }
+
+    std::string toString() const
+    {
+      return std::string("eq(unique_ptr ") + 
+             MOCKCPP_NS::toTypeAndValueString(expectedValue) +
+             std::string(")");
+    }
+
+private:
+
+    V* expectedValue;
+    std::type_info typeInfo;
+};
+
 MOCKCPP_NS_END
 
 #endif

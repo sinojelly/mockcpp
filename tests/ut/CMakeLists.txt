@@ -46,6 +46,7 @@ SET(UT_CASES
   #TestNonvirtualMethodMocker.h
   TestMockcppSample.h
   TestApiHookBase.h
+  TestSmartPointerChecker.h
 )
 
 IF(UNIX)
