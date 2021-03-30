@@ -670,7 +670,7 @@ public:
 
 假如TestNG++被安装在/usr/local/testngpp，可以通过下面的命令行来调用**Test Generator** ：
 ```
-python /usr/local/testngpp/testngpp/generator/testngppgen.pyc -e gb2312 -o MyTestSuite.cpp Test1.h Test2.h
+python /usr/local/testngpp/testngpp/generator/testngppgen.pyc -e utf8 -o MyTestSuite.cpp Test1.h Test2.h
 ```
 
 此命令行将会把Test1.h和Test2.h文件里所有的Fixture都生成到测试套件MyTestSuite里面。

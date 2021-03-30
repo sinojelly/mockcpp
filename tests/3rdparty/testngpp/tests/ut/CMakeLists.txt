@@ -30,9 +30,11 @@ ADD_DEFINITIONS(
     -DVERSION=${VERSION}
 )
 
+IF(NOT MSVC)
 ADD_DEFINITIONS(
   -std=c++11
 )
+ENDIF(NOT MSVC)
 
 SET(UT_CASES
   TestAssertionFailure.h    
