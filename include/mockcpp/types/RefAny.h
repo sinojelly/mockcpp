@@ -18,6 +18,7 @@
 #ifndef __MOCKPP_REF_ANY_H
 #define __MOCKPP_REF_ANY_H
 
+#include <memory>
 #include <mockcpp/types/AnyBase.h>
 #include <mockcpp/types/RefHolder.h>
 
@@ -32,11 +33,12 @@ struct RefAny : public AnyBase
       : AnyBase(new RefHolder<ValueType>(value))
    {}
 
+   #if 0
    template <typename V, typename D>
    RefAny(const std::unique_ptr<V, D>& value)
       : AnyBase(new RefHolder<V*>(value.get()))
    {}
-
+   #endif
 
    RefAny(const RefAny & other);
 

@@ -177,6 +177,46 @@ bool any_castable(const AnyBase& val)
 
 /////////////////////////////////////////////////////////////////
 
+template<typename ValueType>
+ValueType& __unique_ptr_any_cast(AnyBase* operand)
+{
+    typedef typename TypeTraits<ValueType>::Type nonref;
+    typedef Holder<nonref> holder;
+#if 0
+    if (operand->type() != typeid(ValueType))
+    {
+        return 0;
+    }
+#endif
+    holder* p = dynamic_cast<holder*>(operand->getContent());
+    return const_cast<ValueType&>(p->getValue());
+}
+
+template<typename ValueType>
+ValueType& __unique_ptr_any_cast(const AnyBase* operand)
+{
+    typedef typename TypeTraits<ValueType>::Type nonref;
+    typedef Holder<nonref> holder;
+#if 0
+    if (operand->type() != typeid(ValueType))
+    {
+        return 0;
+    }
+#endif
+    holder* p = dynamic_cast<holder*>(operand->getContent());
+    return const_cast<ValueType&>(p->getValue());
+}
+
+template<typename ValueType>
+ValueType& unique_ptr_any_cast(AnyBase& operand) {
+    return __unique_ptr_any_cast<ValueType>(&operand);
+}
+
+template<typename ValueType>
+ValueType& unique_ptr_any_cast(const AnyBase& operand) {
+    return __unique_ptr_any_cast<ValueType>(&operand);
+}
+
 MOCKCPP_NS_END
 
 #endif 

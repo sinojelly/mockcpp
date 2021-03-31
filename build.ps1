@@ -46,8 +46,8 @@ echo "OS_COMPILER in Powershell : $OS_COMPILER"
 Invoke-Expression "cmake $global:CMAKE_COMPILER_PARAM -S . -B $BUILD_DIR/mockcpp"
 Invoke-Expression "cmake $global:CMAKE_COMPILER_PARAM -S tests/3rdparty/testngpp -B $BUILD_DIR/mockcpp_testngpp"
 Invoke-Expression "cmake $global:CMAKE_COMPILER_PARAM -S tests -B $BUILD_DIR/mockcpp_tests"
-CompileProject $global:MY_CXX_COMPILER_NAME $BUILD_DIR/mockcpp
-CompileProject $global:MY_CXX_COMPILER_NAME $BUILD_DIR/mockcpp_testngpp
-CompileProject $global:MY_CXX_COMPILER_NAME $BUILD_DIR/mockcpp_tests
+#CompileProject $global:MY_CXX_COMPILER_NAME $BUILD_DIR/mockcpp
+#CompileProject $global:MY_CXX_COMPILER_NAME $BUILD_DIR/mockcpp_testngpp
+#CompileProject $global:MY_CXX_COMPILER_NAME $BUILD_DIR/mockcpp_tests
 
 RunTests $BUILD_DIR mockcpp_tests $global:MAKE_BUILD_TYPE mockcpp_testngpp

@@ -94,7 +94,7 @@ IF(MSVC)
     ADD_DEFINITIONS(
       /source-charset:utf-8 /execution-charset:utf-8 )
 ELSE(MSVC)
-    ADD_DEFINITIONS(-std=c++11)
+    ADD_DEFINITIONS(-std=c++14)
 ENDIF(MSVC)
 
 IF(UNIX OR MINGW)

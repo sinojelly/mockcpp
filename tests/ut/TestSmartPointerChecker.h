@@ -24,14 +24,42 @@
 USING_TESTNGPP_NS
 USING_MOCKCPP_NS
 
+class Obj {
+public:
+    int val;
+
+    bool operator==(const Obj& other) {
+        //return val == other.val;
+        return this == &other;
+    }
+};
+
 struct Interface {
-    virtual void func1(std::unique_ptr<int> a) = 0;
+    virtual void func1(std::unique_ptr<int> a) {
+        std::cout << "when call func : " << a.get() << std::endl;
+    }
+    virtual void func2(Obj b) {
+        std::cout << "when call func : " << b.val << std::endl;
+    }
     virtual ~Interface(){}
 };
 
+
 FIXTURE(TestSmartPointerChecker) 
 {
-
+#if 0
+    TEST(Test check normal Obj)
+    {
+        Obj b;
+        b.val = 100;
+        MockObject<Interface> mocker;
+        MOCK_METHOD(mocker, func2)
+            .expects(once())
+            .with(eq(b));
+        mocker->func2(b);
+        mocker.verify();
+    }
+#endif
     TEST(Can check unique_ptr parameter) 
     {
         std::unique_ptr<int> intPtr = std::make_unique<int>(10);
@@ -39,7 +67,12 @@ FIXTURE(TestSmartPointerChecker)
         MOCK_METHOD(mocker, func1)
             .expects(once())
             .with(eq<int, std::default_delete<int>>(intPtr.get()));
+        int* origin = intPtr.get();
+        std::cout << "in eq : " << origin << std::endl;
+        std::cout << "unique_ptr addr : " << &intPtr << std::endl;
+        //(new Interface())->func1(std::move(intPtr));
         mocker->func1(std::move(intPtr));
         mocker.verify();
     }
+
 };
