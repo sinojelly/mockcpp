@@ -26,6 +26,8 @@ USING_MOCKCPP_NS
 
 class Obj {
 public:
+    Obj(int v) : val(v) {}
+
     int val;
 
     bool operator==(const Obj& other) {
@@ -34,11 +36,15 @@ public:
 };
 
 struct Interface {
-    virtual void func2(Obj b) {
+    virtual void func1(Obj b) {
     }
-    virtual void func1(std::unique_ptr<int> a) {
+    virtual void func2(std::unique_ptr<int> a) {
     }
     virtual void func3(std::shared_ptr<int> c) {
+    }
+    virtual void func4(std::unique_ptr<Obj> a) {
+    }
+    virtual void func5(std::shared_ptr<Obj> c) {
     }
     virtual ~Interface(){}
 };
@@ -48,13 +54,12 @@ FIXTURE(TestSmartPointerChecker)
 {
     TEST(Can check normal Obj)
     {
-        Obj b;
-        b.val = 100;
+        Obj b(100);
         MockObject<Interface> mocker;
-        MOCK_METHOD(mocker, func2)
+        MOCK_METHOD(mocker, func1)
             .expects(once())
             .with(eq(b));
-        mocker->func2(b);
+        mocker->func1(b);
         mocker.verify();
     }
 
@@ -62,14 +67,14 @@ FIXTURE(TestSmartPointerChecker)
     {
         std::unique_ptr<int> intPtr = std::make_unique<int>(10);
         MockObject<Interface> mocker;
-        MOCK_METHOD(mocker, func1)
+        MOCK_METHOD(mocker, func2)
             .expects(once())
-            .with(eq<int>(intPtr.get()));
-        mocker->func1(std::move(intPtr));
+            .with(eq<int>(intPtr.get())); // Must use eq<int> or eq<int, std::default_delete<int>>
+        mocker->func2(std::move(intPtr));
         mocker.verify();
     }
 
-    TEST(Can check shared_ptr parameter, shared_ptr just looks like a normal object)
+    TEST(Can check shared_ptr<int> parameter, shared_ptr just looks like a normal object)
     {
         std::shared_ptr<int> intPtr = std::make_shared<int>(20);
         MockObject<Interface> mocker;
@@ -77,6 +82,28 @@ FIXTURE(TestSmartPointerChecker)
             .expects(once())
             .with(eq(intPtr));
         mocker->func3(intPtr);
+        mocker.verify();
+    }
+
+    TEST(Can check unique_ptr<Obj> parameter)
+    {
+        std::unique_ptr<Obj> ptr = std::make_unique<Obj>(200);
+        MockObject<Interface> mocker;
+        MOCK_METHOD(mocker, func4)
+            .expects(once())
+            .with(eq<Obj>(ptr.get())); // Must use eq<Obj> or eq<Obj, std::default_delete<Obj>>
+        mocker->func4(std::move(ptr));
+        mocker.verify();
+    }
+
+    TEST(Can check shared_ptr<Obj> parameter, shared_ptr just looks like a normal object)
+    {
+        std::shared_ptr<Obj> ptr = std::make_shared<Obj>(300);
+        MockObject<Interface> mocker;
+        MOCK_METHOD(mocker, func5)
+            .expects(once())
+            .with(eq(ptr));
+        mocker->func5(ptr);
         mocker.verify();
     }
 
