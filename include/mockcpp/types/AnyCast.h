@@ -182,12 +182,7 @@ ValueType& __unique_ptr_any_cast(AnyBase* operand)
 {
     typedef typename TypeTraits<ValueType>::Type nonref;
     typedef Holder<nonref> holder;
-#if 0
-    if (operand->type() != typeid(ValueType))
-    {
-        return 0;
-    }
-#endif
+
     holder* p = dynamic_cast<holder*>(operand->getContent());
     return const_cast<ValueType&>(p->getValue());
 }
@@ -197,12 +192,7 @@ ValueType& __unique_ptr_any_cast(const AnyBase* operand)
 {
     typedef typename TypeTraits<ValueType>::Type nonref;
     typedef Holder<nonref> holder;
-#if 0
-    if (operand->type() != typeid(ValueType))
-    {
-        return 0;
-    }
-#endif
+
     holder* p = dynamic_cast<holder*>(operand->getContent());
     return const_cast<ValueType&>(p->getValue());
 }

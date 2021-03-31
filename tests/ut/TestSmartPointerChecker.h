@@ -29,8 +29,7 @@ public:
     int val;
 
     bool operator==(const Obj& other) {
-        //return val == other.val;
-        return this == &other;
+        return val == other.val;
     }
 };
 
@@ -41,14 +40,16 @@ struct Interface {
     virtual void func2(Obj b) {
         std::cout << "when call func : " << b.val << std::endl;
     }
+    virtual void func3(std::shared_ptr<int> c) {
+        std::cout << "when call func : " << c.get() << std::endl;
+    }
     virtual ~Interface(){}
 };
 
 
 FIXTURE(TestSmartPointerChecker) 
 {
-#if 0
-    TEST(Test check normal Obj)
+    TEST(Can check normal Obj)
     {
         Obj b;
         b.val = 100;
@@ -59,7 +60,7 @@ FIXTURE(TestSmartPointerChecker)
         mocker->func2(b);
         mocker.verify();
     }
-#endif
+
     TEST(Can check unique_ptr parameter) 
     {
         std::unique_ptr<int> intPtr = std::make_unique<int>(10);
@@ -67,11 +68,18 @@ FIXTURE(TestSmartPointerChecker)
         MOCK_METHOD(mocker, func1)
             .expects(once())
             .with(eq<int, std::default_delete<int>>(intPtr.get()));
-        int* origin = intPtr.get();
-        std::cout << "in eq : " << origin << std::endl;
-        std::cout << "unique_ptr addr : " << &intPtr << std::endl;
-        //(new Interface())->func1(std::move(intPtr));
         mocker->func1(std::move(intPtr));
+        mocker.verify();
+    }
+
+    TEST(Can check shared_ptr parameter, shared_ptr just looks like a normal object)
+    {
+        std::shared_ptr<int> intPtr = std::make_shared<int>(20);
+        MockObject<Interface> mocker;
+        MOCK_METHOD(mocker, func3)
+            .expects(once())
+            .with(eq(intPtr));
+        mocker->func3(intPtr);
         mocker.verify();
     }
 
