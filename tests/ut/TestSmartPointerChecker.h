@@ -65,7 +65,7 @@ FIXTURE(TestSmartPointerChecker)
 
     TEST(Can check unique_ptr<int> parameter) 
     {
-        std::unique_ptr<int> intPtr = std::make_unique<int>(10);
+        auto intPtr = std::make_unique<int>(10);
         MockObject<Interface> mocker;
         MOCK_METHOD(mocker, func2)
             .expects(once())
@@ -76,7 +76,7 @@ FIXTURE(TestSmartPointerChecker)
 
     TEST(Can check shared_ptr<int> parameter, shared_ptr just looks like a normal object)
     {
-        std::shared_ptr<int> intPtr = std::make_shared<int>(20);
+        auto intPtr = std::make_shared<int>(20);
         MockObject<Interface> mocker;
         MOCK_METHOD(mocker, func3)
             .expects(once())
@@ -87,7 +87,7 @@ FIXTURE(TestSmartPointerChecker)
 
     TEST(Can check unique_ptr<Obj> parameter)
     {
-        std::unique_ptr<Obj> ptr = std::make_unique<Obj>(200);
+        auto ptr = std::make_unique<Obj>(200);
         MockObject<Interface> mocker;
         MOCK_METHOD(mocker, func4)
             .expects(once())
@@ -98,7 +98,7 @@ FIXTURE(TestSmartPointerChecker)
 
     TEST(Can check shared_ptr<Obj> parameter, shared_ptr just looks like a normal object)
     {
-        std::shared_ptr<Obj> ptr = std::make_shared<Obj>(300);
+        auto ptr = std::make_shared<Obj>(300);
         MockObject<Interface> mocker;
         MOCK_METHOD(mocker, func5)
             .expects(once())
