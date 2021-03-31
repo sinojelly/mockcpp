@@ -35,6 +35,8 @@
 #include <mockcpp/types/Any.h>
 #include <mockcpp/ProcStub.h>
 
+#include <memory>
+
 MOCKCPP_NS_START
 
 struct Matcher;
@@ -52,7 +54,7 @@ Constraint* eq(const T& val)
 	return new IsEqual<T>(val);
 }
 
-template <typename V, typename D>
+template <typename V, typename D = std::default_delete<V>>
 Constraint* eq(const V* val)
 {
 	return new IsEqual<std::unique_ptr<V, D> >(val);

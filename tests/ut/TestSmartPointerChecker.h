@@ -34,14 +34,11 @@ public:
 };
 
 struct Interface {
-    virtual void func1(std::unique_ptr<int> a) {
-        std::cout << "when call func : " << a.get() << std::endl;
-    }
     virtual void func2(Obj b) {
-        std::cout << "when call func : " << b.val << std::endl;
+    }
+    virtual void func1(std::unique_ptr<int> a) {
     }
     virtual void func3(std::shared_ptr<int> c) {
-        std::cout << "when call func : " << c.get() << std::endl;
     }
     virtual ~Interface(){}
 };
@@ -61,13 +58,13 @@ FIXTURE(TestSmartPointerChecker)
         mocker.verify();
     }
 
-    TEST(Can check unique_ptr parameter) 
+    TEST(Can check unique_ptr<int> parameter) 
     {
         std::unique_ptr<int> intPtr = std::make_unique<int>(10);
         MockObject<Interface> mocker;
         MOCK_METHOD(mocker, func1)
             .expects(once())
-            .with(eq<int, std::default_delete<int>>(intPtr.get()));
+            .with(eq<int>(intPtr.get()));
         mocker->func1(std::move(intPtr));
         mocker.verify();
     }
