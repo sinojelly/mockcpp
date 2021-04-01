@@ -64,14 +64,6 @@ IF(WIN32)
    ARCHIVE DESTINATION lib)
 ELSE(WIN32)  
   INSTALL(
-   TARGETS testngpp
+   TARGETS testngpp-static
    LIBRARY DESTINATION lib)
 ENDIF(WIN32)
-
-IF(MSVC)
-  INSTALL(
-   FILES ${CMAKE_BINARY_DIR}/src/Debug/testngpp.pdb
-   DESTINATION lib)
-ENDIF(MSVC)   
-
-
