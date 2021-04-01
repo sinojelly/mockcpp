@@ -11,6 +11,10 @@ function CompileProject() {
   make -C $2
 }
 
+function CompileProjectInstall() {
+  make -C $2 install
+}
+
 function RunTests() {
 	cd $1/$2/ut/$3
 	BUILD_TYPE_BACK="."

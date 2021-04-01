@@ -7,6 +7,7 @@
 # fast fail
 set -e
 
+# Set the install path, should be absolute path
 INSTALL_PATH=~/test_tools/mockcpp_install
 
 # Set the xxunit test framework name

@@ -1,25 +1,33 @@
 #!/bin/bash
 # build and install
 
-# You can change this testngpp install dir by yourself, it must be an absolute path.
-install_dir=~/test_tools/testngpp_install
+# $1  --- compiler name  (GNU)
+# $2  --- [optional] compiler major version  (The first part of cxx compiler version)
 
+# fast fail
+set -e
 
-function build() {
-	mkdir -p $1 2>/dev/null
-	cd $1
-	cmake -DCMAKE_INSTALL_PREFIX=$install_dir $2
-	make install
-}
+# Set the install path, should be absolute path
+INSTALL_PATH=~/test_tools/testngpp_install
 
-build ../../../build/testngpp_to_install ../../tests/3rdparty/testngpp
+. "../../../tools/build_functions.sh"
 
-cd ../../tests/3rdparty/testngpp
+MY_OS_NAME=""
+MY_CXX_COMPILER_NAME=""
+MY_CXX_COMPILER_MAJOR_VERSION=""
+CMAKE_COMPILER_PARAM=""
+MAKE_BUILD_TYPE=""
 
-#mv -f -u $install_dir/3rdparty $install_dir/..
+AUTO_COMPILER="GNU"  #  $1
+AUTO_CXX_VER=`gcc -dumpversion | awk -F.  '{print $1}'`  # $2
+InitEnviroment $AUTO_COMPILER $AUTO_CXX_VER
 
-#cd scripts
-#python setup_linux.py build
-#cp build/exe.linux-i686-2.6/* $install_dir/bin
+BUILD_DIR="build_$MY_CXX_COMPILER_NAME"
 
-#cd ..
+OS_COMPILER="$MY_OS_NAME/$MY_CXX_COMPILER_NAME/$MY_CXX_COMPILER_MAJOR_VERSION"
+
+echo "OS_COMPILER in Shell : $OS_COMPILER"
+
+cmake  -S . -B $BUILD_DIR/testngpp-install -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH
+
+CompileProjectInstall $MY_CXX_COMPILER_NAME $BUILD_DIR/testngpp-install
