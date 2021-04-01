@@ -4,8 +4,20 @@
 # Build mockcpp and it's tests, and at last run all tests.
 
 # $args[0]  --- compiler index in table $SUPPORTED_COMPILER
-# $args[1]  --- testing tool (testngpp or gtest or catch2 etc.)
-# $args[2]  --- install dir, it's an absolute path
+
+# Set the install path, should be absolute path
+$INSTALL_PATH="D:\Develop\test-tools\mockcpp-install"
+
+# Set the xxunit test framework name, default testngpp
+$XUNIT_NAME="testngpp"
+#$XUNIT_NAME="gtest"
+#$XUNIT_NAME="catch2"
+
+# testngpp: not need $XUNIT_HOME
+# gtest: there is a $XUNIT_HOME/include/gtest/gtest.h
+# catch2: there is a $XUNIT_HOME/catch2/catch_test_macros.hpp
+#$XUNIT_HOME="D:/Develop/work/googletest/googletest"
+#$XUNIT_HOME="D:/Develop/work/Catch2/src"
 
 . "$PSScriptRoot\tools\build_functions.ps1"
 
@@ -31,18 +43,6 @@ if (-not $args[0]) {
     $DEFAULT_COMPILER_INDEX=$args[0] 
 }
 
-if (-not $args[1]) {
-    $DEFAULT_TESTING_TOOL="testngpp"   # default choose testngpp
-} else {
-    $DEFAULT_TESTING_TOOL=$args[1] 
-}
-
-if (-not $args[2]) {
-    $INSTALL_PATH="D:\Develop\test-tools\mockcpp-install"   # should be absolute path
-} else {
-    $INSTALL_PATH=$args[2] 
-}
-
 if (!(test-path $INSTALL_PATH)) { mkdir $INSTALL_PATH }
 
 $global:MY_OS_NAME=$null
@@ -59,5 +59,10 @@ $OS_COMPILER="$global:MY_OS_NAME\$global:MY_CXX_COMPILER_NAME\$global:MY_CXX_COM
 
 echo "OS_COMPILER in Powershell : $OS_COMPILER"
 
-Invoke-Expression "cmake $global:CMAKE_COMPILER_PARAM -S . -B $BUILD_DIR/mockcpp-install -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH"
-CompileProjectInstall $global:MY_CXX_COMPILER_NAME $BUILD_DIR/mockcpp-install
+$XUNIT_DEFINE=""
+if ($XUNIT_NAME -ne "testngpp") {
+    $XUNIT_DEFINE="-DMOCKCPP_XUNIT=$XUNIT_NAME -DMOCKCPP_XUNIT_HOME=$XUNIT_HOME"
+}
+
+Invoke-Expression "cmake $global:CMAKE_COMPILER_PARAM -S . -B $BUILD_DIR/mockcpp-install4$XUNIT_NAME -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH $XUNIT_DEFINE"
+CompileProjectInstall $global:MY_CXX_COMPILER_NAME $BUILD_DIR/mockcpp-install4$XUNIT_NAME
