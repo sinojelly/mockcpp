@@ -335,9 +335,3 @@ ADD_DEPENDENCIES(mockcpp vtbl_related_headers arg_related_headers)
 INSTALL(
    TARGETS mockcpp
    ARCHIVE DESTINATION lib)
-
-IF(MSVC)   
-INSTALL(
-   FILES ${CMAKE_BINARY_DIR}/src/Debug/mockcpp.pdb
-   DESTINATION lib)
-ENDIF(MSVC)

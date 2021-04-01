@@ -27,9 +27,23 @@ function CompileProject {
 	if ($compiler_name -eq "MSVC") {
 		cd $project_dir
         Invoke-Expression "msbuild ALL_BUILD.vcxproj"
-        cd ..\..  # Assuming two level directory
+        cd ..\..  # Assuming two levels directory
 	} elseif ($compiler_name -eq "GNU") {
 		Invoke-Expression "make -C $project_dir"
+	}
+}
+
+function CompileProjectInstall {
+	param (
+		$compiler_name,
+		$project_dir
+	)
+	if ($compiler_name -eq "MSVC") {
+		cd $project_dir
+        Invoke-Expression "msbuild INSTALL.vcxproj"
+        cd ..\..  # Assuming two levels directory
+	} elseif ($compiler_name -eq "GNU") {
+		Invoke-Expression "make -C $project_dir install"
 	}
 }
 
