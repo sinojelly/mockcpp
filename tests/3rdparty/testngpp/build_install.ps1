@@ -4,7 +4,9 @@
 # Build mockcpp and it's tests, and at last run all tests.
 
 # $args[0]  --- compiler index in table $SUPPORTED_COMPILER
-# $args[2]  --- install dir, it's an absolute path
+
+# Set the install path, should be absolute path
+$INSTALL_PATH="D:\Develop\test-tools\testngpp-install"
 
 . "$PSScriptRoot\..\..\..\tools\build_functions.ps1"
 
@@ -28,12 +30,6 @@ if (-not $args[0]) {
     $DEFAULT_COMPILER_INDEX=2   # default choose vs2019
 } else {
     $DEFAULT_COMPILER_INDEX=$args[0] 
-}
-
-if (-not $args[1]) {
-    $INSTALL_PATH="D:\Develop\test-tools\testngpp-install"   # should be absolute path
-} else {
-    $INSTALL_PATH=$args[1] 
 }
 
 if (!(test-path $INSTALL_PATH)) { mkdir $INSTALL_PATH }
