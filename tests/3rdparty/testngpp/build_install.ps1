@@ -31,12 +31,12 @@ if (-not $args[0]) {
 }
 
 if (-not $args[1]) {
-    $DEFAULT_INSTALL_PATH="D:\Develop\test-tools\testngpp-install"   # should be absolute path
+    $INSTALL_PATH="D:\Develop\test-tools\testngpp-install"   # should be absolute path
 } else {
-    $DEFAULT_INSTALL_PATH=$args[1] 
+    $INSTALL_PATH=$args[1] 
 }
 
-if (!(test-path $DEFAULT_INSTALL_PATH)) { mkdir $DEFAULT_INSTALL_PATH }
+if (!(test-path $INSTALL_PATH)) { mkdir $INSTALL_PATH }
 
 $global:MY_OS_NAME=$null
 $global:MY_CXX_COMPILER_NAME=$null
@@ -52,5 +52,5 @@ $OS_COMPILER="$global:MY_OS_NAME\$global:MY_CXX_COMPILER_NAME\$global:MY_CXX_COM
 
 echo "OS_COMPILER in Powershell : $OS_COMPILER"
 
-Invoke-Expression "cmake $global:CMAKE_COMPILER_PARAM -S . -B $BUILD_DIR/testngpp-install -DCMAKE_INSTALL_PREFIX=$DEFAULT_INSTALL_PATH"
+Invoke-Expression "cmake $global:CMAKE_COMPILER_PARAM -S . -B $BUILD_DIR/testngpp-install -DCMAKE_INSTALL_PREFIX=$INSTALL_PATH"
 CompileProjectInstall $global:MY_CXX_COMPILER_NAME $BUILD_DIR/testngpp-install
