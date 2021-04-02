@@ -1,3 +1,17 @@
+# Use the following content to make a CMakeLists.txt to get compiler name and major_ver, run : cmake -S . -B build
+# CMAKE_MINIMUM_REQUIRED(VERSION 3.12...3.19)
+# PROJECT(cmake-test)
+# MESSAGE("CMAKE_CXX_COMPILER_ID - compiler name:")
+# MESSAGE(${CMAKE_CXX_COMPILER_ID})
+# MESSAGE("CMAKE_CXX_COMPILER_VERSION - compiler major version:")
+# MESSAGE(${CMAKE_CXX_COMPILER_VERSION})
+#
+# cmake_param also can be: "-G `"Visual Studio 16 2019`" -A Win32"  etc.
+$global:SUPPORTED_COMPILER = @(
+           @{ name="GNU"; major_ver="7"; cmake_param="-G `"MinGW Makefiles`""},  # 0 --- MinGW GNU 7.x
+           @{ name="GNU"; major_ver="8"; cmake_param="-G `"MinGW Makefiles`""},  # 1 --- MinGW GNU 8.x
+           @{ name="MSVC"; major_ver="19"; cmake_param="-G `"Visual Studio 16 2019`"" }  # 2 --- Visual Studio 2019
+          )
 
 function InitEnviroment {
 	param (

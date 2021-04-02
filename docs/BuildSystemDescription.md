@@ -54,7 +54,11 @@ cd path/to/mockcpp
 ./build.sh GNU 8
 ```
 ##### Build and install
-TODO: Script need to be updated.
+If you use GNU 8.x, you can modify the INSTALL_PATH XUNIT_NAME XUNIT_HOME in the script and then use these commands:
+```
+cd path/to/mockcpp
+./build_install.sh GNU 8
+```
 
 #### testngpp
 ##### Build and run tests
@@ -64,7 +68,11 @@ cd path/to/mockcpp/tests/3rdparty/testngpp
 ./build.sh GNU 8
 ```
 ##### Build and install
-TODO: Script need to be updated.
+If you use GNU 8.x, you can modify the INSTALL_PATH in the script and then use these commands:
+```
+cd path/to/mockcpp/tests/3rdparty/testngpp
+./build_install.sh GNU 8
+```
 
 ### Windows
 #### mockcpp
@@ -74,30 +82,51 @@ If you use VS2019, you can use these commands:
 cd path/to/mockcpp
 .\build.ps1 2
 ```
-The parameter 2 is the index of $SUPPORTED_COMPILER in build.ps1:
+The parameter 2 is the index of $global:SUPPORTED_COMPILER in tools\build_functions.ps1:
 ``` powershell
-$SUPPORTED_COMPILER = @(
+# cmake_param also can be: "-G `"Visual Studio 16 2019`" -A Win32"  etc.
+$global:SUPPORTED_COMPILER = @(
            @{ name="GNU"; major_ver="7"; cmake_param="-G `"MinGW Makefiles`""},  # 0 --- MinGW GNU 7.x
            @{ name="GNU"; major_ver="8"; cmake_param="-G `"MinGW Makefiles`""},  # 1 --- MinGW GNU 8.x
            @{ name="MSVC"; major_ver="19"; cmake_param="-G `"Visual Studio 16 2019`"" }  # 2 --- Visual Studio 2019
           )
 ```
-You can update this $SUPPORTED_COMPILER table to support more compilers, you can also submit a pull request, thanks.
+You can update this $global:SUPPORTED_COMPILER table to support more compilers, you can also submit a pull request.
+
+In order to find the compiler name and major version, you can use the following content to make a CMakeLists.txt and run : cmake -S . -B build
+```
+CMAKE_MINIMUM_REQUIRED(VERSION 3.12...3.19)
+PROJECT(cmake-test)
+MESSAGE("CMAKE_CXX_COMPILER_ID - compiler name:")
+MESSAGE(${CMAKE_CXX_COMPILER_ID})
+MESSAGE("CMAKE_CXX_COMPILER_VERSION - compiler major version:")
+MESSAGE(${CMAKE_CXX_COMPILER_VERSION})
+```
 
 ##### Build and install
-TODO: Script need to be updated.
+If you use VS2019, you can modify the INSTALL_PATH XUNIT_NAME XUNIT_HOME in the script and then use these commands:
+```
+cd path/to/mockcpp
+.\build_install.ps1 2
+```
+The parameter 2 is the index of $global:SUPPORTED_COMPILER in tools\build_functions.ps1, It's the same as **Build and run tests**.
 
 #### testngpp
 ##### Build and run tests
 If you use VS2019, you can use these commands:
 ```
-cd path/to/mockcpp
+cd path/to/mockcpp/tests/3rdparty/testngpp
 .\build.ps1 2
 ```
-The parameter 2 is the index of $SUPPORTED_COMPILER in build.ps1.
+The parameter 2 is the index of $global:SUPPORTED_COMPILER in tools\build_functions.ps1.
 
 ##### Build and install
-TODO: Script need to be updated.
+If you use VS2019, you can modify the INSTALL_PATH in the script use these commands:
+```
+cd path/to/mockcpp/tests/3rdparty/testngpp
+.\build_install.ps1 2
+```
+The parameter 2 is the index of $global:SUPPORTED_COMPILER in tools\build_functions.ps1.
 
 
 ## User project build suggestion

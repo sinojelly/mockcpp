@@ -21,6 +21,7 @@
 #include <mockcpp/types/AnyCast.h>
 #include <mockcpp/Constraint.h>
 #include <mockcpp/Formatter.h>
+#include <memory>
 
 MOCKCPP_NS_START
 
