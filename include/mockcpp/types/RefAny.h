@@ -18,7 +18,6 @@
 #ifndef __MOCKPP_REF_ANY_H
 #define __MOCKPP_REF_ANY_H
 
-#include <memory>
 #include <mockcpp/types/AnyBase.h>
 #include <mockcpp/types/RefHolder.h>
 
