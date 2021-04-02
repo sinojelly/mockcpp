@@ -27,8 +27,13 @@ function RunTests() {
 function RunTestsFromPrebuiltTools() {
     cd $1/$2/$3
     BUILD_TYPE_BACK="."
-    LISTENER_PATH="../../$BUILD_TYPE_BACK/tests/testngpp/binary/$4/testngpp/listener"
-    RUNNER_PATH="../../$BUILD_TYPE_BACK/tests/testngpp/binary/$4/testngpp/bin"
+	if [ -z "$5" ]; then # not specify the prebuilt tools
+		TESTNGPP_PATH="../../$BUILD_TYPE_BACK/tests/testngpp"      # default choose the tools in project
+	else
+		TESTNGPP_PATH=$5
+	fi
+    LISTENER_PATH="$TESTNGPP_PATH/binary/$4/testngpp/listener"
+    RUNNER_PATH="$TESTNGPP_PATH/binary/$4/testngpp/bin"
     $RUNNER_PATH/testngpp-runner $(ls *.so) -L"$LISTENER_PATH" -l"testngppstdoutlistener -c -v" -m
     cd ../../$BUILD_TYPE_BACK
 }

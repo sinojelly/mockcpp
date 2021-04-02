@@ -48,30 +48,48 @@ to check whether it is working properly.
 ### Linux
 #### mockcpp
 ##### Build and run tests
-If you use GNU 8.x, you can use these commands:
+If you use GNU compiler, you can use these commands because GNU is the default compiler:
 ```
 cd path/to/mockcpp
-./build.sh GNU 8
+./build.sh
 ```
+If you use other compilers, you can use these commands
+```
+./build.sh COMPILER_NAME COMPILER_MAJOR_VER
+```
+The parameter should comes from CMAKE_CXX_COMPILER_ID and CMAKE_CXX_COMPILER_VERSION.
+
 ##### Build and install
-If you use GNU 8.x, you can modify the INSTALL_PATH XUNIT_NAME XUNIT_HOME in the script and then use these commands:
+If you use GNU, you can modify the INSTALL_PATH XUNIT_NAME XUNIT_HOME in the script and then use these commands:
 ```
 cd path/to/mockcpp
-./build_install.sh GNU 8
+./build_install.sh
+```
+If you use other compilers, you can use these commands
+```
+./build_install.sh COMPILER_NAME COMPILER_MAJOR_VER
 ```
 
 #### testngpp
 ##### Build and run tests
-If you use GNU 8.x, you can use these commands:
+If you use GNU, you can use these commands:
 ```
 cd path/to/mockcpp/tests/3rdparty/testngpp
-./build.sh GNU 8
+./build.sh
+```
+If you use other compilers, you can use these commands
+```
+./build.sh COMPILER_NAME COMPILER_MAJOR_VER
 ```
 ##### Build and install
-If you use GNU 8.x, you can modify the INSTALL_PATH in the script and then use these commands:
+If you use GNU, you can modify the INSTALL_PATH in the script and then use these commands:
 ```
 cd path/to/mockcpp/tests/3rdparty/testngpp
-./build_install.sh GNU 8
+./build_install.sh
+```
+If you use other compilers, you can use these commands
+```
+./build_install.sh COMPILER_NAME COMPILER_MAJOR_VER
 ```
 
 ### Windows
@@ -144,8 +162,16 @@ https://gitee.com/sinojelly/testngpp-mockcpp-sample
 You can build_install mockcpp testngpp and update the files in testngpp-mockcpp-sample/tests/testngpp.
 Be sure to follow the OS_NAME/COMPILER_NAME/COMPILER_MAJOR_VERSION directory structure convention.
 
+Important: Both mockcpp and testngpp are build_install to the testngpp-mockcpp-sample/tests/testngpp dir. 
+
 #### 3) Use the build.sh or build.ps1 to build.
 The usage is the same as build mockcpp or testngpp.
+
+#### 4) You can specify the USER_TESTNGPP_PATH to use your local prebuilt tools.
+This is usefull if your compiler is different from others in your team.
+
+On Linux: export USER_TESTNGPP_PATH=/home/sinojelly/test_tools/testngpp_install
+On Windows: $env:USER_TESTNGPP_PATH="D:\Develop\test-tools\testngpp-install"
 
 ### Method 2: Use mockcpp testngpp source code
 

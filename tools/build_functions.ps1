@@ -87,7 +87,8 @@ function RunTestsFromPrebuiltTools {
         $build_dir,
 		$tested_project,
 		$build_type,
-        $os_compiler
+        $os_compiler,
+		$prebuilt_tools
     )
     cd $build_dir/$tested_project/$build_type
     if ($build_type -eq ".") {
@@ -95,8 +96,13 @@ function RunTestsFromPrebuiltTools {
 	} else {
 		$BUILD_TYPE_BACK=".."
 	}
-    $LISTENER_PATH="..\..\$BUILD_TYPE_BACK\tests\testngpp\binary\$os_compiler\testngpp\listener"
-    $RUNNER_PATH="..\..\$BUILD_TYPE_BACK\tests\testngpp\binary\$os_compiler\testngpp\bin"
+	if (-not $prebuilt_tools) { # not specify the prebuilt tools
+		$TESTNGPP_PATH="..\..\$BUILD_TYPE_BACK\tests\testngpp"      # default choose the tools in project
+	} else {
+		$TESTNGPP_PATH=$prebuilt_tools
+	}
+    $LISTENER_PATH="$TESTNGPP_PATH\binary\$os_compiler\testngpp\listener"
+    $RUNNER_PATH="$TESTNGPP_PATH\binary\$os_compiler\testngpp\bin"
     $ALL_DLL=(ls *.dll -name)-replace ".dll"
     Invoke-Expression "$RUNNER_PATH\testngpp-runner.exe  $ALL_DLL -L`"$LISTENER_PATH`" -l`"testngppstdoutlistener -c -v`" -m"
     cd ..\..\$BUILD_TYPE_BACK
