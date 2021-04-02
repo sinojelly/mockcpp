@@ -131,15 +131,23 @@ The parameter 2 is the index of $global:SUPPORTED_COMPILER in tools\build_functi
 
 ## User project build suggestion
 
+### Method 1: Use mockcpp testngpp prebuilt binaries
+
 In order to develop faster, we use the prebuilt binary files of the testing tools, avoid compiling the testing tools each time while we compiling our product project.
 
 But because of ABI compatible issues of different compiler versions, maybe we encounter some runtime error. So I suggest you to replace the prebuilt binary files with yours that was built in the same enviroment as your product project. Be sure to follow the OS_NAME/COMPILER_NAME/COMPILER_MAJOR_VERSION directory structure convention.
 
-### 1. Refer the sample project
+#### 1) Refer the sample project
 https://gitee.com/sinojelly/testngpp-mockcpp-sample
 
-### 2. Replace the prebuilt binary files with yours.
+#### 2) Replace the prebuilt binary files with yours.
+You can build_install mockcpp testngpp and update the files in testngpp-mockcpp-sample/tests/testngpp.
 Be sure to follow the OS_NAME/COMPILER_NAME/COMPILER_MAJOR_VERSION directory structure convention.
 
-### 3. Use the build.sh or build.ps1 to build.
+#### 3) Use the build.sh or build.ps1 to build.
 The usage is the same as build mockcpp or testngpp.
+
+### Method 2: Use mockcpp testngpp source code
+
+You can also use mockcpp testngpp source code in your project, but it may take some time to compile. The sample project use mockcpp testngpp source code is here:
+https://gitee.com/sinojelly/testngpp-mockcpp-sample-src
