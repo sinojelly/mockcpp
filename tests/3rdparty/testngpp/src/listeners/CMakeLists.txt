@@ -1,3 +1,4 @@
+INCLUDE(${PROJECT_SOURCE_DIR}/../../../tools/testngpp.cmake)
 
 ADD_DEFINITIONS(
     -DPACKAGE_NAME=${PACKAGE_NAME}
@@ -59,11 +60,11 @@ TARGET_LINK_LIBRARIES(testngppxmllistener ${TESTNGPP_LIBRARY})
 
 INSTALL(
    TARGETS testngppstdoutlistener testngppxmllistener
-   LIBRARY DESTINATION testngpp/listener)
+   LIBRARY DESTINATION binary/${TESTNGPP_OS_COMPILER}/testngpp/listener)
 
 IF(MSVC)
   INSTALL(
    FILES ${CMAKE_BINARY_DIR}/src/listeners/Debug/testngppstdoutlistener.pdb ${CMAKE_BINARY_DIR}/src/listeners/Debug/testngppxmllistener.pdb
-   DESTINATION testngpp/listener)
+   DESTINATION binary/${TESTNGPP_OS_COMPILER}/testngpp/listener)
 ENDIF(MSVC)   
 

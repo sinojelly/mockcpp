@@ -1,3 +1,4 @@
+INCLUDE(${PROJECT_SOURCE_DIR}/../../../tools/testngpp.cmake)
 
 IF(MSVC)
   ADD_DEFINITIONS( -D_CRT_SECURE_NO_WARNINGS )
@@ -201,7 +202,7 @@ IF(MSVC OR MINGW)
    TARGET_LINK_LIBRARIES(testngpp-win32-testcase-runner ${TESTNGPP_LIBRARY} testngpp-runner-lib)
 
    INSTALL(TARGETS testngpp-win32-testcase-runner
-      RUNTIME DESTINATION bin)
+      RUNTIME DESTINATION binary/${TESTNGPP_OS_COMPILER}/testngpp/bin)
 ENDIF(MSVC OR MINGW)
 
 # -Wl,--export-dynamic
@@ -219,10 +220,10 @@ ENDIF(TESTNGPP_USE_DLOPEN)
 
 INSTALL(
    TARGETS testngpp-runner
-   RUNTIME DESTINATION bin)
+   RUNTIME DESTINATION binary/${TESTNGPP_OS_COMPILER}/testngpp/bin)
 
 IF(MSVC)
   INSTALL(
    FILES ${CMAKE_BINARY_DIR}/src/runner/Debug/testngpp-runner.pdb ${CMAKE_BINARY_DIR}/src/runner/Debug/testngpp-win32-testcase-runner.pdb
-   DESTINATION bin)
+   DESTINATION binary/${TESTNGPP_OS_COMPILER}/testngpp/bin)
 ENDIF(MSVC)   

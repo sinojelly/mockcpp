@@ -1,4 +1,6 @@
 
+INCLUDE(${PROJECT_SOURCE_DIR}/tools/testngpp.cmake)
+
 find_package (Python3 COMPONENTS Interpreter)
 
 IF(Python3_FOUND)
@@ -334,4 +336,4 @@ ADD_DEPENDENCIES(mockcpp vtbl_related_headers arg_related_headers)
 
 INSTALL(
    TARGETS mockcpp
-   ARCHIVE DESTINATION lib)
+   ARCHIVE DESTINATION binary/${TESTNGPP_OS_COMPILER}/mockcpp/lib)
