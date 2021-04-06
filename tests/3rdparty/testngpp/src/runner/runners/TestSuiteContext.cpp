@@ -1,6 +1,11 @@
 
 #include <vector>
-#include <filesystem>
+
+#ifdef _MSC_VER
+#include <direct.h>
+#else
+#include <unistd.h>
+#endif
 
 #include <testngpp/comm/ExceptionKeywords.h>
 
@@ -22,7 +27,6 @@
  
 TESTNGPP_NS_START
  
- namespace fs = std::filesystem;
 
 /////////////////////////////////////////////////////////////////
 namespace
@@ -144,13 +148,21 @@ unloadFixtures()
 }
 
 /////////////////////////////////////////////////////////////////
+std::string current_working_directory()
+{
+    char* cwd = getcwd( 0, 0 );
+    std::string working_directory(cwd);
+    std::free(cwd);
+    return working_directory;
+}
+
+/////////////////////////////////////////////////////////////////
 void
 TestSuiteContextImpl::
 load( const std::string& path )
 {
    StringList searchingPaths;
-   std::string workDir(fs::current_path().string());
-   searchingPaths.add(workDir); 
+   searchingPaths.add(current_working_directory());
 
    __TESTNGPP_TRY
    {

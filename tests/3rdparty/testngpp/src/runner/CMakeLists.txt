@@ -34,12 +34,6 @@ ADD_DEFINITIONS(
 )
 
 IF (MSVC)
-ADD_DEFINITIONS( /std:c++17 -D__STDC_LIMIT_MACROS )
-ELSE(MSVC)
-ADD_DEFINITIONS(-std=c++17)
-ENDIF(MSVC)
-
-IF (MSVC)
 SET(TESTNGPP_LIBRARY testngpp-static testngpp-utils)
 ELSE (MSVC)
 SET(TESTNGPP_LIBRARY testngpp-static testngpp-utils)
