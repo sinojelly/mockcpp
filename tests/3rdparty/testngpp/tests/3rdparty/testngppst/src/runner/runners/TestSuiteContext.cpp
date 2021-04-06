@@ -1,6 +1,12 @@
 
 #include <vector>
 
+#ifdef _MSC_VER
+#include <direct.h>
+#else
+#include <unistd.h>
+#endif
+
 #include <testngppst/comm/ExceptionKeywords.h>
 
 #include <testngppst/utils/InternalError.h>
@@ -141,11 +147,21 @@ unloadFixtures()
 }
 
 /////////////////////////////////////////////////////////////////
+std::string current_working_directory()
+{
+    char* cwd = getcwd( 0, 0 );
+    std::string working_directory(cwd);
+    std::free(cwd);
+    return working_directory;
+}
+
+/////////////////////////////////////////////////////////////////
 void
 TestSuiteContextImpl::
 load( const std::string& path )
 {
-   const StringList searchingPaths;
+   StringList searchingPaths;
+   searchingPaths.add(current_working_directory());
 
    __TESTNGPPST_TRY
    {
