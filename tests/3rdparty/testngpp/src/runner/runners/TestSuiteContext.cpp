@@ -1,5 +1,6 @@
 
 #include <vector>
+#include <filesystem>
 
 #include <testngpp/comm/ExceptionKeywords.h>
 
@@ -21,6 +22,8 @@
  
 TESTNGPP_NS_START
  
+ namespace fs = std::filesystem;
+
 /////////////////////////////////////////////////////////////////
 namespace
 {
@@ -145,7 +148,9 @@ void
 TestSuiteContextImpl::
 load( const std::string& path )
 {
-   const StringList searchingPaths;
+   StringList searchingPaths;
+   std::string workDir(fs::current_path().string());
+   searchingPaths.add(workDir); 
 
    __TESTNGPP_TRY
    {
