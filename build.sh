@@ -22,7 +22,6 @@ MAKE_BUILD_TYPE=""
 USER_CHOOSED_COMPILER=""
 USER_CHOOSED_COMPILER_MAJOR_VER=""
 
-
 # script usage 1: no parameter, use GNU compiler
 AUTO_COMPILER="GNU"
 AUTO_CXX_VER=`gcc -dumpversion | awk -F.  '{print $1}'`
