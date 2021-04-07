@@ -4,11 +4,9 @@
 ### Linux 
 Install these tools：
 ```
-sudo apt install git
-sudo apt install gcc
-sudo apt install g++
-sudo apt install cmake
+sudo apt install git gcc g++ make cmake python3
 ```
+Suggest to use cmake newer or equal to 3.18.
 ### Windows
 
 Install Visual Studio or MinGW, Cygwin haven't been tested.
