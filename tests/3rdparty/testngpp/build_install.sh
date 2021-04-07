@@ -8,7 +8,7 @@
 set -e
 
 # Set the install path, should be absolute path
-INSTALL_PATH=~/test_tools/testngpp_install
+INSTALL_PATH=~/test_tools/mockcpp_install
 
 . "../../../tools/build_functions.sh"
 
