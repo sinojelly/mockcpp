@@ -1,3 +1,13 @@
+CompilerArray=("1st item" 
+               "2nd item" 
+			   "3rd item" 
+			   "4th item")
+
+
+function ReadUserChoice() {
+	printf 'Word -> %s\n' "${CompilerArray[@]}"
+}
+
 
 function InitEnviroment() {
         MY_OS_NAME="Linux"

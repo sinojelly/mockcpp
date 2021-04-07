@@ -15,6 +15,9 @@ MY_CXX_COMPILER_MAJOR_VERSION=""
 CMAKE_COMPILER_PARAM=""
 MAKE_BUILD_TYPE=""
 
+ReadUserChoice
+exit 0
+
 AUTO_COMPILER="GNU"  #  $1
 AUTO_CXX_VER=`gcc -dumpversion | awk -F.  '{print $1}'`  # $2
 #InitEnviroment $AUTO_COMPILER $AUTO_CXX_VER
