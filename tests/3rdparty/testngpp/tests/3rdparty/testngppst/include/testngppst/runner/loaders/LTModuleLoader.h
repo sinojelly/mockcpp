@@ -4,7 +4,6 @@
 
 #include <testngppst/testngppst.h>
 #include <testngppst/runner/loaders/ModuleLoader.h>
-#include <testngppst/runner/SearchingPaths.h>
 
 
 TESTNGPPST_NS_START
@@ -13,12 +12,12 @@ struct LTModuleLoaderImpl;
 
 struct LTModuleLoader : public ModuleLoader
 {
-   LTModuleLoader(const SearchingPaths* searchingPaths);
+   LTModuleLoader();
 
    ~LTModuleLoader(); 
 
-	void load(const std::string& modulePath);
-
+   void load( const StringList& searchingPaths \
+            , const std::string& modulePath);
    void unload();
 
    void* findSymbol(const std::string& symbol);

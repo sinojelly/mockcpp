@@ -1,8 +1,8 @@
 
-#include <testngppst/runner/ModuleLoader.h>
-#include <testngppst/runner/ModuleLoaderFactory.h>
+#include <testngppst/runner/loaders/ModuleLoader.h>
+#include <testngppst/runner/loaders/ModuleLoaderFactory.h>
 
-#include <testngppst/runner/LTModuleLoader.h>
+#include <testngppst/runner/loaders/LTModuleLoader.h>
 
 TESTNGPPST_NS_START
 

@@ -46,11 +46,11 @@ public:
 
     std::string toTypeAndValueString() const;
 
+    PlaceHolder* getContent() const;
+
 protected:
 
     AnyBase& swap(AnyBase& rhs);
-
-    PlaceHolder* getContent() const;
 
 private:
 
