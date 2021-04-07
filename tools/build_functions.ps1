@@ -8,18 +8,23 @@
 #
 # cmake_param also can be: "-G `"Visual Studio 16 2019`" -A Win32"  etc.
 $global:SUPPORTED_COMPILER = @(
-           @{ name="GNU"; major_ver="7"; cmake_param="-G `"MinGW Makefiles`""; desc="MinGW GNU 7.x"},  # 0 --- MinGW GNU 7.x
-           @{ name="GNU"; major_ver="8"; cmake_param="-G `"MinGW Makefiles`""; desc="MinGW GNU 8.x"},  # 1 --- MinGW GNU 8.x
-           @{ name="MSVC"; major_ver="19"; cmake_param="-G `"Visual Studio 16 2019`""; desc="Visual Studio 2019" }  # 2 --- Visual Studio 2019
+           @{ name="GNU"; major_ver="7"; cmake_param="-G `"MinGW Makefiles`""; desc="MinGW GNU 7.x"},
+           @{ name="GNU"; major_ver="8"; cmake_param="-G `"MinGW Makefiles`""; desc="MinGW GNU 8.x"},
+           @{ name="MSVC"; major_ver="19"; cmake_param="-G `"Visual Studio 16 2019`""; desc="Visual Studio 2019" }
           )
 
 function ReadUserChoice {
 	param ()
+	$count = $global:SUPPORTED_COMPILER.Count - 1
 	Write-Host "Please choose your compiler's name and major version : (input the index)"
-	Write-Host "0. ", $global:SUPPORTED_COMPILER["0"].name, $global:SUPPORTED_COMPILER["0"].major_ver, " -- such as ",$global:SUPPORTED_COMPILER["0"].desc   
-	Write-Host "1. ", $global:SUPPORTED_COMPILER["1"].name, $global:SUPPORTED_COMPILER["1"].major_ver, " -- such as ",$global:SUPPORTED_COMPILER["1"].desc 
-	Write-Host "2. ", $global:SUPPORTED_COMPILER["2"].name, $global:SUPPORTED_COMPILER["2"].major_ver, " -- such as ",$global:SUPPORTED_COMPILER["2"].desc 
-	$global:USER_CHOICE=Read-Host "Enter your chooice (0 ~ 2)" 
+	foreach($index in 0..$count)
+	{
+		Write-Host $index, ". ", $global:SUPPORTED_COMPILER[$index].name, $global:SUPPORTED_COMPILER[$index].major_ver, " -- such as ",$global:SUPPORTED_COMPILER[$index].desc 
+	}
+	
+	do {
+		$global:USER_CHOICE=Read-Host "Enter your chooice ( 0 ~", $count, ")" 
+	} while (-not $global:USER_CHOICE -or $global:USER_CHOICE -lt 0 -or $global:USER_CHOICE -gt 2)
 }
 
 function InitEnviroment {

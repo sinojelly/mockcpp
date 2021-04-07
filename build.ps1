@@ -17,10 +17,11 @@ if (-not $args[0]) {
     $DEFAULT_COMPILER_INDEX=$args[0] 
 }
 
+# Detect the compiler
+cmake -B build tools
+
+# Read user choice
 ReadUserChoice
-echo "Your chooice"
-echo $global:USER_CHOICE
-exit 0
 
 $global:MY_OS_NAME=$null
 $global:MY_CXX_COMPILER_NAME=$null
@@ -28,7 +29,7 @@ $global:MY_CXX_COMPILER_MAJOR_VERSION=$null
 $global:CMAKE_COMPILER_PARAM=$null
 $global:MAKE_BUILD_TYPE=$null
 
-InitEnviroment $global:SUPPORTED_COMPILER[$DEFAULT_COMPILER_INDEX].name $global:SUPPORTED_COMPILER[$DEFAULT_COMPILER_INDEX].major_ver $global:SUPPORTED_COMPILER[$DEFAULT_COMPILER_INDEX].cmake_param
+InitEnviroment $global:SUPPORTED_COMPILER[$global:USER_CHOICE].name $global:SUPPORTED_COMPILER[$global:USER_CHOICE].major_ver $global:SUPPORTED_COMPILER[$global:USER_CHOICE].cmake_param
 
 $BUILD_DIR="build_$global:MY_CXX_COMPILER_NAME"
 
