@@ -3,7 +3,8 @@
 # If you use powershell the first time, excute this cmd first: set-executionpolicy remotesigned
 # Build mockcpp and it's tests, and at last run all tests.
 
-# $args[0]  --- compiler index in table $global:SUPPORTED_COMPILER in tools\build_functions.ps1
+# $args[0]  --- [optional] compiler index in table $global:SUPPORTED_COMPILER in tools\build_functions.ps1
+# $args[1]  --- [optional] if it is "test" then only run tests without compiling.
 
 $global:USER_CHOICE=$null
 $global:SUPPORTED_COMPILER=$null 
@@ -12,16 +13,12 @@ $global:SUPPORTED_COMPILER=$null
 
 # If no input parameter
 if (-not $args[0]) {
-    $DEFAULT_COMPILER_INDEX=2   # default choose vs2019
+    # Detect the compiler
+    cmake -B build tools
+    ReadUserChoice
 } else {
-    $DEFAULT_COMPILER_INDEX=$args[0] 
+    $global:USER_CHOICE=$args[0] 
 }
-
-# Detect the compiler
-cmake -B build tools
-
-# Read user choice
-ReadUserChoice
 
 $global:MY_OS_NAME=$null
 $global:MY_CXX_COMPILER_NAME=$null
@@ -37,11 +34,13 @@ $OS_COMPILER="$global:MY_OS_NAME\$global:MY_CXX_COMPILER_NAME\$global:MY_CXX_COM
 
 echo "OS_COMPILER in Powershell : $OS_COMPILER"
 
+if (-not ($args[1] -eq "test")) {
 Invoke-Expression "cmake $global:CMAKE_COMPILER_PARAM -S . -B $BUILD_DIR/mockcpp"
 Invoke-Expression "cmake $global:CMAKE_COMPILER_PARAM -S tests/3rdparty/testngpp -B $BUILD_DIR/mockcpp_testngpp"
 Invoke-Expression "cmake $global:CMAKE_COMPILER_PARAM -S tests -B $BUILD_DIR/mockcpp_tests"
 CompileProject $global:MY_CXX_COMPILER_NAME $BUILD_DIR/mockcpp
 CompileProject $global:MY_CXX_COMPILER_NAME $BUILD_DIR/mockcpp_testngpp
 CompileProject $global:MY_CXX_COMPILER_NAME $BUILD_DIR/mockcpp_tests
+}
 
 RunTests $BUILD_DIR mockcpp_tests $global:MAKE_BUILD_TYPE mockcpp_testngpp
