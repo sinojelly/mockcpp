@@ -40,7 +40,7 @@ struct CheckWith : public Constraint
 
     std::string toString() const
     {
-      return std::string("check(") + 
+      return std::string("checkWith(") + 
              MOCKCPP_NS::toTypeAndValueString(predict) +
              std::string(")");
     }

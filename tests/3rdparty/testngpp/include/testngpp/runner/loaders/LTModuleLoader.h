@@ -4,7 +4,7 @@
 
 #include <testngpp/testngpp.h>
 #include <testngpp/runner/loaders/ModuleLoader.h>
-#include <testngpp/runner/SearchingPaths.h>
+//#include <testngpp/runner/SearchingPaths.h>
 
 
 TESTNGPP_NS_START
@@ -13,7 +13,7 @@ struct LTModuleLoaderImpl;
 
 struct LTModuleLoader : public ModuleLoader
 {
-   LTModuleLoader(const SearchingPaths* searchingPaths);
+   LTModuleLoader(const StringList* searchingPaths);
 
    ~LTModuleLoader(); 
 

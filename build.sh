@@ -17,7 +17,8 @@ MAKE_BUILD_TYPE=""
 
 AUTO_COMPILER="GNU"  #  $1
 AUTO_CXX_VER=`gcc -dumpversion | awk -F.  '{print $1}'`  # $2
-InitEnviroment $AUTO_COMPILER $AUTO_CXX_VER
+#InitEnviroment $AUTO_COMPILER $AUTO_CXX_VER
+InitEnviroment $1 $2
 
 BUILD_DIR="build_$MY_CXX_COMPILER_NAME"
 

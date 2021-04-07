@@ -13,7 +13,6 @@ SET(TESTNGPP_SRCS
   Formatter.cpp 
   MemChecker.cpp
   TestCase.cpp
-  runner/ResourceCheckPoint.cpp
   mem_checker/bool_array.cpp       
   mem_checker/mem_pool_base.cpp
   mem_checker/debug_new.cpp        
@@ -23,6 +22,11 @@ SET(TESTNGPP_SRCS
   mem_checker/check_status.cpp
   mem_checker/NoThrowsReporter.cpp
 )
+
+IF (NOT CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  # using regular Clang or AppleClang
+  SET(TESTNGPP_SRCS ${TESTNGPP_SRCS} runner/ResourceCheckPoint.cpp)
+ENDIF()
 
 # include debug info in testngpp.lib
 #IF(MSVC)
