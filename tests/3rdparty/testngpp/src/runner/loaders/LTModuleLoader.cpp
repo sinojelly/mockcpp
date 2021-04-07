@@ -3,6 +3,7 @@
 #include <ltdl.h>
 
 #include <testngpp/internal/Error.h>
+#include <testngpp/comm/ExceptionKeywords.h>
 
 #include <testngpp/runner/loaders/LTModuleLoader.h>
 
@@ -16,8 +17,9 @@ struct LTModuleLoaderImpl
 
     void init();
 
+    const char* addSearchingPaths(const StringList& searchingPaths);
     void load(const std::string& modulePath);
-    void loadUnderPaths( \
+    void loadInSearchingPaths( \
        const StringList& searchingPaths, \
        const std::string& modulePath);
 

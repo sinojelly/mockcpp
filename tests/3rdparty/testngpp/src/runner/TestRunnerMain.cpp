@@ -200,14 +200,18 @@ int real_main(int argc, char* argv[])
 
 int main(int argc, char* argv[])
 {
+   #ifndef __clang__
    TESTNGPP_RCP rcp = TESTNGPP_SET_RESOURCE_CHECK_POINT();
+   #endif
 
    int code = 0;
 
    try
    {
      code = real_main(argc, argv);
+     #ifndef __clang__
      TESTNGPP_VERIFY_RESOURCE_CHECK_POINT(rcp);
+     #endif
    }
    catch(std::exception& error)
    {
