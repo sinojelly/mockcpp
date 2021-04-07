@@ -14,7 +14,7 @@ $global:SUPPORTED_COMPILER=$null
 # If no input parameter
 if (-not $args[0]) {
     # Detect the compiler
-    cmake -B build tools
+    cmake -B build ../../../tools
     ReadUserChoice
 } else {
     $global:USER_CHOICE=$args[0] 
