@@ -5,6 +5,7 @@
 
 # $args[0]  --- compiler index in table $global:SUPPORTED_COMPILER in tools\build_functions.ps1
 
+$global:USER_CHOICE=$null
 $global:SUPPORTED_COMPILER=$null 
 
 . "$PSScriptRoot\tools\build_functions.ps1"
@@ -15,6 +16,11 @@ if (-not $args[0]) {
 } else {
     $DEFAULT_COMPILER_INDEX=$args[0] 
 }
+
+ReadUserChoice
+echo "Your chooice"
+echo $global:USER_CHOICE
+exit 0
 
 $global:MY_OS_NAME=$null
 $global:MY_CXX_COMPILER_NAME=$null
