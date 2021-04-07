@@ -14,7 +14,7 @@ struct DLModuleLoader : public ModuleLoader
    DLModuleLoader();
    ~DLModuleLoader(); 
 
-	void load( const StringList& searchingPaths \
+   void load( const StringList& searchingPaths \
             , const std::string& modulePath);
    void unload();
 

@@ -1,12 +1,10 @@
 
+#include <string>
 #include <ltdl.h>
 
 #include <testngpp/internal/Error.h>
-#include <testngpp/comm/ExceptionKeywords.h>
 
 #include <testngpp/runner/loaders/LTModuleLoader.h>
-
-
 
 TESTNGPP_NS_START
 
@@ -18,12 +16,9 @@ struct LTModuleLoaderImpl
 
     void init();
 
-    const char* addSearchingPaths(
-        const std::list<std::string>& searchingPaths);
-
     void load(const std::string& modulePath);
     void loadUnderPaths( \
-       const std::list<std::string>& searchingPaths, \
+       const StringList& searchingPaths, \
        const std::string& modulePath);
 
     void unload();
@@ -74,12 +69,14 @@ LTModuleLoaderImpl::init()
 /////////////////////////////////////////////////////////////////
 const char*
 LTModuleLoaderImpl::
-addSearchingPaths(const std::list<std::string>& searchingPaths)
+addSearchingPaths(const StringList& searchingPaths)
 {
    const char* origSearchingPath = ::lt_dlgetsearchpath();
    const char* p = origSearchingPath;
-   std::list<std::string>::const_iterator i = searchingPaths.begin();
-   for(; i != searchingPaths.end(); i++)
+
+   StringList::Type::const_iterator i = \
+       searchingPaths.get().begin();
+   for(; i != searchingPaths.get().end(); i++)
    {
       ::lt_dlinsertsearchdir(p, (*i).c_str());
       p = ::lt_dlgetsearchpath();
@@ -101,8 +98,8 @@ LTModuleLoaderImpl::load(const std::string& modulePath)
 
 ////////////////////////////////////////////////////////
 void
-LTModuleLoaderImpl::loadUnderPaths( \
-       const std::list<std::string>& searchingPaths, \
+LTModuleLoaderImpl::loadInSearchingPaths( \
+       const StringList& searchingPaths, \
        const std::string& modulePath)
 {
     const char* originalSearchingPath = \
@@ -161,20 +158,10 @@ LTModuleLoader::~LTModuleLoader()
 
 ////////////////////////////////////////////////////////
 void
-LTModuleLoader::load(const std::string& modulePath)
+LTModuleLoader::load( const StringList& searchingPaths, const std::string& modulePath)
 {
     This->init();
-    This->load(modulePath);
-}
-
-////////////////////////////////////////////////////////
-void
-LTModuleLoader::loadUnderPaths( \
-       const std::list<std::string>& searchingPaths, \
-       const std::string& modulePath)
-{
-    This->init();
-    This->loadUnderPaths(searchingPaths, modulePath);
+    This->loadInSearchingPaths(searchingPaths, modulePath);
 }
 
 ////////////////////////////////////////////////////////

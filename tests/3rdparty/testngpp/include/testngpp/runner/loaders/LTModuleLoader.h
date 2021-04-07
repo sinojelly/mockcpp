@@ -4,8 +4,6 @@
 
 #include <testngpp/testngpp.h>
 #include <testngpp/runner/loaders/ModuleLoader.h>
-//#include <testngpp/runner/SearchingPaths.h>
-
 
 TESTNGPP_NS_START
 
@@ -13,12 +11,12 @@ struct LTModuleLoaderImpl;
 
 struct LTModuleLoader : public ModuleLoader
 {
-   LTModuleLoader(const StringList* searchingPaths);
+   LTModuleLoader();
 
    ~LTModuleLoader(); 
 
-	void load(const std::string& modulePath);
-
+   void load( const StringList& searchingPaths \
+            , const std::string& modulePath);
    void unload();
 
    void* findSymbol(const std::string& symbol);
