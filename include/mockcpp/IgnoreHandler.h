@@ -1,4 +1,4 @@
- /***
+/***
    mockcpp is a C/C++ mock framework.
    Copyright [2008] [Darwin Yuan <darwin.yuan@gmail.com>]
 
