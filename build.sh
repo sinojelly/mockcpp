@@ -1,8 +1,12 @@
 #!/bin/bash
 # build mockcpp and it's tests, and at last run all tests.
 
-# $1  --- compiler name  (GNU)
+# $1  --- [optional] compiler name  (default is GNU)
 # $2  --- [optional] compiler major version  (The first part of cxx compiler version)
+
+# if you want to choose a compiler other than GNU, you can 
+#   uncomment the ReadUserChoice, config the CompilerArray in tools/build_functions.sh, then
+#   InitEnviroment $USER_CHOOSED_COMPILER $USER_CHOOSED_COMPILER_MAJOR_VER
 
 # fast fail
 set -e
@@ -18,11 +22,17 @@ MAKE_BUILD_TYPE=""
 USER_CHOOSED_COMPILER=""
 USER_CHOOSED_COMPILER_MAJOR_VER=""
 
-#ReadUserChoice
 
-AUTO_COMPILER="GNU"  #  $1
-AUTO_CXX_VER=`gcc -dumpversion | awk -F.  '{print $1}'`  # $2
+# script usage 1: no parameter, use GNU compiler
+AUTO_COMPILER="GNU"
+AUTO_CXX_VER=`gcc -dumpversion | awk -F.  '{print $1}'`
 InitEnviroment $AUTO_COMPILER $AUTO_CXX_VER
+
+# script usage 2: input the compiler name and major version
+#InitEnviroment $1 $2
+
+# script usage 3: choose the compiler and version
+#ReadUserChoice
 #InitEnviroment $USER_CHOOSED_COMPILER $USER_CHOOSED_COMPILER_MAJOR_VER
 
 BUILD_DIR="build_$MY_CXX_COMPILER_NAME"
