@@ -1,16 +1,32 @@
-CompilerArray=("1st item" 
-               "2nd item" 
-			   "3rd item" 
-			   "4th item")
-
+CompilerArray=("0. GNU 5" 
+               "1. GNU 7" 
+			   "2. GNU 8" 
+			   "3. GNU 9"
+			   "4. Clang 11")
 
 function ReadUserChoice() {
-	printf 'Word -> %s\n' "${CompilerArray[@]}"
+	maxIndex=$((${#CompilerArray[*]}-1))
+	printf "\nPlease choose your compiler's name and major version : (input the index)\n\n"
+	printf '%s\n' "${CompilerArray[@]}"
+	printf "\n"
+	read -p "Enter your chooice (0 ~ ${maxIndex}) : "
+	choice=$REPLY
+	while ( [ $choice -lt 0 ] || [ $choice -gt $maxIndex ] ) 
+	do
+	    read -p "Enter your chooice (0 ~ $maxIndex) : "
+	    choice=$REPLY
+	done
+	choosed_line=${CompilerArray[@]:$choice:1}
+	#echo $choosed_line
+	USER_CHOOSED_COMPILER=`echo "$choosed_line" | awk '{print $2 }'`
+	USER_CHOOSED_COMPILER_MAJOR_VER=`echo "$choosed_line" | awk '{print $3}'`
+    #echo $USER_CHOOSED_COMPILER
+	#echo $USER_CHOOSED_COMPILER_MAJOR_VER
 }
 
 
 function InitEnviroment() {
-        MY_OS_NAME="Linux"
+    MY_OS_NAME="Linux"
 	MY_CXX_COMPILER_NAME=$1
 	MY_CXX_COMPILER_MAJOR_VERSION=$2
 	CMAKE_COMPILER_PARAM=""
