@@ -49,6 +49,26 @@ struct Interface {
     virtual ~Interface(){}
 };
 
+struct Client {
+    Client(std::shared_ptr<Interface> intf):_intf(intf){}
+
+    void func1(Obj b) {
+         _intf->func1(b);
+    }
+private:
+    std::shared_ptr<Interface> _intf;
+};
+
+struct Client2 {
+    Client2(std::unique_ptr<Interface> intf2):_intf2(std::move(intf2)){}
+
+    void func1(Obj b) {
+         _intf2->func1(b);
+    }
+private:
+    std::unique_ptr<Interface> _intf2;
+};
+
 
 FIXTURE(TestSmartPointerChecker) 
 {
@@ -105,6 +125,35 @@ FIXTURE(TestSmartPointerChecker)
             .with(eq(ptr));
         mocker->func5(ptr);
         mocker.verify();
+    }
+
+    TEST(Can inject shared_ptr dependency) 
+    {
+        Obj b(100);
+        MockObject<Interface> mocker;
+        MOCK_METHOD(mocker, func1)
+            .expects(once())
+            .with(eq(b));
+        auto ptr = std::make_shared<Interface>();
+        ptr.reset<Interface>(mocker);
+        Client client(ptr);
+        client.func1(b);
+        mocker.verify();
+    }
+
+    TEST(Can inject unique_ptr dependency) 
+    {
+        Obj b(101);
+        MockObject<Interface> mocker;
+        MOCK_METHOD(mocker, func1)
+            .expects(once())
+            .with(eq(b));
+        auto ptr = std::make_unique<Interface>();
+        ptr.reset(mocker);
+        Client2 client2(std::move(ptr));
+        client2.func1(b);
+        mocker.verify();
+
     }
 
 };
