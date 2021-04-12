@@ -69,6 +69,15 @@ private:
     std::unique_ptr<Interface> _intf2;
 };
 
+struct Client3 {
+    Client3(Interface& intf3):_intf3(intf3){}
+
+    void func1(Obj b) {
+         _intf3.func1(b);
+    }
+private:
+    Interface& _intf3;
+};
 
 FIXTURE(TestSmartPointerChecker) 
 {
@@ -155,5 +164,17 @@ FIXTURE(TestSmartPointerChecker)
         mocker.verify();
 
     }
-
+    TEST(Can inject reference dependency) 
+    {
+        Obj b(102);
+        MockObject<Interface> mocker;
+        MOCK_METHOD(mocker, func1)
+            .expects(once())
+            .with(eq(b));
+        auto ptr = std::make_shared<Interface>();
+        ptr.reset<Interface>(mocker);
+        Client3 client3(*ptr);
+        client3.func1(b);
+        mocker.verify();
+    }
 };
