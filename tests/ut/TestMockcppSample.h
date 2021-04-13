@@ -30,6 +30,12 @@ int func_client(Interface2* intf)
     return intf->method2();
 }
 
+template <typename T>
+int template_func(T &t) 
+{
+    return 1;
+}
+
 FIXTURE(mockcpp_sample, mockcpp samples)
 {
     TEST(test_method_mocker)
@@ -72,4 +78,17 @@ FIXTURE(mockcpp_sample, mockcpp samples)
         ASSERT_EQ(2, func_client(mocker));
 
     }	
+
+#if 0
+    // if not use MOCKCPP_USE_MOCKABLE, compile error
+    // if use MOCKCPP_USE_MOCKABLE, compile pass, but maybe all the MOCKER tests failed.
+    TEST(mock a template function) 
+    {
+        MOCKER(template_func)
+            .defaults()
+            .will(returnValue(100));
+        struct A {}a;
+        ASSERT_EQ(100, template_func(a));
+    }
+#endif
 };
