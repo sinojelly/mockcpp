@@ -26,14 +26,11 @@ You can use mockcpp testngpp prebuilt libraries and header files, or use their s
 If you use the prebuilt libraries, be sure they are built on the same os and compiler as the project that is being tested.
 
 ## mockcpp features
-|  OS    | Compiler | Virtual method mock | Global function mock | Overloaded function mock | Non-virtual method mock (Experiment) |
-|  ----  | ----     |         ----  |    ----  |   ----      |   ----                |
-|Linux   | GCC      |  Yes          | Yes      |   Yes       |  Yes                  |
-|Win10   | MinGW    |  Yes          | Yes      |   Yes       |  Yes                  |
-|Win10   | VS2019   |  Yes          | No       |   Yes       |  Not test             |
-|Android Termux| Clang |  No        | No       |   No        |  No                   |
-
-ps: mockcpp on Android Termux using Clang compiler only compiled pass, but the compiler is different from others so there are still lots of work to do before it works. 
+|  OS    | Compiler | Virtual method mock | Global function mock | Overloaded function mock |
+|  ----  | ----     |         ----  |    ----  |   ----      |
+|Linux   | GCC      |  Yes          | Yes      |   Yes       |
+|Win10   | MinGW    |  Yes          | Yes      |   Yes       |
+|Win10   | VS2019   |  Yes          | No       |   Yes       |
 
 ## testngpp features
 
@@ -42,7 +39,6 @@ ps: mockcpp on Android Termux using Clang compiler only compiled pass, but the c
 |Linux|GCC  |Yes          |Yes      |Yes      | Yes          |
 |Win10|MinGW|Yes          |No       |No       | Yes          |
 |Win10|VS2019|Yes         |Yes      |Yes      | Yes          |
-|Android Termux|Clang|Yes |Yes      |Yes      | Yes          |
 
 ## Sample code
 ### Testngpp parameterized test sample
