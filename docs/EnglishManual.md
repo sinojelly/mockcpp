@@ -161,7 +161,7 @@ Input Argument Matcher
 
 Output Argument Matcher
   * Output through reference: `outBound(reference, constraint)`
-  * Output through pointer: `outBound(point, constraint)`
+  * Output through pointer: `outBoundP(point, size, constraint)`
 
 ### Usage ###
 
