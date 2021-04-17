@@ -41,6 +41,8 @@ Constraint* constraint(const T& value)
     return new IsEqual<T>(value);
 }
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wunused-function"
 Constraint* constraint(Constraint* c)
 {
     return c == 0 ? any() : c;
@@ -50,6 +52,7 @@ Constraint* constraint(const Constraint* c)
 {
     return constraint(const_cast<Constraint*>(c));
 }
+#pragma GCC diagnostic pop
 
 Constraint* constraint(const Void& v)
 {
