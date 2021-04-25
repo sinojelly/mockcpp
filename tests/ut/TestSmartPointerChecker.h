@@ -208,7 +208,7 @@ FIXTURE(TestSmartPointerChecker)
             .will(returnValue(10));
         std::shared_ptr<Base> base;
         base.reset<Base>(mocker);
-        ASSERT_EQ(10, func_use_derived(base)); // vs2019: crash
+        ASSERT_EQ(10, func_use_derived(base)); // vs2019: crash, Linux GNU 8.3: OK
     }
     TEST(Can cast shared_ptr pointer to derived class type in initializer_list)
     {
@@ -219,6 +219,6 @@ FIXTURE(TestSmartPointerChecker)
             .will(returnValue(10));
         std::shared_ptr<Base> base;
         base.reset<Base>(mocker);
-        ASSERT_EQ(10, func_use_derived2({base})); // vs2019: crash
+        ASSERT_EQ(10, func_use_derived2({base})); // vs2019: crash, Linux GNU 8.3: OK
     }
 };
