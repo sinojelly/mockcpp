@@ -20,6 +20,7 @@
 #include <mockcpp/mockcpp.hpp>
 
 #include <memory>
+#include <initializer_list>
 
 USING_TESTNGPP_NS
 USING_MOCKCPP_NS
@@ -78,6 +79,27 @@ struct Client3 {
 private:
     Interface& _intf3;
 };
+
+struct Base {
+    virtual ~Base()=default;
+    virtual int method1(int a) { return 0; }
+};
+
+struct Derived : public Base {
+    virtual int method2(int a, int b) { return 0; }
+};
+
+int func_use_derived(std::shared_ptr<Base> base)
+{
+   std::shared_ptr<Derived> derived = std::dynamic_pointer_cast<Derived>(base);
+   return derived->method2(1, 2);
+}
+
+int func_use_derived2(std::initializer_list<std::shared_ptr<Base>> list)
+{
+   std::shared_ptr<Derived> derived = std::dynamic_pointer_cast<Derived>(*list.begin());
+   return derived->method2(1, 2);
+}
 
 FIXTURE(TestSmartPointerChecker) 
 {
@@ -176,5 +198,27 @@ FIXTURE(TestSmartPointerChecker)
         Client3 client3(*ptr);
         client3.func1(b);
         mocker.verify();
+    }
+    TEST(Can cast shared_ptr pointer to derived class type in normal parameter)
+    {
+        MockObject<Derived> mocker;
+        MOCK_METHOD(mocker, method2)
+            .expects(once())
+            .with(eq(1), eq(2))
+            .will(returnValue(10));
+        std::shared_ptr<Base> base;
+        base.reset<Base>(mocker);
+        ASSERT_EQ(10, func_use_derived(base)); // vs2019: crash
+    }
+    TEST(Can cast shared_ptr pointer to derived class type in initializer_list)
+    {
+        MockObject<Derived> mocker;
+        MOCK_METHOD(mocker, method2)
+            .expects(once())
+            .with(eq(1), eq(2))
+            .will(returnValue(10));
+        std::shared_ptr<Base> base;
+        base.reset<Base>(mocker);
+        ASSERT_EQ(10, func_use_derived2({base})); // vs2019: crash
     }
 };
