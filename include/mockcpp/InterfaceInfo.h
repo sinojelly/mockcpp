@@ -44,7 +44,9 @@ unsigned int getNumberOfVtbls()
 template <typename Interface>
 unsigned int getNumberOfVtbls()
 {
-   return sizeof(Interface)/sizeof(void*);
+   // temparly comment out it to support mocking some complecated classes on VS
+   // return sizeof(Interface)/sizeof(void*);
+   return 2; 
 }
 
 #endif

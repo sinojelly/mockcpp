@@ -1,6 +1,10 @@
 #include <testngpp/testngpp.hpp>
 #include <mockcpp/mokc.h>
 #include <mockcpp/mockcpp.hpp>
+#include <iostream>
+#include <vector>
+#include <memory>
+using namespace std;
 
 struct Interface
 {
@@ -35,6 +39,23 @@ int template_func(T &t)
 {
     return 1;
 }
+
+class Base
+{
+public:
+    virtual ~Base(){}
+    virtual int method1(int a) { return 0; }
+    int method2(float b) { return 1; }
+    int member;
+    int member2;
+    int member3;
+};
+
+class Derived : public Base {
+public:
+   virtual ~Derived(){}
+   virtual int method1(int a) { return 10; }
+};
 
 FIXTURE(mockcpp_sample, mockcpp samples)
 {
@@ -77,7 +98,18 @@ FIXTURE(mockcpp_sample, mockcpp samples)
             .will(returnValue(100));
         ASSERT_EQ(2, func_client(mocker));
 
-    }	
+    }
+
+    TEST(mock a Derived class with a non-pure-virtual base class)
+    {
+        MockObject<Derived> mocker;
+        MOCK_METHOD(mocker,  method1)
+            .defaults()
+            .will(returnValue(100));
+        ASSERT_EQ(100, mocker->method1(10));
+        ASSERT_EQ(24, sizeof(Derived));
+        ASSERT_EQ(8, sizeof(void*));
+    }
 
 #if 0
     // if not use MOCKCPP_USE_MOCKABLE, compile error
