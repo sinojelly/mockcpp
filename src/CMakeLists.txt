@@ -336,4 +336,5 @@ ADD_DEPENDENCIES(mockcpp vtbl_related_headers arg_related_headers)
 
 INSTALL(
    TARGETS mockcpp
-   ARCHIVE DESTINATION binary/${TESTNGPP_OS_COMPILER}/mockcpp/lib)
+   ARCHIVE DESTINATION lib)
+#   ARCHIVE DESTINATION binary/${TESTNGPP_OS_COMPILER}/mockcpp/lib)
