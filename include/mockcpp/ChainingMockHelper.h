@@ -103,6 +103,12 @@ struct PredictTypeTraits<bool (Predict::*)(T)>
     typedef T ParaType;
 };
 
+template <typename Predict, typename T>
+struct PredictTypeTraits<bool (Predict::*)(T) const>
+{
+    typedef T ParaType;
+};
+
 template <typename Predict>
 Constraint* checkWith(Predict pred)
 {
