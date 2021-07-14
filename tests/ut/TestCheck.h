@@ -139,5 +139,31 @@ FIXTURE(Check)
 
 		ASSERT_EQ(10, input.a);
 	}
+
+	TEST(Can check with mutable lambda)
+	{
+		MOCK_METHOD(mocker, method)
+			.expects(once())
+			.with(checkWith([](STRUCT_T *p) mutable {
+				return p->b == 2;
+			}));
+
+		client(mocker, &input);
+
+		ASSERT_EQ(10, input.a);
+	}
+
+	TEST(Can check with immutable lambda)
+	{
+		MOCK_METHOD(mocker, method)
+			.expects(once())
+			.with(checkWith([](STRUCT_T *p) {
+				return p->b == 2;
+			}));
+
+		client(mocker, &input);
+
+		ASSERT_EQ(10, input.a);
+	}
 };
 
