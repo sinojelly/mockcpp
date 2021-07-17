@@ -76,7 +76,7 @@ struct SrcAddr
 	        file = last_info;
 	        if (!print_position_from_addr(_instruction, line, last_info, sizeof(last_info))) // fail to get source location
 	        {
-	        	sprintf(last_info, "instruction 0x%016lX", (unsigned long long)_instruction);
+	        	sprintf(last_info, "instruction 0x%016llX", (unsigned long long)_instruction);
 	        }
 	    }
 	}
