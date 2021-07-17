@@ -145,6 +145,7 @@ FIXTURE(Check)
 		MOCK_METHOD(mocker, method)
 			.expects(once())
 			.with(checkWith([](STRUCT_T *p) mutable {
+                p->a = 10;
 				return p->b == 2;
 			}));
 
@@ -158,6 +159,7 @@ FIXTURE(Check)
 		MOCK_METHOD(mocker, method)
 			.expects(once())
 			.with(checkWith([](STRUCT_T *p) {
+			    p->a = 10;
 				return p->b == 2;
 			}));
 
