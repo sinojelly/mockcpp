@@ -18,21 +18,20 @@
 #include <string.h>
 #include <inttypes.h>
 #include <sys/mman.h>
+#include <unistd.h>
 
 #include <mockcpp/CodeModifier.h>
 
-#define PAGE_ALIGN_BITS  12
-
 //////////////////////////////////////////////////////////////////
-#define PAGE_SIZE   (1 << PAGE_ALIGN_BITS)
-#define ALIGN_TO_PAGE_BOUNDARY(addr) (void*) (((uintptr_t)addr) & (~((1<<(PAGE_ALIGN_BITS))-1)))
+#define ALIGN_TO_PAGE_BOUNDARY(addr, page_size) (void*) (((uintptr_t)addr) & (~(page_size - 1)))
 //////////////////////////////////////////////////////////////////
 
 MOCKCPP_NS_START
 
 bool CodeModifier::modify(void *dest, const void *src, size_t size)
 {
-    if(::mprotect(ALIGN_TO_PAGE_BOUNDARY(dest), PAGE_SIZE * 2, PROT_EXEC | PROT_WRITE | PROT_READ ) != 0)
+    int page_size = getpagesize();
+    if(::mprotect(ALIGN_TO_PAGE_BOUNDARY(dest, page_size), page_size * 2, PROT_EXEC | PROT_WRITE | PROT_READ ) != 0)
     {  
        return false; 
     }
